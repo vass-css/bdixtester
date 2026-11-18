@@ -1,0 +1,2536 @@
+# BDIX Tester — Full Production-Ready Android Application Development & Phase 4–11 Authorization Prompt
+
+## 1. Project Identity — Official Decisions
+
+The official application and brand name is **BDIX Tester**.
+
+এই project-এর নাম, branding, package identity এবং developer identity অপরিবর্তিত রাখতে হবে।
+
+| Property | Official decision |
+|---|---|
+| Application name | BDIX Tester |
+| Project name | BDIX Tester |
+| Category | Tools |
+| Platform | Native Android |
+| Programming language | Kotlin |
+| UI framework | Jetpack Compose |
+| Design system | Material 3 |
+| Architecture | Single Activity + Single Module |
+| Architectural pattern | Lightweight MVVM |
+| Primary audience | Bangladesh broadband and BDIX users |
+| Primary purpose | BDIX server discovery and connectivity testing |
+| Secondary purpose | Server performance measurement and catalog management |
+| Development approach | Native, lightweight, privacy-conscious |
+| Developer name | Jubayer Hossain |
+| Preferred Developer ID | JubayerHossain |
+| Application ID | `com.jubayerhossain.bdixtester` |
+| Namespace | `com.jubayerhossain.bdixtester` |
+
+Do not rename the application or modify its identity without explicit authorization.
+
+All future source files, documentation, UI labels, release metadata and store listing materials must consistently use `BDIX Tester`.
+
+## 2. Existing Project Status — Preserve Completed Work
+
+The project has already completed Phase 1, Phase 2 and Phase 3.
+
+The latest completion report records the following achievements.
+
+### 2.1 Phase 1 — Product Specification
+
+Status: Completed.
+
+Existing document:
+
+`docs/PRODUCT_SPECIFICATION.md`
+
+The product specification already covers the reference application analysis, server discovery, server categories, test workflows, speed testing, catalog updates, favorites, history, export and privacy principles.
+
+Inspect and preserve the existing document.
+
+Update it only where actual implementation, technical research or production requirements reveal a necessary discrepancy.
+
+### 2.2 Phase 2 — Architecture and Technical Design
+
+Status: Completed.
+
+Existing documents include:
+
+- `docs/architecture/ARCHITECTURE.md`
+- `docs/architecture/PACKAGE_STRUCTURE.md`
+- `docs/architecture/NETWORK_TESTING_ARCHITECTURE.md`
+- `docs/architecture/CATALOG_UPDATE_ARCHITECTURE.md`
+- `docs/architecture/RESULT_CLASSIFICATION.md`
+- `docs/architecture/decisions/ADR-001` through `ADR-013`
+
+The project already follows:
+
+- Single Activity.
+- Single `:app` Gradle module.
+- Kotlin.
+- Jetpack Compose.
+- Material 3.
+- MVVM.
+- StateFlow.
+- Constructor-based dependency injection using `AppContainer`.
+- Separated domain, data, feature and UI responsibilities.
+
+Preserve these architectural decisions unless an evidence-backed technical issue requires a documented change.
+
+Do not migrate to a multi-module architecture.
+
+Do not introduce Hilt or Dagger merely for preference or imitation.
+
+### 2.3 Phase 3 — UI/UX Design System and Navigation Shell
+
+Status: Completed.
+
+Existing implementation includes:
+
+- Material 3 light theme.
+- Material 3 dark theme.
+- System theme.
+- Slate-navy and electric-cyan diagnostic palette.
+- Plus Jakarta Sans typography.
+- JetBrains Mono for URLs and technical metrics.
+- Semantic status colors.
+- Reusable `StatusBadge`.
+- Reusable `ServerCard`.
+- Reusable `MetricTile`.
+- Reusable `EmptyStateView`.
+- Adaptive bottom navigation.
+- Adaptive navigation rail.
+- Dashboard.
+- Server directory.
+- Scan screen shell.
+- Favorites and history shell.
+- Settings.
+- Server details.
+- Compose previews.
+- Accessibility semantics.
+- UI test tags.
+- Robolectric and unit tests.
+
+Existing visual identity must be preserved and professionally refined.
+
+Do not replace the design system with an unrelated visual concept.
+
+### 2.4 Current Baseline Verification
+
+The previous report records:
+
+| Check | Previous result |
+|---|---|
+| `compile_applet` | Passed |
+| `lint_applet` | Passed |
+| `:app:testDebugUnitTest` | 10 passed, 0 failed |
+| Unit tests | Passed |
+| Robolectric tests | Passed |
+| Navigation UI test | Passed |
+| Emulator test | Not executed |
+| Physical-device test | Not executed |
+
+Treat these as previous results.
+
+Rerun the relevant checks before modifying the project and compare new results against this baseline.
+
+Do not claim that old test results represent the current build until they have been reproduced.
+
+## 3. Project Identity and Configuration Protection
+
+Preserve:
+
+- `applicationId = "com.jubayerhossain.bdixtester"`
+- `namespace = "com.jubayerhossain.bdixtester"`
+- Existing package structure.
+- Existing single-module architecture.
+- Existing application icon.
+- Existing typography.
+- Existing theme.
+- Existing navigation structure.
+- Existing build configuration.
+
+Before changing build configuration:
+
+1. Inspect the root Gradle configuration.
+2. Inspect `app/build.gradle.kts`.
+3. Inspect `settings.gradle.kts`.
+4. Inspect `gradle/libs.versions.toml`.
+5. Inspect `gradle-wrapper.properties`.
+6. Inspect the Android SDK configuration.
+7. Inspect existing plugins and dependencies.
+8. Inspect all build variants.
+9. Inspect manifest configuration.
+10. Inspect GitHub Actions workflows.
+
+Do not blindly upgrade or downgrade dependencies.
+
+Do not remove a working dependency merely because a newer alternative exists.
+
+Use compatible, stable versions verified against the actual environment.
+
+## 4. Full Production-Readiness Objective
+
+The objective is to transform the existing Phase 1–3 implementation into a complete production-grade BDIX server discovery and testing application.
+
+The final application must support:
+
+1. Complete built-in server catalog.
+2. Persistent local catalog.
+3. User-created servers.
+4. Server categories.
+5. HTTP connectivity testing.
+6. HTTPS connectivity testing.
+7. Actual FTP connectivity testing where supported.
+8. Explicit handling of FTPS support limitations.
+9. Quick Scan.
+10. Full Scan.
+11. Selected-server testing.
+12. Category-based testing.
+13. Bounded concurrent testing.
+14. Real-time testing progress.
+15. Accurate result classification.
+16. Separate response-latency measurement.
+17. Dedicated optional download-speed testing.
+18. Remote catalog updates.
+19. Local catalog caching.
+20. Catalog integrity verification.
+21. Favorites and pinned servers.
+22. Testing history.
+23. Custom endpoint management.
+24. CSV and JSON export.
+25. Settings and preferences.
+26. Privacy controls.
+27. Accessibility.
+28. Responsive UI.
+29. Automated tests.
+30. GitHub Actions CI/CD.
+31. Production APK and AAB build support.
+32. Release documentation.
+33. Play Store preparation.
+34. Production security and quality audit.
+
+Do not consider the application production-ready merely because it compiles or displays a polished interface.
+
+Production readiness must be established through actual implementation, testing, documentation and explicit acceptance criteria.
+
+# 5. CRITICAL BLOCKER — Original FtpLinks Catalog
+
+The last progress report records:
+
+`FtpLinks.links = emptyList()`
+
+Reason:
+
+The complete original Dart endpoint list was not found in the inspected workspace and supplied files.
+
+This is a known unresolved dependency.
+
+The project must not silently ship with an empty built-in catalog while claiming to provide a complete BDIX server discovery experience.
+
+### 5.1 Source Recovery
+
+Before catalog implementation:
+
+1. Search the complete repository.
+2. Search all existing source files.
+3. Search existing documentation.
+4. Search attachments and supplied project files.
+5. Check available original user-provided conversation context.
+6. Check any previously supplied Dart `FtpLinks` class.
+7. Identify whether a complete original URL list is actually available.
+
+Use the original user-provided list as the source of truth.
+
+Do not reconstruct missing endpoints from memory.
+
+Do not invent new server addresses.
+
+Do not substitute random public websites.
+
+If the complete source is unavailable:
+
+- Continue implementing the generic catalog engine.
+- Continue implementing database, repositories and catalog-management functionality.
+- Continue implementing all independent features.
+- Keep the built-in source catalog explicitly empty rather than manufacturing data.
+- Document the blocker.
+- Do not mark catalog population complete.
+- Do not claim the complete app is ready for public release.
+
+Request the exact original source only after all available recovery locations have been checked.
+
+### 5.2 Exact URL Preservation
+
+Every supplied endpoint must be preserved exactly.
+
+Preserve:
+
+- Scheme.
+- Hostname.
+- IP address.
+- Explicit port.
+- Path.
+- Query parameters.
+- Trailing slash.
+- Original spelling.
+- Meaningful unusual path structures.
+
+Do not silently:
+
+- Remove endpoints.
+- Rewrite URLs.
+- Change ports.
+- Replace hostnames.
+- Convert HTTP to HTTPS.
+- Convert FTP to HTTP.
+- Normalize paths.
+- Remove duplicate source entries.
+- Invent replacement addresses.
+
+### 5.3 Kotlin Catalog
+
+Maintain the existing file:
+
+`app/src/main/java/com/jubayerhossain/bdixtester/data/catalog/FtpLinks.kt`
+
+Use the existing Kotlin implementation conventions.
+
+The complete catalog must be represented through a Kotlin source-of-truth object.
+
+Preserve original source entries for auditability.
+
+### 5.4 Catalog Audit
+
+Update:
+
+`docs/research/ENDPOINT_CATALOG_AUDIT.md`
+
+Calculate:
+
+- Original endpoint count.
+- Parsed endpoint count.
+- Unique endpoint count.
+- Exact duplicate count.
+- Invalid URL count.
+- HTTP count.
+- HTTPS count.
+- FTP count.
+- FTPS count.
+- Unsupported scheme count.
+- Hostname count.
+- Public IPv4 count.
+- Private IPv4 count.
+- Explicit port count.
+- Non-root path count.
+- Entries requiring manual review.
+
+All reported values must be calculated from the real source.
+
+# 6. Phase 4 — Production Data Layer and Persistence
+
+Implement the complete data layer.
+
+Preserve the existing architecture and integrate the required persistence without introducing unnecessary modules.
+
+### 6.1 Database
+
+Evaluate and implement Room for structured data where appropriate.
+
+The database should support:
+
+- Server catalog.
+- User-created endpoints.
+- Favorites.
+- Pinned endpoints.
+- Testing history.
+- Catalog version metadata.
+- Catalog provenance.
+- Catalog verification metadata.
+
+Use stable primary keys.
+
+Define appropriate indexes.
+
+Avoid redundant stored fields.
+
+Separate immutable endpoint definitions from changing testing results.
+
+### 6.2 Entities
+
+Create appropriate entities such as:
+
+- `ServerEntity`
+- `FavoriteEntity`, if a separate relation is required.
+- `TestHistoryEntity`
+- `CatalogMetadataEntity`
+- Additional entities only where justified.
+
+Do not create unnecessary tables.
+
+### 6.3 Database Relationships
+
+Define the relationship between:
+
+- Built-in catalog entries.
+- Remote catalog entries.
+- User-created entries.
+- Favorites.
+- Test history.
+
+Important rules:
+
+- Catalog refresh must not delete user-created servers.
+- Catalog refresh must not erase favorites.
+- Old test records must remain traceable to the endpoint tested at that time.
+- Deleting a custom server must follow a clearly documented history-retention policy.
+- Built-in entries must not be accidentally deleted through ordinary UI actions.
+
+### 6.4 Database Migrations
+
+Provide proper Room schema export and migrations.
+
+Requirements:
+
+- Never use destructive migrations in production.
+- Preserve user data.
+- Test schema migrations.
+- Test database upgrade paths.
+- Test database initialization.
+- Test rollback behavior where applicable.
+
+Do not use destructive fallback migration merely to make a build pass.
+
+### 6.5 Repository Layer
+
+Implement production repository contracts and implementations.
+
+Support:
+
+- Built-in catalog.
+- Local database.
+- User-created servers.
+- Favorites.
+- History.
+- Catalog metadata.
+- Future remote catalog synchronization.
+
+Use Flow for observable data.
+
+Use appropriate transaction boundaries.
+
+### 6.6 DataStore
+
+Use DataStore Preferences for appropriate settings:
+
+- Theme.
+- Timeout preferences.
+- Concurrency preferences.
+- Scan configuration.
+- Auto-update preference.
+- Wi-Fi-only update preference.
+- Speed-test data limit.
+- History retention.
+- User interface preferences.
+
+Do not store large server records or historical test results in DataStore.
+
+### 6.7 Catalog Initialization
+
+Implement reliable one-time initialization.
+
+Requirements:
+
+- Built-in catalog initialization is idempotent.
+- Restarting the app does not create duplicate entries.
+- An incomplete initialization does not corrupt the database.
+- Catalog source entries remain traceable.
+- Database initialization handles failures safely.
+- User-created records are preserved.
+
+### 6.8 Phase 4 Acceptance Criteria
+
+- Database initializes successfully.
+- Migrations are tested.
+- Catalog persistence works.
+- User entries persist after process restart.
+- Favorites survive catalog updates.
+- History remains consistent.
+- Duplicate initialization is prevented.
+- Database operations do not block the main thread.
+- Repository tests pass.
+
+Create:
+
+- `docs/implementation/DATA_LAYER_IMPLEMENTATION.md`
+- `docs/testing/DATABASE_TESTING.md`
+
+# 7. Phase 5 — Production HTTP, HTTPS, FTP and FTPS Connectivity Engine
+
+Implement the real network-testing engine.
+
+This is one of the most important parts of BDIX Tester.
+
+### 7.1 Protocol Classification
+
+Classification must be based strictly on the URI scheme.
+
+| Scheme | Protocol |
+|---|---|
+| `http://` | HTTP |
+| `https://` | HTTPS |
+| `ftp://` | FTP |
+| `ftps://` | FTPS, subject to supported mode |
+| Other | Unsupported |
+
+Never classify a URL as FTP because its hostname or path contains `ftp`.
+
+Keep category classification separate from protocol classification.
+
+### 7.2 HTTP Testing
+
+Implement:
+
+- URL validation.
+- DNS resolution.
+- Connection establishment.
+- HTTP response measurement.
+- Redirect handling.
+- Response-status classification.
+- Connection timeout.
+- Read timeout.
+- Cancellation.
+- Failure classification.
+- Resource cleanup.
+
+Use a maintained HTTP client compatible with the actual Android and Kotlin environment.
+
+Inspect dependency maintenance status, license and security history before adoption.
+
+Do not introduce unnecessary networking libraries.
+
+### 7.3 HTTP Request Strategy
+
+Implement a documented, low-impact request strategy.
+
+Suggested approach:
+
+1. Attempt a lightweight HEAD request where appropriate.
+2. Handle servers that reject or do not support HEAD.
+3. Use a carefully bounded GET fallback where justified.
+4. Prefer a bounded Range request where supported.
+5. Close the response body promptly.
+6. Never download an unlimited response body for connectivity testing.
+
+Some servers may respond differently to HEAD and GET.
+
+Document the implications.
+
+Do not interpret an application error as proof that the network is unreachable.
+
+### 7.4 Redirect Safety
+
+Handle redirects carefully.
+
+Requirements:
+
+- Limit redirect count.
+- Avoid infinite redirect loops.
+- Record the final URL where appropriate.
+- Do not forward credentials.
+- Do not follow redirects to unsupported schemes.
+- Handle redirect failures clearly.
+- Document cross-host redirect behavior.
+
+### 7.5 HTTPS and TLS
+
+Requirements:
+
+- Use standard system trust anchors.
+- Verify TLS certificates.
+- Respect hostname verification.
+- Distinguish TLS failures from HTTP failures.
+- Never use trust-all certificate managers.
+- Never disable certificate verification.
+- Do not silently ignore certificate errors.
+
+### 7.6 HTTP Cleartext Policy
+
+The application needs HTTP testing because the supplied catalog contains HTTP endpoints.
+
+Android 9/API 28 and higher restrict cleartext traffic by default unless it is deliberately permitted.
+
+Research and configure this intentionally.
+
+Requirements:
+
+- Do not weaken TLS verification.
+- Do not use insecure configuration as a convenience.
+- Document the cleartext requirement.
+- Restrict actual testing requests to user-selected or catalog-defined URLs.
+- Never send passwords or credentials over plain HTTP.
+- Keep remote catalog synchronization HTTPS-only.
+- Test cleartext behavior on supported Android versions.
+
+Do not silently rewrite HTTP endpoints into HTTPS endpoints.
+
+### 7.7 FTP Testing
+
+Implement actual FTP control-connection testing where supported.
+
+Use an appropriate maintained FTP implementation or carefully reviewed protocol implementation.
+
+Requirements:
+
+- Establish TCP connection to the intended endpoint.
+- Read and classify the FTP welcome response.
+- Respect configured timeouts.
+- Close connections cleanly.
+- Do not perform directory enumeration.
+- Do not download files for connectivity tests.
+- Do not attempt credential brute forcing.
+- Do not automatically use personal credentials.
+- Do not label a successful TCP connection as complete FTP application-level success without protocol evidence.
+
+If the test stops at the FTP greeting stage, label it accurately as FTP service reachable.
+
+### 7.8 FTPS
+
+Treat FTPS as separate from plain FTP.
+
+Research and define support for:
+
+- Explicit FTPS.
+- Implicit FTPS, if needed.
+
+Use normal certificate and hostname validation.
+
+Never silently downgrade FTPS into plain FTP.
+
+If a specific FTPS mode is unsupported, report it clearly.
+
+### 7.9 Private IP Support
+
+The original catalog may include ISP-local addresses.
+
+Recognize private IPv4 ranges:
+
+- `10.0.0.0/8`
+- `172.16.0.0/12`
+- `192.168.0.0/16`
+
+Private endpoints must be testable when explicitly included in the catalog or user-created by the user.
+
+Do not block them merely because they are private.
+
+However:
+
+- Do not scan adjacent addresses.
+- Do not enumerate the network.
+- Do not expand a single endpoint into a subnet.
+- Do not perform port discovery.
+- Test only the specified endpoint and configured port.
+
+Report reachability relative to the current network.
+
+### 7.10 Result Classification
+
+Implement a consistent result model.
+
+At minimum:
+
+- `NOT_TESTED`
+- `QUEUED`
+- `TESTING`
+- `REACHABLE`
+- `HTTP_RESPONSE_ERROR`
+- `REDIRECTED`
+- `DNS_FAILURE`
+- `CONNECTION_REFUSED`
+- `CONNECTION_TIMEOUT`
+- `TLS_FAILURE`
+- `FTP_SERVICE_REACHABLE`
+- `FTP_PROTOCOL_ERROR`
+- `UNSUPPORTED_PROTOCOL`
+- `INVALID_URL`
+- `CANCELLED`
+- `UNKNOWN_FAILURE`
+
+Choose a maintainable representation consistent with existing enums.
+
+Do not create contradictory status fields.
+
+### 7.11 Performance Measurements
+
+Keep these measurements separate:
+
+- DNS resolution time.
+- TCP connection time.
+- HTTP response latency.
+- FTP greeting/control-connection time.
+- Download throughput.
+
+Never call application-level response time an ICMP ping.
+
+Do not display Mbps unless a valid throughput measurement was completed.
+
+### 7.12 Failure Isolation
+
+One endpoint failure must not crash or abort unrelated endpoint tests.
+
+Each test must return a structured result.
+
+### 7.13 Security and Resource Management
+
+- Close all sockets and response bodies.
+- Use bounded timeouts.
+- Use bounded buffers.
+- Avoid main-thread networking.
+- Handle exceptions explicitly.
+- Avoid unbounded retries.
+- Avoid unbounded connections.
+- Avoid leaking sensitive URLs into logs.
+- Avoid credentials in logs or persisted test records.
+
+Create:
+
+`docs/implementation/NETWORK_ENGINE_IMPLEMENTATION.md`
+
+# 8. Phase 6 — Quick Scan, Full Scan and Batch Testing
+
+Implement the full scanning experience.
+
+### 8.1 Quick Scan
+
+Quick Scan should provide a lightweight connectivity check.
+
+Define exactly which measurements are included.
+
+Recommended characteristics:
+
+- Lower overhead than a full diagnostic test.
+- No download-speed test.
+- Bounded response processing.
+- Clearly documented timeout.
+- Fast progress feedback.
+- No hidden omission of servers.
+
+Explain that Quick Scan may produce less complete information than Full Scan.
+
+### 8.2 Full Scan
+
+Full Scan should test all eligible entries in the chosen scope.
+
+Support:
+
+- All servers.
+- Selected servers.
+- Selected categories.
+- Favorites, where useful.
+- User-created servers.
+
+### 8.3 Scan Queue
+
+Implement a bounded queue.
+
+Recommended initial safety defaults:
+
+- Default concurrency: 3 endpoints.
+- Maximum configurable concurrency: 5 endpoints.
+- Per-host concurrency: 1.
+- Conservative connection timeout.
+- Conservative response timeout.
+- No automatic repeated full scans.
+
+These defaults should be verified through measurement and documented.
+
+Do not increase concurrency simply to make the application look faster.
+
+### 8.4 Progress Reporting
+
+Display live:
+
+- Total endpoints.
+- Queued endpoints.
+- Active tests.
+- Completed endpoints.
+- Reachable count.
+- Unreachable count.
+- HTTP error count.
+- Unsupported count.
+- Cancelled count.
+- Remaining endpoints.
+- Current scan duration.
+
+Ensure every count is derived from actual test results.
+
+### 8.5 Scan Controls
+
+Implement:
+
+- Start.
+- Stop.
+- Pause, only if safely supported.
+- Resume, only if state can be restored correctly.
+- Retry failed endpoints.
+- Retry selected endpoints.
+- Scan selected category.
+- Start a fresh scan.
+
+Avoid overlapping full scans.
+
+### 8.6 Cancellation
+
+Cancellation must:
+
+- Stop pending queue items.
+- Cancel active coroutine jobs.
+- Close active connections.
+- Update the final scan state.
+- Preserve completed results.
+- Avoid incorrectly reporting unfinished endpoints as failed.
+
+### 8.7 Scan Lifecycle
+
+The scan engine must handle:
+
+- Activity recreation.
+- Navigation changes.
+- Process death.
+- App backgrounding.
+- Network changes.
+- User cancellation.
+
+Do not run long scans as an invisible background operation.
+
+Evaluate foreground-service requirements only if a future product requirement genuinely needs long-running background scanning.
+
+### 8.8 Scan Acceptance Criteria
+
+- Correct total counts.
+- Correct completed counts.
+- No duplicate concurrent tests.
+- No unbounded concurrency.
+- One endpoint failure does not abort the batch.
+- Cancellation works.
+- Progress updates correctly.
+- Previously completed tests remain available.
+- All terminal states are consistent.
+
+Create:
+
+`docs/implementation/SCAN_ENGINE_IMPLEMENTATION.md`
+
+# 9. Phase 7 — Dedicated Server Download-Speed Testing
+
+Implement download-speed measurement as a separate, explicit user operation.
+
+Do not mix it into ordinary Quick Scan or Full Scan.
+
+### 9.1 Speed-Test Source
+
+A server must have an explicitly configured, known test resource.
+
+Do not assume every server has a valid test file.
+
+Do not scrape a server directory to find download files.
+
+Do not download arbitrary media or large files.
+
+### 9.2 Speed-Test Configuration
+
+Support:
+
+- Selected test endpoint.
+- Test resource.
+- Maximum transfer amount.
+- Test timeout.
+- User cancellation.
+- Test profile.
+- Result timestamp.
+
+Use a conservative default data limit.
+
+A reasonable starting default is approximately 5 MiB per test, but verify and document the final setting.
+
+Allow an explicit user-controlled increase within a safe documented maximum.
+
+### 9.3 Measurement
+
+Calculate throughput from actual transferred bytes and elapsed time.
+
+Formula:
+
+`Download Mbps = (Transferred Bytes × 8) / (Elapsed Seconds × 1,000,000)`
+
+Display units correctly.
+
+Distinguish:
+
+- Mbps.
+- MB/s.
+- MiB/s.
+
+Do not confuse response latency with download throughput.
+
+### 9.4 Speed-Test Accuracy
+
+Handle:
+
+- Failed transfers.
+- Partial transfers.
+- Redirects.
+- Timeout.
+- Server throttling.
+- Invalid content length.
+- Range requests.
+- Cancellation.
+- Insufficient transferred bytes.
+
+Do not report a failed test as 0 Mbps.
+
+Use an unavailable/error state where appropriate.
+
+### 9.5 Speed-Test UI
+
+Display:
+
+- Selected server.
+- Test resource.
+- Transfer progress.
+- Transferred bytes.
+- Elapsed time.
+- Current speed where meaningful.
+- Final average speed.
+- Test completion state.
+
+Inform the user about expected data usage before a potentially large test.
+
+### 9.6 Restrictions
+
+Never perform speed tests automatically during a complete connectivity scan.
+
+Never download arbitrary large content.
+
+Never claim that one server test represents the user's entire ISP bandwidth.
+
+Create:
+
+`docs/implementation/SPEED_TEST_IMPLEMENTATION.md`
+
+# 10. Phase 8 — Secure Remote Catalog Updates
+
+Implement the versioned remote catalog system.
+
+This feature is necessary to keep the server directory maintainable without requiring a new application release for every catalog change.
+
+### 10.1 Catalog Sources
+
+Evaluate a stable HTTPS-hosted JSON catalog.
+
+Suitable hosting approaches may include:
+
+- A controlled GitHub repository with static JSON releases.
+- A controlled HTTPS endpoint.
+- Another documented static-content hosting solution.
+
+Choose based on:
+
+- Ownership.
+- Availability.
+- Maintenance.
+- Cost.
+- Rate limits.
+- Cache behavior.
+- Security.
+- Operational simplicity.
+
+Do not invent a production API URL.
+
+Do not require a backend if static distribution adequately satisfies the requirements.
+
+### 10.2 Versioned Catalog Schema
+
+Support:
+
+- Schema version.
+- Catalog version.
+- Publication timestamp.
+- Generated timestamp.
+- Minimum compatible app version.
+- Server ID.
+- Server name.
+- URL.
+- Protocol.
+- Category.
+- Featured status.
+- Description.
+- Source provenance.
+- Verification state.
+- Last review timestamp.
+- Optional speed-test configuration.
+
+Use strict schema validation.
+
+Unknown fields should be handled according to a documented forward-compatibility strategy.
+
+### 10.3 Integrity and Authenticity
+
+A remote catalog can control which destinations users are encouraged to connect to.
+
+Protect it against tampering.
+
+Evaluate and implement:
+
+- HTTPS transport.
+- SHA-256 integrity checks.
+- Signed catalog metadata.
+- Public-key signature verification, where appropriate.
+- Version validation.
+- Anti-rollback handling.
+- Schema validation.
+- Atomic local updates.
+
+Never store a private catalog-signing key in the Android application.
+
+Keep catalog-signing secrets outside the public repository.
+
+### 10.4 Conditional Updates
+
+Support where available:
+
+- ETag.
+- If-None-Match.
+- Last-Modified.
+- If-Modified-Since.
+- Local cache.
+- Version comparison.
+
+Avoid downloading the full catalog when it has not changed.
+
+### 10.5 Update Safety
+
+Requirements:
+
+- Preserve last known good catalog.
+- Do not overwrite local data with invalid JSON.
+- Do not accept an incompatible schema silently.
+- Do not erase user-created endpoints.
+- Do not remove favorites during catalog replacement.
+- Use database transactions.
+- Record successful update time.
+- Report update failures.
+
+### 10.6 Catalog Provenance
+
+Distinguish:
+
+- Built-in.
+- Remote.
+- User-created.
+
+Keep each entry's provenance.
+
+Do not treat remote presence as proof of human verification.
+
+### 10.7 Verification Model
+
+Distinguish:
+
+1. Catalog supplied.
+2. Catalog source reviewed.
+3. Human verification recorded.
+4. Endpoint reachable during latest test.
+5. Endpoint tested from current network.
+
+These are different attributes.
+
+Do not use a single `verified` boolean to represent all of them.
+
+### 10.8 Background Updates
+
+Evaluate WorkManager for persistent catalog synchronization.
+
+Requirements:
+
+- Network constraints.
+- Metered-network preference.
+- Wi-Fi-only preference.
+- User-controlled auto-update.
+- Reasonable update frequency.
+- Retry with backoff.
+- No continuous polling.
+- No background endpoint scanning.
+
+Provide a manual refresh action.
+
+### 10.9 Catalog Maintenance
+
+Prepare a maintainable catalog publishing workflow.
+
+Document:
+
+- Who can update the catalog.
+- How entries are reviewed.
+- How outdated entries are removed.
+- How failed endpoints are handled.
+- How new endpoints are validated.
+- How provenance is recorded.
+- How catalog versions are released.
+- How rollback is performed.
+
+Do not let automatically failed tests delete endpoints without an explicit maintenance policy.
+
+### 10.10 Data Consumption
+
+Minimize remote update traffic.
+
+Measure:
+
+- Initial catalog transfer size.
+- Unchanged-catalog update traffic.
+- Changed-catalog transfer size.
+- Cache effectiveness.
+
+Do not claim a low-data result without measurement.
+
+Create:
+
+`docs/implementation/CATALOG_SYNC_IMPLEMENTATION.md`
+
+# 11. Phase 9 — Favorites, Custom Servers, History and Export
+
+Complete all remaining user-facing data-management capabilities.
+
+### 11.1 Favorites
+
+Implement:
+
+- Add favorite.
+- Remove favorite.
+- Pin favorite.
+- Unpin favorite.
+- Favorites screen.
+- Favorites filtering.
+- Favorites sorting.
+- Persistence across restarts.
+
+Favorites must remain stable across catalog updates.
+
+### 11.2 Custom Servers
+
+Implement:
+
+- Add custom endpoint.
+- Edit custom endpoint.
+- Delete custom endpoint.
+- Validate URL.
+- Select category.
+- Enter display name.
+- Display protocol.
+- Test custom endpoint.
+- Add custom endpoint to favorites.
+
+Keep user-created endpoints logically separate from built-in and remote entries.
+
+### 11.3 Server History
+
+Implement a persistent test history.
+
+Store:
+
+- Server ID.
+- Snapshot of the URL at test time.
+- Server name snapshot.
+- Protocol.
+- Test mode.
+- Result.
+- Timestamp.
+- Response latency.
+- Relevant HTTP status.
+- Error classification.
+- Download throughput, if tested.
+- Actual transferred bytes, if relevant.
+
+History must remain meaningful if the original server is later removed from the catalog.
+
+### 11.4 History Management
+
+Support:
+
+- Recent history.
+- Search.
+- Filtering.
+- Sorting.
+- Individual deletion.
+- Clear all.
+- Retention settings.
+
+Avoid storing unnecessary network identifiers.
+
+### 11.5 Export
+
+Support:
+
+- CSV.
+- JSON.
+- Plain text, where useful.
+
+Use Android Storage Access Framework.
+
+Support exporting:
+
+- Catalog.
+- Favorites.
+- Custom servers.
+- Testing history.
+- Scan summary.
+
+Requirements:
+
+- Valid UTF-8.
+- Proper CSV escaping.
+- Stable JSON schema.
+- No credentials.
+- No private user information beyond what is necessary.
+- Clear export status.
+
+### 11.6 Import
+
+Evaluate whether user import is required.
+
+If implemented:
+
+- Validate the complete file.
+- Reject malformed entries.
+- Prevent duplicate insertion.
+- Show an import summary.
+- Preserve built-in catalog data.
+- Never execute imported content.
+- Require user confirmation.
+
+Do not introduce unnecessary import complexity if export and manual endpoint creation are sufficient for the initial production release.
+
+### 11.7 Data Deletion
+
+Provide understandable controls for:
+
+- Clear history.
+- Remove favorites.
+- Delete custom endpoints.
+- Reset settings.
+- Reset local application data where appropriate.
+
+Warn the user before destructive bulk operations.
+
+Create:
+
+`docs/implementation/USER_DATA_FEATURES.md`
+
+# 12. Phase 10 — Production Hardening, Security, Performance and QA
+
+This phase must not be treated as optional.
+
+A production application requires systematic testing beyond a successful debug build.
+
+### 12.1 Architecture Audit
+
+Verify:
+
+- UI is not performing network operations directly.
+- ViewModels do not contain database implementation details.
+- Repositories have clear responsibilities.
+- Long-running operations are cancellable.
+- State is consistent.
+- Database transactions are correct.
+- Catalog updates are isolated.
+- No unnecessary dependency remains.
+
+Do not introduce layers simply to increase the file count.
+
+### 12.2 Code Quality
+
+Inspect the project's existing conventions first.
+
+Use appropriate tools such as:
+
+- Android Lint.
+- Kotlin compiler diagnostics.
+- Kotlin formatting/linting.
+- Detekt, if justified.
+- Dependency analysis.
+- License review.
+- Static analysis.
+
+Configure reasonable rules.
+
+Do not perform broad automated rewrites that damage existing implementation.
+
+### 12.3 Unit Testing
+
+Provide meaningful unit tests for:
+
+- URL parsing.
+- Protocol classification.
+- Category classification.
+- Catalog validation.
+- Duplicate detection.
+- Catalog initialization.
+- Catalog repository.
+- Database repositories.
+- Result classification.
+- HTTP response handling.
+- Redirect behavior.
+- Timeout behavior.
+- FTP response handling.
+- Scan queue.
+- Cancellation.
+- Concurrency limits.
+- Progress counts.
+- Speed calculations.
+- Settings.
+- Export generation.
+- Catalog version comparison.
+- Remote catalog validation.
+
+Tests must verify actual behavior, not merely instantiate classes.
+
+### 12.4 Database Testing
+
+Test:
+
+- Initial database creation.
+- Insert.
+- Update.
+- Delete.
+- Queries.
+- Database migration.
+- Catalog synchronization.
+- Favorite preservation.
+- History retention.
+- Transaction failure.
+- Duplicate initialization.
+
+### 12.5 Network Testing
+
+Use deterministic local mock servers or controlled test fixtures wherever possible.
+
+Include cases for:
+
+- Valid HTTP.
+- Valid HTTPS.
+- Redirects.
+- 401.
+- 403.
+- 404.
+- 5xx.
+- HEAD unsupported.
+- GET fallback.
+- DNS failure.
+- Connection timeout.
+- Connection refused.
+- TLS failure.
+- FTP greeting.
+- FTP protocol error.
+- Unsupported FTPS mode.
+- Cancellation.
+- Partial transfer.
+- Large response protection.
+- Speed-test cancellation.
+
+Do not make automated CI depend on random public BDIX endpoints.
+
+### 12.6 UI Testing
+
+Test:
+
+- Dashboard.
+- Server directory.
+- Search.
+- Category filters.
+- Server details.
+- Favorites.
+- History.
+- Settings.
+- Scan screen.
+- Progress UI.
+- Error states.
+- Export flow.
+- Navigation.
+- Back behavior.
+- Theme behavior.
+- Empty states.
+
+Use Robolectric or Android instrumentation where appropriate.
+
+### 12.7 Accessibility
+
+Verify:
+
+- Screen-reader labels.
+- Semantic descriptions.
+- Touch targets.
+- Text scaling.
+- Contrast.
+- Status labels.
+- Keyboard and focus behavior where relevant.
+- Accessible progress information.
+- Accessible errors.
+
+Do not rely exclusively on color to convey a test result.
+
+### 12.8 Responsive UI
+
+Verify:
+
+- Compact phones.
+- Standard phones.
+- Large phones.
+- Tablets.
+- Foldables where supported.
+- Portrait.
+- Landscape.
+- Resizable app windows where applicable.
+- Different font scales.
+- Different navigation modes.
+
+### 12.9 Performance
+
+Measure:
+
+- Cold startup.
+- Warm startup.
+- Dashboard rendering.
+- Long-list scrolling.
+- Catalog parsing.
+- Database query performance.
+- Scan scheduling overhead.
+- Memory during batch testing.
+- Speed-test memory usage.
+- Catalog synchronization traffic.
+
+Do not claim performance improvements without baseline and measured comparison.
+
+### 12.10 Battery and Network Efficiency
+
+Verify:
+
+- No continuous scanning.
+- No unnecessary wake locks.
+- No unnecessary polling.
+- No unbounded retries.
+- No unnecessary network requests.
+- No repeated catalog downloads.
+- No large downloads during ordinary connectivity scans.
+- No hidden background work.
+
+### 12.11 Privacy and Security Review
+
+Review:
+
+- Android permissions.
+- Network Security Configuration.
+- Cleartext HTTP policy.
+- TLS certificate validation.
+- User endpoint handling.
+- Catalog signature verification.
+- DataStore and database protection.
+- Logging.
+- Export.
+- Third-party dependencies.
+- Network behavior.
+- Privacy policy accuracy.
+
+Never include:
+
+- Trust-all TLS.
+- Hardcoded credentials.
+- Hardcoded private signing keys.
+- Unnecessary location permission.
+- Unnecessary device-ID collection.
+- Unnecessary advertising SDKs.
+- Unnecessary analytics SDKs.
+
+### 12.12 Privacy Policy
+
+Maintain:
+
+`docs/privacy/PRIVACY_POLICY.md`
+
+The document must accurately describe:
+
+- Data processed locally.
+- User-created endpoints.
+- Server-test requests.
+- Information visible to tested server operators.
+- Remote catalog requests.
+- Data retention.
+- Export.
+- Deletion.
+- Third-party SDKs, if any.
+- Contact mechanism.
+
+Important:
+
+A connectivity test sends a request from the user's device to the selected endpoint. That endpoint may observe the user's public network address and request metadata.
+
+Explain this behavior accurately.
+
+Do not promise that no information is ever transmitted over a network.
+
+Do not invent a public privacy-policy hosting URL.
+
+The policy must be published at a publicly accessible HTTPS URL before store submission.
+
+### 12.13 Production Quality Gate
+
+The application must not be declared production-ready while any of these critical defects remain:
+
+- Critical security vulnerability.
+- Data-loss bug.
+- Database corruption risk.
+- Incorrect test-result classification.
+- Unbounded network behavior.
+- Crashing scan flow.
+- Broken cancellation.
+- Invalid release signing.
+- Unexplained permissions.
+- Broken navigation.
+- Unresolved core catalog-source blocker.
+
+Create:
+
+- `docs/testing/PRODUCTION_READINESS_CHECKLIST.md`
+- `docs/testing/SECURITY_AUDIT.md`
+- `docs/testing/PERFORMANCE_REPORT.md`
+- `docs/privacy/PRIVACY_AND_DATA_HANDLING.md`
+
+# 13. Phase 11 — CI/CD, Release Engineering and Production Artifacts
+
+Prepare the application for actual distribution.
+
+Do not confuse release preparation with public publication.
+
+### 13.1 GitHub Actions
+
+Preserve the existing workflow:
+
+`.github/workflows/android-ci.yml`
+
+Inspect it before modification.
+
+Create or refine workflows for:
+
+- Pull request validation.
+- Push validation.
+- Kotlin compilation.
+- Unit tests.
+- Robolectric tests.
+- Android lint.
+- Debug APK build.
+- Release build validation.
+- Dependency verification.
+- Artifact upload.
+
+Use GitHub Actions caching correctly.
+
+Avoid repeatedly downloading unchanged Gradle distributions and dependencies.
+
+### 13.2 Security
+
+Use:
+
+- Least-privilege workflow permissions.
+- Secure GitHub Actions secrets.
+- Safe logging.
+- Maintained actions.
+- Immutable action references where appropriate.
+- Protected release workflow triggers.
+
+Do not print signing passwords or keys.
+
+Never commit a keystore or private signing material.
+
+### 13.3 Version Management
+
+Maintain a consistent versioning strategy.
+
+Requirements:
+
+- Valid `versionName`.
+- Monotonically increasing `versionCode`.
+- Release notes.
+- Reproducible artifact configuration.
+- Correct package identity.
+- Consistent application label.
+
+Do not reuse an already-published version code.
+
+### 13.4 Signing
+
+Prepare:
+
+`docs/release/APP_SIGNING_STRATEGY.md`
+
+Document:
+
+- Upload key.
+- App signing key.
+- Keystore format.
+- Certificate fingerprints.
+- Secret storage.
+- Backup.
+- Recovery.
+- Rotation and compromise handling.
+- Google Play App Signing.
+- Future update continuity.
+
+Do not fabricate signing credentials.
+
+If the owner has not provided an approved release keystore:
+
+- Prepare the signing configuration.
+- Document the required secret names.
+- Do not commit or expose key material.
+- Clearly mark the signed artifact as blocked.
+- Do not claim the AAB is production-signed.
+
+Use Play App Signing appropriately for Google Play distribution.
+
+### 13.5 Required Artifacts
+
+Prepare:
+
+| Artifact | Purpose |
+|---|---|
+| Debug APK | Development verification |
+| Release APK | Direct Android distribution where applicable |
+| Release AAB | Google Play distribution |
+| Universal APK, if appropriately supported | Direct installation |
+| SHA-256 checksums | Artifact integrity |
+| Release notes | Version communication |
+| Build report | Reproducibility and verification |
+
+Generate only the formats required by the actual distribution strategy.
+
+### 13.6 Release Validation
+
+Verify:
+
+- AAB structure.
+- APK structure.
+- Package ID.
+- Version code.
+- Version name.
+- Minimum SDK.
+- Target SDK.
+- Signing certificate.
+- Manifest permissions.
+- Resource integrity.
+- Dependency consistency.
+
+Use appropriate bundle validation tools.
+
+### 13.7 Google Play Readiness
+
+Research current requirements immediately before release.
+
+As of November 18, 2026, the published requirement states that new apps and updates submitted from August 31, 2026 must target Android 16/API 36 or higher, subject to the platform-specific exceptions in Google's policy.
+
+Verify this requirement again when creating the production build.
+
+Review:
+
+- Target API.
+- App bundle.
+- Signing.
+- Privacy policy.
+- Data safety.
+- App content.
+- Content rating.
+- Store listing.
+- Screenshots.
+- App icon.
+- Description.
+- Contact information.
+- Developer verification requirements.
+- Release track requirements.
+
+Do not invent store-review results.
+
+### 13.8 Store Data Safety
+
+Prepare a data-safety declaration worksheet based on the actual final implementation and every included SDK.
+
+Do not automatically declare that no data is collected.
+
+Distinguish between:
+
+- Local processing.
+- Network requests to tested endpoints.
+- Remote catalog traffic.
+- Third-party SDK collection.
+- Data stored on the device.
+- Data shared externally.
+
+The final declaration must match the actual binary, privacy policy and dependency behavior.
+
+### 13.9 Store Listing
+
+Prepare draft materials:
+
+- App title.
+- Short description.
+- Full description.
+- Feature list.
+- Category.
+- Privacy disclosure.
+- Contact details.
+- Screenshots specification.
+- Promotional graphic requirements.
+- Changelog.
+
+Use accurate claims.
+
+Do not claim:
+
+- Every server is BDIX verified.
+- Every server works on every ISP.
+- Guaranteed download speed.
+- 100% server availability.
+- Live streaming support.
+- A feature that has not been implemented.
+
+Create:
+
+- `docs/release/BUILD_AND_RELEASE.md`
+- `docs/release/APP_SIGNING_STRATEGY.md`
+- `docs/release/GOOGLE_PLAY_SUBMISSION_CHECKLIST.md`
+- `docs/release/RELEASE_ARTIFACTS.md`
+
+## 14. Application UX — Final Production Requirements
+
+Keep the existing Phase 3 design system and improve it only where required by real product behavior.
+
+### 14.1 Dashboard
+
+Provide:
+
+- Total servers.
+- Reachable count.
+- Unreachable count.
+- Not-tested count.
+- Latest scan.
+- Catalog update status.
+- Quick Scan.
+- Full Scan.
+- Featured servers.
+- Recent activity.
+
+All statistics must come from actual state.
+
+### 14.2 Server Directory
+
+Provide:
+
+- All.
+- FTP & Files.
+- Movies.
+- Live TV.
+- Software.
+- Web.
+- Other.
+- Featured.
+
+Categories must be configurable.
+
+Do not infer category from protocol.
+
+### 14.3 Server Cards
+
+Use the existing `ServerCard` component and extend it only where necessary.
+
+Show:
+
+- Name.
+- URL.
+- Category.
+- Protocol.
+- Status.
+- Latest response latency.
+- Latest download speed when separately tested.
+- Last tested time.
+- Favorite action.
+- Details action.
+- Visit Website action.
+
+### 14.4 Search and Filters
+
+Support:
+
+- Name.
+- URL.
+- Hostname.
+- IP.
+- Protocol.
+- Category.
+- Status.
+- Favorites.
+
+Filtering and sorting must remain responsive for a large catalog.
+
+### 14.5 Scan UX
+
+Display:
+
+- Actual progress.
+- Current test state.
+- Completed count.
+- Remaining count.
+- Result summary.
+- Cancellation.
+- Final summary.
+
+Never freeze the UI during a scan.
+
+### 14.6 Result Details
+
+Explain:
+
+- What was tested.
+- Which protocol was used.
+- What succeeded.
+- What failed.
+- When it was tested.
+- What the response means.
+- Whether the result is network-specific.
+- Whether a speed measurement was performed.
+
+Use understandable Bangla and English labels.
+
+### 14.7 Localization
+
+Implement a maintainable string-resource strategy.
+
+Support:
+
+- English.
+- Bangla.
+
+Do not hardcode user-facing strings throughout composables.
+
+Ensure Bangla text does not overflow.
+
+Keep technical terms understandable.
+
+Use correct number, date and unit formatting.
+
+### 14.8 Visual State Coverage
+
+Every major screen must have:
+
+- Initial state.
+- Loading state.
+- Content state.
+- Empty state.
+- Error state.
+- Offline state where relevant.
+- Disabled action state.
+- Success state.
+
+Do not leave planned functionality with misleading interactive controls.
+
+If a feature fails, show a useful error and recovery path.
+
+## 15. Final Product Behavior Rules
+
+These rules apply to the complete application.
+
+### 15.1 Server Reachability
+
+Use wording such as:
+
+`Reachable from current network`
+
+Do not automatically display:
+
+`BDIX Verified`
+
+unless independent documented verification supports the claim.
+
+### 15.2 Response Latency
+
+Do not label HTTP application-level latency as ICMP ping.
+
+Use technically accurate labels.
+
+### 15.3 Download Speed
+
+Only display download throughput after a real, bounded data-transfer test.
+
+### 15.4 Server Verification
+
+Keep human review, catalog inclusion and live reachability separate.
+
+### 15.5 Server Database
+
+Do not delete an endpoint simply because one test fails.
+
+Use repeated evidence and a documented maintenance process.
+
+### 15.6 User Safety
+
+Test only the specific endpoint supplied by the catalog or user.
+
+Do not perform port scanning, subnet scanning or directory brute force.
+
+### 15.7 Network Usage
+
+Explain data usage.
+
+Do not run large transfers without user action.
+
+### 15.8 Privacy
+
+Do not introduce advertising or analytics SDKs without separate product authorization.
+
+The existing ad-free, local-first decision must remain in effect.
+
+# 16. Git and Repository Protection
+
+Before any change:
+
+1. Run `git status`.
+2. Inspect modified and untracked files.
+3. Identify the current branch.
+4. Inspect recent commits.
+5. Establish the current working baseline.
+6. Review existing build and test results.
+
+Preservation requirements:
+
+- Do not delete useful files.
+- Do not remove existing features.
+- Do not rewrite existing long documentation unnecessarily.
+- Do not silently overwrite user changes.
+- Do not discard uncommitted work.
+- Do not force-push.
+- Do not reset the repository destructively.
+- Do not remove tests just to make a build pass.
+
+Keep changes focused and traceable.
+
+At each major phase, provide a list of modified files.
+
+Do not claim a commit or push occurred unless it actually happened.
+
+Do not publish the application.
+
+# 17. Mandatory Execution Order
+
+Follow this order.
+
+## Step 1 — Current State Audit
+
+Inspect the entire repository.
+
+Verify the previous Phase 1–3 report against actual files.
+
+Run baseline checks.
+
+Record any difference between the report and the actual repository.
+
+## Step 2 — Resolve the Endpoint Catalog Source
+
+Search the available original inputs and conversation context.
+
+Verify whether the complete original Dart `FtpLinks` list can be recovered.
+
+Do not invent missing data.
+
+## Step 3 — Complete Phase 4
+
+Implement:
+
+- Room database.
+- Entities.
+- DAOs.
+- Repositories.
+- Migrations.
+- DataStore.
+- Catalog initialization.
+- Persistent user data.
+
+Add appropriate tests.
+
+## Step 4 — Complete Phase 5
+
+Implement:
+
+- HTTP testing.
+- HTTPS testing.
+- FTP testing.
+- FTPS support or documented limitations.
+- Timeouts.
+- Result classification.
+- Cancellation.
+- Connection cleanup.
+- Network failure isolation.
+
+Add deterministic tests.
+
+## Step 5 — Complete Phase 6
+
+Implement:
+
+- Quick Scan.
+- Full Scan.
+- Selected testing.
+- Category testing.
+- Queue.
+- Bounded concurrency.
+- Progress.
+- Cancellation.
+- Retry.
+
+Connect the existing scan UI to real state.
+
+## Step 6 — Complete Phase 7
+
+Implement:
+
+- Explicit speed-test resources.
+- User-confirmed transfer.
+- Configurable byte limits.
+- Accurate throughput.
+- Progress.
+- Cancellation.
+- Result storage.
+
+## Step 7 — Complete Phase 8
+
+Implement:
+
+- Remote catalog model.
+- Version validation.
+- HTTPS synchronization.
+- Integrity verification.
+- Cache support.
+- Conditional updates.
+- Atomic database updates.
+- Manual refresh.
+- Optional WorkManager synchronization.
+
+## Step 8 — Complete Phase 9
+
+Implement:
+
+- Favorites.
+- Pinning.
+- Custom servers.
+- History.
+- Retention.
+- Export.
+- Optional import, if justified.
+
+## Step 9 — Complete Phase 10
+
+Perform:
+
+- Architecture review.
+- Security review.
+- Performance review.
+- Privacy review.
+- Accessibility testing.
+- Adaptive UI testing.
+- Unit testing.
+- Database testing.
+- Network testing.
+- UI testing.
+- Regression testing.
+
+Resolve all critical and high-severity defects.
+
+## Step 10 — Complete Phase 11
+
+Prepare:
+
+- CI workflow.
+- Build validation.
+- Release configuration.
+- Signing strategy.
+- APK.
+- AAB.
+- Checksums.
+- Release documentation.
+- Google Play submission checklist.
+
+Do not upload or publish without separate explicit authorization.
+
+## Step 11 — Final Production Audit
+
+Verify the entire application from launch through the main user journeys.
+
+Ensure every visible action works.
+
+Ensure every important feature has actual implementation.
+
+Ensure no placeholder behavior is presented as production functionality.
+
+Ensure all known limitations are documented.
+
+Produce the final report.
+
+# 18. Production Acceptance Criteria
+
+Do not declare the application production-ready until the following gates have been satisfied or explicitly marked as external blockers.
+
+| Area | Acceptance requirement |
+|---|---|
+| Identity | Correct package, namespace and application name |
+| Existing work | Phase 1–3 preserved and verified |
+| Built-in catalog | Complete source catalog included and audited |
+| Persistence | Reliable local database and migrations |
+| Protocols | Accurate HTTP/HTTPS/FTP classification |
+| Network engine | Functional and tested |
+| Scan system | Quick Scan and Full Scan work |
+| Progress | Real-time and accurate |
+| Cancellation | Active tasks terminate safely |
+| Speed testing | Opt-in, bounded and correctly measured |
+| Catalog updates | Secure, versioned and recoverable |
+| Favorites | Persistent |
+| History | Persistent and manageable |
+| Custom servers | Full CRUD operations |
+| Export | Valid files produced |
+| UI/UX | Every visible control has correct behavior |
+| Accessibility | Key accessibility requirements satisfied |
+| Security | No critical or high-severity unresolved issue |
+| Privacy | Actual behavior matches documentation |
+| CI | Build, lint and test pipeline passes |
+| Release | Valid release artifacts produced |
+| Signing | Production signing configured and verified |
+| Play readiness | Current policy checklist completed |
+| Device testing | Actual supported-device testing documented |
+
+If an external requirement is unavailable, such as the original endpoint catalog, signing key, Play Console access or physical test device:
+
+- State the exact blocker.
+- Explain its impact.
+- Continue all independent work.
+- Do not fabricate success.
+- Do not mark the application fully production-ready.
+
+# 19. Production Test Matrix
+
+Create:
+
+`docs/testing/PRODUCTION_TEST_MATRIX.md`
+
+Include:
+
+### Android Versions
+
+Test the actual declared minimum SDK and representative supported API levels.
+
+### Devices
+
+Where available, test:
+
+- Compact phone.
+- Standard phone.
+- Large phone.
+- Different Android manufacturers.
+- Tablet.
+- Foldable or resizable environment where applicable.
+
+### Network Types
+
+Where available, test:
+
+- Bangladesh broadband connection.
+- At least two different ISP environments.
+- Wi-Fi.
+- Mobile data.
+- VPN-connected environment, where useful.
+- Offline state.
+- Network switch during an active scan.
+
+### Endpoint Types
+
+Test controlled examples of:
+
+- HTTP.
+- HTTPS.
+- FTP.
+- Unsupported protocol.
+- Private IPv4.
+- Public IPv4.
+- Hostname.
+- Custom port.
+- Redirect.
+- Timeout.
+- HTTP error.
+- TLS error.
+
+Do not claim an endpoint works on BDIX solely because it works on one test network.
+
+### Important Environment Limitation
+
+The existing development report states that no Android Emulator or ADB-connected device was available.
+
+Recheck the current environment.
+
+If still unavailable:
+
+- Continue CI and automated tests.
+- Provide a physical-device testing checklist.
+- Do not claim real-device verification.
+- Do not claim actual ISP/BDIX verification.
+- Record physical testing as an outstanding release gate.
+
+# 20. Official Documentation and Current Policy Verification
+
+Use current official sources.
+
+Verify the relevant documentation before final implementation and again before production release.
+
+### Android Platform
+
+1. Android Developers  
+   https://developer.android.com/
+
+2. Android Architecture  
+   https://developer.android.com/topic/architecture
+
+3. Jetpack Compose  
+   https://developer.android.com/develop/ui/compose
+
+4. Material 3  
+   https://developer.android.com/develop/ui/compose/designsystems/material3
+
+5. Adaptive App Quality  
+   https://developer.android.com/docs/quality-guidelines/adaptive-app-quality
+
+6. Core App Quality  
+   https://developer.android.com/docs/quality-guidelines/core-app-quality
+
+7. Android Connectivity  
+   https://developer.android.com/develop/connectivity
+
+8. Android Network Operations  
+   https://developer.android.com/develop/connectivity/network-ops
+
+9. Android DataStore  
+   https://developer.android.com/topic/libraries/architecture/datastore
+
+10. Android Room  
+    https://developer.android.com/training/data-storage/room
+
+11. WorkManager  
+    https://developer.android.com/develop/background-work/background-tasks/persistent
+
+12. Android Network Security Configuration  
+    https://developer.android.com/privacy-and-security/security-config
+
+13. Android Cleartext Communication Risks  
+    https://developer.android.com/privacy-and-security/risks/cleartext-communications
+
+14. Android App Signing  
+    https://developer.android.com/studio/publish/app-signing
+
+15. Android App Bundle  
+    https://developer.android.com/guide/app-bundle
+
+### Google Play
+
+16. Target API Requirements  
+    https://developer.android.com/google/play/requirements/target-sdk
+
+17. Google Play Developer Policies  
+    https://play.google.com/about/developer-content-policy/
+
+18. Google Play Data Safety  
+    https://support.google.com/googleplay/android-developer/answer/10144311
+
+19. Prepare App for Review  
+    https://support.google.com/googleplay/android-developer/answer/9859455
+
+20. Play App Signing  
+    https://developer.android.com/studio/publish/app-signing
+
+### Kotlin
+
+21. Kotlin Documentation  
+    https://kotlinlang.org/docs/home.html
+
+22. Coroutines  
+    https://kotlinlang.org/docs/coroutines-overview.html
+
+23. Kotlin Flow  
+    https://kotlinlang.org/docs/flow.html
+
+### Network Protocols
+
+24. HTTP Semantics — RFC 9110  
+    https://www.rfc-editor.org/rfc/rfc9110
+
+25. HTTP/1.1 — RFC 9112  
+    https://www.rfc-editor.org/rfc/rfc9112
+
+26. FTP — RFC 959  
+    https://www.rfc-editor.org/rfc/rfc959
+
+27. FTP over TLS — RFC 4217  
+    https://www.rfc-editor.org/rfc/rfc4217
+
+28. TLS 1.3 — RFC 8446  
+    https://www.rfc-editor.org/rfc/rfc8446
+
+29. IANA IPv4 Registry  
+    https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+
+### GitHub Actions
+
+30. GitHub Actions  
+    https://docs.github.com/en/actions
+
+31. Android Build and Test  
+    https://docs.github.com/en/actions/tutorials/build-and-test-code/android
+
+32. Dependency Caching  
+    https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+
+### Reference Application
+
+33. Original BDIX Tester  
+    https://play.google.com/store/apps/details?id=com.shubhobrata.roy.bdixtester
+
+Do not treat the reference application as the authority for Android platform behavior or security.
+
+Use official Android and protocol documentation.
+
+# 21. Final Production Report
+
+At completion, produce a comprehensive report.
+
+## A. Executive Summary
+
+Explain the actual final state of BDIX Tester.
+
+Do not use vague statements such as "everything is done".
+
+## B. Existing Work Preservation
+
+Explain how Phase 1–3 were preserved and which improvements were made.
+
+## C. Phase Completion
+
+Provide the actual status of:
+
+- Phase 1.
+- Phase 2.
+- Phase 3.
+- Phase 4.
+- Phase 5.
+- Phase 6.
+- Phase 7.
+- Phase 8.
+- Phase 9.
+- Phase 10.
+- Phase 11.
+
+Use:
+
+- Completed.
+- Partially completed.
+- Blocked.
+- Not started.
+
+## D. Feature Implementation
+
+For every major feature, state:
+
+- Implementation status.
+- Source files.
+- Relevant tests.
+- Known limitations.
+
+## E. Endpoint Catalog
+
+Report:
+
+- Original source availability.
+- Total entries.
+- Unique entries.
+- Invalid entries.
+- Duplicate entries.
+- Protocol distribution.
+- Private/public address distribution.
+- Any unresolved catalog issues.
+
+Do not report invented numbers.
+
+## F. Database and Persistence
+
+Explain:
+
+- Database schema.
+- Migrations.
+- Repositories.
+- DataStore.
+- Retention.
+- Integrity tests.
+
+## G. Network Engine
+
+Explain:
+
+- HTTP implementation.
+- HTTPS implementation.
+- FTP support.
+- FTPS support or limitations.
+- Timeout strategy.
+- Concurrency strategy.
+- Cancellation.
+- Result classifications.
+
+## H. Scan and Speed Testing
+
+Explain:
+
+- Quick Scan.
+- Full Scan.
+- Progress.
+- Cancellation.
+- Retry.
+- Throughput methodology.
+- Transfer limits.
+
+## I. Remote Catalog
+
+Explain:
+
+- Hosting strategy.
+- Catalog version.
+- Signature/integrity validation.
+- Update behavior.
+- Last-known-good recovery.
+- Data usage.
+- Remaining operational dependencies.
+
+## J. UI/UX
+
+List the completed screens and real functionality.
+
+Explain accessibility and adaptive UI testing.
+
+## K. Security and Privacy
+
+Report:
+
+- Permissions.
+- Network security.
+- Cleartext policy.
+- TLS verification.
+- Storage.
+- Logging.
+- Privacy policy.
+- Data safety declarations.
+- Dependency risks.
+
+## L. Testing Evidence
+
+For every test suite, provide:
+
+- Exact command.
+- Environment.
+- Actual result.
+- Number of tests.
+- Pass count.
+- Fail count.
+- Skipped count.
+
+Distinguish automated tests from physical-device tests.
+
+## M. CI/CD and Artifacts
+
+Provide:
+
+- Workflow names.
+- Build results.
+- APK path.
+- AAB path.
+- Checksums.
+- Signing status.
+- Version details.
+
+Only link to files that actually exist.
+
+## N. Remaining Blockers
+
+List all blockers.
+
+Examples:
+
+- Missing original endpoint source.
+- No release signing key.
+- No physical Android test device.
+- No actual Bangladesh ISP test evidence.
+- No public privacy-policy hosting.
+- No Play Console access.
+
+Do not hide blockers to make the project appear complete.
+
+## O. Final Production Status
+
+Select the evidence-supported status:
+
+1. Development complete, not release-ready.
+2. Feature-complete, external verification pending.
+3. Release candidate ready.
+4. Production-ready and release artifacts verified.
+
+Never choose a higher status without meeting its acceptance conditions.
+
+## P. Next Action
+
+Clearly identify the exact remaining owner action, if any.
+
+Do not publish the app without separate authorization.
+
+# 22. Final Authorization
+
+I explicitly authorize the implementation of all remaining development phases:
+
+- Phase 4 — Production Data Layer and Persistence.
+- Phase 5 — HTTP/HTTPS/FTP Connectivity Engine.
+- Phase 6 — Quick Scan, Full Scan and Batch Testing.
+- Phase 7 — Dedicated Download-Speed Testing.
+- Phase 8 — Secure Remote Catalog Updates.
+- Phase 9 — Favorites, Custom Servers, History and Export.
+- Phase 10 — Production Hardening, Security, Performance and QA.
+- Phase 11 — CI/CD, Release Engineering and Production Artifacts.
+
+Phase 1, Phase 2 and Phase 3 are already completed. Preserve them and improve only where genuinely necessary.
+
+**Do not stop after writing a plan or creating documentation. Implement the authorized functionality, connect it to the existing UI, test it, fix defects and verify the final application.**
+
+Do not leave important features as placeholders while reporting them as complete.
+
+Continue through every authorized phase in the current execution workflow.
+
+If the endpoint catalog, signing credentials, external hosting or physical-device access is unavailable, continue all independent work and report the exact blocker.
+
+**Public publishing, Play Console submission and distribution to users remain separate actions requiring my explicit approval.**
+
+# FINAL OBJECTIVE
+
+Deliver a fully functional, thoroughly tested, secure, lightweight and production-grade native Android application named **BDIX Tester**.
+
+The final application must be more than a prototype or UI demonstration.
+
+It must provide real server catalog management, reliable network testing, accurate scan results, optional speed measurement, secure catalog updates, persistent user data, useful export functionality, accessible UI and verified production build artifacts.
+
+Preserve the existing project, use modern stable Android technologies, follow current official guidance, and prove completion through actual test evidence.
+
+**Complete all authorized phases from Phase 4 through Phase 11 and deliver the strongest production-ready result supported by the available evidence.**

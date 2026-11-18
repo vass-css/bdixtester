@@ -1,0 +1,2488 @@
+# BDIX Tester — Reference-App-Informed Native Android Development & Phase 1–3 Authorization Prompt
+
+## 1. Project Identity — Official Decision
+
+The official application and brand name is **BDIX Tester**.
+
+This is the official project identity. Do not introduce alternative application names, rename the project, or modify the branding without explicit authorization.
+
+Use this identity consistently throughout the entire project.
+
+| Property | Official decision |
+|---|---|
+| Application name | BDIX Tester |
+| Project name | BDIX Tester |
+| Category | Tools |
+| Platform | Native Android |
+| Programming language | Kotlin |
+| UI framework | Jetpack Compose |
+| Design system | Material 3 |
+| Architecture | Single Activity + Single Module |
+| Application model | Native Android application |
+| Primary audience | Bangladesh broadband and BDIX users |
+| Primary purpose | Discover and test locally reachable BDIX-related servers |
+| Secondary purpose | Server directory, server speed measurement and network diagnostics |
+| Development approach | Lightweight, maintainable and privacy-conscious |
+| Distribution | Android application distribution |
+
+### Developer Identity
+
+Use:
+
+- Developer display name: `Jubayer Hossain`
+- Preferred developer ID: `JubayerHossain`
+
+Do not claim that a Google Play developer profile URL or developer ID is available until it has been independently verified.
+
+### Branding Rules
+
+- Application title must remain `BDIX Tester`.
+- Use `BDIX Tester` in documentation.
+- Use `BDIX Tester` in application labels.
+- Use consistent naming in Gradle metadata.
+- Use consistent naming in GitHub workflows.
+- Use consistent naming in future store listing materials.
+
+Do not copy the reference application's logo, icons, screenshots, artwork, branding, or proprietary visual assets.
+
+## 2. Application ID, Namespace & Package Identity
+
+Use the following proposed Android identifiers:
+
+- `applicationId = "com.jubayerhossain.bdixtester"`
+- `namespace = "com.jubayerhossain.bdixtester"`
+- Base package: `com.jubayerhossain.bdixtester`
+
+Before modifying anything:
+
+1. Inspect the current Gradle configuration.
+2. Inspect the complete Android source structure.
+3. Identify all package declarations.
+4. Identify all imports.
+5. Inspect `AndroidManifest.xml`.
+6. Inspect application and activity references.
+7. Inspect test packages.
+8. Identify generated-resource dependencies.
+9. Identify existing application ID and namespace.
+10. Determine the safest migration strategy.
+11. Update affected references consistently.
+12. Verify the final configuration through Gradle tasks.
+
+Do not retain `com.example` or another template package simply because it already exists.
+
+Do not create a duplicate or nested Android project directory.
+
+### Package Identity Rules
+
+- Maintain one canonical application ID.
+- Maintain a consistent namespace and package structure.
+- Do not change the application ID after public release without a documented migration strategy.
+- Maintain a consistent application versioning strategy.
+- Do not introduce unnecessary product flavors.
+- Do not create separate application IDs for development and production without a demonstrated requirement.
+
+## 3. Reference Application — Mandatory Analysis
+
+The primary reference application is:
+
+**BDIX Tester : BD Movie servers**
+
+Google Play URL:
+
+https://play.google.com/store/apps/details?id=com.shubhobrata.roy.bdixtester&hl=en
+
+Developer displayed on Google Play:
+
+`Mr.Unpredictable`
+
+Public developer identity:
+
+`Shubhobrata Roy`
+
+The reference application is used for product research and feature inspiration only.
+
+Do not copy its source code, proprietary implementation, branding, assets, or exact interface.
+
+### 3.1 Public Google Play Information
+
+The publicly visible Play Store listing presents:
+
+| Property | Observed information |
+|---|---|
+| Application | BDIX Tester : BD Movie servers |
+| Developer | Mr.Unpredictable |
+| Category | Tools |
+| Content rating | Everyone |
+| Monetization | Contains ads |
+| Downloads | 500K+ |
+| Displayed rating | Approximately 4.4 stars |
+| Displayed reviews | Approximately 8.81K |
+| Displayed update date | February 24, 2026 |
+
+These are observations from the public listing, not claims about current internal implementation.
+
+Always recheck current store information when performing future research.
+
+### 3.2 Reference Application's Main Product Concept
+
+The reference application focuses on helping Bangladesh broadband users identify servers that are accessible through their current internet connection.
+
+Its publicly listed features include:
+
+**A. Categorized Server Database**
+
+- Large server directory.
+- Categorized BDIX-related endpoints.
+- Server entries described as human-verified.
+- Dedicated server categories.
+
+**B. Automatic Database Updates**
+
+The application listing claims that its database can be updated without requiring an application update.
+
+This is an important product requirement to investigate and improve.
+
+**C. Low Data Consumption**
+
+The application advertises a very small data requirement for normal operation.
+
+Preserve this product principle.
+
+Do not consume unnecessary bandwidth when loading or testing server metadata.
+
+**D. Server Speed Testing**
+
+The listing describes download-speed testing of BDIX servers.
+
+Distinguish server reachability, response latency, and actual download throughput.
+
+Do not treat them as the same measurement.
+
+### 3.3 Screenshot-Based UI Observations
+
+Publicly indexed screenshots show an earlier interface with these visible elements:
+
+- All, TV, FTP and Movie category navigation.
+- Featured server entries.
+- Server name.
+- Server URL.
+- Server category.
+- Working status.
+- Speed information.
+- Visit Website action.
+- Circular testing-progress indicator.
+- Working servers found count.
+- Total servers in database.
+- Quick Search option.
+- Stop action.
+
+The screenshots also show test progress and result-summary states.
+
+Important restrictions:
+
+- Screenshot values are examples, not fixed application data.
+- Do not hardcode the number of servers.
+- Do not hardcode working-server counts.
+- Do not hardcode percentages.
+- Do not fabricate response times.
+- Do not assume the screenshot represents the current production version.
+- Verify behavior against the actual repository and current app listing wherever possible.
+
+### 3.4 Public Review Findings
+
+Selected public reviews show several useful requirements.
+
+**History and Cross-Checking**
+
+Users have requested the ability to identify previously visited or tested URLs.
+
+BDIX Tester should provide a structured testing history in a future authorized phase.
+
+**Bookmarks and Pinning**
+
+Users have requested a way to pin or bookmark frequently used servers.
+
+Support favorites as a planned product capability.
+
+**Export Functionality**
+
+Users have requested an export facility.
+
+Plan structured export of server entries and testing results.
+
+**Server Database Freshness**
+
+A public review from September 25, 2025 complains that some unavailable websites remained in the database.
+
+This identifies a particularly important problem:
+
+A large catalog is not useful when it becomes stale.
+
+BDIX Tester must have an explicit catalog-maintenance and update strategy.
+
+**Streaming Experience**
+
+A public review from January 28, 2020 discusses changes to the previous streaming experience.
+
+This is historical user feedback.
+
+Do not assume that the current application provides the same streaming functionality.
+
+Do not introduce media streaming or downloading merely because a historical review mentions it.
+
+### 3.5 Reference Application's Public Developer Architecture Information
+
+The developer's public professional profile describes BDIX Tester as:
+
+- Android application.
+- Kotlin.
+- MVVM with Clean Architecture.
+- Kotlin Coroutines.
+- Dagger 2 migrated to Hilt.
+- JUnit 4.
+- Espresso.
+- UI Automator.
+
+This is publicly described project information.
+
+It does not prove that every detail remains identical in the current Play Store binary.
+
+Treat it as an architectural reference, not a mandatory dependency specification.
+
+Do not introduce Hilt, Dagger, or any other dependency merely to imitate the reference application.
+
+Select dependencies according to the actual project requirements.
+
+### 3.6 Reference App Data Safety Observation
+
+The Google Play listing currently displays disclosures related to:
+
+- App activity.
+- App information and performance.
+- Device or other IDs.
+- Data sharing with third parties.
+- Data collection.
+- Encryption status.
+- Data deletion availability.
+
+These are developer-provided Play Store declarations.
+
+Do not assume the underlying behavior without separate verification.
+
+BDIX Tester should follow a more privacy-conscious design wherever practical.
+
+### 3.7 Reference Analysis Report
+
+Create:
+
+`docs/research/REFERENCE_APP_ANALYSIS.md`
+
+Document:
+
+1. Reference application identity.
+2. Public Play Store metadata.
+3. Publicly described features.
+4. Screenshot-based UI observations.
+5. Public review findings.
+6. Publicly described technology stack.
+7. Important unknowns.
+8. Strengths worth learning from.
+9. Weaknesses worth improving.
+10. Features to implement in BDIX Tester.
+11. Features to defer.
+12. Original design and implementation decisions.
+
+Include source URLs and the date of research.
+
+Clearly distinguish:
+
+- Verified public listing information.
+- Screenshot observations.
+- Developer claims.
+- User feedback.
+- Technical recommendations.
+- Unverified assumptions.
+
+Do not present inferred internal behavior as fact.
+
+## 4. Product Vision — BDIX Tester
+
+BDIX Tester should become a modern, lightweight and reliable native Android application for discovering and testing BDIX-related server endpoints.
+
+The main user journey should be:
+
+1. Open BDIX Tester.
+2. View the available server catalog.
+3. Browse servers by category.
+4. Start a quick scan or full scan.
+5. Observe live testing progress.
+6. Identify endpoints reachable from the current connection.
+7. Inspect individual server information.
+8. Open a server using the device's external browser.
+9. Save useful servers to favorites.
+10. Compare previous test results.
+11. Manually refresh the catalog or allow scheduled catalog updates.
+
+The application must be useful without a user account.
+
+The built-in server catalog and previously downloaded catalog data should remain accessible offline.
+
+Actual network testing and remote catalog updates naturally require an active network connection.
+
+### Core Product Principles
+
+- Accurate results.
+- Low data consumption.
+- Fast and predictable testing.
+- Reliable server catalog.
+- Transparent test status.
+- ISP-specific connectivity awareness.
+- Privacy-conscious storage.
+- Lightweight Android implementation.
+- Clear distinction between reachability and speed.
+- Maintainable architecture.
+
+## 5. Important Technical Distinction — BDIX, Reachability and Speed
+
+Do not confuse these three concepts.
+
+### 5.1 Server Reachability
+
+Reachability means the device can establish a defined kind of connection to an endpoint from its current network.
+
+It does not automatically prove:
+
+- The server is officially connected to BDIX.
+- The server is hosted in Bangladesh.
+- The endpoint provides file downloads.
+- The endpoint is operational for every user.
+- The endpoint is fast.
+- The server is available through every ISP.
+
+### 5.2 BDIX Accessibility
+
+BDIX accessibility depends on ISP routing, peering arrangements, network configuration, server addressing and endpoint availability.
+
+A successful test from one ISP does not guarantee success from another ISP.
+
+The application must describe results as:
+
+`Reachable from current network`
+
+Do not automatically claim:
+
+`BDIX Verified`
+
+unless an independent, documented verification process actually supports that claim.
+
+### 5.3 Server Speed
+
+Response latency and download throughput are different metrics.
+
+For example:
+
+- DNS resolution time measures name-resolution latency.
+- TCP connection time measures connection establishment.
+- HTTP response time measures application-level response latency.
+- Download throughput measures data transfer rate.
+
+Do not display a response time as Mbps.
+
+Do not report a speed result when no valid speed test has been executed.
+
+## 6. PHASE 1 — Product Specification
+
+Create:
+
+`docs/PRODUCT_SPECIFICATION.md`
+
+Define the complete intended product behavior.
+
+### 6.1 Server Categories
+
+Use a flexible category system inspired by the reference application.
+
+Initial category concepts:
+
+| Category | Purpose |
+|---|---|
+| All | All catalog entries |
+| FTP & Files | FTP and file-server endpoints |
+| Movies | Movie and video-related server portals |
+| Live TV | Television and IPTV-related server portals |
+| Software | Software and application-related portals |
+| Web | General websites and web portals |
+| Other | Unclassified entries |
+| Featured | Curated featured entries |
+
+The category names must be data-driven where appropriate.
+
+Do not assume that every entry in the provided catalog belongs to the FTP category.
+
+**Featured is a separate curated attribute, not necessarily a protocol.**
+
+Keep category and protocol classification separate.
+
+### 6.2 Dashboard
+
+Define a dashboard containing:
+
+- Total servers in the catalog.
+- Number of categories.
+- Last catalog update timestamp.
+- Last testing timestamp.
+- Number of endpoints tested.
+- Reachable endpoints.
+- Unreachable endpoints.
+- Restricted or HTTP-error endpoints.
+- Unsupported endpoints.
+- Quick Scan action.
+- Full Scan action.
+- Recently tested servers.
+- Featured servers, when available.
+
+All counts must come from actual data.
+
+Do not display fabricated testing statistics.
+
+Before the first test, use an empty or not-yet-tested state.
+
+### 6.3 Categorized Server Directory
+
+The main server directory should provide:
+
+- All category.
+- FTP category.
+- Movie category.
+- Live TV category.
+- Other configured categories.
+- Featured entries.
+- Server search.
+- Status filters.
+- Protocol filters.
+- Sorting.
+- Server details.
+- Visit Website action.
+- Favorite action in a future authorized phase.
+
+The directory must support a large catalog without unnecessary recomposition or expensive loading.
+
+### 6.4 Server Cards
+
+Design a reusable server-card specification.
+
+Each entry may display:
+
+- Server name.
+- URL or hostname.
+- Category.
+- Protocol.
+- Featured status.
+- Current testing state.
+- Last test result.
+- Response latency when measured.
+- Download throughput when separately measured.
+- Last tested timestamp.
+- Visit Website action.
+
+Show only information that is available.
+
+Use a clear not-tested state.
+
+Do not show an old test result as though it were a live result.
+
+### 6.5 Quick Scan and Full Scan
+
+The reference application visibly presents a Quick Search option and testing-progress interface.
+
+BDIX Tester should provide two clearly defined testing modes in a future authorized phase.
+
+**Quick Scan**
+
+- Low-overhead connectivity checks.
+- Shorter configured timeouts.
+- No speed-test data transfer.
+- Clear indication that a quick scan may produce inconclusive results.
+- No hidden skipping of endpoints without explaining the policy.
+
+**Full Scan**
+
+- Test the complete selected catalog.
+- Use normal configured connection timeouts.
+- Return structured results for individual entries.
+- Provide a complete final summary.
+
+Document the exact behavior and differences.
+
+Do not use an ambiguous Quick Scan label without explaining what it does.
+
+### 6.6 Testing Controls
+
+The future testing interface should support:
+
+- Test one server.
+- Test a selected group.
+- Test one category.
+- Test all servers.
+- Stop current testing.
+- Retry failed endpoints.
+- Recheck selected endpoints.
+
+Use explicit progress information.
+
+Show:
+
+- Total endpoints.
+- Completed endpoints.
+- Remaining endpoints.
+- Reachable count.
+- Unreachable count.
+- Error count.
+- Unsupported count.
+- Cancelled count.
+
+Do not restart completed tests unnecessarily.
+
+Ensure that cancelling a scan stops pending work and safely closes active connections.
+
+### 6.7 Server Details
+
+A server-details screen should show:
+
+- Server name.
+- Original URL.
+- Parsed host.
+- Explicit port, where applicable.
+- Category.
+- Protocol.
+- Catalog source.
+- Catalog verification information.
+- Last catalog review date, when available.
+- Latest test result.
+- Latest response time.
+- Latest download speed, if tested separately.
+- Testing history.
+- Visit Website action.
+
+Do not claim verification if no verification record exists.
+
+### 6.8 Favorites and Bookmarks
+
+Plan:
+
+- Add to favorites.
+- Remove from favorites.
+- Display favorites separately.
+- Pin or prioritize selected entries.
+- Preserve favorites across application restarts.
+- Keep favorites independent of catalog refreshes.
+
+A catalog update must not accidentally erase the user's favorites.
+
+### 6.9 Testing History
+
+Plan a history system capable of recording:
+
+- Server ID.
+- Original URL at test time.
+- Timestamp.
+- Protocol.
+- Test mode.
+- Result classification.
+- Measured latency.
+- Download throughput, if separately tested.
+- Failure reason.
+- Network profile label, if manually configured.
+
+History must not contain fabricated data.
+
+Define a storage limit and retention strategy.
+
+Users must be able to clear history.
+
+### 6.10 Export
+
+Plan export capabilities for:
+
+- Server catalog.
+- Favorites.
+- Custom endpoints.
+- Testing history.
+- Test summaries.
+
+Possible formats:
+
+- CSV.
+- JSON.
+- Plain text.
+
+Use Android's Storage Access Framework where applicable.
+
+Do not request broad storage permissions unnecessarily.
+
+### 6.11 Custom Server Management
+
+Future functionality may support:
+
+- Add custom endpoint.
+- Edit custom endpoint.
+- Delete custom endpoint.
+- Validate URL.
+- Select category.
+- Select display name.
+- Test custom endpoint.
+- Add to favorites.
+
+Keep user-created endpoints separate from the official built-in catalog.
+
+Do not allow a remote catalog update to delete custom entries.
+
+### 6.12 Settings
+
+Define:
+
+- Theme.
+- Connection timeout.
+- Read timeout.
+- Maximum test concurrency.
+- Quick Scan behavior.
+- Automatic catalog updates.
+- Manual catalog refresh.
+- Wi-Fi-only catalog updates.
+- Maximum speed-test data.
+- History retention.
+- Favorites management.
+- Export.
+- Privacy information.
+
+Avoid unnecessary settings.
+
+## 7. Original User-Provided FtpLinks Catalog — Mandatory Preservation
+
+The original user-provided Dart `FtpLinks` class is an important input to this project.
+
+The complete original URL list was supplied earlier in the project conversation and must be treated as the canonical user-provided source.
+
+The original class follows this pattern:
+
+```dart
+class FtpLinks {
+  static const List<String> links = [
+    // Original user-provided URLs
+  ];
+}
+```
+
+Locate the complete original source from the current project, supplied files, or previously provided project context.
+
+Do not recreate the source list from memory or guess missing URLs.
+
+### 7.1 Exact Preservation Rules
+
+Every original endpoint must be accounted for.
+
+Preserve:
+
+- Original scheme.
+- Original hostname.
+- Original IP address.
+- Original explicit port.
+- Original path.
+- Original query parameters, if present.
+- Original trailing slash.
+- Original URL spelling.
+- Original unusual but valid path structure.
+
+Do not silently:
+
+- Remove entries.
+- Rewrite entries.
+- Normalize paths.
+- Change ports.
+- Replace hostnames.
+- Convert HTTP to HTTPS.
+- Convert FTP to HTTP.
+- Remove duplicate entries from the source.
+- Invent replacement endpoints.
+
+Some URLs may contain private IP addresses, repeated paths or unusual slash patterns.
+
+Preserve their exact source representation.
+
+### 7.2 Kotlin Conversion
+
+Convert the original Dart class into Kotlin.
+
+Required file:
+
+`app/src/main/java/com/jubayerhossain/bdixtester/data/catalog/FtpLinks.kt`
+
+Use the Kotlin equivalent:
+
+```kotlin
+package com.jubayerhossain.bdixtester.data.catalog
+
+object FtpLinks {
+    val links: List<String> = listOf(
+        // Complete original user-provided URL catalog.
+    )
+}
+```
+
+This example shows the intended structure only.
+
+The actual file must contain every original supplied URL.
+
+Do not introduce Dart or Flutter dependencies.
+
+### 7.3 Source Catalog and Runtime Catalog
+
+Separate:
+
+1. Original user-provided source catalog.
+2. Parsed and validated runtime catalog.
+3. Remote catalog updates.
+4. User-created endpoints.
+
+Do not silently overwrite the original catalog when a new remote catalog arrives.
+
+Keep the original endpoint provenance available for auditing.
+
+### 7.4 Catalog Audit
+
+Create:
+
+`docs/research/ENDPOINT_CATALOG_AUDIT.md`
+
+Calculate from the actual source.
+
+Report:
+
+- Original endpoint count.
+- Successfully parsed endpoint count.
+- Unique endpoint count.
+- Exact duplicate count.
+- Invalid URL count.
+- HTTP endpoint count.
+- HTTPS endpoint count.
+- FTP endpoint count.
+- FTPS endpoint count.
+- Unsupported scheme count.
+- Hostname endpoint count.
+- Public IPv4 endpoint count.
+- Private IPv4 endpoint count.
+- Entries containing explicit ports.
+- Entries containing non-root paths.
+- Entries requiring manual review.
+
+Do not invent any of these numbers.
+
+### 7.5 Duplicate Policy
+
+Audit duplicates.
+
+Preserve duplicate entries in the original source representation.
+
+A runtime catalog may remove exact duplicates only through a documented rule.
+
+Do not treat different paths or ports as duplicates merely because they use the same hostname.
+
+Make catalog initialization idempotent.
+
+Do not insert duplicate built-in servers every time the app starts.
+
+### 7.6 Missing Source Handling
+
+If the complete original `FtpLinks` source cannot be located:
+
+- Do not invent missing endpoints.
+- Do not use a partial list as the complete catalog.
+- Document exactly what is missing.
+- Identify which files or previous inputs were checked.
+- Request the missing original source before claiming completion of the catalog migration.
+
+## 8. Automatic Database Update Architecture
+
+The reference application advertises automatic database updates without requiring a new application release.
+
+This is a major product requirement.
+
+BDIX Tester should be designed to support a maintainable remote catalog-update mechanism.
+
+### 8.1 Built-in Catalog
+
+The application must include a built-in catalog fallback.
+
+The initial catalog must remain usable without internet access.
+
+A user must be able to open the server directory even if remote catalog services are unavailable.
+
+### 8.2 Remote Catalog
+
+Future updates may use a small, versioned JSON catalog served over HTTPS.
+
+Do not invent a production backend endpoint.
+
+Research and document suitable hosting options before implementation.
+
+Possible hosting approaches may include:
+
+- A controlled GitHub-hosted versioned JSON source.
+- A dedicated HTTPS endpoint.
+- Another maintainable static-content distribution service.
+
+Evaluate availability, maintenance effort, security, caching, rate limits and long-term ownership.
+
+### 8.3 Catalog Schema
+
+Design a versioned catalog structure capable of representing:
+
+- Schema version.
+- Catalog version.
+- Generated timestamp.
+- Published timestamp.
+- Expiration metadata, if used.
+- Minimum compatible application version.
+- Server identifier.
+- Display name.
+- URL.
+- Protocol.
+- Category.
+- Featured status.
+- Description.
+- Source attribution.
+- Verification status.
+- Last manually reviewed timestamp.
+- Optional speed-test endpoint metadata.
+
+Do not place dynamic live status in the static catalog.
+
+### 8.4 Update Behavior
+
+The future catalog update system must support:
+
+- Automatic update checks.
+- Manual refresh.
+- Local caching.
+- Version comparison.
+- ETag support where available.
+- Conditional requests.
+- Last-Modified support where available.
+- Small response sizes.
+- Safe JSON parsing.
+- Schema validation.
+- Atomic updates.
+- Rollback or retention of the last known good catalog.
+- Graceful offline behavior.
+
+Do not replace a valid local catalog with a malformed or incomplete remote response.
+
+Do not delete user-created endpoints during catalog synchronization.
+
+### 8.5 Update Scheduling
+
+For future background catalog synchronization, evaluate WorkManager.
+
+Use background work only when the update must be reliable after the user leaves the application.
+
+Respect:
+
+- Network availability.
+- Metered-network preferences.
+- Battery conditions.
+- App lifecycle.
+- User preferences.
+
+Periodic scheduling must not be presented as an exact-time guarantee.
+
+Do not run continuous background server scans.
+
+### 8.6 Catalog Verification
+
+The reference application claims that its server entries are human-verified.
+
+BDIX Tester must have a transparent verification model.
+
+Where applicable, maintain:
+
+- Verification state.
+- Reviewer/source provenance.
+- Last review timestamp.
+- Evidence or notes.
+- Confidence classification.
+
+A server must not be called human-verified merely because its HTTP endpoint responded successfully.
+
+Live reachability and human verification are separate properties.
+
+### 8.7 Low Data Consumption
+
+Optimize catalog synchronization using:
+
+- Compact JSON.
+- Conditional HTTP requests.
+- Appropriate cache headers.
+- Avoidance of unnecessary full downloads.
+- No repeated polling.
+- Configurable update behavior.
+- Graceful reuse of cached data.
+
+Document the expected data usage.
+
+## 9. Protocol Classification and Network Testing Architecture
+
+Correct protocol identification is mandatory.
+
+A URL containing the text `ftp` is not necessarily an FTP endpoint.
+
+The URL scheme determines the protocol classification.
+
+### 9.1 Protocol Classification
+
+| URL scheme | Classification |
+|---|---|
+| `http://` | HTTP |
+| `https://` | HTTPS |
+| `ftp://` | FTP |
+| `ftps://` | FTPS, subject to mode and implementation support |
+| Other schemes | Unsupported or manually reviewable |
+
+Do not classify HTTP endpoints as FTP.
+
+### 9.2 HTTP Testing
+
+The future HTTP testing engine should evaluate:
+
+- URL validity.
+- DNS resolution.
+- Connection establishment.
+- TLS handshake where applicable.
+- HTTP response status.
+- Redirect behavior.
+- Connection time.
+- Response latency.
+- Timeout.
+- Connection refusal.
+- TLS error.
+
+Use lightweight requests.
+
+Prefer HEAD where it provides useful information.
+
+If HEAD is unsupported, evaluate a carefully bounded GET fallback.
+
+Do not download large page bodies merely to test basic reachability.
+
+### 9.3 HTTP Result Classification
+
+An HTTP response is evidence that some level of HTTP communication was successful.
+
+Distinguish:
+
+| Condition | Interpretation |
+|---|---|
+| 2xx | Successful HTTP response |
+| 3xx | Redirect response |
+| 401 | Authentication required |
+| 403 | Access denied |
+| 404 | Requested resource not found |
+| 4xx | HTTP client-side status |
+| 5xx | HTTP server-side status |
+| DNS failure | Hostname resolution failed |
+| Connection refused | Connection rejected |
+| Timeout | No valid response within configured time |
+| TLS failure | Secure connection could not be established |
+| Invalid URL | Endpoint cannot be parsed |
+| Unsupported scheme | Current tester does not support the scheme |
+
+Do not label a 403 or 404 response as identical to a DNS failure.
+
+Use a state such as `Responding — Restricted` where appropriate.
+
+### 9.4 Actual FTP Testing
+
+For actual FTP endpoints:
+
+- Use FTP-specific protocol handling.
+- Validate the protocol and port.
+- Support connection timeouts.
+- Distinguish control-connection success from data-transfer success.
+- Respect passive/active mode requirements where relevant.
+- Do not attempt unauthorized credentials.
+- Do not enumerate directories.
+- Do not download files just to test basic connectivity.
+
+If FTP is unsupported by the current authorized implementation, report it as unsupported.
+
+Never claim that an HTTP test proves FTP availability.
+
+### 9.5 FTPS
+
+Treat FTPS as separate from plain FTP.
+
+Consider explicit and implicit FTPS modes only after research and an approved implementation plan.
+
+Never disable certificate validation to make a test succeed.
+
+Do not send credentials over an unencrypted connection.
+
+### 9.6 Private IP Address Handling
+
+The catalog may contain private network endpoints.
+
+Recognize private IPv4 ranges:
+
+- `10.0.0.0/8`
+- `172.16.0.0/12`
+- `192.168.0.0/16`
+
+A private endpoint may only be reachable inside a particular ISP, VPN, LAN or routing environment.
+
+Therefore:
+
+- Test endpoints from the user's current network.
+- Display the actual observation.
+- Explain when an endpoint is unreachable from the current connection.
+- Do not claim that it is globally invalid.
+- Do not perform network-wide scanning.
+- Do not attempt to discover adjacent IP addresses.
+
+### 9.7 Connectivity Latency Versus Ping
+
+Do not label an application-layer HTTP response measurement as ICMP ping.
+
+Android network environments may block ICMP or make it unreliable.
+
+Use accurately named measurements such as:
+
+- DNS resolution time.
+- TCP connection time.
+- HTTP response latency.
+- FTP control-connection time.
+
+Only claim ICMP ping when a real ICMP measurement was successfully implemented.
+
+### 9.8 Current Network Changes
+
+Network conditions can change when a user changes ISP, Wi-Fi, mobile data, router or VPN.
+
+Plan to:
+
+- Detect relevant connectivity changes using supported Android APIs.
+- Avoid claiming that a previous result applies to a newly connected network.
+- Allow users to rerun tests.
+- Preserve old results with their original timestamps.
+- Keep network identity metadata privacy-conscious.
+
+Do not collect Wi-Fi SSID or location data without a separate documented requirement, permission assessment and explicit approval.
+
+A manually configured network profile label is preferable for the initial product.
+
+## 10. Server Speed Testing — Separate Measurement System
+
+The reference application advertises server download-speed testing.
+
+BDIX Tester should treat this as a separate operation from basic reachability testing.
+
+### 10.1 Basic Principle
+
+Do not measure download throughput by downloading arbitrary files from a server directory.
+
+Do not scrape server contents.
+
+Use a known, explicitly configured speed-test resource.
+
+### 10.2 Speed-Test Requirements
+
+A future speed-test feature should:
+
+- Require an explicit user action.
+- Identify the selected test endpoint.
+- Display the expected data transfer.
+- Respect configurable data limits.
+- Measure actual transferred bytes.
+- Measure transfer duration.
+- Calculate throughput.
+- Support cancellation.
+- Avoid buffering the entire downloaded content in memory.
+- Handle incomplete transfers.
+- Distinguish failed tests from valid measurements.
+
+### 10.3 Measurement Accuracy
+
+Calculate download throughput using actual transferred bytes and elapsed time.
+
+Use a clearly documented formula:
+
+`Download Mbps = (Transferred Bytes × 8) / (Elapsed Seconds × 1,000,000)`
+
+Distinguish decimal Mbps from MiB/s where relevant.
+
+Do not display a throughput result when the test failed or transferred an insufficient amount of valid data.
+
+### 10.4 Speed-Test Endpoint
+
+Do not assume that every catalog server provides a suitable speed-test file.
+
+The catalog schema must allow an optional, explicitly configured speed-test endpoint.
+
+Require a known test resource and a documented measurement method.
+
+### 10.5 Data Usage and User Control
+
+Provide:
+
+- Quick test profile.
+- More accurate test profile.
+- Maximum transfer limit.
+- Cancellation.
+- Data-use disclosure.
+- Clear indication of the amount of data transferred.
+
+Do not execute large speed tests automatically during a full connectivity scan.
+
+### 10.6 Important Distinction
+
+A speed test against one server measures the path to that particular server and test resource.
+
+It does not necessarily measure the user's complete internet-plan speed.
+
+A BDIX server speed result must not be presented as a universal ISP speed measurement.
+
+## 11. Security, Responsible Testing and Privacy
+
+BDIX Tester is a server-directory and connectivity-testing utility.
+
+It is not a vulnerability scanner or penetration-testing application.
+
+### Strictly Prohibited Features
+
+Do not implement:
+
+- Port scanning.
+- Network-range scanning.
+- IP enumeration.
+- Directory brute forcing.
+- Credential brute forcing.
+- Authentication bypass.
+- Vulnerability scanning.
+- Unauthorized file downloads.
+- Automated content harvesting.
+- Aggressive request flooding.
+- Hidden background server testing.
+
+### Network Safety
+
+Use:
+
+- Bounded concurrency.
+- Configurable connection timeout.
+- Configurable read timeout.
+- Cancellation.
+- Per-endpoint error isolation.
+- Safe URL parsing.
+- Proper response-body closure.
+- Limited response processing.
+- Valid TLS verification.
+
+Do not create an unlimited number of concurrent requests.
+
+### HTTP Cleartext Considerations
+
+The application must test user-provided HTTP endpoints when authorized.
+
+However:
+
+- Keep the remote catalog update service HTTPS-only.
+- Never transmit passwords or sensitive credentials over plain HTTP.
+- Document why cleartext HTTP testing is required.
+- Configure network security behavior deliberately.
+- Do not globally weaken TLS or certificate validation.
+- Never use trust-all certificate managers.
+- Do not silently upgrade an HTTP URL to HTTPS because that changes endpoint behavior.
+
+### Privacy Requirements
+
+Prefer a local-first design.
+
+Initial requirements:
+
+- No mandatory registration.
+- No mandatory user account.
+- No cloud synchronization.
+- No unnecessary analytics.
+- No unnecessary personal-data collection.
+- No unnecessary device identifier collection.
+- No unnecessary location permission.
+- No hidden background testing.
+- No server catalog upload without explicit authorization.
+- Local favorites and history.
+- User-controlled history deletion.
+- Clear disclosure of network requests.
+
+Do not add an advertising SDK during Phase 1–3.
+
+Monetization is not part of the authorized initial implementation.
+
+## 12. PHASE 2 — Architecture and Technical Design
+
+Create:
+
+- `docs/architecture/ARCHITECTURE.md`
+- `docs/architecture/PACKAGE_STRUCTURE.md`
+- `docs/architecture/NETWORK_TESTING_ARCHITECTURE.md`
+- `docs/architecture/CATALOG_UPDATE_ARCHITECTURE.md`
+- `docs/architecture/RESULT_CLASSIFICATION.md`
+
+Use a lightweight, maintainable architecture.
+
+### 12.1 Technology Stack
+
+Use:
+
+- Kotlin.
+- Android SDK.
+- Jetpack Compose.
+- Material 3.
+- Single Activity.
+- Single application module.
+- Gradle Kotlin DSL.
+- Version Catalog.
+- Kotlin Coroutines.
+- Flow and StateFlow.
+- ViewModel.
+- Lifecycle-aware state collection.
+- DataStore Preferences.
+- A suitable local database only when justified.
+- A maintained HTTP client.
+- JUnit.
+- AndroidX testing libraries where required.
+
+Use compatible stable versions based on the actual project environment.
+
+Do not blindly upgrade Gradle, AGP, Kotlin, Compose, or Android SDK versions.
+
+### 12.2 Architectural Style
+
+Use lightweight MVVM with clearly separated responsibilities.
+
+Follow unidirectional data flow for the UI.
+
+The UI observes state and sends user actions to the appropriate ViewModel or domain boundary.
+
+Avoid unnecessary architectural layers.
+
+### 12.3 Architectural Boundaries
+
+**Application Layer**
+
+- Application initialization.
+- Main Activity.
+- Navigation setup.
+- Dependency construction.
+
+**Core Layer**
+
+- Shared models.
+- Common result types.
+- Error handling.
+- URL validation utilities.
+- Time and formatting utilities.
+- Logging abstractions.
+
+**Domain Layer**
+
+- Server models.
+- Category definitions.
+- Protocol definitions.
+- Test-result models.
+- Repository contracts.
+- Use-case contracts.
+- Validation rules.
+
+**Data Layer**
+
+- Built-in source catalog.
+- Parsed catalog.
+- Remote catalog source.
+- Local catalog persistence.
+- Favorites.
+- Custom endpoints.
+- Settings.
+- History.
+
+**Network Layer**
+
+- HTTP tester abstraction.
+- FTP tester abstraction.
+- TLS handling.
+- Timeout configuration.
+- Connection metrics.
+- Result classification.
+- Concurrency policy.
+
+**Feature Layer**
+
+- Dashboard.
+- Server catalog.
+- Server details.
+- Scan interface.
+- Results.
+- Favorites.
+- History.
+- Settings.
+- About.
+
+**UI Layer**
+
+- Theme.
+- Reusable Compose components.
+- Icons.
+- Layouts.
+- Loading, empty and error states.
+
+### 12.4 Dependency Injection
+
+Prefer constructor injection and a lightweight dependency setup.
+
+Use Hilt only when it provides measurable value or is already appropriately integrated into the repository.
+
+Do not add a heavyweight dependency-injection framework simply because the reference developer used it.
+
+### 12.5 Local Storage Decision
+
+Use DataStore Preferences for suitable small settings.
+
+Evaluate Room when requirements justify structured persistence for:
+
+- Catalog entries.
+- User-created endpoints.
+- Favorites.
+- Testing history.
+- Filtering and sorting.
+
+Do not store a large, frequently queried server catalog in a collection of unrelated preference keys.
+
+Document the selected persistence strategy.
+
+### 12.6 Server Model
+
+Design a structured server model.
+
+Potential fields:
+
+- Stable ID.
+- Display name.
+- Original URL.
+- Parsed hostname.
+- Optional explicit port.
+- Protocol.
+- Category.
+- Featured attribute.
+- Source type.
+- Verification state.
+- Last review timestamp.
+- Optional speed-test endpoint configuration.
+
+Separate server configuration from mutable test state.
+
+### 12.7 Test Result Model
+
+Design a structured test-result model containing:
+
+- Server ID.
+- Test timestamp.
+- Test mode.
+- Test protocol.
+- Test status.
+- DNS time, if measured.
+- TCP connection time, if measured.
+- HTTP response latency, if measured.
+- FTP connection latency, if measured.
+- HTTP status code, where applicable.
+- Error classification.
+- Failure message.
+- Download throughput, only when separately tested.
+- Transferred byte count, where applicable.
+
+Use nullable fields for measurements that were not available.
+
+Do not invent zero values for unavailable measurements.
+
+### 12.8 Concurrency and Cancellation Design
+
+Document:
+
+- Global concurrency limit.
+- Per-host concurrency policy.
+- Queue behavior.
+- Timeout behavior.
+- Cancellation propagation.
+- Error isolation.
+- Retry policy.
+- Memory considerations.
+- Progress reporting.
+
+Use Kotlin Coroutines.
+
+Avoid blocking the main thread.
+
+Do not start multiple overlapping full scans unintentionally.
+
+### 12.9 Remote Catalog Architecture
+
+Document:
+
+- Bundled fallback catalog.
+- Remote JSON structure.
+- HTTPS source strategy.
+- Update scheduling.
+- Cache validators.
+- Schema compatibility.
+- Atomic update.
+- Last known good data.
+- Duplicate policy.
+- Catalog versioning.
+- Provenance.
+- Verification metadata.
+
+Do not assume a production hosting URL exists.
+
+### 12.10 Architecture Decision Records
+
+Create decision records under:
+
+`docs/architecture/decisions/`
+
+Record decisions for:
+
+- Single Activity and Single Module.
+- MVVM and state flow.
+- Catalog persistence.
+- Protocol separation.
+- Network client.
+- FTP implementation strategy.
+- Concurrency.
+- Timeout.
+- Catalog update.
+- Verification model.
+- History storage.
+- Data export.
+- Dependency injection.
+
+For each decision, explain:
+
+- Context.
+- Requirements.
+- Alternatives.
+- Selected approach.
+- Reason.
+- Trade-offs.
+- Future consequences.
+
+## 13. Proposed Package Structure
+
+Maintain one Gradle module.
+
+Use the following as a target logical structure, adapting it to the actual repository.
+
+```text
+app/
+├── build.gradle.kts
+└── src/
+    ├── main/
+    │   ├── AndroidManifest.xml
+    │   └── java/
+    │       └── com/
+    │           └── jubayerhossain/
+    │               └── bdixtester/
+    │                   ├── MainActivity.kt
+    │                   ├── BdixtesterApplication.kt
+    │                   │
+    │                   ├── core/
+    │                   │   ├── common/
+    │                   │   ├── model/
+    │                   │   ├── result/
+    │                   │   ├── validation/
+    │                   │   ├── network/
+    │                   │   └── util/
+    │                   │
+    │                   ├── data/
+    │                   │   ├── catalog/
+    │                   │   │   ├── FtpLinks.kt
+    │                   │   │   └── BuiltInCatalog.kt
+    │                   │   ├── local/
+    │                   │   ├── remote/
+    │                   │   ├── repository/
+    │                   │   └── preferences/
+    │                   │
+    │                   ├── domain/
+    │                   │   ├── model/
+    │                   │   ├── repository/
+    │                   │   ├── usecase/
+    │                   │   └── protocol/
+    │                   │
+    │                   ├── network/
+    │                   │   ├── client/
+    │                   │   ├── http/
+    │                   │   ├── ftp/
+    │                   │   ├── timeout/
+    │                   │   └── classification/
+    │                   │
+    │                   ├── feature/
+    │                   │   ├── dashboard/
+    │                   │   ├── servers/
+    │                   │   ├── scan/
+    │                   │   ├── results/
+    │                   │   ├── favorites/
+    │                   │   ├── history/
+    │                   │   ├── settings/
+    │                   │   └── about/
+    │                   │
+    │                   ├── navigation/
+    │                   │
+    │                   └── ui/
+    │                       ├── components/
+    │                       ├── theme/
+    │                       ├── icons/
+    │                       └── preview/
+    │
+    ├── test/
+    └── androidTest/
+```
+
+This is a target structure, not permission to create unnecessary empty files.
+
+Do not create a separate Gradle module for every package.
+
+Do not force this exact directory structure when the existing project already has a sensible equivalent.
+
+## 14. PHASE 3 — UI/UX Design System and Navigation Shell
+
+Implement the initial native Compose interface.
+
+The interface should be inspired by the reference application's simple server-discovery workflow, but must use original visual design.
+
+### 14.1 Design Direction
+
+The interface must be:
+
+- Modern.
+- Professional.
+- Clean.
+- Lightweight.
+- Responsive.
+- Accessible.
+- Easy to understand.
+- Consistent.
+- Suitable for ordinary Android devices.
+
+Prioritize functional clarity over decoration.
+
+Avoid:
+
+- Excessive gradients.
+- Random colors.
+- Unnecessary cards.
+- Excessive animation.
+- Tiny text.
+- Inconsistent spacing.
+- Unnecessary visual complexity.
+- Inconsistent status indicators.
+
+### 14.2 Material 3 Design System
+
+Define:
+
+- Color tokens.
+- Light theme.
+- Dark theme.
+- System theme.
+- Typography scale.
+- Spacing scale.
+- Shape system.
+- Corner radii.
+- Elevation.
+- Icon conventions.
+- Component states.
+- Loading states.
+- Empty states.
+- Error states.
+- Responsive layouts.
+- Accessibility behavior.
+
+Use Material 3 components where appropriate.
+
+Do not copy the exact legacy visual style of the reference application.
+
+### 14.3 Main Navigation
+
+Design the initial navigation shell around:
+
+- Home.
+- Servers.
+- Favorites.
+- Settings.
+
+Add scan and result screens as appropriate to the navigation model.
+
+Use a predictable back stack.
+
+Use type-safe navigation where supported by the verified dependency configuration.
+
+### 14.4 Dashboard Design
+
+Create an original dashboard.
+
+Potential components:
+
+- Welcome/header area.
+- Current network connection information, only when available.
+- Catalog statistics.
+- Quick Scan action.
+- Full Scan action.
+- Category shortcuts.
+- Featured servers.
+- Recently tested servers.
+- Catalog update information.
+
+Use accurate state.
+
+Do not show fabricated server counts or reachability results.
+
+### 14.5 Server Directory UI
+
+The directory should provide:
+
+- Category navigation.
+- All servers.
+- FTP.
+- Movies.
+- Live TV.
+- Other configured categories.
+- Featured filtering.
+- Search.
+- Sorting.
+- Status filtering.
+- Server cards.
+
+A category should not show fake data to fill the screen.
+
+Display a useful empty state when no matching entries exist.
+
+### 14.6 Server Card UI
+
+Design a reusable server card containing appropriate available fields:
+
+- Name.
+- URL.
+- Category label.
+- Protocol label.
+- Featured indicator.
+- Test state.
+- Last test timestamp.
+- Latency.
+- Download throughput, when measured.
+- Visit Website action.
+
+Use clearly differentiated states:
+
+- Not tested.
+- Testing.
+- Reachable.
+- Restricted.
+- Unreachable.
+- Timed out.
+- Unsupported.
+
+Never communicate the status through color alone.
+
+### 14.7 Testing UI Shell
+
+Design a testing interface inspired by the reference application's progress screen.
+
+Include visual areas for:
+
+- Circular or linear progress.
+- Completed count.
+- Total count.
+- Reachable count.
+- Unreachable count.
+- Error count.
+- Remaining count.
+- Stop control.
+
+Do not hardcode results.
+
+During Phase 3, show a clear initial or not-yet-tested state.
+
+Do not execute real network scans in this phase.
+
+### 14.8 Quick Scan and Full Scan UI
+
+Design distinct user-facing descriptions.
+
+Explain:
+
+- What Quick Scan measures.
+- What Full Scan measures.
+- Why a server may need more time.
+- Why a connection can be reachable but the website still returns an HTTP error.
+
+Do not present ambiguous actions.
+
+### 14.9 Favorites and History Shell
+
+Prepare the navigation and interface structure.
+
+Use an honest empty state until the corresponding storage and functionality are implemented in an authorized later phase.
+
+Do not insert sample history or fake favorites.
+
+### 14.10 Settings Shell
+
+Prepare settings UI for:
+
+- Appearance.
+- Connection timeout.
+- Testing concurrency.
+- Automatic catalog updates.
+- Wi-Fi-only updates.
+- Speed-test data limit.
+- History retention.
+- Privacy information.
+- About.
+
+Do not present settings as functional until their underlying feature exists.
+
+### 14.11 External Website Navigation
+
+The future Visit Website action should open the selected endpoint using the Android external browser intent.
+
+Do not add WebView merely to reproduce a legacy in-app browsing experience.
+
+Do not automatically download content.
+
+### 14.12 Accessibility and Adaptive UI
+
+Support:
+
+- Screen readers.
+- Semantic labels.
+- Adequate touch targets.
+- Scalable text.
+- Color contrast.
+- Responsive layouts.
+- Small phones.
+- Large phones.
+- Tablets.
+- Foldables where appropriate.
+- Different screen densities.
+- Different navigation modes.
+
+Use Compose previews for relevant states.
+
+## 15. Performance and Resource Constraints
+
+BDIX Tester should remain lightweight.
+
+Prioritize:
+
+- Low memory use.
+- Fast startup.
+- Efficient list rendering.
+- Limited recomposition.
+- Bounded network concurrency.
+- Efficient catalog parsing.
+- Minimal storage.
+- Cancellation support.
+- No unnecessary services.
+- No unnecessary dependencies.
+
+Avoid:
+
+- Heavy frameworks without a clear benefit.
+- Unnecessary database layers.
+- Large downloaded assets.
+- Continuous background scanning.
+- Excessive polling.
+- Unbounded coroutines.
+- Excessive response-body buffering.
+- Unnecessary animation frameworks.
+- Unnecessary media playback libraries.
+
+### Development Environment Considerations
+
+The development environment is resource-constrained.
+
+Use GitHub Actions for repeatable builds and verification where practical.
+
+Prefer low-resource local commands and avoid launching multiple unnecessary Gradle processes.
+
+Do not require an Android emulator to be available for every development task.
+
+Clearly distinguish:
+
+- Local compilation.
+- Unit testing.
+- Static analysis.
+- UI preview inspection.
+- Emulator testing.
+- Physical-device testing.
+
+Never claim a physical-device test without actually performing it.
+
+## 16. Future Implementation Roadmap
+
+The following phases define future product evolution.
+
+They are planning requirements only.
+
+They are not implementation authorization.
+
+| Future phase | Scope |
+|---|---|
+| Phase 4 | Complete catalog data layer and persistence |
+| Phase 5 | HTTP/HTTPS and protocol-specific connectivity testing engine |
+| Phase 6 | Quick Scan, Full Scan and batch-testing functionality |
+| Phase 7 | Dedicated server speed testing |
+| Phase 8 | Remote catalog updates and background synchronization |
+| Phase 9 | Favorites, custom servers, history and export |
+| Phase 10 | Security, reliability, accessibility and performance hardening |
+| Phase 11 | GitHub Actions release pipeline and production release preparation |
+
+Do not start these phases unless explicitly authorized.
+
+## 17. Documentation and Deliverables
+
+Use `BDIX Tester` consistently in all documentation.
+
+### Required Documentation
+
+| Phase | Required deliverable |
+|---|---|
+| Research | `docs/research/REFERENCE_APP_ANALYSIS.md` |
+| Research | `docs/research/TECH_STACK_RESEARCH.md` |
+| Research | `docs/research/BDIX_PROTOCOL_RESEARCH.md` |
+| Research | `docs/research/ENDPOINT_CATALOG_AUDIT.md` |
+| Phase 1 | `docs/PRODUCT_SPECIFICATION.md` |
+| Phase 2 | `docs/architecture/ARCHITECTURE.md` |
+| Phase 2 | `docs/architecture/PACKAGE_STRUCTURE.md` |
+| Phase 2 | `docs/architecture/NETWORK_TESTING_ARCHITECTURE.md` |
+| Phase 2 | `docs/architecture/CATALOG_UPDATE_ARCHITECTURE.md` |
+| Phase 2 | `docs/architecture/RESULT_CLASSIFICATION.md` |
+| Phase 2 | Architecture decision records |
+| Phase 3 | Native Compose design system |
+| Phase 3 | Navigation shell |
+| Phase 3 | Relevant Compose previews |
+| Phase 3 | Relevant UI tests |
+
+Additional documents where appropriate:
+
+- `docs/testing/TESTING_STRATEGY.md`
+- `docs/testing/NETWORK_TESTING_POLICY.md`
+- `docs/privacy/PRIVACY_AND_DATA_HANDLING.md`
+- `docs/release/BUILD_AND_RELEASE.md`
+- `docs/CHANGELOG.md`
+
+### Documentation Standards
+
+- Prefer official documentation.
+- Include direct reference URLs.
+- Include research dates.
+- Distinguish fact from recommendation.
+- Explain technical reasoning.
+- Record limitations.
+- Record unresolved questions.
+- Do not fabricate test results.
+- Do not claim BDIX verification without evidence.
+- Do not claim remote catalog functionality before it is implemented and tested.
+
+## 18. GitHub Actions and CI Foundation
+
+Inspect all existing GitHub Actions workflows before changing anything.
+
+Workflow location:
+
+`.github/workflows/`
+
+### CI Requirements
+
+The authorized phases may prepare or maintain a minimal CI workflow that supports:
+
+- Repository checkout.
+- JDK configuration.
+- Gradle configuration.
+- Dependency caching.
+- Gradle wrapper validation.
+- Kotlin compilation.
+- Unit tests.
+- Android lint.
+- Debug build.
+
+Do not create unnecessary workflow duplication.
+
+### Caching
+
+Use appropriate dependency caching.
+
+Cache keys must consider relevant Gradle configuration and wrapper files.
+
+Do not treat an old cache as proof that the build configuration is correct.
+
+### Security
+
+- Use least-privilege workflow permissions.
+- Avoid exposing secrets.
+- Do not print secret values.
+- Prefer maintained official actions.
+- Pin third-party actions appropriately.
+- Keep workflows readable.
+- Avoid unnecessary build matrices.
+
+### Release Restrictions
+
+Do not:
+
+- Publish an APK.
+- Publish an AAB.
+- Create a production release.
+- Upload to Google Play.
+- Upload to another application store.
+- Introduce signing secrets.
+- Create an automatic publishing workflow.
+
+Release automation is future work.
+
+## 19. Testing and Verification
+
+Complete all applicable checks during the authorized phases.
+
+### 19.1 Repository Verification
+
+- Inspect the entire repository.
+- Validate the Gradle configuration.
+- Validate the application ID.
+- Validate the namespace.
+- Validate package declarations.
+- Validate manifest references.
+- Inspect existing tests.
+- Inspect source structure.
+- Inspect existing workflows.
+- Review dependency declarations.
+
+### 19.2 Catalog Verification
+
+- Locate the complete original `FtpLinks` source.
+- Confirm the original entry count.
+- Confirm every source entry is represented.
+- Verify exact URL preservation.
+- Audit duplicates.
+- Audit malformed entries.
+- Classify URL schemes.
+- Identify private IP addresses.
+- Verify catalog initialization design.
+
+### 19.3 Architecture Verification
+
+- Verify separation between UI and domain.
+- Verify the protocol abstraction design.
+- Verify the catalog update design.
+- Verify test-result modeling.
+- Verify lifecycle and cancellation design.
+- Verify local storage decisions.
+- Verify dependency justification.
+
+### 19.4 UI Verification
+
+- Build Compose previews where possible.
+- Inspect empty states.
+- Inspect loading states.
+- Inspect error states.
+- Inspect responsive behavior.
+- Verify navigation.
+- Verify accessibility semantics.
+- Run relevant UI tests where the environment supports them.
+
+### 19.5 Testing Policy
+
+Do not claim that the actual public server catalog is working merely because the Kotlin catalog compiles.
+
+Do not claim that a real network test has passed unless it has been executed.
+
+Use controlled test fixtures for future network-engine tests.
+
+Test public servers only when testing is authorized and appropriately limited.
+
+## 20. Strict Scope Protection — Phase 1–3 Authorization Only
+
+You are explicitly authorized to complete only:
+
+**PHASE 1 — Product Specification**
+
+**PHASE 2 — Architecture and Technical Design**
+
+**PHASE 3 — UI/UX Design System and Navigation Shell**
+
+### Authorized Work
+
+- Repository audit.
+- Reference application research.
+- Product specification.
+- Technical research.
+- Architecture documentation.
+- Endpoint catalog audit.
+- Original `FtpLinks` Kotlin migration.
+- Basic immutable built-in catalog models.
+- Catalog preservation and source validation.
+- Material 3 design system.
+- Initial Compose screens.
+- Initial navigation shell.
+- Relevant previews.
+- Relevant UI tests.
+- Minimal CI checks where appropriate.
+
+### Not Authorized Without Further Approval
+
+- Complete network testing engine.
+- Complete FTP/FTPS testing implementation.
+- Real HTTP/HTTPS batch scanning.
+- Actual speed-testing implementation.
+- Automatic remote database synchronization.
+- Production remote catalog hosting.
+- Background catalog update workers.
+- Full favorites persistence.
+- Full testing history implementation.
+- Export and import implementation.
+- Complete custom server manager.
+- Live TV streaming.
+- In-app media streaming.
+- Embedded browser or WebView.
+- File downloading.
+- Port scanning.
+- Network-range scanning.
+- Authentication or credential features.
+- Firebase integration.
+- Advertising SDK integration.
+- Cloud synchronization.
+- Production publishing.
+- Any Phase 4 or later implementation.
+
+Do not start a future phase without explicit approval.
+
+### Preservation Rules
+
+- Do not delete existing files.
+- Do not delete tests.
+- Do not remove useful configuration.
+- Do not replace working code unnecessarily.
+- Do not rewrite long existing documentation without a reason.
+- Do not silently overwrite user-provided material.
+- Do not silently remove catalog entries.
+- Do not create unnecessary project folders.
+- Do not introduce unrelated features.
+
+If a change is necessary, explain the reason and verify that it does not destroy unrelated work.
+
+## 21. Execution Workflow
+
+Follow this order.
+
+### Step 1 — Complete Repository Audit
+
+Inspect:
+
+- Entire project structure.
+- Gradle configuration.
+- Kotlin source files.
+- AndroidManifest.xml.
+- Resources.
+- Existing UI.
+- Existing tests.
+- GitHub Actions.
+- Existing research documents.
+- Original `FtpLinks` source.
+
+Record the initial state.
+
+Do not modify files before understanding the project.
+
+### Step 2 — Reference Application Analysis
+
+Complete:
+
+`docs/research/REFERENCE_APP_ANALYSIS.md`
+
+Document:
+
+- Public application features.
+- Screenshot observations.
+- Public review insights.
+- Developer-published architecture information.
+- Known limitations of the research.
+- Recommended improvements for BDIX Tester.
+
+Do not copy proprietary assets or implementation.
+
+### Step 3 — Identity and Package Audit
+
+Verify:
+
+- Application name.
+- Application ID.
+- Namespace.
+- Package declarations.
+- Manifest references.
+- Existing naming conventions.
+
+Apply necessary migration safely.
+
+### Step 4 — Original Catalog Audit
+
+Locate the complete original `FtpLinks` class.
+
+Audit all entries.
+
+Create the catalog audit report.
+
+Convert the complete list into Kotlin without silently changing the URLs.
+
+### Step 5 — Phase 1: Product Specification
+
+Complete:
+
+`docs/PRODUCT_SPECIFICATION.md`
+
+Define the product's features, workflows, states, acceptance criteria, testing principles and future scope.
+
+### Step 6 — Phase 2: Architecture and Technical Design
+
+Complete:
+
+- `docs/architecture/ARCHITECTURE.md`
+- `docs/architecture/PACKAGE_STRUCTURE.md`
+- `docs/architecture/NETWORK_TESTING_ARCHITECTURE.md`
+- `docs/architecture/CATALOG_UPDATE_ARCHITECTURE.md`
+- `docs/architecture/RESULT_CLASSIFICATION.md`
+- Relevant architecture decisions.
+
+Verify that the architecture can support future server discovery, testing, speed measurement and catalog updates without coupling everything together.
+
+### Step 7 — Phase 3: Design System and Navigation Shell
+
+Implement:
+
+- Material 3 design system.
+- Light theme.
+- Dark theme.
+- System theme.
+- Shared UI components.
+- Dashboard shell.
+- Server directory shell.
+- Server details shell.
+- Scan screen shell.
+- Favorites shell.
+- Settings shell.
+- Navigation infrastructure.
+- Compose previews.
+- Relevant UI tests.
+
+Use real catalog metadata when it is available.
+
+Do not show fabricated test results.
+
+Do not implement the real network-testing engine.
+
+### Step 8 — GitHub Actions and Verification
+
+Inspect and preserve existing workflows.
+
+Run the available build, test and lint checks.
+
+Record exact commands and results.
+
+Do not claim physical-device verification if it was not performed.
+
+### Step 9 — Final Review
+
+Inspect all modified files.
+
+Verify the project identity.
+
+Verify catalog preservation.
+
+Verify documentation completeness.
+
+Verify UI navigation.
+
+List all limitations.
+
+Produce the full progress report.
+
+Stop after Phase 3.
+
+## 22. Final Progress Report
+
+At completion, provide a detailed report.
+
+### A. Reference Application Analysis
+
+Include:
+
+- Reference application identity.
+- Main features observed.
+- Screenshot observations.
+- Public review insights.
+- Public architecture information.
+- Strengths adopted.
+- Weaknesses addressed.
+- Features intentionally excluded.
+- Research limitations.
+
+### B. Project Identity
+
+- Application name.
+- Application ID.
+- Namespace.
+- Package structure.
+
+### C. Phase Completion
+
+Report:
+
+- Phase 1 status.
+- Phase 2 status.
+- Phase 3 status.
+
+Use clear statuses:
+
+- Completed.
+- Partially completed.
+- Blocked.
+- Not started.
+
+### D. Endpoint Catalog Audit
+
+Report:
+
+- Original endpoint count.
+- Converted endpoint count.
+- Unique endpoint count.
+- Duplicate count.
+- Invalid entry count.
+- Protocol distribution.
+- Private/public IP classification.
+- Unresolved entries.
+
+Include actual evidence.
+
+### E. Files Created and Modified
+
+List every exact file path.
+
+Explain:
+
+- What was created.
+- What was modified.
+- Why it was modified.
+- Which existing work was preserved.
+
+### F. Architecture Decisions
+
+Explain the important technical decisions and their reasoning.
+
+### G. UI/UX Progress
+
+Report:
+
+- Theme implementation.
+- Components.
+- Screens.
+- Navigation.
+- Compose previews.
+- Responsive UI considerations.
+- Accessibility.
+
+### H. Testing Results
+
+Include:
+
+- Exact commands.
+- Actual results.
+- Passed tests.
+- Failed tests.
+- Skipped tests.
+- Environment limitations.
+
+### I. Privacy and Security Review
+
+Report:
+
+- Permissions.
+- Network-security configuration.
+- Data storage design.
+- Remote catalog security design.
+- Unnecessary dependencies avoided.
+- Outstanding risks.
+
+### J. Known Limitations
+
+List everything that could not be implemented or verified.
+
+### K. Future Phase Roadmap
+
+List remaining work for Phase 4 and subsequent phases.
+
+Do not execute these phases.
+
+### L. Approval Gate
+
+Explicitly request authorization before starting Phase 4.
+
+## 23. Official Documentation and Research References
+
+Use official documentation as the primary technical source.
+
+### Android
+
+1. Android Developers  
+   https://developer.android.com/
+
+2. Android App Architecture  
+   https://developer.android.com/topic/architecture
+
+3. UI Layer Architecture  
+   https://developer.android.com/topic/architecture/ui-layer
+
+4. Jetpack Compose  
+   https://developer.android.com/develop/ui/compose
+
+5. Compose UI Architecture  
+   https://developer.android.com/develop/ui/compose/architecture
+
+6. Material 3  
+   https://developer.android.com/develop/ui/compose/designsystems/material3
+
+7. Android Connectivity  
+   https://developer.android.com/develop/connectivity
+
+8. Connect to the Network  
+   https://developer.android.com/develop/connectivity/network-ops/connecting
+
+9. Read Network State  
+   https://developer.android.com/develop/connectivity/network-ops/reading-network-state
+
+10. Android DataStore  
+    https://developer.android.com/topic/libraries/architecture/datastore
+
+11. Android Navigation  
+    https://developer.android.com/develop/ui/compose/navigation
+
+12. Android Background Work  
+    https://developer.android.com/develop/background-work/background-tasks
+
+13. WorkManager  
+    https://developer.android.com/develop/background-work/background-tasks/persistent
+
+14. Android Network Security Configuration  
+    https://developer.android.com/privacy-and-security/security-config
+
+15. Android Cleartext Communication Risks  
+    https://developer.android.com/privacy-and-security/risks/cleartext-communications
+
+16. Android App Quality Guidelines  
+    https://developer.android.com/docs/quality-guidelines/core-app-quality
+
+17. Android Adaptive App Quality  
+    https://developer.android.com/docs/quality-guidelines/adaptive-app-quality
+
+### Kotlin
+
+18. Kotlin Documentation  
+    https://kotlinlang.org/docs/home.html
+
+19. Kotlin Coroutines  
+    https://kotlinlang.org/docs/coroutines-overview.html
+
+20. Kotlin Flow  
+    https://kotlinlang.org/docs/flow.html
+
+### Network Protocols
+
+21. HTTP Semantics — RFC 9110  
+    https://www.rfc-editor.org/rfc/rfc9110
+
+22. HTTP/1.1 — RFC 9112  
+    https://www.rfc-editor.org/rfc/rfc9112
+
+23. FTP — RFC 959  
+    https://www.rfc-editor.org/rfc/rfc959
+
+24. Explicit FTP over TLS — RFC 4217  
+    https://www.rfc-editor.org/rfc/rfc4217
+
+25. TLS 1.3 — RFC 8446  
+    https://www.rfc-editor.org/rfc/rfc8446
+
+26. IANA IPv4 Special-Purpose Address Registry  
+    https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+
+### GitHub Actions
+
+27. GitHub Actions Documentation  
+    https://docs.github.com/en/actions
+
+28. GitHub Actions Android Build and Test  
+    https://docs.github.com/en/actions/tutorials/build-and-test-code/android
+
+29. GitHub Actions Dependency Caching  
+    https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+
+### Reference Application
+
+30. BDIX Tester — Google Play  
+    https://play.google.com/store/apps/details?id=com.shubhobrata.roy.bdixtester&hl=en
+
+31. Public Developer Profile  
+    https://bd.linkedin.com/in/shubhobrataroy
+
+32. Public GitHub Profile  
+    https://github.com/shubhobrataroy
+
+### Reference Policy
+
+- Open and verify official documentation when research is performed.
+- Prefer current official documentation over third-party tutorials.
+- Record the date of research.
+- Do not assume old documentation is still current.
+- Do not treat third-party APK listing information as authoritative over the official Google Play listing.
+- Do not assume an external app's implementation details are publicly verified.
+- Do not copy the reference application's proprietary implementation.
+
+## 24. Final Instruction
+
+Begin by auditing the existing BDIX Tester repository.
+
+Deeply analyze the reference application using its publicly available Google Play information, screenshots, reviews and developer-published technical information.
+
+Create a documented reference-app analysis.
+
+Preserve the complete original user-provided `FtpLinks` endpoint catalog.
+
+Convert the catalog into Kotlin without silently modifying, omitting or inventing URLs.
+
+Create a professional, lightweight native Android architecture.
+
+Design BDIX Tester around categorized server discovery, quick and full testing workflows, reliable results, low data consumption, catalog freshness, server speed measurement and privacy-conscious local storage.
+
+Use modern Kotlin, Jetpack Compose, Material 3, Coroutines and appropriate Android architecture.
+
+Design future server testing and automatic database updates without prematurely implementing them.
+
+Preserve existing project work.
+
+Verify technical decisions with official documentation.
+
+Report actual build and test evidence.
+
+**You are authorized to complete Phase 1, Phase 2 and Phase 3 only. Do not start Phase 4 or any later phase without my explicit approval.**

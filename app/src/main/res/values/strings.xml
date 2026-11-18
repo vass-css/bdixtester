@@ -1,0 +1,343 @@
+<resources>
+    <string name="app_name">BDIX Tester</string>
+
+    <!-- Navigation destinations -->
+    <string name="nav_home">Home</string>
+    <string name="nav_servers">Servers</string>
+    <string name="nav_scan">Scan</string>
+    <string name="nav_favorites">Saved</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Common actions & labels -->
+    <string name="action_back">Navigate back</string>
+    <string name="action_visit_website">Visit Website</string>
+    <string name="action_quick_scan">Quick Scan</string>
+    <string name="action_full_scan">Full Scan</string>
+    <string name="action_stop_scan">Stop</string>
+    <string name="action_clear_filters">Clear filters</string>
+    <string name="action_add_server">Add Custom Server</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_export">Export</string>
+    <string name="action_test_server">Test Now</string>
+    <string name="action_add_favorite">Save Favorite</string>
+    <string name="action_remove_favorite">Remove Favorite</string>
+    <string name="action_pin">Pin</string>
+    <string name="action_unpin">Unpin</string>
+    <string name="action_sync_now">Sync Catalog Now</string>
+    <string name="label_not_yet_tested">Not tested</string>
+    <string name="label_featured">Featured</string>
+    <string name="label_private_ip">Private IPv4</string>
+    <string name="label_latency_ms">Latency: %1$d ms</string>
+    <string name="label_throughput_mbps">Throughput: %1$s Mbps</string>
+    <string name="export_success">Export saved successfully.</string>
+    <string name="export_failed">Could not write export file.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_subtitle">Bangladesh broadband &amp; BDIX server discovery</string>
+    <string name="dashboard_network_connected">Network connection active</string>
+    <string name="dashboard_network_offline">No active network detected</string>
+    <string name="dashboard_network_disclaimer">Connectivity depends on your current ISP routing. Reachable endpoints are reported as reachable from current network.</string>
+    <string name="dashboard_catalog_stats_title">Catalog Overview</string>
+    <string name="dashboard_stat_total_servers">Total Servers</string>
+    <string name="dashboard_stat_categories">Categories</string>
+    <string name="dashboard_stat_tested">Tested</string>
+    <string name="dashboard_stat_reachable">Reachable</string>
+    <string name="dashboard_stat_unreachable">Unreachable</string>
+    <string name="dashboard_stat_restricted">Restricted / Error</string>
+    <string name="dashboard_stat_unsupported">Unsupported</string>
+    <string name="dashboard_catalog_notice_title">Built-In Catalog Audit Notice</string>
+    <string name="dashboard_catalog_discrepancy_body">Built-in catalog loaded %1$d supplied source entries verbatim (%2$d unique URLs, %3$d exact duplicate rows). Expected source count specification is %4$d.</string>
+    <string name="dashboard_catalog_verified_body">Built-in catalog verified: %1$d source entries preserved verbatim (%2$d remote, %3$d custom).</string>
+    <string name="dashboard_scan_modes_title">Connectivity Testing Modes</string>
+    <string name="dashboard_quick_scan_desc">Fast, low-overhead connectivity checks (2.5s budget) with no speed-test data transfer.</string>
+    <string name="dashboard_full_scan_desc">Tests the selected catalog with normal timeouts (5s connect / 6s read) and stage-by-stage latencies.</string>
+    <string name="dashboard_categories_title">Category Shortcuts</string>
+    <string name="dashboard_featured_title">Featured Servers</string>
+    <string name="dashboard_recent_title">Recently Tested</string>
+    <string name="dashboard_recent_empty">No scans executed yet. Start a Quick Scan or Full Scan to measure live reachability from your current network.</string>
+
+    <!-- Servers directory -->
+    <string name="servers_search_placeholder">Search server name, host, or URL…</string>
+    <string name="servers_filter_featured">Featured only</string>
+    <string name="servers_empty_title">No servers found</string>
+    <string name="servers_empty_catalog_desc">No servers are currently available in the catalog.</string>
+    <string name="servers_empty_filter_desc">No servers match your current category, protocol, status, or search query.</string>
+    <string name="servers_dialog_add_title">Add Custom Endpoint</string>
+    <string name="servers_dialog_edit_title">Edit Custom Endpoint</string>
+    <string name="servers_dialog_name_label">Display Name (optional)</string>
+    <string name="servers_dialog_url_label">Endpoint URL (http, https, ftp, ftps)</string>
+    <string name="servers_dialog_speed_url_label">Optional Speed-Test Resource URL (http/https)</string>
+    <string name="servers_dialog_delete_title">Delete Custom Server?</string>
+    <string name="servers_dialog_delete_body">Remove \"%1$s\" from your custom endpoints?</string>
+
+    <!-- Server details -->
+    <string name="details_title">Server Details</string>
+    <string name="details_endpoint_section">Endpoint Metadata</string>
+    <string name="details_verification_section">Catalog Provenance &amp; Verification</string>
+    <string name="details_latest_result_section">Latest Connectivity Observation</string>
+    <string name="details_speed_test_section">Optional Download Speed Test</string>
+    <string name="details_history_section">Endpoint Test History</string>
+    <string name="details_not_tested_notice">Not yet tested. Tap Quick Test or Full Test below to run a live connectivity probe.</string>
+    <string name="details_open_browser_error">No external browser found to open this URL.</string>
+    <string name="details_open_browser_ftp_unsupported">Visit Website supports http:// and https:// endpoints only. Use connectivity testing for FTP/FTPS endpoints.</string>
+    <string name="details_open_browser_invalid_scheme">Cannot open unsupported URL scheme in external browser.</string>
+    <string name="details_speed_test_disclaimer">Opt-in HTTP/HTTPS transfer up to %1$d MiB. Measures download speed from this test resource path only—not total ISP bandwidth.</string>
+    <string name="details_speed_test_url_input">Test Resource URL (http:// or https://)</string>
+    <string name="details_speed_test_start">Start Speed Test</string>
+    <string name="details_speed_test_cancel">Cancel Transfer</string>
+    <string name="details_cross_host_title">Confirm Cross-Host Redirect</string>
+    <string name="details_cross_host_body">The speed-test URL redirected to a different host (%1$s). Continue downloading from %2$s?</string>
+
+    <!-- Scan screen -->
+    <string name="scan_title">Connectivity Scanner</string>
+    <string name="scan_scope_title">Scan Scope</string>
+    <string name="scan_coalescing_caption">Unique exact URLs: %1$d | Catalog entries: %2$d | Executed probes: %3$d | Mapped results: %4$d</string>
+    <string name="scan_start_label">Start %1$s</string>
+    <string name="scan_metric_completed">Completed</string>
+    <string name="scan_metric_remaining">Remaining</string>
+    <string name="scan_metric_reachable">Reachable</string>
+    <string name="scan_metric_unreachable">Unreachable</string>
+    <string name="scan_metric_error">Restricted / Error</string>
+    <string name="scan_metric_unsupported">Unsupported</string>
+    <string name="scan_metric_active">Active Workers</string>
+    <string name="scan_metric_queued">Queued</string>
+    <string name="scan_explain_title">Understanding Results &amp; Timeouts</string>
+    <string name="scan_explain_body">Quick Scan uses a 2.5s budget and skips throughput transfer, so slow servers may be inconclusive. HTTP 401/403/404 responses still prove the host responded on your current network (classified as Restricted rather than Unreachable).</string>
+    <string name="scan_interrupted_notice">A previous scan session was interrupted before completion. Completed server results were preserved.</string>
+
+    <!-- Favorites & History -->
+    <string name="favorites_tab_favorites">Favorites</string>
+    <string name="favorites_tab_history">History</string>
+    <string name="favorites_empty_title">No saved favorites yet</string>
+    <string name="favorites_empty_desc">Tap the bookmark icon on any server card or detail screen to save and pin endpoints across catalog updates.</string>
+    <string name="history_empty_title">No testing history yet</string>
+    <string name="history_empty_desc">Run a Quick Scan, Full Scan, single endpoint test, or speed test to build local connectivity history.</string>
+    <string name="history_clear_all">Clear History</string>
+    <string name="history_clear_confirm_title">Clear All Test History?</string>
+    <string name="history_clear_confirm_body">This permanently removes all saved scan and speed-test records from this device.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance_section">Appearance &amp; Language</string>
+    <string name="settings_language_label">App Language</string>
+    <string name="settings_network_section">Testing Engine &amp; Speed Cap</string>
+    <string name="settings_concurrency_label">Max Concurrent Probes: %1$d (1 per host)</string>
+    <string name="settings_timeouts_summary">Full Scan Connect: %1$ds | Read: %2$ds | Quick Budget: %3$s</string>
+    <string name="settings_speed_cap_label">Opt-In Speed-Test Cap: %1$d MiB</string>
+    <string name="settings_network_profile_label">Manual Network Profile Label (optional, e.g., Home ISP / Office)</string>
+    <string name="settings_catalog_section">Remote Signed Catalog Sync</string>
+    <string name="settings_remote_url_label">Signed Manifest HTTPS URL (GitHub / HTTPS JSON)</string>
+    <string name="settings_auto_sync_label">Automatic Background Updates</string>
+    <string name="settings_wifi_only_label">Wi-Fi Only Catalog Sync</string>
+    <string name="settings_cross_origin_label">Allow Cross-Origin Payload URL</string>
+    <string name="settings_data_section">History, Retention &amp; Bulk Deletion</string>
+    <string name="settings_retention_label">History Retention Window: %1$d days</string>
+    <string name="settings_clear_favorites">Clear All Favorites</string>
+    <string name="settings_clear_custom">Delete All Custom Servers</string>
+    <string name="settings_reset_all">Reset All Local Data</string>
+    <string name="settings_confirm_action_title">Confirm Data Removal</string>
+    <string name="settings_privacy_section">Privacy &amp; About</string>
+    <string name="settings_developer_label">Developer</string>
+    <string name="settings_developer_value">Jubayer Hossain (JubayerHossain)</string>
+    <string name="settings_privacy_summary">Local-first design. No account, no analytics, no location or Wi-Fi SSID collection, and no advertising SDKs. Manual network labels and custom servers stay on-device.</string>
+    <string name="settings_version_label">Version</string>
+    <string name="settings_confirm_clear_favorites">Remove all saved favorite and pinned endpoints?</string>
+    <string name="settings_confirm_clear_custom">Delete all user-created custom endpoints?</string>
+    <string name="settings_confirm_reset_all">Clear history, favorites, custom servers, remote catalog cache, and reset settings to defaults? Built-in catalog entries remain intact.</string>
+
+    <!-- Main Tester Home & Reference Flow -->
+    <string name="home_open_drawer">Open navigation menu</string>
+    <string name="home_working_servers_found">Working servers Found</string>
+    <string name="home_working_servers_count_live">%1$d Working servers Found</string>
+    <string name="home_action_view">VIEW</string>
+    <string name="home_action_start_test">Start Test</string>
+    <string name="home_action_stop">Stop</string>
+    <string name="home_starting_title">Starting</string>
+    <string name="home_checking_internet">Checking internet</string>
+    <string name="home_testing_wait">Testing. Please wait</string>
+    <string name="home_currently_testing">Currently Testing: %1$s</string>
+
+    <!-- Wi-Fi Warning Dialog -->
+    <string name="wifi_warning_title">Network Error</string>
+    <string name="wifi_warning_body">Looks like your Wifi is turned off. Normally your Mobile network is not connected to BDIX.</string>
+    <string name="wifi_warning_settings">WIFI SETTINGS</string>
+    <string name="wifi_warning_continue">CONTINUE ANYWAY</string>
+
+    <!-- Navigation Drawer -->
+    <string name="drawer_ip_label">IP Address: %1$s</string>
+    <string name="drawer_ip_unavailable">Unavailable</string>
+    <string name="drawer_show_server_list">Show Server List</string>
+    <string name="drawer_saved_history">Saved &amp; History</string>
+    <string name="drawer_privacy_policy">Privacy Policy</string>
+    <string name="drawer_update_server_list">Update Server List</string>
+    <string name="drawer_add_server_request">New Server Add Request</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_version">Version: %1$s</string>
+    <string name="drawer_build">Build: %1$d</string>
+    <string name="drawer_update_triggered">Catalog sync started.</string>
+    <string name="drawer_update_configure_hint">Configure a signed remote catalog URL in Settings to sync updates.</string>
+    <string name="privacy_dialog_close">Close</string>
+
+    <!-- Server List Reference Tabs -->
+    <string name="servers_tab_working">Working</string>
+    <string name="servers_tab_not_tested">Not Tested</string>
+    <string name="servers_tab_not_working">Not Working</string>
+    <string name="servers_bottom_all">All</string>
+    <string name="servers_bottom_tv">TV</string>
+    <string name="servers_bottom_ftp">FTP</string>
+    <string name="servers_bottom_movie">Movies</string>
+    <string name="servers_bottom_ftp_count">FTP (%1$d)</string>
+    <string name="servers_bottom_movie_count">Movies (%1$d)</string>
+    <string name="servers_bottom_tv_count">TV (%1$d)</string>
+    <string name="servers_bottom_ott_count">OTT (%1$d)</string>
+    <string name="servers_bottom_search">Search</string>
+    <string name="servers_empty_working_desc">No working servers found yet. Tap Start Test below to scan your BDIX network.</string>
+    <string name="servers_empty_not_working_desc">No failing servers in this category yet.</string>
+
+    <!-- Revision 1–3 UI/UX, Browser & Navigation strings -->
+    <string name="home_quick_scan_hint">Fast 2.5s reachability probe</string>
+    <string name="home_full_scan_hint">Complete latency, TLS &amp; HTTP verification</string>
+    <string name="home_network_wifi">Wi-Fi</string>
+    <string name="home_network_mobile">Mobile Data</string>
+    <string name="home_network_ethernet">Ethernet</string>
+    <string name="home_network_offline">Offline</string>
+    <string name="home_summary_working">Working</string>
+    <string name="home_summary_failed">Failed</string>
+    <string name="home_summary_avg_ping">Avg Ping</string>
+    <string name="home_summary_not_tested_yet">Ready to scan %1$d BDIX endpoints</string>
+    <string name="home_ring_a11y_idle">%1$d of %2$d working servers found</string>
+    <string name="home_ring_a11y_scanning">Scanning %1$s percent complete, %2$d working servers found</string>
+    <string name="servers_title">Servers</string>
+    <string name="servers_open_url_a11y">Open %1$s in external browser</string>
+    <string name="servers_open_details_a11y">View diagnostics for %1$s</string>
+    <string name="servers_sync_catalog_a11y">Sync remote server catalog</string>
+    <string name="servers_latency_chip">%1$d ms</string>
+    <string name="server_badge_ip">IP: %1$s</string>
+    <string name="server_badge_host">Host: %1$s</string>
+    <string name="details_open_browser_failed">Unable to launch external browser for this URL.</string>
+    <string name="saved_title">Saved Servers</string>
+    <string name="history_title">Testing History</string>
+
+    <!-- Bangladesh OTT Directory -->
+    <string name="servers_bottom_ott">OTT</string>
+    <string name="ott_filter_all">All (%1$d)</string>
+    <string name="ott_filter_bd">Bangladesh (%1$d)</string>
+    <string name="ott_filter_global">Global in BD (%1$d)</string>
+    <string name="ott_badge_bd">Bangladesh</string>
+    <string name="ott_badge_global">Global in BD</string>
+    <string name="ott_empty_title">No OTT platforms found</string>
+    <string name="ott_empty_desc">No OTT platforms match your search or region filter.</string>
+
+    <!-- Modern Material 3 Settings Rows & Dialogs -->
+    <string name="settings_theme_title">App Theme</string>
+    <string name="settings_theme_dialog_title">Choose App Theme</string>
+    <string name="settings_language_dialog_title">Choose App Language</string>
+    <string name="settings_scan_mode_title">Default Scan Mode</string>
+    <string name="settings_scan_mode_dialog_title">Choose Default Scan Mode</string>
+    <string name="settings_scan_mode_quick_desc">Fast 2.5s reachability probe</string>
+    <string name="settings_scan_mode_full_desc">Complete latency, TLS &amp; HTTP check</string>
+    <string name="settings_concurrency_title">Max Concurrent Probes</string>
+    <string name="settings_concurrency_badge">%1$d max</string>
+    <string name="settings_speed_cap_title">Opt-In Speed-Test Cap</string>
+    <string name="settings_speed_cap_dialog_title">Choose Speed-Test Cap</string>
+    <string name="settings_speed_cap_value">%1$d MiB</string>
+    <string name="settings_network_profile_title">Network Profile Label</string>
+    <string name="settings_network_profile_unset">Not set (optional)</string>
+    <string name="settings_network_profile_dialog_hint">e.g., Home ISP or Office Fiber</string>
+    <string name="settings_remote_url_title">Remote Catalog URL</string>
+    <string name="settings_remote_url_unset">Not configured</string>
+    <string name="settings_remote_url_dialog_hint">https://example.com/catalog-manifest.json</string>
+    <string name="settings_auto_sync_subtitle">Periodically check signed remote catalog</string>
+    <string name="settings_wifi_only_subtitle">Prevent catalog downloads on mobile data</string>
+    <string name="settings_cross_origin_subtitle">Permit payload hosted on a different domain</string>
+    <string name="settings_retention_title">History Retention Window</string>
+    <string name="settings_retention_dialog_title">Choose Retention Window</string>
+    <string name="settings_retention_days_value">%1$d days</string>
+    <string name="settings_clear_history_subtitle">Remove all saved scan logs from this device</string>
+    <string name="settings_clear_favorites_subtitle">Unbookmark and unpin all saved servers</string>
+    <string name="settings_clear_custom_subtitle">Remove all user-added custom endpoints</string>
+    <string name="settings_reset_all_subtitle">Reset preferences and clear local user data</string>
+
+    <!-- Elevated Server Cards, Home Top Bar & Settings Screenshot Integrations -->
+    <string name="action_open">Open</string>
+    <string name="home_ip_pill_connected">%1$s · %2$s</string>
+    <string name="home_ip_pill_offline">Offline</string>
+    <string name="settings_header_catalog_summary">%1$d BDIX · %2$d OTT</string>
+    <string name="settings_quick_actions_section">Servers &amp; Catalog Actions</string>
+    <string name="settings_update_server_list_subtitle">Fetch the latest signed server catalog updates</string>
+    <string name="settings_add_server_request_subtitle">Add a new custom BDIX or FTP server endpoint</string>
+    <string name="settings_community_section">Community, Privacy &amp; About</string>
+    <string name="settings_privacy_policy_subtitle">Local-first architecture with zero tracking or ads</string>
+    <string name="settings_privacy_policy_full_body">BDIX Tester is built with a strict local-first privacy architecture.\n\n• No Accounts or Sign-In: Use every feature without creating an account.\n• No Analytics or Ads: Zero advertising SDKs and zero third-party behavioral tracking.\n• No Location or Wi-Fi SSID Collection: Network checks only observe local transport status and IP on-device.\n• On-Device Storage: Your saved favorites, custom servers, scan history, and manual ISP labels stay exclusively on your device and can be cleared anytime from Settings.</string>
+    <string name="settings_facebook_page_title">Facebook Community</string>
+    <string name="settings_facebook_page_subtitle">Explore BDIX Tester community tips &amp; updates</string>
+    <string name="settings_share_app_title">Share App</string>
+    <string name="settings_share_app_subtitle">Recommend BDIX Tester to friends</string>
+    <string name="settings_share_app_message">Try BDIX Tester — find fast working BDIX FTP, Movie, and TV servers plus 26 Bangladesh OTT platforms right from your broadband connection!</string>
+    <string name="settings_footer_version_build">Version %1$s  ·  Build %2$d</string>
+
+    <!-- P1–P3 Precision Diagnostic Minimalism UI/UX Strings -->
+    <string name="settings_reduce_animations_title">Reduce Animations</string>
+    <string name="settings_reduce_animations_subtitle">Disable pulsing, shimmer, and spring effects</string>
+    <string name="settings_last_synced_at">Last synced: %1$s</string>
+    <string name="settings_never_synced">Not synced yet</string>
+    <string name="settings_sync_retry">Retry Sync</string>
+    <string name="servers_sort_label">Sort</string>
+    <string name="servers_sort_default">Default Order</string>
+    <string name="servers_sort_fastest">Fastest Ping</string>
+    <string name="servers_sort_name">Name (A–Z)</string>
+    <string name="servers_copy_url">Copy URL</string>
+    <string name="servers_url_copied">Copied URL: %1$s</string>
+    <string name="servers_diagnostics_title">Server Diagnostics</string>
+    <string name="servers_diagnostics_action">View Diagnostics</string>
+    <string name="servers_more_actions_a11y">More actions for %1$s</string>
+    <string name="diagnostics_stage_dns">DNS Lookup</string>
+    <string name="diagnostics_stage_tcp">TCP Connect</string>
+    <string name="diagnostics_stage_tls">TLS Handshake</string>
+    <string name="diagnostics_stage_http">HTTP Response</string>
+    <string name="diagnostics_stage_ftp">FTP Control</string>
+    <string name="diagnostics_http_status">HTTP Status</string>
+    <string name="diagnostics_ftp_code">FTP Greeting</string>
+    <string name="diagnostics_final_url">Final URL</string>
+    <string name="diagnostics_error_detail">Diagnostic Note</string>
+    <string name="diagnostics_not_available">N/A</string>
+    <string name="saved_section_pinned">Pinned</string>
+    <string name="saved_section_all">Saved</string>
+    <string name="saved_removed_snackbar">Removed \"%1$s\" from saved</string>
+    <string name="history_section_today">Today</string>
+    <string name="history_section_yesterday">Yesterday</string>
+    <string name="history_section_earlier">Earlier</string>
+    <string name="history_deleted_snackbar">Deleted history entry for \"%1$s\"</string>
+    <string name="action_undo">Undo</string>
+    <string name="home_mode_caption_quick">Quick Scan · 2.5s budget</string>
+    <string name="home_mode_caption_full">Full Scan · Complete check</string>
+    <string name="home_post_scan_summary">%1$d working · Avg %2$d ms</string>
+
+    <!-- Four Curated Color Themes & Preview Cards -->
+    <string name="settings_color_theme_section_title">Color Theme</string>
+    <string name="settings_color_theme_section_subtitle">Choose one of four curated Light &amp; Dark palettes</string>
+    <string name="settings_appearance_mode_title">Appearance Mode</string>
+    <string name="settings_appearance_mode_dialog_title">Choose Appearance Mode</string>
+    <string name="settings_appearance_system">System Default</string>
+    <string name="settings_appearance_light">Light</string>
+    <string name="settings_appearance_dark">Dark</string>
+    <string name="theme_preset_midnight_indigo">Midnight Indigo</string>
+    <string name="theme_preset_midnight_indigo_desc">Navy &amp; indigo · Modern precision</string>
+    <string name="theme_preset_graphite_amber">Graphite &amp; Amber</string>
+    <string name="theme_preset_graphite_amber_desc">Charcoal &amp; amber · Technical instrument</string>
+    <string name="theme_preset_deep_emerald">Deep Emerald</string>
+    <string name="theme_preset_deep_emerald_desc">Forest &amp; teal · Calm clarity</string>
+    <string name="theme_preset_warm_premium">Warm Premium</string>
+    <string name="theme_preset_warm_premium_desc">Ivory &amp; burgundy · Editorial refinement</string>
+    <string name="theme_preview_selected">Active</string>
+    <string name="theme_preview_sample_card_title">BDIX Media Node</string>
+    <string name="theme_preview_sample_badge">Reachable · 4 ms</string>
+    <string name="theme_preview_primary_btn">Scan</string>
+    <string name="theme_preview_secondary_btn">Servers</string>
+    <string name="theme_preview_card_a11y">%1$s theme preset, %2$s</string>
+</resources>

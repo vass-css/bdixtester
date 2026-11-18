@@ -1,0 +1,1616 @@
+# BDIX Tester — Ultimate Performance Engineering, Rocket-Fast Execution, Butter-Smooth UI, Memory Optimization & Low-End Device Excellence
+
+## ১. তোমার দায়িত্ব (Role & Mission)
+
+তুমি একজন Principal Android Performance Engineer, Senior Kotlin Engineer, Jetpack Compose Performance Specialist, Memory Management Engineer, Network Systems Engineer, Database Optimization Engineer এবং Android Runtime Specialist হিসেবে কাজ করবে।
+
+তোমার দায়িত্ব হলো বিদ্যমান BDIX Tester Android Application-এর সম্পূর্ণ Performance গভীরভাবে বিশ্লেষণ করা এবং প্রমাণভিত্তিক Optimization-এর মাধ্যমে Application-টিকে যতটা সম্ভব দ্রুত, Lightweight, Smooth, Responsive, Stable এবং Battery Efficient করা।
+
+আমি চাই Application-এর Performance এমন পর্যায়ে উন্নত হোক, যেন ব্যবহার করার সময় সবকিছু অত্যন্ত দ্রুত ও স্বাভাবিক মনে হয়।
+
+আমার প্রত্যাশা:
+
+- Rocket-fast App Startup।
+- Butter-smooth UI।
+- Almost instant Navigation।
+- Fast Server Catalog Loading।
+- Smooth Scrolling।
+- Minimal RAM Usage।
+- No Unnecessary Memory Allocation।
+- No Memory Leaks।
+- Minimal CPU Overhead।
+- Efficient GPU Rendering।
+- No Unnecessary Recomposition।
+- Fast Server Search।
+- Fast Category Filtering।
+- Efficient Network Testing।
+- Optimized Background Scanning।
+- Minimal Battery Consumption।
+- No ANR।
+- No Unnecessary Crashes।
+- Smaller Application Footprint।
+- Fast Application Resume।
+- Stable Behaviour on Low-End Android Devices।
+
+**শুধু Benchmark-এ ভালো দেখানোর জন্য Optimization করবে না। বাস্তব ব্যবহারকারীর অভিজ্ঞতা দ্রুত ও উন্নত করতে হবে।**
+
+তোমার মূল লক্ষ্য হবে:
+
+**Maximum Real-World Performance + Minimum Unnecessary Resource Consumption + Zero Functional Regression.**
+
+---
+
+# ২. Project Context ও Existing Architecture
+
+প্রথমে সম্পূর্ণ Application বুঝবে।
+
+Project:
+
+- Name: BDIX Tester।
+- Platform: Native Android।
+- Language: Kotlin।
+- UI Framework: Jetpack Compose।
+- Design System: Material Design 3।
+- Database: Existing Room Database।
+- Background Execution: Existing Background Scanning Architecture।
+- CI/CD: Existing GitHub Actions।
+
+নিচের Existing Features অক্ষুণ্ণ রাখতে হবে:
+
+1. Existing BDIX Server Testing Engine।
+2. FTP Server Catalog।
+3. Movies / Media Catalog।
+4. Live TV Catalog।
+5. Existing OTT Catalog এবং ২৬টি OTT Platform।
+6. ISP Information ও ISP-to-Server Mapping।
+7. Quick Scan।
+8. Full Scan।
+9. Working / Not Tested / Not Working Status।
+10. Server Search।
+11. Category Filtering।
+12. ISP Search।
+13. Fastest Ping Sorting।
+14. A–Z Sorting।
+15. Saved Servers।
+16. Pinned Servers।
+17. Testing History।
+18. Export Functionality।
+19. Custom Server Management।
+20. Remote Catalog Sync।
+21. Four Premium Color Themes।
+22. Light / Dark / System Appearance।
+23. Bengali এবং English Support।
+24. Background Server Scanning।
+25. Scan Progress Notification।
+26. Scan Completion Notification।
+
+আগে অনুমোদিত চারটি Theme:
+
+- Midnight Indigo।
+- Graphite & Amber।
+- Deep Emerald।
+- Warm Premium।
+
+পুরোনো Cyan-Sky Color System সম্পূর্ণভাবে বাদ দেওয়ার সিদ্ধান্ত অক্ষুণ্ণ থাকবে।
+
+Performance Optimization-এর নামে কোনো Theme, Feature বা User Functionality সরিয়ে ফেলবে না।
+
+---
+
+# ৩. সর্বপ্রথম নিয়ম — Measure Before Optimize
+
+Optimization শুরু করার আগে সম্পূর্ণ Application-এর বর্তমান Performance মাপবে।
+
+অনুমান করে Optimization করবে না।
+
+### 3.1 Baseline Performance Measurement
+
+নিচের বিষয়গুলোর বর্তমান অবস্থা সংগ্রহ করবে:
+
+| Performance Area | Measurements |
+|---|---|
+| App Startup | Cold / Warm / Hot |
+| UI Rendering | Frame Duration / Frame Overrun |
+| Scrolling | Frame Jank / P95 / P99 |
+| Memory | Heap / PSS / RSS |
+| CPU | Main Thread / Worker Threads |
+| GPU | Rendering / Frame Time |
+| Database | Query Time / Transactions |
+| Network | Request Time / Timeout |
+| App Size | APK / AAB / DEX / Resources |
+| Battery | Background Usage / Wake Locks |
+| Stability | Crash / ANR |
+| Compose | Recomposition / State Invalidation |
+
+### 3.2 Use Actual Performance Tools
+
+প্রয়োজন অনুযায়ী ব্যবহার করবে:
+
+- Android Studio CPU Profiler।
+- Android Studio Memory Profiler।
+- Android Studio Network Inspector।
+- Android Studio Layout Inspector।
+- Android Studio Energy Profiler।
+- System Tracing।
+- Perfetto।
+- Macrobenchmark।
+- Microbenchmark।
+- Baseline Profile।
+- JankStats।
+- Android Vitals।
+- StrictMode।
+- Heap Dump।
+- LeakCanary।
+
+প্রতিটি Tool-এর প্রয়োজন এবং বর্তমান Project Compatibility যাচাই করবে।
+
+### 3.3 Before vs After Comparison
+
+প্রতিটি গুরুত্বপূর্ণ Optimization-এর আগে ও পরে একই ধরনের Test চালাবে।
+
+রিপোর্ট করবে:
+
+- Previous Value।
+- Optimized Value।
+- Absolute Difference।
+- Percentage Improvement।
+- Measurement Method।
+- Test Environment।
+- Confidence Level।
+
+যেখানে বাস্তব Measurement সম্ভব নয়, সেখানে Unverified হিসেবে চিহ্নিত করবে।
+
+**কোনো Benchmark ছাড়া অ্যাপ ২ গুণ, ৫ গুণ বা ১০ গুণ Fast হয়েছে বলে দাবি করবে না।**
+
+---
+
+# ৪. Phase 1 — App Startup Optimization
+
+Application Open হওয়ার সঙ্গে সঙ্গেই যেন ব্যবহারকারী দ্রুত Interface দেখতে পান।
+
+### 4.1 Cold Startup
+
+পরীক্ষা করবে:
+
+- Application Process Initialization।
+- MainActivity Initialization।
+- Application Class Initialization।
+- Dependency Injection Initialization।
+- DataStore Initialization।
+- Room Database Initialization।
+- Repository Initialization।
+- JSON Catalog Parsing।
+- Font Loading।
+- Theme Initialization।
+- Navigation Initialization।
+- First Compose Frame।
+
+যে কাজ প্রথম Screen দেখানোর জন্য প্রয়োজন নেই, সেগুলোকে Startup-এর Critical Path থেকে সরানোর উপযুক্ততা যাচাই করবে।
+
+### 4.2 Warm ও Hot Startup
+
+- Activity Recreation।
+- Process Reuse।
+- State Restoration।
+- Cached Catalog Access।
+- Theme Restoration।
+- Previous Navigation Restoration।
+
+এসব ক্ষেত্রে অপ্রয়োজনীয় Initialization বন্ধ করবে।
+
+### 4.3 Lazy Initialization
+
+যেসব Component বা Data App Launch-এর সময় প্রয়োজন নেই সেগুলো অপ্রয়োজনীয়ভাবে Initialize করবে না।
+
+তবে অতিরিক্ত Lazy Initialization-এর কারণে ব্যবহারকারী প্রথমবার কোনো Feature Open করলে যেন নতুন Lag তৈরি না হয়, সেটিও পরীক্ষা করবে।
+
+### 4.4 App Startup Library
+
+বর্তমান Initialization Architecture পর্যালোচনা করবে।
+
+প্রয়োজন হলে AndroidX App Startup বা উপযুক্ত Lazy Initialization Pattern বিবেচনা করবে।
+
+নতুন Dependency কেবল বাস্তব Benefit থাকলে যুক্ত করবে।
+
+### 4.5 Startup Target
+
+প্রথমে বাস্তব Baseline মাপবে।
+
+Android-এর Startup Performance Guidance অনুসারে যথাসম্ভব দ্রুত Initial Display নিশ্চিত করবে।
+
+Official Reference:
+
+https://developer.android.com/topic/performance/appstartup
+
+---
+
+# ৫. Phase 2 — Jetpack Compose Performance Optimization
+
+Compose Performance এই Project-এর অন্যতম প্রধান লক্ষ্য।
+
+প্রতিটি Screen ও Shared Component পরীক্ষা করবে।
+
+### 5.1 Recomposition Optimization
+
+খুঁজে বের করবে:
+
+- Unnecessary Recomposition।
+- Excessive State Observation।
+- Unstable Parameters।
+- Expensive Composable Calculations।
+- Incorrect State Hoisting।
+- Unnecessary Composition।
+- State Read During High-Frequency Updates।
+- Backwards State Writes।
+- Unnecessary Object Creation।
+
+সমাধানের জন্য প্রযোজ্য ক্ষেত্রে ব্যবহার করবে:
+
+- `remember`
+- `rememberSaveable`
+- Stable UI State Models।
+- Immutable Data।
+- Proper State Hoisting।
+- Deferred State Reads।
+- Lambda-based Modifiers।
+- `derivedStateOf`
+- `computedStateOf` (শুধু বর্তমান Compose Version সমর্থন করলে)।
+
+প্রতিটি ক্ষেত্রে প্রয়োজনীয়তা যাচাই করবে।
+
+অকারণে সব Composable-এ `remember` বা `derivedStateOf` ব্যবহার করবে না।
+
+### 5.2 Stability Optimization
+
+- Stable Parameter।
+- Unstable Parameter।
+- Immutable Models।
+- Mutable Collection।
+- Data Class।
+- Interface Stability।
+- Compose Compiler Stability।
+- Strong Skipping Compatibility।
+
+Project-এর বর্তমান Compose ও Kotlin Version অনুযায়ী সঠিক Optimization করবে।
+
+শুধু Recomposition সংখ্যা কমানোর জন্য `@Stable`, `@Immutable` বা Compiler Configuration ভুলভাবে ব্যবহার করবে না।
+
+### 5.3 Lazy Layout Optimization
+
+বিশেষভাবে পরীক্ষা করবে:
+
+- LazyColumn।
+- LazyRow।
+- LazyVerticalGrid।
+- LazyHorizontalGrid।
+- Large Server Lists।
+- Heterogeneous List।
+- Nested Scrolling।
+- Scroll State।
+
+প্রয়োজনে:
+
+- Stable Unique Keys।
+- Appropriate `contentType`।
+- Efficient Item Rendering।
+- Avoid Expensive Work Inside Item Composables।
+- Efficient Scroll State Observation।
+- Proper Item Reuse।
+
+List Index-কে Stable Item Key হিসেবে ব্যবহার করবে না।
+
+অপ্রয়োজনীয় `indexOf()` বা বারবার Full List Traversal এড়িয়ে চলবে।
+
+### 5.4 UI State Management
+
+Scan Progress প্রতি মুহূর্তে Update হলেও সম্পূর্ণ Screen যেন অপ্রয়োজনীয়ভাবে Recompose না হয়।
+
+উদাহরণস্বরূপ:
+
+- Hero Progress।
+- Working Counter।
+- Status Tabs।
+- Server Cards।
+- Scan Button।
+- Navigation।
+
+এসবের State Dependency সঠিকভাবে আলাদা করবে।
+
+একটি Server-এর Status পরিবর্তন হলে প্রয়োজন ছাড়া পুরো Server List Rebuild বা Recompose হওয়া উচিত নয়।
+
+### 5.5 Compose Performance Audit
+
+Layout Inspector এবং Composition Tracing দিয়ে বাস্তব সমস্যা শনাক্ত করবে।
+
+শুধু Recomposition Count কমানোকে Performance Improvement হিসেবে গণ্য করবে না।
+
+প্রকৃত Rendering Time এবং Benchmark Result দিয়ে প্রমাণ করবে।
+
+Official References:
+
+https://developer.android.com/develop/ui/compose/performance
+
+https://developer.android.com/develop/ui/compose/performance/bestpractices
+
+https://developer.android.com/develop/ui/compose/performance/stability
+
+---
+
+# ৬. Phase 3 — Memory Optimization ও Memory Leak Elimination
+
+RAM Usage যতটা সম্ভব কমাবে, তবে বাস্তব প্রয়োজনীয় Cache এবং Performance-এর মধ্যে Balance বজায় রাখবে।
+
+### 6.1 Heap Analysis
+
+পরীক্ষা করবে:
+
+- Java Heap।
+- Kotlin Object Allocation।
+- Native Memory।
+- Graphics Memory।
+- Bitmap Memory।
+- Direct Byte Buffers।
+- Room Database Memory।
+- JSON Object Memory।
+- Coroutine Memory।
+- Cached Collections।
+- Network Buffers।
+
+PSS, RSS এবং Java Heap-কে একই Metric মনে করবে না।
+
+Memory Profiler ব্যবহার করে বরাদ্দ এবং সময়ের সঙ্গে Memory Usage পরীক্ষা করবে।
+
+### 6.2 Memory Leak Detection
+
+বিশেষভাবে খুঁজবে:
+
+- Activity Leak।
+- Context Leak।
+- ViewModel Leak।
+- Service Leak।
+- Coroutine Leak।
+- Flow Collector Leak।
+- Listener Leak।
+- Broadcast Receiver Leak।
+- Callback Leak।
+- Handler Leak।
+- Lifecycle Observer Leak।
+- Socket Leak।
+- Network Response Leak।
+- Database Cursor Leak।
+- Animation Reference Leak।
+
+### 6.3 Common Memory Leak Patterns
+
+পরীক্ষা করবে:
+
+- Static বা Long-Lived Object-এ Activity Context রাখা।
+- Activity Destroy হওয়ার পর Reference ধরে রাখা।
+- Unregister না করা Listener।
+- Uncancelled Coroutine।
+- Unclosed Socket।
+- Unclosed InputStream / OutputStream।
+- Unreleased Response Body।
+- Unnecessary Global Scope।
+- Infinite Flow Collection।
+- Unreleased Resources।
+- Application বন্ধ হওয়ার পরেও চলমান Background Task।
+
+### 6.4 LeakCanary
+
+প্রয়োজন হলে LeakCanary Debug Build-এ Integrate করবে।
+
+- Production Release-এ LeakCanary অপ্রয়োজনীয়ভাবে Include করবে না।
+- Activity এবং Service Lifecycle Leak পরীক্ষা করবে।
+- Leak Trace বিশ্লেষণ করবে।
+- Leak-এর Root Cause Fix করবে।
+- শুধু Leak Detection Tool Install করেই কাজ শেষ হয়েছে বলবে না।
+
+https://square.github.io/leakcanary/
+
+### 6.5 Memory Management
+
+- Unnecessary Object Creation কমাবে।
+- Large Temporary Collections কমাবে।
+- প্রয়োজন ছাড়া Duplicate Catalog Object তৈরি করবে না।
+- অপ্রয়োজনীয় Cache সীমিত করবে।
+- Lifecycle অনুযায়ী Resource Release করবে।
+- Memory Pressure-এর সময় অপ্রয়োজনীয় Cache Release করবে।
+- Background Process-এ Unnecessary Memory Retention বন্ধ করবে।
+
+`android:largeHeap="true"` ব্যবহার করে সমস্যাকে লুকাবে না।
+
+কোনো Memory Optimization-এর আগে Memory Profile পরীক্ষা করবে।
+
+Official References:
+
+https://developer.android.com/topic/performance/memory-overview
+
+https://developer.android.com/topic/performance/memory/manage-app-memory
+
+---
+
+# ৭. Phase 4 — CPU এবং Thread Performance
+
+Application-এর CPU Usage এবং Thread Management পর্যালোচনা করবে।
+
+### 7.1 Main Thread
+
+Main Thread-এ কখনো অপ্রয়োজনীয় Heavy Work চালাবে না।
+
+বিশেষভাবে:
+
+- JSON Parsing।
+- Large Sorting।
+- Catalog Mapping।
+- Database Operations।
+- Network Requests।
+- Search Indexing।
+- Large Serialization।
+- File Reading।
+- Heavy Calculations।
+
+প্রয়োজন অনুযায়ী Background Dispatcher ব্যবহার করবে।
+
+### 7.2 Coroutine Optimization
+
+- Structured Concurrency।
+- Correct Coroutine Scope।
+- Cancellation।
+- Dispatcher Selection।
+- Bounded Concurrency।
+- Lifecycle-aware Collection।
+- Avoid Unnecessary Coroutine Creation।
+- Avoid GlobalScope।
+- Avoid Blocking Calls।
+
+একই কাজের জন্য অপ্রয়োজনীয় বহু Coroutine তৈরি করবে না।
+
+### 7.3 Thread Management
+
+- Excessive Thread Creation।
+- Unnecessary Thread Pool।
+- Blocking Worker Threads।
+- Thread Starvation।
+- Lock Contention।
+- Synchronization Overhead।
+- CPU-intensive Work।
+
+পরীক্ষা করবে।
+
+### 7.4 StrictMode
+
+Development/Debug Build-এ StrictMode ব্যবহার করে Main Thread Disk ও Network Access শনাক্ত করবে।
+
+Production Build-এ Debugging Penalty বা Logging অপ্রয়োজনীয়ভাবে চালু রাখবে না।
+
+Reference:
+
+https://developer.android.com/reference/android/os/StrictMode
+
+---
+
+# ৮. Phase 5 — GPU, Rendering ও Butter-Smooth Scrolling
+
+Application যেন Scroll, Navigation এবং Animation-এর সময় Smooth থাকে।
+
+### 8.1 Frame Performance
+
+বিশেষভাবে পরীক্ষা করবে:
+
+- Frame Duration।
+- Frame Overrun।
+- Janky Frames।
+- P50।
+- P90।
+- P95।
+- P99।
+
+Device Refresh Rate অনুযায়ী Frame Budget বিবেচনা করবে।
+
+60Hz Display-এ প্রায় 16.67ms, 90Hz-এ প্রায় 11.11ms এবং 120Hz-এ প্রায় 8.33ms-এর Frame Interval লক্ষ্য করতে হবে।
+
+### 8.2 Rendering Optimization
+
+- Excessive Layout Pass।
+- Deep Layout Hierarchy।
+- Expensive Drawing।
+- Unnecessary Clipping।
+- Expensive Blur।
+- Large Shadows।
+- Excessive Alpha Layers।
+- Overdraw।
+- Complex Path Drawing।
+- Large Canvas Work।
+- Heavy Animations।
+
+পরীক্ষা করবে।
+
+### 8.3 Animation Optimization
+
+- Unnecessary Infinite Animation বন্ধ করবে।
+- Idle Animation সীমিত করবে।
+- Active Animation-এর প্রয়োজনীয়তা বজায় রাখবে।
+- Reduced Motion সম্মান করবে।
+- Animation State Lifecycle পরিচালনা করবে।
+- Background-এ অপ্রয়োজনীয় Animation বন্ধ করবে।
+
+### 8.4 Scroll Performance
+
+Servers, Movies, FTP, Live TV, OTT, Saved এবং History List-এ Smooth Scrolling নিশ্চিত করবে।
+
+List-এর মাঝখানে নতুন Data Update হলে অপ্রয়োজনীয় Scroll Position Reset হওয়া যাবে না।
+
+### 8.5 Graphics Memory
+
+অপ্রয়োজনীয় Bitmap, Image এবং Graphics Resource তৈরি হবে না।
+
+বড় Image Asset থাকলে উপযুক্ত Resolution ও Resource Strategy ব্যবহার করবে।
+
+Performance-এর জন্য প্রয়োজনীয় Design Quality অকারণে নষ্ট করবে না।
+
+---
+
+# ৯. Phase 6 — Server Catalog এবং JSON Data Performance
+
+BDIX Tester-এর Catalog বড় হওয়ায় Data Processing Efficient হতে হবে।
+
+দুটি সরবরাহ করা JSON Dataset এবং Existing Catalog-এর প্রকৃত Record Count যাচাই করবে।
+
+### 9.1 JSON Loading
+
+- Catalog বারবার Parse করবে না।
+- Application Launch-এর প্রতিবার অপ্রয়োজনীয় Full Parsing এড়িয়ে চলবে।
+- Parsed Data নিরাপদভাবে Reuse করবে।
+- JSON Parsing Background Thread-এ করবে।
+- Parsing-এর জন্য UI Thread Block করবে না।
+- অপ্রয়োজনীয় Duplicate Model তৈরি করবে না।
+- Full Dataset বারবার Copy করবে না।
+- প্রয়োজন ছাড়া JSON পুনরায় Serialize করবে না।
+
+### 9.2 Catalog Data Model
+
+ISP, Category এবং Server-এর Relationship Efficient রাখতে হবে।
+
+নিচের Information Preserve করতে হবে:
+
+- ISP ID।
+- ISP Name।
+- Server ID।
+- Original URL।
+- Category।
+- Protocol।
+- Status।
+- Source Information।
+
+ISP Mapping-এর কারণে কোনো Server বাদ যাবে না।
+
+### 9.3 Search Optimization
+
+Search করার সময় প্রতিবার সম্পূর্ণ Catalog নতুনভাবে Normalize করবে না।
+
+প্রয়োজন অনুযায়ী Precomputed Search Fields বা উপযুক্ত Search Index বিবেচনা করবে।
+
+Search Criteria:
+
+- ISP Name।
+- Server Name।
+- URL।
+- Domain।
+- IP।
+- Category।
+
+Search যেন দ্রুত এবং Consistent হয়।
+
+### 9.4 Filtering Optimization
+
+- Category Filter।
+- ISP Filter।
+- Status Filter।
+- Protocol Filter।
+- Sorting।
+
+যথাযথভাবে Optimize করবে।
+
+বারবার একই Filter Combination Calculate করবে না।
+
+অপ্রয়োজনীয় Full Dataset Rebuild এড়িয়ে চলবে।
+
+### 9.5 Sorting Optimization
+
+Fastest Ping First এবং A–Z Sorting Efficient হতে হবে।
+
+Unknown Latency এবং Invalid Ping সঠিকভাবে পরিচালনা করবে।
+
+Sort Operation UI Thread Block করবে না, যদি Data Size বা Calculation-এর কারণে সেটি Heavy হয়।
+
+ক্যাটালগের প্রকৃত Data Size অনুযায়ী Optimization করবে; অপ্রয়োজনীয়ভাবে জটিল Data Structure তৈরি করবে না।
+
+---
+
+# ১০. Phase 7 — Network Testing Engine Optimization
+
+এটাই Application-এর সবচেয়ে গুরুত্বপূর্ণ Performance Area।
+
+বর্তমান Network Testing Engine গভীরভাবে পর্যালোচনা করবে।
+
+লক্ষ্য হলো Server Testing দ্রুত করা, অথচ Network Stability ও Accuracy নষ্ট না করা।
+
+### 10.1 Network Concurrency
+
+সব Server একসঙ্গে Unbounded Coroutine বা Thread দিয়ে Test করবে না।
+
+উপযুক্ত Bounded Concurrency ব্যবহার করবে।
+
+পরীক্ষা করবে:
+
+- Maximum Parallel Requests।
+- Connection Timeout।
+- Read Timeout।
+- DNS Resolution।
+- Connection Establishment।
+- Request Cancellation।
+- Response Handling।
+- Connection Reuse।
+- Socket Cleanup।
+
+Concurrency এমনভাবে Optimize করতে হবে যেন:
+
+- Scan দ্রুত হয়।
+- Low-End CPU Overload না হয়।
+- RAM Usage অস্বাভাবিকভাবে না বাড়ে।
+- Internet Connection অপ্রয়োজনীয়ভাবে Saturate না হয়।
+- ISP বা Router-এর ওপর অতিরিক্ত চাপ না পড়ে।
+
+### 10.2 Adaptive Concurrency
+
+Device Capability এবং Network Condition অনুযায়ী Concurrency নিয়ন্ত্রণ করার উপযুক্ততা বিবেচনা করবে।
+
+প্রয়োজন অনুযায়ী:
+
+- Available Processors।
+- Memory Pressure।
+- Current Network Condition।
+- Timeout Rate।
+- Failure Rate।
+
+বিবেচনা করতে পারবে।
+
+তবে অসংখ্য Device-এর ওপর ভুল অনুমানের ভিত্তিতে Dynamic Tuning করবে না।
+
+### 10.3 Network Request Optimization
+
+- Duplicate Requests এড়িয়ে চলবে।
+- Unsupported Protocol ভুলভাবে পরীক্ষা করবে না।
+- Response Body অপ্রয়োজনে Download করবে না।
+- Proper Resource Closing নিশ্চিত করবে।
+- Request Timeout রাখবে।
+- সীমিত Retry Policy ব্যবহার করবে।
+- Failed Endpoint-এ অপ্রয়োজনীয় Repeated Request বন্ধ করবে।
+- DNS এবং Connection Reuse প্রয়োজন অনুযায়ী পরীক্ষা করবে।
+
+প্রতিটি Network Protocol-এর Testing Semantics সঠিক রাখতে হবে।
+
+### 10.4 HTTP/HTTPS/FTP এবং Streaming
+
+সব Endpoint-কে একইভাবে পরীক্ষা করবে না।
+
+Protocol অনুযায়ী সঠিক Probe Strategy ব্যবহার করবে।
+
+- HTTP।
+- HTTPS।
+- FTP।
+- Supported Streaming Endpoints।
+
+যে Server Testing Engine সমর্থন করে না, সেটিকে ভুলভাবে Working বা Not Working হিসেবে দেখাবে না।
+
+### 10.5 Progress Update Optimization
+
+একটি Server Test শেষ হলেই সম্পূর্ণ UI-তে অপ্রয়োজনীয় State Update পাঠাবে না।
+
+Progress Update Efficient এবং Throttled হবে।
+
+ব্যবহারকারী যেন Progress পরিষ্কার দেখতে পান, কিন্তু প্রতি Request-এর জন্য অতিরিক্ত UI Recomposition বা Database Write না হয়।
+
+### 10.6 Scan Cancellation
+
+- Stop Action দ্রুত কাজ করবে।
+- Pending Requests Cancel হবে।
+- Active Request যথাসম্ভব দ্রুত Terminate হবে।
+- No Orphan Coroutine।
+- No Orphan Socket।
+- No Background Worker Leak।
+
+### 10.7 Scan Accuracy
+
+Performance বাড়ানোর নামে Server Testing Accuracy কমানো যাবে না।
+
+ভুল Ping, Fake Working Status অথবা Incorrect Result গ্রহণযোগ্য নয়।
+
+---
+
+# ১১. Phase 8 — Background Scanning Performance ও Battery Optimization
+
+Application Minimize করলেও Background Scan চলবে—এই Existing Requirement অক্ষুণ্ণ রাখতে হবে।
+
+তবে Background Scanning যেন অপ্রয়োজনীয় Battery এবং RAM ব্যবহার না করে।
+
+### 11.1 Background Execution
+
+- Existing Background Execution Architecture Audit করবে।
+- উপযুক্ত Foreground Service বা Supported Execution Model ব্যবহার করবে।
+- Application UI-এর Lifecycle থেকে Scan Decouple করবে।
+- Activity Reference ধরে রাখবে না।
+- প্রয়োজন ছাড়া Service চালু রাখবে না।
+- Scan শেষ হলে Service Stop করবে।
+
+### 11.2 Progress Notification
+
+- Notification প্রয়োজন অনুযায়ী Update করবে।
+- প্রতি Server Request-এ অপ্রয়োজনীয় Notification Update করবে না।
+- Progress Throttling ব্যবহার করবে।
+- Completed Scan-এর Duplicate Notification তৈরি করবে না।
+
+### 11.3 Battery Optimization
+
+- Unnecessary Wake Lock থাকবে না।
+- Wake Lock প্রয়োজন হলে Limited Scope-এ ব্যবহার করবে।
+- কাজ শেষ হলেই Release করবে।
+- Idle অবস্থায় Network Request হবে না।
+- Idle অবস্থায় Decorative Animation চলবে না।
+- Background-এ অপ্রয়োজনীয় Polling হবে না।
+
+### 11.4 Background Resource Cleanup
+
+Scan শেষ হলে:
+
+- Network Resources Release।
+- Coroutine Cleanup।
+- Database Work Cleanup।
+- Notification State Update।
+- Service Shutdown।
+- Unnecessary Memory Reference Release।
+
+সবকিছু সঠিকভাবে সম্পন্ন করবে।
+
+Android Background Execution Restrictions এবং Foreground Service Policy অনুসরণ করবে।
+
+Reference:
+
+https://developer.android.com/develop/background-work/background-tasks
+
+https://developer.android.com/develop/background-work/services/fgs
+
+https://developer.android.com/topic/performance/vitals/stuck-wakelock
+
+---
+
+# ১২. Phase 9 — Room Database ও Persistence Optimization
+
+Existing Room Database পরীক্ষা করবে।
+
+### 12.1 Database Performance
+
+- Database Initialization।
+- Query Time।
+- Transaction Time।
+- Insert/Update।
+- Delete।
+- Data Fetch।
+- Relation Loading।
+- Duplicate Query।
+- Database Connection।
+- Unnecessary Cursor।
+
+### 12.2 Query Optimization
+
+প্রয়োজন অনুযায়ী:
+
+- Proper Index।
+- Efficient WHERE Conditions।
+- LIMIT।
+- Minimal Column Selection।
+- Efficient Sorting।
+- Efficient Filtering।
+- Batch Operations।
+- Transaction Management।
+
+Database-এ প্রয়োজন ছাড়া পুরো Catalog বারবার Insert বা Update করবে না।
+
+### 12.3 Flow এবং Database Observation
+
+অপ্রয়োজনীয় Database Query Trigger হচ্ছে কি না পরীক্ষা করবে।
+
+একটি ছোট State পরিবর্তনের কারণে সম্পূর্ণ Database Table-এর Data বারবার Fetch হচ্ছে কি না দেখবে।
+
+### 12.4 Persistence
+
+বর্তমান Room Schema এবং User Data Preserve করবে।
+
+কোনো Database Migration প্রয়োজন হলে সেটির বাস্তব প্রয়োজন ব্যাখ্যা করবে এবং Migration Test করবে।
+
+শুধু Performance-এর নামে Database Rewrite করবে না।
+
+Official Reference:
+
+https://developer.android.com/topic/performance/sqlite-performance-best-practices
+
+---
+
+# ১৩. Phase 10 — Memory Allocation, Garbage Collection ও Resource Efficiency
+
+Application-এর Object Allocation এবং Garbage Collection Behaviour পরীক্ষা করবে।
+
+বিশেষভাবে:
+
+- Excessive Temporary Objects।
+- Large Collections।
+- Unnecessary String Concatenation।
+- Repeated JSON Mapping।
+- Duplicate Data Classes।
+- Large Cache।
+- Frequent Allocation。
+- Excessive Boxing。
+- Large Collection Transformations।
+- Unnecessary Bitmap Allocation。
+
+প্রমাণ থাকলে Optimization করবে।
+
+শুধু Code ছোট দেখানোর জন্য Readability ও Maintainability নষ্ট করবে না।
+
+Garbage Collection কমানোর নামে অপ্রয়োজনীয় Object Pool তৈরি করবে না।
+
+যে Pool বাস্তব Benchmark-এ Benefit দেয় না, সেটি ব্যবহার করবে না।
+
+---
+
+# ১৪. Phase 11 — APK / AAB Size এবং Release Performance Optimization
+
+Application যেন অপ্রয়োজনীয়ভাবে বড় না হয়।
+
+### 14.1 R8 Optimization
+
+Release Build-এর বর্তমান R8 Configuration পরীক্ষা করবে।
+
+প্রয়োজনে:
+
+- Code Shrinking।
+- Obfuscation।
+- Resource Shrinking।
+- Optimized Release Configuration।
+- Safe Keep Rules।
+- Dependency Footprint Analysis।
+
+ব্যবহার করবে।
+
+### 14.2 Dependency Audit
+
+- Unused Dependencies।
+- Duplicate Libraries।
+- Heavy Libraries।
+- Unnecessary Transitive Dependencies।
+- Unused Resources।
+- Duplicate Icons।
+- Unused Fonts।
+
+চিহ্নিত করবে।
+
+কোনো Library Remove করার আগে বাস্তব Reference এবং Runtime Usage যাচাই করবে।
+
+### 14.3 Resource Optimization
+
+- Image Resolution।
+- Vector Resources।
+- Font Files।
+- XML Resources।
+- Large Assets।
+- Duplicate Resources।
+
+পর্যালোচনা করবে।
+
+### 14.4 Release Performance
+
+শুধু Debug Build দেখে Final Performance ঘোষণা করবে না।
+
+Release-like Optimized Build-এ Performance Benchmark চালাবে।
+
+R8 Optimization-এর কারণে Reflection, Serialization, Room অথবা Dependency Injection ভেঙে যাচ্ছে কি না পরীক্ষা করবে।
+
+Official Reference:
+
+https://developer.android.com/topic/performance/app-optimization/enable-app-optimization
+
+---
+
+# ১৫. Phase 12 — Baseline Profile ও Startup Profile Optimization
+
+Baseline Profile এবং Startup Profile ব্যবহার করার উপযুক্ততা যাচাই করবে।
+
+### 15.1 Critical User Journeys
+
+প্রয়োজন অনুযায়ী নিচের Flow-এর জন্য Profile তৈরি করবে:
+
+1. Cold App Launch।
+2. Home Screen Display।
+3. Servers Screen Navigation।
+4. FTP Category।
+5. Movies Category।
+6. Live TV Category।
+7. ISP Search।
+8. Server Filtering।
+9. Scroll Server List।
+10. Saved Screen।
+11. History Screen।
+12. Settings এবং Theme Change।
+
+### 15.2 Baseline Profile
+
+- Existing Gradle Plugin Compatibility।
+- Current Android Gradle Plugin।
+- Existing Kotlin Version।
+- Existing Build Configuration।
+
+যাচাই করে Profile Generation Setup করবে।
+
+Baseline Profile শুধু নামমাত্র তৈরি করবে না; বাস্তব User Journey অন্তর্ভুক্ত করতে হবে।
+
+### 15.3 Startup Profile
+
+App Startup-এর Critical Code Path অনুযায়ী Startup Profile প্রয়োজন কি না নির্ধারণ করবে।
+
+অপ্রয়োজনীয় Profile Configuration যোগ করবে না।
+
+Reference:
+
+https://developer.android.com/topic/performance/baselineprofiles/overview
+
+---
+
+# ১৬. Phase 13 — Architecture-Level Performance Audit
+
+সম্পূর্ণ Application Architecture পর্যালোচনা করবে।
+
+বিশেষভাবে:
+
+- UI Layer।
+- ViewModel।
+- Repository।
+- Data Source।
+- Database।
+- Network Layer।
+- Background Service।
+- Settings।
+- State Management।
+- Coroutine।
+- Flow।
+- Event Handling।
+
+### Architecture Performance Questions
+
+- একই Data কি একাধিকবার Load হচ্ছে?
+- একই Data কি অপ্রয়োজনীয়ভাবে Copy হচ্ছে?
+- Repository কি অপ্রয়োজনীয় Object তৈরি করছে?
+- ViewModel কি অপ্রয়োজনীয়ভাবে Heavy Logic করছে?
+- Composable কি Business Logic চালাচ্ছে?
+- Application Scope অপ্রয়োজনীয়ভাবে কাজ চালাচ্ছে?
+- একই Network Request একাধিক জায়গা থেকে শুরু হচ্ছে?
+- Database এবং UI State-এর মধ্যে Duplicate State রয়েছে?
+- Background Scan এবং UI-এর মধ্যে অতিরিক্ত Data Transfer হচ্ছে?
+
+প্রয়োজন ছাড়া নতুন Architecture বা Design Pattern চাপিয়ে দেবে না।
+
+বর্তমান Architecture ঠিক থাকলে সেটি Preserve করবে।
+
+---
+
+# ১৭. Phase 14 — Low-End Android Device Optimization
+
+BDIX Tester যেন কম RAM ও সীমিত CPU/GPU-যুক্ত Android Phone-এও ভালোভাবে কাজ করে।
+
+বাংলাদেশের সাধারণ ব্যবহারকারীদের বিভিন্ন ধরনের Android Device বিবেচনা করবে।
+
+### Device Conditions
+
+- Low-RAM Devices।
+- Entry-Level CPU।
+- Weak GPU।
+- Older Android Versions।
+- Slow Storage।
+- Slow Network।
+- High Network Latency।
+- Battery Saver।
+- Limited Memory Availability।
+
+### Special Tests
+
+- Large Server List।
+- Fast Repeated Search।
+- Rapid Category Switching।
+- Long Scrolling।
+- Large History۔
+- Multiple Background Scan Updates।
+- Application Resume।
+- Theme Switching।
+- Screen Rotation।
+- Memory Pressure।
+- Background/Foreground Transition।
+
+প্রয়োজন অনুযায়ী Device Capability অনুসারে Optimization করবে।
+
+Low-End Device-এর জন্য অপ্রয়োজনীয় Heavy Visual Effect বা Decoration বন্ধ রাখবে, তবে Core Functionality অক্ষুণ্ণ থাকবে।
+
+---
+
+# ১৮. Phase 15 — ANR, Crash ও Stability Elimination
+
+Performance মানে শুধু Speed নয়। Application Stable হওয়াও গুরুত্বপূর্ণ।
+
+পরীক্ষা করবে:
+
+- Application Not Responding।
+- Main Thread Blocking।
+- Deadlock।
+- Race Condition।
+- Coroutine Cancellation Failure।
+- Out-of-Memory।
+- Process Recreation।
+- Background Service Failure।
+- Network Exception।
+- Database Lock।
+- Uncaught Exception।
+- Notification Failure।
+
+প্রয়োজন অনুযায়ী Android Vitals এবং Crash Diagnostic Information ব্যবহার করবে।
+
+সব Error Ignore করে App Fast দেখানোর চেষ্টা করবে না।
+
+Error Handling Efficient এবং Predictable হতে হবে।
+
+---
+
+# ১৯. Phase 16 — Performance Benchmarking ও Automated Tests
+
+প্রতিটি Performance Improvement পরীক্ষার আওতায় আনবে।
+
+### 19.1 Macrobenchmark
+
+প্রাসঙ্গিক User Journey-এর জন্য Macrobenchmark তৈরি করবে।
+
+প্রয়োজন অনুযায়ী:
+
+- StartupTimingMetric।
+- FrameTimingMetric।
+- TraceSectionMetric।
+
+ব্যবহার করবে।
+
+### 19.2 Microbenchmark
+
+যেসব Kotlin Function বা Data Processing Operation Performance-Critical, সেগুলো Microbenchmark দিয়ে পরীক্ষা করবে।
+
+উদাহরণ:
+
+- Catalog Filtering।
+- Search Index।
+- Sorting।
+- JSON Mapping।
+- Data Transformation।
+
+### 19.3 Compose Tests
+
+- Rendering Regression।
+- Navigation Performance।
+- Large List Scrolling।
+- Search Responsiveness।
+- Frequent State Updates।
+- Theme Switching।
+
+### 19.4 Memory Tests
+
+- Repeated Screen Navigation।
+- Activity Recreation।
+- ViewModel Cleanup।
+- Service Cleanup।
+- Repeated Scan Lifecycle।
+- Heap Growth।
+- Leak Detection।
+
+### 19.5 Background Tests
+
+- Start Scan।
+- Minimize।
+- Resume।
+- Cancel।
+- Complete।
+- Notification।
+- Process Recreation।
+
+### 19.6 Test Environment
+
+Emulator এবং Physical Device Result আলাদা রাখবে।
+
+Emulator Benchmark-কে প্রকৃত Low-End Device Performance হিসেবে দেখাবে না।
+
+যেখানে Physical Device প্রয়োজন, সেখানে Cloud Device Testing বা Manual Device Testing-এর সুপারিশ করবে।
+
+Official Reference:
+
+https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview
+
+https://developer.android.com/topic/performance/benchmarking/macrobenchmark-metrics
+
+---
+
+# ২০. Phase 17 — GitHub Actions Performance CI
+
+বর্তমান GitHub Actions Workflow পরীক্ষা করবে।
+
+নতুন Performance Validation Pipeline প্রয়োজন হলে যুক্ত করবে।
+
+### Automated CI Jobs
+
+1. Debug Build।
+2. Release Build।
+3. Unit Tests।
+4. Repository Tests।
+5. Catalog Tests।
+6. Compose UI Tests।
+7. Android Emulator Tests।
+8. Background Service Tests।
+9. Memory-Related Regression Tests যেখানে সম্ভব।
+10. Macrobenchmark Execution যেখানে Runner/Device Support উপযুক্ত।
+11. R8 Validation।
+12. Baseline Profile Generation/Validation।
+
+### Performance Regression Detection
+
+Benchmark Report সংরক্ষণ করবে।
+
+আগের Benchmark-এর সঙ্গে নতুন Benchmark তুলনা করবে।
+
+Significant Regression পাওয়া গেলে সেটি CI-তে শনাক্ত করবে।
+
+Noisy Emulator Data-এর কারণে মিথ্যা Failure তৈরি করবে না।
+
+Performance Threshold বাস্তব Baseline এবং Measurement Variance থেকে নির্ধারণ করবে।
+
+### Artifacts
+
+প্রয়োজনে সংরক্ষণ করবে:
+
+- Benchmark JSON।
+- JUnit XML।
+- System Trace।
+- Perfetto Trace।
+- Heap Dump (Sensitive Data থাকলে নিরাপদ Handling সহ)।
+- Memory Report।
+- Build Output।
+- APK/AAB Size Report।
+
+---
+
+# ২১. Phase 18 — Performance Optimization Priority
+
+Implementation-কে নিচের Priority অনুসারে সাজাবে।
+
+### P0 — Critical Performance Issues
+
+- Main Thread Blocking।
+- Memory Leak।
+- ANR।
+- Unbounded Network Concurrency।
+- Major Startup Bottleneck।
+- Excessive CPU Usage।
+- Excessive Background Resource Usage।
+
+### P1 — High-Impact Optimization
+
+- Compose Recomposition।
+- Server List Scrolling।
+- Catalog Loading।
+- Search ও Filtering।
+- Network Testing।
+- Background Scan।
+- Battery Consumption।
+- Large Object Allocation।
+
+### P2 — Runtime ও Resource Optimization
+
+- Room Query Optimization।
+- R8।
+- Dependency Size।
+- Resource Footprint।
+- Baseline Profile।
+- Startup Profile।
+- Cache Strategy।
+
+### P3 — Advanced Optimization
+
+- Fine-Grained CPU Optimization।
+- Advanced Rendering।
+- Memory Allocation Refinement।
+- Advanced Benchmark Tuning।
+- Low-End Device-Specific Refinements।
+
+প্রতিটি Task-এর জন্য:
+
+- Current Problem।
+- Evidence।
+- Root Cause।
+- Proposed Fix।
+- Expected Benefit।
+- Regression Risk।
+- Benchmark।
+- Acceptance Criteria।
+
+উল্লেখ করবে।
+
+---
+
+# ২২. Performance Acceptance Criteria
+
+চূড়ান্ত Performance বিচার করার জন্য প্রমাণভিত্তিক Criteria তৈরি করবে।
+
+### Startup
+
+- Cold Startup।
+- Warm Startup।
+- Hot Startup।
+- Time to Initial Display।
+- Time to Full Display।
+
+### Responsiveness
+
+- Button Response।
+- Navigation Response।
+- Search Response।
+- Filter Response।
+- Screen Resume।
+
+### Rendering
+
+- Frame Duration।
+- Frame Overrun।
+- P95/P99।
+- Janky Frame Distribution।
+
+### Memory
+
+- Heap Usage।
+- PSS।
+- RSS।
+- Memory Growth।
+- Retained Objects।
+- Out-of-Memory Crashes।
+
+### Network
+
+- Server Test Duration।
+- Average Request Latency।
+- Timeout Rate।
+- Failure Rate।
+- Maximum Active Connections।
+- Cancellation Time।
+
+### Stability
+
+- Crash।
+- ANR।
+- Unhandled Exceptions।
+- Background Service Lifecycle।
+- Process Recovery।
+
+### Battery
+
+- Scan Energy।
+- Background Resource Usage।
+- Wake Lock Duration।
+- Idle Power Consumption।
+
+সব Metric-এর জন্য বর্তমান Baseline মেপে যুক্তিসংগত Target নির্ধারণ করবে।
+
+**কোনো Arbitrary Number অর্জনের জন্য Functionality, Accuracy, Stability অথবা Battery Life নষ্ট করবে না।**
+
+---
+
+# ২৩. কঠোর Code Preservation Rules
+
+এই Project-এ Code Preservation অত্যন্ত গুরুত্বপূর্ণ।
+
+- Existing Code অপ্রয়োজনীয়ভাবে Delete করবে না।
+- Existing Functionality সরাবে না।
+- Tests Delete করবে না।
+- Comments Delete করবে না।
+- Documentation Rewrite করবে না।
+- Business Logic অপ্রয়োজনীয়ভাবে পরিবর্তন করবে না।
+- Database Schema অপ্রয়োজনীয়ভাবে পরিবর্তন করবে না।
+- Existing Catalog Data বাদ দেবে না।
+- Existing Background Scanning Behaviour নষ্ট করবে না।
+- Four Premium Theme Architecture পরিবর্তন করবে না।
+- নতুন Dependency যুক্ত করার আগে Compatibility এবং Benefit যাচাই করবে।
+- অপ্রয়োজনীয় Architecture Rewrite করবে না।
+- সব পরিবর্তনের Diff পরীক্ষা করবে।
+
+কোনো Code সত্যিই Obsolete বা Performance-Harmful হলে তার Evidence এবং Impact ব্যাখ্যা করে প্রয়োজনীয় সর্বনিম্ন পরিবর্তন করবে।
+
+---
+
+# ২৪. Final Documentation
+
+সম্পূর্ণ Performance Engineering কাজের শেষে নিচের Documentation তৈরি করবে।
+
+### Report 1
+
+`docs/performance/performance-audit.md`
+
+সম্পূর্ণ বর্তমান Performance Audit।
+
+### Report 2
+
+`docs/performance/startup-optimization.md`
+
+Cold/Warm/Hot Startup এবং Startup Optimization।
+
+### Report 3
+
+`docs/performance/compose-performance.md`
+
+Recomposition, Stability, Lazy Layout এবং Rendering।
+
+### Report 4
+
+`docs/performance/memory-and-leak-audit.md`
+
+Heap, Memory, Leak Detection এবং Resource Cleanup।
+
+### Report 5
+
+`docs/performance/network-engine-optimization.md`
+
+Network Testing Engine এবং Concurrency।
+
+### Report 6
+
+`docs/performance/database-optimization.md`
+
+Room এবং Database Query Performance।
+
+### Report 7
+
+`docs/performance/background-and-battery.md`
+
+Background Scan, Wake Lock এবং Battery Optimization।
+
+### Report 8
+
+`docs/performance/baseline-profile.md`
+
+Baseline Profile এবং Startup Profile।
+
+### Report 9
+
+`docs/performance/benchmark-results.md`
+
+Before/After Benchmark Comparison।
+
+### Report 10
+
+`docs/performance/final-performance-report.md`
+
+সম্পূর্ণ Final Performance Summary।
+
+---
+
+# ২৫. Official Documentation ও Research References
+
+প্রথমে নিচের Official Sources অনুসরণ করবে।
+
+এর পাশাপাশি Project-এর প্রয়োজন অনুযায়ী আরও বর্তমান Official Documentation, Engineering Articles এবং Performance Case Studies খুঁজে বের করবে।
+
+### Android Performance
+
+1. Android Performance Overview:
+https://developer.android.com/topic/performance
+
+2. Measuring Performance:
+https://developer.android.com/topic/performance/measuring-performance
+
+3. Android Studio Profiler:
+https://developer.android.com/studio/profile/
+
+4. Android Vitals:
+https://developer.android.com/topic/performance/vitals
+
+5. App Startup:
+https://developer.android.com/topic/performance/appstartup
+
+6. App Startup Best Practices:
+https://developer.android.com/topic/performance/appstartup/best-practices
+
+### Jetpack Compose
+
+7. Compose Performance:
+https://developer.android.com/develop/ui/compose/performance
+
+8. Compose Performance Best Practices:
+https://developer.android.com/develop/ui/compose/performance/bestpractices
+
+9. Compose Stability:
+https://developer.android.com/develop/ui/compose/performance/stability
+
+10. Compose Performance Tooling:
+https://developer.android.com/develop/ui/compose/performance/tooling
+
+### Memory
+
+11. Android Memory Management:
+https://developer.android.com/topic/performance/memory-overview
+
+12. Manage App Memory:
+https://developer.android.com/topic/performance/memory/manage-app-memory
+
+13. Android Memory Profiler:
+https://developer.android.com/studio/profile/memory-profiler
+
+14. LeakCanary:
+https://square.github.io/leakcanary/
+
+### Benchmarking
+
+15. Macrobenchmark:
+https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview
+
+16. Microbenchmark:
+https://developer.android.com/topic/performance/benchmarking/microbenchmark-overview
+
+17. Macrobenchmark Metrics:
+https://developer.android.com/topic/performance/benchmarking/macrobenchmark-metrics
+
+18. Baseline Profiles:
+https://developer.android.com/topic/performance/baselineprofiles/overview
+
+19. Baseline Profile Codelab:
+https://developer.android.com/codelabs/android-baseline-profiles-improve
+
+### Rendering ও Tracing
+
+20. System Tracing:
+https://developer.android.com/topic/performance/tracing
+
+21. Perfetto:
+https://perfetto.dev/docs/
+
+### Database
+
+22. SQLite Performance:
+https://developer.android.com/topic/performance/sqlite-performance-best-practices
+
+### Battery ও Power
+
+23. Battery Optimization:
+https://developer.android.com/topic/performance/power
+
+24. Analyze Network Traffic:
+https://developer.android.com/topic/performance/power/network/analyze-data
+
+25. Stuck Wake Locks:
+https://developer.android.com/topic/performance/vitals/stuck-wakelock
+
+### Runtime এবং Code Optimization
+
+26. R8 Optimization:
+https://developer.android.com/topic/performance/app-optimization/enable-app-optimization
+
+27. Android StrictMode:
+https://developer.android.com/reference/android/os/StrictMode
+
+28. Android Thread Performance:
+https://developer.android.com/topic/performance/threads
+
+---
+
+# ২৬. Final Bengali Report Format
+
+সম্পূর্ণ Implementation শেষে বাংলায় বিস্তারিত রিপোর্ট দেবে।
+
+### ১. Overall Performance
+
+Application-এর আগের ও বর্তমান Performance-এর তুলনা।
+
+### ২. Startup
+
+Cold, Warm এবং Hot Startup Result।
+
+### ৩. UI Performance
+
+Navigation, Scrolling, Recomposition এবং Frame Timing।
+
+### ৪. Memory
+
+Heap, PSS, RSS, Memory Growth এবং Leak Detection।
+
+### ৫. CPU ও GPU
+
+CPU Usage, Thread Behaviour এবং Rendering Findings।
+
+### ৬. Network
+
+Server Testing Speed, Concurrency, Timeout এবং Request Efficiency।
+
+### ৭. Catalog Performance
+
+JSON Parsing, ISP Mapping, Search, Filtering এবং Sorting।
+
+### ৮. Background
+
+Background Scan, Notification, Battery এবং Resource Cleanup।
+
+### ৯. Database
+
+Room Query, Database Operations এবং Persistence।
+
+### ১০. Application Size
+
+APK/AAB Size এবং R8 Optimization।
+
+### ১১. GitHub Actions
+
+Build, Benchmark, Test এবং CI Results।
+
+### ১২. Modified Files
+
+প্রতিটি Modified File এবং পরিবর্তনের কারণ।
+
+### ১৩. Before vs After Comparison
+
+| Metric | Before | After | Improvement |
+|---|---:|---:|---:|
+| Cold Startup | Measured | Measured | Calculated |
+| Warm Startup | Measured | Measured | Calculated |
+| Server List Scroll | Measured | Measured | Calculated |
+| Memory Usage | Measured | Measured | Calculated |
+| CPU Usage | Measured | Measured | Calculated |
+| APK Size | Measured | Measured | Calculated |
+
+যে Metric মাপা সম্ভব হয়নি, সেখানে Not Measured লিখবে।
+
+### ১৪. Remaining Issues
+
+যে সমস্যাগুলো সমাধান হয়নি বা বাস্তব ডিভাইসে Testing প্রয়োজন, সেগুলো উল্লেখ করবে।
+
+---
+
+# FINAL EXECUTION COMMAND
+
+এখন BDIX Tester-এর সম্পূর্ণ Performance Engineering কাজ শুরু করো।
+
+প্রথমে বর্তমান Application-এর বাস্তব Performance Audit করবে।
+
+তারপর CPU, RAM, GPU, Startup, Compose Rendering, Network, Database, Background Scanning, Battery, Memory Leak এবং Application Size-এর Bottleneck শনাক্ত করবে।
+
+এরপর P0 → P1 → P2 → P3 অনুযায়ী প্রয়োজনীয় Optimization বাস্তবায়ন করবে।
+
+শুধু Report তৈরি করে থেমে যাবে না।
+
+প্রতিটি গুরুত্বপূর্ণ Optimization-এর পরে Build, Tests এবং Performance Benchmark চালাবে।
+
+আগের Benchmark-এর সঙ্গে নতুন Benchmark তুলনা করবে।
+
+**বিশেষ অগ্রাধিকার:**
+
+1. App Startup যতটা সম্ভব দ্রুত করা।
+2. UI ও Navigation মাখনের মতো Smooth করা।
+3. RAM Usage ও Memory Leak কমানো।
+4. Server Scanning দ্রুত ও Accurate করা।
+5. Background Scanning Efficient করা।
+6. Battery Consumption নিয়ন্ত্রণ করা।
+7. Low-End Android Device-এ ভালো Performance নিশ্চিত করা।
+8. Application Size ও Runtime Overhead কমানো।
+
+কোনো Performance Improvement-এর নামে Functionality, Reliability, Network Accuracy, Accessibility, User Data বা Maintainability নষ্ট করবে না।
+
+অপ্রয়োজনীয় Code Rewrite, Dependency Addition এবং Architecture Change এড়িয়ে চলবে।
+
+**আমার চূড়ান্ত লক্ষ্য: BDIX Tester-কে যতটা সম্ভব Rocket-Fast, Butter-Smooth, Lightweight, Memory-Efficient, Battery-Friendly এবং Production-Grade Android Application-এ উন্নীত করা।**
+
+Optimize intelligently. Measure everything. Preserve functionality. Verify every improvement.

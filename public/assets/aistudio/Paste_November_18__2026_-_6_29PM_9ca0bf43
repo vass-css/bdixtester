@@ -1,0 +1,1094 @@
+# BDIX / FTP Server Tester — Complete UI/UX Redesign & Production-Ready Implementation Prompt
+
+## 1. Project Mission
+
+তুমি একজন **Senior Android Engineer, Lead UI/UX Designer, Jetpack Compose Specialist, Accessibility Engineer এবং Mobile Performance Engineer** হিসেবে কাজ করবে।
+
+তোমার দায়িত্ব হলো বর্তমান **BDIX / FTP Server Tester** Android Application-এর সম্পূর্ণ Repository, Kotlin Source Code, Jetpack Compose UI, Design System, Navigation, Theme, Typography, Animations এবং প্রতিটি Screen গভীরভাবে বিশ্লেষণ করে প্রদত্ত **World-Class UI/UX Research, Complete Design Audit & Redesign Report** অনুসারে অ্যাপটিকে একটি আধুনিক, Professional, Consistent, Accessible, Responsive এবং Production-Ready Android Application-এ উন্নীত করা।
+
+এটি কোনো নতুন অ্যাপ তৈরি করার কাজ নয়। এটি একটি বিদ্যমান অ্যাপের **Existing Architecture ও Core Functionality অক্ষুণ্ণ রেখে Systematic UI/UX Improvement এবং Design System Refinement** করার কাজ।
+
+### Primary Objective
+
+বর্তমান অ্যাপের ভালো দিকগুলো অক্ষুণ্ণ রেখে Research Report-এ শনাক্ত করা UX, Accessibility, Typography, Color Contrast, Navigation, Layout, Motion এবং Component Consistency-এর সমস্যাগুলো সমাধান করবে।
+
+চূড়ান্ত Design Direction হবে:
+
+**Precision Diagnostic Minimalism — Material Design 3**
+
+Design Philosophy:
+
+- Calm when Idle, Energetic when Scanning.
+- Clear Visual Hierarchy.
+- High Contrast and Readability.
+- Consistent Component Language.
+- Native Android Experience.
+- Bengali and English Typography Excellence.
+- Accessibility First.
+- Performance Conscious UI.
+- Minimal Cognitive Load.
+- Responsive Across Android Screen Sizes.
+
+---
+
+## 2. Mandatory Instructions — Non-Negotiable Rules
+
+নিচের নির্দেশনাগুলো অবশ্যই অনুসরণ করবে।
+
+### 2.1 Preserve Existing Project
+
+- প্রথমে সম্পূর্ণ Repository Structure এবং Existing Architecture বুঝবে।
+- কোনো Existing Feature, Functionality, Business Logic, Data, Database, API, Endpoint বা Configuration অপ্রয়োজনীয়ভাবে পরিবর্তন করবে না।
+- কোনো Existing Function, Class, Composable, Test, Documentation, Comment বা JSDoc মুছে ফেলবে না।
+- কোনো প্রয়োজনীয় Feature সরিয়ে দিয়ে Simplified বা Fake Implementation তৈরি করবে না।
+- অপ্রয়োজনীয়ভাবে Architecture Rewrite, Refactor বা Library Replacement করবে না।
+- Existing Code Structure, Naming Convention এবং Coding Style অনুসরণ করবে।
+- Existing Tests অক্ষুণ্ণ রাখবে এবং প্রয়োজন অনুযায়ী নতুন Tests যুক্ত করবে।
+- একই কাজের জন্য অপ্রয়োজনীয় নতুন Dependency যোগ করবে না।
+
+### 2.2 Preserve Core Functionality
+
+নিচের Existing Capabilities অবশ্যই অক্ষুণ্ণ রাখতে হবে:
+
+- 369টি Built-in BDIX Endpoint।
+- 26টি Bangladesh এবং Global OTT Platform।
+- Existing Server Testing Engine।
+- Working, Not Tested এবং Not Working Status।
+- Quick Scan এবং Full Scan-এর Existing Functionality।
+- Server Category Filtering।
+- OTT Region Filtering।
+- Saved Servers।
+- Pinned Servers।
+- Testing History।
+- Export Functionality।
+- Custom Server Management।
+- Remote Server Catalog Synchronization।
+- Theme Selection।
+- Bengali এবং English Language Support।
+- Direct External Browser Launch।
+- Existing Privacy Policy, Share App এবং App Version Information।
+
+Existing Source Code থেকে প্রতিটি Feature-এর প্রকৃত Implementation যাচাই করবে। কোনো Feature শুধু Report-এ আছে বলে সেটিকে Implemented ধরে নেবে না।
+
+### 2.3 No Unnecessary Screen or Feature
+
+- সম্পূর্ণ Server Details Screen পুনরায় তৈরি করবে না।
+- কোনো Server Card Tap করলে সরাসরি Android Default External Browser-এ Open হবে।
+- আগের UX Decision অনুযায়ী আলাদা Server Metadata Page ফিরিয়ে আনবে না।
+- Optional Diagnostics Bottom Sheet কেবল Existing Architecture-এ নিরাপদে যুক্ত করা সম্ভব হলে এবং সেটি সরাসরি Browser Launch-এর সঙ্গে সংঘর্ষ তৈরি না করলে বিবেচনা করবে।
+- Home Screen-এ অপ্রয়োজনীয় Dashboard, Statistics বা অতিরিক্ত Card যুক্ত করবে না।
+- নতুন UI Feature কেবল তখনই যুক্ত করবে, যখন তা বাস্তব User Experience উন্নত করে।
+
+---
+
+## 3. Phase 1 — Complete Repository Audit
+
+**কোনো Source Code পরিবর্তনের আগে সম্পূর্ণ Repository Audit করবে।**
+
+প্রথমে Project Structure এবং Source Code বুঝবে।
+
+বিশেষভাবে পরীক্ষা করবে:
+
+1. Application Entry Point এবং MainActivity।
+2. Existing Navigation Architecture।
+3. BdixTesterAppRoot বা সমতুল্য Root Composable।
+4. All Screen Composables।
+5. Theme এবং Color Definitions।
+6. Typography এবং Font Families।
+7. Shapes এবং Spacing Tokens।
+8. Shared Components।
+9. Animation Implementations।
+10. Settings এবং Preferences Management।
+11. Database এবং Persistence।
+12. Server Testing State এবং Data Flow।
+13. Remote Catalog Synchronization।
+14. External Browser Launch Logic।
+15. Existing Tests এবং GitHub Actions CI।
+
+### Important Audit Rules
+
+Research Report-এর প্রতিটি Verified Finding Source Code-এর সঙ্গে মিলিয়ে দেখবে।
+
+নিচের Classification ব্যবহার করবে:
+
+- **Verified:** Source Code বা পরীক্ষার মাধ্যমে নিশ্চিত।
+- **Partially Verified:** কিছু অংশ নিশ্চিত, কিন্তু সম্পূর্ণ নয়।
+- **Unverified:** সরাসরি যাচাই করা সম্ভব হয়নি।
+- **Design Recommendation:** UX Improvement-এর প্রস্তাব।
+- **Not Applicable:** বর্তমান Implementation-এ প্রাসঙ্গিক নয়।
+
+Report-এ কোনো ভুল, অসামঞ্জস্য বা পুরোনো Technical Recommendation পাওয়া গেলে সেটি অন্ধভাবে অনুসরণ করবে না।
+
+বিশেষ করে:
+
+- WCAG Contrast Ratio নিজে পুনরায় হিসাব করবে।
+- Gradient-এর বিভিন্ন অংশে Text Contrast পরীক্ষা করবে।
+- Font Scaling এবং Bengali Script Rendering যাচাই করবে।
+- Reduced Motion-এর প্রকৃত Platform Support পরীক্ষা করবে।
+- Adaptive Navigation API ও বর্তমান Dependency Version যাচাই করবে।
+- Existing Animation-এর বাস্তব প্রয়োজনীয়তা মূল্যায়ন করবে।
+
+কোনো কিছু যাচাই না করে Verified দাবি করবে না।
+
+### Phase 1 Deliverables
+
+Audit শেষ হলে তৈরি করবে:
+
+- `docs/research/ui-ux-implementation-audit.md`
+- `docs/design/design-system-specification.md`
+- `docs/design/screen-redesign-specification.md`
+- `docs/design/accessibility-checklist.md`
+- `docs/design/implementation-roadmap.md`
+
+প্রতিটি সমস্যার জন্য Existing File Path, সংশ্লিষ্ট Class/Composable, বর্তমান আচরণ, প্রস্তাবিত পরিবর্তন এবং Acceptance Criteria উল্লেখ করবে।
+
+**এই Phase-এ কোনো Source Code পরিবর্তন করবে না। Audit এবং Implementation Plan উপস্থাপন করে অনুমোদনের জন্য অপেক্ষা করবে।**
+
+---
+
+## 4. Phase 2 — Design System Refinement
+
+অনুমোদন পাওয়ার পর প্রথমে Existing Design System উন্নত করবে।
+
+### 4.1 Color System
+
+বর্তমান Brand Identity অক্ষুণ্ণ রাখবে।
+
+**Light Theme — Crisp Alabaster**
+
+| Token | HEX |
+|---|---|
+| Background | `#F4F7FA` |
+| Surface Low | `#FFFFFF` |
+| Surface Container | `#EBF1F7` |
+| Primary | `#03669C` |
+| On Surface | `#0B1521` |
+| On Surface Variant | `#475A6E` |
+| Reachable | `#047857` |
+| Reachable Container | `#D1FAE5` |
+| Restricted | `#B45309` |
+| Restricted Container | `#FEF3C7` |
+| Unreachable | `#C81E1E` |
+| Unreachable Container | `#FEE2E2` |
+| CTA Gradient Start | `#0369A1` |
+| CTA Gradient End | `#1D4ED8` |
+| CTA Text | `#FFFFFF` |
+
+**Dark Theme — Deep Ocean Slate**
+
+| Token | HEX |
+|---|---|
+| Background | `#081018` |
+| Surface Low | `#0D1722` |
+| Surface Container | `#12202E` |
+| Primary | `#38BDF8` |
+| On Surface | `#F1F5F9` |
+| On Surface Variant | `#9FB0C4` |
+| Reachable | `#34D399` |
+| Reachable Container | `#064E3B` |
+| Restricted | `#FBBF24` |
+| Restricted Container | `#5C3409` |
+| Unreachable | `#F87171` |
+| Unreachable Container | `#5C1919` |
+| CTA Gradient Start | `#22D3EE` |
+| CTA Gradient Middle | `#38BDF8` |
+| CTA Gradient End | `#3B82F6` |
+| CTA Text | `#041E2D` |
+
+### Color Implementation Requirements
+
+- Existing Semantic Color Architecture অনুসরণ করবে।
+- Light এবং Dark Theme-এর জন্য আলাদা Semantic Mapping রাখবে।
+- Dynamic Color ডিফল্টভাবে Disabled রাখবে।
+- কোনো Status বোঝাতে শুধু Color ব্যবহার করবে না; প্রয়োজন অনুযায়ী Text ও Icon ব্যবহার করবে।
+- Disabled, Focused, Pressed, Selected এবং Error State-এর Color Mapping পরীক্ষা করবে।
+- Gradient-এর প্রতিটি গুরুত্বপূর্ণ অঞ্চলে Text Contrast যাচাই করবে।
+- Transparency বা Alpha ব্যবহার করলে Composited Color-এর Contrast হিসাব করবে।
+- শুধু HEX পরিবর্তন করলেই কাজ শেষ হয়েছে ধরে নেবে না।
+
+**WCAG 2.2 AA Acceptance Criteria:**
+
+- Normal Text: কমপক্ষে 4.5:1।
+- Large Text: কমপক্ষে 3:1।
+- গুরুত্বপূর্ণ Non-text UI Components: কমপক্ষে 3:1।
+- Focus এবং Interactive State-ও যথাযথভাবে যাচাই করবে।
+
+### 4.2 Typography System
+
+বর্তমান Font Pairing পরিবর্তন করবে না:
+
+- English: Plus Jakarta Sans।
+- Bengali: Noto Sans Bengali।
+- Numeric / URL / IP / Ping: JetBrains Mono।
+
+Typography Implementation:
+
+1. সব Bengali Typography Style-এ `letterSpacing = 0.sp` নিশ্চিত করবে।
+2. Bengali Text-এ JetBrains Mono-এর অপ্রয়োজনীয় Inheritance সরাবে।
+3. `labelSmall`-এ Bengali Font Fallback সঠিক করবে।
+4. Mono Font কেবল URL, IP Address, Port, Ping এবং Numeric Metrics-এর জন্য ব্যবহার করবে।
+5. Numeric Metrics-এর জন্য Tabular Numbers ব্যবহার করবে।
+6. Bengali যুক্তবর্ণ, মাত্রা এবং Line Height সঠিকভাবে Render হচ্ছে কি না পরীক্ষা করবে।
+7. Font Weight-এর জন্য প্রকৃত Available Font Weight ব্যবহার করবে।
+
+প্রস্তাবিত Typography Scale:
+
+| Role | Size | Weight | English / Bengali Line Height |
+|---|---:|---|---|
+| Hero Number | 44sp | Bold | 52 / 52sp |
+| Headline Medium | 24sp | Bold | 32 / 36sp |
+| Title Large | 20sp | SemiBold | 26 / 30sp |
+| Title Medium | 16sp | SemiBold | 22 / 24sp |
+| Title Small | 14sp | SemiBold | 20 / 22sp |
+| Body Large | 15sp | Normal | 22 / 24sp |
+| Body Medium | 14sp | Normal | 20 / 22sp |
+| Body Small | 12.5sp | Normal | 18 / 20sp |
+| Label Large | 14sp | SemiBold | 20 / 22sp |
+| Label Medium | 12sp | Medium | 16 / 18sp |
+| Label Small | 11sp | SemiBold | 16 / 17sp |
+| Mono URL / Metric | 12.5sp | Normal | 18 / 18sp |
+
+উপরের Scale একটি Design Reference। Existing Typography Hierarchy-এর সঙ্গে সামঞ্জস্য রেখে প্রয়োজনীয় পরিবর্তন করবে। Bengali Style-এ Letter Spacing শূন্য রাখবে।
+
+### 4.3 Icon System
+
+Material Symbols Rounded / Existing Material Icons ব্যবহার করবে।
+
+প্রতিটি Navigation Item-এ Selected এবং Unselected Icon-এর ভিন্ন Visual State থাকবে।
+
+| Navigation | Selected | Unselected |
+|---|---|---|
+| Home | Filled Home | Outlined Home |
+| Servers | Filled DNS | Outlined DNS |
+| Saved | Filled Bookmark | Bookmark Border |
+| History | Filled History | Available Outlined Equivalent |
+| Settings | Filled Settings | Outlined Settings |
+
+Rules:
+
+- Existing Dependency-তে Icon Available কি না যাচাই করবে।
+- প্রয়োজন ছাড়া নতুন Icon Library যোগ করবে না।
+- Icon Size Consistent রাখবে।
+- Interactive Icon-এ যথাযথ Content Description যোগ করবে।
+- শুধু রং দিয়ে Active Navigation বোঝাবে না।
+- Unsupported Icon-এর জন্য Fake বা অপ্রাসঙ্গিক Vector ব্যবহার করবে না।
+
+### 4.4 Spacing, Shape and Elevation
+
+**Spacing Scale:**
+
+- XS: 4dp
+- SM: 8dp
+- MD: 12dp
+- LG: 16dp
+- XL: 24dp
+- XXL: 32dp
+
+**Shape Scale:**
+
+- Chips / Badges: 8dp।
+- Icon Squircle: 12dp।
+- Inputs: 14–16dp।
+- Rich Cards / Settings Groups: 20dp।
+- Profile Header: 24dp।
+- Pills / CTA: Fully Rounded।
+
+**Elevation:**
+
+- Flat Surface: 0dp।
+- Top / Bottom Bars: 1–3dp।
+- Rich Cards: 2dp + 1dp Outline।
+- Modal Dialog / Bottom Sheet: 6dp।
+
+Global Design Tokens ব্যবহার করবে। একই মান বিভিন্ন Screen-এ Hardcode করবে না।
+
+---
+
+## 5. Phase 3 — Screen-by-Screen Redesign and Implementation
+
+### 5.1 Home Screen — Precision Diagnostic Dashboard
+
+Primary Goal: এক ট্যাপে Scan Start/Stop করা, Live Progress দেখা এবং Working Servers-এ যাওয়া।
+
+Keep Intact:
+
+- Existing Compact Brand Header।
+- Live IP Information।
+- Circular Scan Progress।
+- Working / Total Counter।
+- Start / Stop Test CTA।
+- Working Server Navigation।
+- Existing Quick Scan এবং Full Scan Functionality।
+
+Redesign Requirements:
+
+**A. Calm Idle, Energetic Active Scan**
+
+Idle অবস্থায়:
+
+- Home Screen শান্ত এবং পরিষ্কার থাকবে।
+- অপ্রয়োজনীয় Infinite Animation বন্ধ থাকবে।
+- Static Precision Ring অথবা অত্যন্ত Subtle Breathing Effect ব্যবহার করবে।
+- Scan Running না থাকলে Radar বা Sonar-এর মতো Animation চলবে না।
+
+Active Scan অবস্থায়:
+
+- প্রয়োজনীয় Sonar Pulse।
+- Orbital Motion।
+- Active Progress Indicator।
+- Comet Sweep বা Subtle Particle Effect।
+- Live Progress Update।
+
+Scan Complete হলে:
+
+- Animation স্বাভাবিকভাবে থামবে।
+- Completed Status স্পষ্টভাবে দেখাবে।
+- প্রয়োজন হলে অল্প সময়ের জন্য Result Summary দেখাবে।
+
+**B. CTA Accessibility**
+
+Light Theme:
+
+- Gradient: `#0369A1 → #1D4ED8`
+- Text/Icon: `#FFFFFF`
+
+Dark Theme:
+
+- Gradient: `#22D3EE → #38BDF8 → #3B82F6`
+- Text/Icon: `#041E2D`
+
+প্রতিটি Gradient-এর Text Contrast পুনরায় পরীক্ষা করবে।
+
+**C. Scan Mode Visibility**
+
+বড় কোনো Toggle বা অতিরিক্ত Card যুক্ত করবে না।
+
+Start Test CTA-এর নিচে অথবা Progress Ring-এর কাছাকাছি ছোট একটি Mode Indicator দেখাবে।
+
+উদাহরণ:
+
+`Quick Scan · 369 Servers`
+
+অথবা
+
+`Full Scan · 369 Servers`
+
+এটি Existing Scan Configuration থেকে আসতে হবে। Hardcoded Text ব্যবহার করবে না।
+
+**D. Post Scan Feedback**
+
+Scan Complete হলে ছোট এবং Non-intrusive Summary দেখাতে পারো:
+
+`Scan Complete · 41 Working`
+
+অথবা প্রকৃত তথ্য পাওয়া গেলে:
+
+`Scan Complete · Avg 12 ms`
+
+কোনো Mock Data বা অনুমানভিত্তিক Metric দেখাবে না।
+
+**E. Responsive Layout**
+
+Compact Screen-এ Existing Single-Column Experience বজায় রাখবে।
+
+Medium / Expanded Screen-এ উপযুক্ত Multi-Column বা Centered Layout ব্যবহার করবে।
+
+Home Screen-কে অপ্রয়োজনীয় Card দিয়ে ভারী করবে না।
+
+---
+
+### 5.2 Servers and Bangladesh OTT Screen
+
+Primary Goal: Working / Not Tested / Not Working Server খুঁজে পাওয়া, Category ও Region Filter করা, Save করা এবং External Browser-এ Open করা।
+
+Keep Intact:
+
+- Existing Status Tabs।
+- Live Status Counts।
+- Existing Server Categories।
+- OTT Region Filters।
+- Server Testing Data।
+- Bookmark Functionality।
+- Direct External Browser Launch।
+
+Redesign Requirements:
+
+1. OTT Region Chips-এর Minimum Touch Height 48dp করবে।
+2. Light Theme-এর Emerald এবং Amber Status Contrast ঠিক করবে।
+3. Working Tab-এ Fastest Ping First এবং A–Z Sorting যোগ করার উপযুক্ততা যাচাই করবে।
+4. Fastest Ping Sorting-এর সময় কেবল বৈধ Numeric Ping Value ব্যবহার করবে।
+5. Unknown বা Unavailable Ping-কে Incorrectly Fastest হিসেবে বিবেচনা করবে না।
+6. Existing Top App Bar-এর Scroll Behaviour উন্নত করবে।
+7. প্রয়োজন হলে `enterAlwaysScrollBehavior()` ব্যবহার করবে, তবে Existing Navigation এবং Scroll State ভাঙবে না।
+8. Status Tabs এবং Category Filters অপ্রয়োজনীয় Vertical Space দখল করছে কি না পরীক্ষা করবে।
+9. বড় List-এর জন্য Performance-Friendly Lazy Layout ব্যবহার করবে।
+
+**Optional Diagnostics:**
+
+আলাদা Server Details Screen ফিরিয়ে আনবে না।
+
+Long-Press বা Explicit Overflow Action-এর মাধ্যমে Optional Modal Bottom Sheet বিবেচনা করতে পারো।
+
+সেখানে শুধু বাস্তবে পাওয়া Metadata দেখাবে:
+
+- HTTP Status।
+- TLS Information।
+- Latency।
+- Available Network Diagnostics।
+
+এই Feature Existing Testing Engine-এ প্রয়োজনীয় Data না থাকলে তৈরি করবে না। নতুন Network Request বা Testing Behaviour অনুমোদন ছাড়া যোগ করবে না।
+
+---
+
+### 5.3 Saved Servers Screen
+
+Primary Goal: Favourite এবং Pinned Server দ্রুত খুঁজে পাওয়া ও Open করা।
+
+Redesign Requirements:
+
+- Servers Screen-এর সঙ্গে সামঞ্জস্যপূর্ণ Unified Rich Card ব্যবহার করবে।
+- 20dp Card Radius বজায় রাখবে।
+- Category Icon Badge যোগ করবে।
+- Shared URL Footer ব্যবহার করবে।
+- Open, Bookmark এবং Pin Action-এর অবস্থান Consistent রাখবে।
+- Pinned Servers এবং All Saved Servers আলাদা Section-এ দেখাবে।
+- Pinned Items না থাকলে অপ্রয়োজনীয় Section Header দেখাবে না।
+- Saved List Empty হলে Search Bar-এর অপ্রয়োজনীয় Vertical Space এড়িয়ে চলবে।
+- Search, Filter এবং Pin State ঠিকভাবে Preserve করবে।
+- কোনো Favourite Remove করলে Undo Snackbar দেখাবে।
+
+Pinned এবং Saved Server-এর Existing Data Relationship পরিবর্তন করবে না।
+
+---
+
+### 5.4 Testing History Screen
+
+Primary Goal: Previous Scan Results দেখা, Filter করা, Export এবং Delete করা।
+
+Redesign Requirements:
+
+1. Unified 20dp Rich Card ব্যবহার করবে।
+2. Servers এবং Saved Screen-এর সঙ্গে Component Consistency বজায় রাখবে।
+3. সম্ভব হলে Date Grouping ব্যবহার করবে:
+   - Today
+   - Yesterday
+   - Earlier
+4. Status এবং Protocol Filter বজায় রাখবে।
+5. Single Item Delete করলে Undo Snackbar দেখাবে।
+6. Clear All Action-এ Confirmation Dialog বজায় রাখবে।
+7. Existing Export Functionality অক্ষুণ্ণ রাখবে।
+8. Empty, Loading এবং Error State উন্নত করবে।
+9. Date বা Timestamp না থাকলে কোনো Fake Grouping তৈরি করবে না।
+
+Undo Implementation এমনভাবে করবে যাতে Database এবং UI State উভয়ই সঠিকভাবে Restore হয়।
+
+---
+
+### 5.5 Settings Screen
+
+Primary Goal: Theme, Language, Scan Engine, Catalog Synchronization, Data Management এবং Privacy Settings সহজে নিয়ন্ত্রণ করা।
+
+Keep Intact:
+
+- Existing Grouped Settings Architecture।
+- Theme Selection।
+- Language Selection।
+- Scan Engine Settings।
+- Remote Catalog Actions।
+- IP Information।
+- Privacy Policy।
+- Share App।
+- Version / Build Information।
+
+Redesign Requirements:
+
+**A. Duplicate Catalog Actions**
+
+`Update Server List` এবং `Sync Catalog Now` একই কাজ করে কি না Source Code থেকে যাচাই করবে।
+
+একই কাজ হলে অপ্রয়োজনীয় Duplicate Action সরিয়ে Unified Action তৈরি করবে।
+
+আলাদা কাজ হলে তাদের পার্থক্য স্পষ্টভাবে বোঝাবে।
+
+**B. Sync Information**
+
+প্রয়োজন হলে দেখাবে:
+
+- Last Successful Sync।
+- Current Sync State।
+- Retry Action।
+- Error Information।
+
+সব তথ্য Existing Data Source থেকে আসতে হবে।
+
+**C. Reduced Motion**
+
+Appearance & Language Section-এ একটি `Reduce Animations` Option যুক্ত করবে।
+
+System Animation Preference-এর সঙ্গে সামঞ্জস্য রাখবে।
+
+**D. Light Theme IP Contrast**
+
+IP Information-এর Text Color প্রয়োজনে `#035E91` ব্যবহার করবে।
+
+সঠিক Background-এর বিপরীতে Contrast Ratio যাচাই করবে।
+
+**E. Settings Navigation**
+
+Settings-এর দীর্ঘ তালিকা আরও Readable এবং Navigable করবে।
+
+Unnecessary Nested Screen বা অতিরিক্ত Group তৈরি করবে না।
+
+---
+
+## 6. Unified Component Architecture
+
+চারটি প্রধান URL-ভিত্তিক Screen-এ Consistent Card Design নিশ্চিত করবে:
+
+- Servers
+- OTT
+- Saved
+- History
+
+একই Visual Language ব্যবহার করবে।
+
+### Shared Rich Card
+
+প্রস্তাবিত Architecture:
+
+- Unified Card Container।
+- Category Icon Badge।
+- Title।
+- Subtitle / Metadata।
+- Status Indicator।
+- Optional Latency Badge।
+- Rich URL Footer।
+- Contextual Actions।
+
+### RichCardUrlFooter
+
+Shared Footer Specification:
+
+- Surface Container Background।
+- Minimum Height: 48dp।
+- Start: LTR Monospace URL।
+- End: Open ↗ Pill।
+- Adequate Touch Target।
+- Long URL Truncation।
+- Proper Content Description।
+
+### Additional Components
+
+প্রয়োজন অনুযায়ী Reusable Components তৈরি করবে:
+
+- `BdixRichCard`
+- `RichCardUrlFooter`
+- `BdixStatusBadge`
+- `BdixCategoryIcon`
+- `BdixSectionHeader`
+- `BdixEmptyState`
+- `BdixErrorState`
+- `BdixLoadingState`
+- `BdixUndoSnackbar`
+- `BdixSortSelector`
+
+এগুলো শুধু উদাহরণ। Existing Project Naming Convention ও Architecture অনুসারে নাম নির্ধারণ করবে।
+
+একই Component-এর একাধিক Duplicate Version তৈরি করবে না।
+
+---
+
+## 7. Adaptive Navigation and Responsive Layout
+
+Android Window Size Class অনুযায়ী Navigation সাজাবে।
+
+| Window Width | Navigation |
+|---|---|
+| Compact: <600dp | NavigationBar |
+| Medium: 600–839dp | NavigationRail |
+| Expanded: ≥840dp | NavigationRail |
+
+Implementation Requirements:
+
+- Existing Bottom Navigation-কে অপ্রয়োজনীয়ভাবে সম্পূর্ণ Rewrite করবে না।
+- বর্তমান Dependency Version অনুযায়ী Official Adaptive Navigation API যাচাই করবে।
+- প্রয়োজনে `NavigationSuiteScaffold` ব্যবহার করবে।
+- Existing Tab Navigation, Back Stack এবং State Restoration অক্ষুণ্ণ রাখবে।
+- `saveState = true` এবং `restoreState = true` Behaviour Preserve করবে।
+- Landscape এবং Split-Screen Layout পরীক্ষা করবে।
+- বড় Width-এ Content-এর Maximum Width সীমিত রাখবে।
+- বড় Screen-এ অপ্রয়োজনীয়ভাবে অত্যন্ত প্রশস্ত Card তৈরি করবে না।
+- প্রয়োজন অনুযায়ী 2-Column Grid ব্যবহার করবে।
+
+### Scroll Behaviour
+
+- Tab Switch করলে আগের Scroll Position Preserve করবে।
+- Active Tab-এ পুনরায় Tap করলে Scroll-to-Top Behaviour বিবেচনা করবে।
+- Pull-to-Refresh কেবল বাস্তব Refresh Action থাকলে যোগ করবে।
+- Navigation পরিবর্তনের ফলে অপ্রত্যাশিত Scroll Reset হতে দেবে না।
+
+---
+
+## 8. Accessibility and Reduced Motion
+
+Accessibility কোনো Optional Decoration নয়; এটি Core Product Requirement।
+
+### 8.1 Touch Target
+
+- Interactive Elements-এর জন্য কমপক্ষে 48×48dp Touch Target নিশ্চিত করবে।
+- OTT Region Chips অন্তত 48dp Height হবে।
+- ছোট Icon-কে প্রয়োজনীয় Touch Padding দেবে।
+- Interactive Elements-এর মধ্যে যথাযথ Spacing রাখবে।
+
+### 8.2 TalkBack and Semantics
+
+- প্রতিটি Interactive Icon-এর Meaningful Content Description থাকবে।
+- প্রয়োজন হলে `semantics(mergeDescendants = true)` ব্যবহার করবে।
+- Custom Click Action-এর জন্য যথাযথ Accessibility Label যোগ করবে।
+- গুরুত্বপূর্ণ Numeric Metrics TalkBack-এ পরিষ্কারভাবে পড়া যাবে।
+- Duplicate Accessibility Announcement এড়িয়ে চলবে।
+- Focus Order Visual Reading Order-এর সঙ্গে সামঞ্জস্যপূর্ণ রাখবে।
+
+### 8.3 Font Scaling
+
+- 100%, 130%, 150% এবং 200% Font Scaling-এ UI পরীক্ষা করবে।
+- Text Truncation এবং Content Clipping এড়িয়ে চলবে।
+- Fixed Height ব্যবহার করে Text কেটে ফেলবে না।
+- বাংলা Text-এর Wrapping সঠিক রাখতে হবে।
+
+### 8.4 Reduced Motion
+
+- Android System Animation Preference যাচাই করবে।
+- `Settings.Global.ANIMATOR_DURATION_SCALE` ব্যবহারের আগে বর্তমান Android Platform Behaviour এবং Permission Requirements যাচাই করবে।
+- এটি একমাত্র Accessibility Signal হিসেবে ধরে নেবে না।
+- In-app `Reduce Animations` Preference সাপোর্ট করবে।
+- Reduced Motion Enabled থাকলে Infinite Decorative Animation বন্ধ করবে।
+- Animation-এর পরিবর্তে Immediate State Transition বা Subtle Crossfade ব্যবহার করবে।
+- Active Scan-এর গুরুত্বপূর্ণ Progress Feedback অক্ষুণ্ণ রাখবে।
+
+**Acceptance Criteria:**
+
+Reduced Motion Enabled থাকলে কোনো অপ্রয়োজনীয় Infinite Idle Animation চলবে না।
+
+---
+
+## 9. Motion and Interaction Design
+
+Motion হবে Purposeful, Lightweight এবং State-Aware।
+
+### Keep
+
+- Tab Transition Crossfade।
+- Bookmark / Pin Feedback।
+- Button Press Animation।
+- List Item State Transition।
+- Active Scan Progress Animation।
+- Meaningful Loading Indicator।
+
+### Reduce or Remove
+
+- Idle অবস্থায় Continuous Sonar Animation।
+- অপ্রয়োজনীয় Rotating Icon।
+- Unnecessary Shimmer Loop।
+- একাধিক Concurrent Infinite Animation।
+- User Action-এর সঙ্গে সম্পর্কহীন Decorative Motion।
+
+প্রস্তাবিত Motion Tokens:
+
+| Interaction | Motion |
+|---|---|
+| Button Press | Spring |
+| Tab Transition | 220ms Crossfade |
+| List Item | animateItem() |
+| Bookmark / Pin | Subtle Spring |
+| Active Scan | State-Based Motion |
+| Reduced Motion | Minimal / Immediate |
+
+প্রতিটি Animation-এর Lifecycle সঠিকভাবে Manage করবে।
+
+Screen থেকে বের হলে বা Animation-এর প্রয়োজন শেষ হলে অপ্রয়োজনীয় Animation চলতে থাকবে না।
+
+---
+
+## 10. Error, Loading and Empty States
+
+সব Screen-এর জন্য Consistent State Design তৈরি করবে।
+
+### Loading State
+
+- প্রয়োজন অনুযায়ী Lightweight Skeleton Placeholder ব্যবহার করবে।
+- প্রথমবার Database Load বা Remote Catalog Sync-এর সময় Loading Feedback দেবে।
+- অপ্রয়োজনীয় Infinite Shimmer ব্যবহার করবে না।
+
+### Error State
+
+- Remote Sync Fail হলে Inline Error Message দেখাবে।
+- প্রয়োজন অনুযায়ী Retry Action দেবে।
+- Error Message সহজ ভাষায় লিখবে।
+- Internal Technical Error সরাসরি User-এর সামনে প্রকাশ করবে না।
+
+### Empty State
+
+- Saved List Empty।
+- History Empty।
+- Search Result Not Found।
+- Working Server Not Found।
+- Filter Result Empty।
+
+প্রতিটি Empty State-এ Contextual Message এবং প্রাসঙ্গিক Action থাকবে।
+
+### Snackbar
+
+নিচের Action-গুলোর জন্য Undo Feedback বিবেচনা করবে:
+
+- Remove Saved Server।
+- Unpin Server।
+- Delete History Item।
+
+Action সফল হয়েছে বলে মিথ্যা Feedback দেখাবে না।
+
+---
+
+## 11. Performance and Stability
+
+অ্যাপটি বাংলাদেশের Low-End Android Device-এও Smooth রাখতে হবে।
+
+বিশেষভাবে বিবেচনা করবে:
+
+- LazyColumn / LazyVerticalGrid Performance।
+- Stable Keys।
+- Unnecessary Recomposition।
+- Large Server List Rendering।
+- Animation Lifecycle।
+- Image বা Icon Rendering Overhead।
+- State Management।
+- Memory Usage।
+- Database Query Performance।
+- Coroutine Lifecycle।
+- Network State Updates।
+
+UI Redesign-এর কারণে Existing Server Testing Engine-এর Performance ক্ষতিগ্রস্ত হওয়া যাবে না।
+
+প্রয়োজন ছাড়া Architecture বা Data Layer পরিবর্তন করবে না।
+
+কোনো Performance Improvement দাবি করার আগে যথাযথ Benchmark বা Profiling Evidence দেবে।
+
+---
+
+## 12. Implementation Priority
+
+Implementation অবশ্যই নিচের Priority Order অনুসরণ করবে।
+
+### P0 — Critical Fixes
+
+| Task | Scope |
+|---|---|
+| CTA Contrast Fix | Home |
+| Light Status Contrast Fix | Servers / Settings |
+| Dynamic System Bar Style | MainActivity / Theme |
+| Bengali Letter Spacing Fix | Typography |
+| Bengali Font Fallback Fix | Typography |
+
+P0 Acceptance:
+
+- Light এবং Dark CTA Contrast Pass করবে।
+- Status Text এবং Badge Contrast যাচাই করা হবে।
+- Manual Theme Switch-এর পর Status Bar ও Navigation Bar Icon দৃশ্যমান থাকবে।
+- Bengali Letter Spacing `0.sp` হবে।
+- Bengali Badge ও Label সঠিক Font-এ Render হবে।
+
+### P1 — Core Experience
+
+| Task | Scope |
+|---|---|
+| Reduced Motion | Home / Shared Motion |
+| Idle Animation Cleanup | Home |
+| Filled / Outlined Navigation Icons | Navigation |
+| Adaptive Navigation at 600dp | Root Navigation |
+| 48dp OTT Chips | Servers / OTT |
+
+P1 Acceptance:
+
+- Idle Screen-এ অপ্রয়োজনীয় Infinite Animation চলবে না।
+- Active Scan-এ Progress Animation কাজ করবে।
+- সব পাঁচটি Navigation Item-এর Selected / Unselected State স্পষ্ট হবে।
+- Compact Width-এ NavigationBar।
+- Medium এবং Expanded Width-এ NavigationRail।
+- OTT Chips-এর Touch Target অন্তত 48dp।
+
+### P2 — Design Consistency and Productivity
+
+| Task | Scope |
+|---|---|
+| Unified Rich Cards | Servers / OTT / Saved / History |
+| Rich URL Footer | All URL Cards |
+| Settings Action Consolidation | Settings |
+| Reduce Animations Setting | Settings |
+| Undo Snackbar | Saved / History |
+| Fastest Ping Sorting | Servers |
+
+P2 Acceptance:
+
+- চারটি প্রধান List Screen-এ Unified Card Language।
+- Sorting সঠিক Numeric Ping অনুযায়ী কাজ করবে।
+- Undo করলে Database এবং UI উভয় জায়গায় Data Restore হবে।
+- Duplicate Settings Action থাকবে না, যদি সেগুলো একই কাজ করে।
+
+### P3 — Optional Polish
+
+| Task | Scope |
+|---|---|
+| Copy URL | Server Cards |
+| Collapsible Top Bar | Servers / Lists |
+| Tap Active Tab to Top | Navigation |
+| Subtle Post-Scan Feedback | Home |
+| Optional Diagnostics Sheet | Server Card |
+| Additional Responsive Polish | All Screens |
+
+P3 Acceptance:
+
+- Copy Action সফল হলে Snackbar Feedback।
+- Top Bar Scroll Behaviour সঠিকভাবে কাজ করবে।
+- Tab-to-Top Existing Scroll State নষ্ট করবে না।
+- Post-Scan Feedback প্রকৃত Scan Result দেখাবে।
+- Optional Feature Existing UX বা Functionality-এর সঙ্গে সংঘর্ষ তৈরি করবে না।
+
+---
+
+## 13. Testing and Quality Assurance
+
+শুধু Code Compile করলেই Implementation Complete হয়েছে বলা যাবে না।
+
+### Build Validation
+
+- Existing Gradle Configuration অক্ষুণ্ণ রাখবে।
+- Debug Build Successful হতে হবে।
+- Release Build-এর সম্ভাব্য সমস্যা যাচাই করবে।
+- Existing Unit Tests Pass করতে হবে।
+- প্রয়োজনীয় UI Tests যুক্ত করবে।
+- Lint এবং Static Analysis চালাবে।
+- কোনো নতুন Warning তৈরি হলে ব্যাখ্যা করবে।
+
+### UI Validation
+
+প্রতিটি Screen Light এবং Dark Theme-এ পরীক্ষা করবে।
+
+Test Conditions:
+
+- Compact Phone।
+- Landscape Phone।
+- 600dp Medium Width।
+- 840dp Expanded Width।
+- Low Height / Split Screen।
+- 100% Font Scale।
+- 150% Font Scale।
+- 200% Font Scale।
+- Bengali Language।
+- English Language।
+- Reduce Animations Enabled।
+- Empty, Loading, Error এবং Populated State।
+
+### Functionality Regression Testing
+
+বিশেষভাবে পরীক্ষা করবে:
+
+1. Scan Start / Stop।
+2. Quick Scan / Full Scan।
+3. Live Scan Progress।
+4. Working Server Filtering।
+5. Not Tested Filtering।
+6. Not Working Filtering।
+7. OTT Category এবং Region Filtering।
+8. External Browser Launch।
+9. Bookmark / Unbookmark।
+10. Pin / Unpin।
+11. Search।
+12. Sorting।
+13. History Filtering।
+14. Single Delete / Undo।
+15. Clear All।
+16. Export।
+17. Custom Server Management।
+18. Catalog Sync।
+19. Theme Switching।
+20. Language Switching।
+21. App Restart-এর পর State Persistence।
+
+### Accessibility Validation
+
+- WCAG 2.2 AA Color Contrast।
+- Touch Target Size।
+- TalkBack Semantics।
+- Focus Order।
+- Font Scaling।
+- Reduced Motion।
+
+যেসব পরীক্ষা বাস্তবে চালানো সম্ভব নয় সেগুলোকে স্পষ্টভাবে `Unverified` হিসেবে রিপোর্ট করবে।
+
+---
+
+## 14. Official Documentation and Research References
+
+Implementation-এর সময় প্রাসঙ্গিক Official Documentation অনুসরণ করবে।
+
+### Android / Jetpack Compose
+
+- Compose Accessibility: https://developer.android.com/develop/ui/compose/accessibility
+- Adaptive Apps: https://developer.android.com/develop/adaptive-apps
+- Compose Layouts: https://developer.android.com/develop/ui/compose/layouts
+- Material 3 in Compose: https://developer.android.com/develop/ui/compose/designsystems/material3
+- Window Size Classes: https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes
+- Edge-to-Edge: https://developer.android.com/develop/ui/views/layout/edge-to-edge
+
+### Accessibility
+
+- WCAG 2.2: https://www.w3.org/TR/WCAG22/
+- WCAG Understanding Documents: https://www.w3.org/WAI/WCAG22/Understanding/
+
+### UX Research
+
+- Nielsen Norman Group — 10 Usability Heuristics: https://www.nngroup.com/articles/ten-usability-heuristics/
+- Material Design 3: https://m3.material.io/
+- Apple Human Interface Guidelines: https://developer.apple.com/design/human-interface-guidelines/
+
+Official Documentation-এর Current Version অনুসরণ করবে। পুরোনো API বা Deprecated Implementation ব্যবহার করবে না।
+
+---
+
+## 15. Git and Code Change Management
+
+Implementation-এর আগে বর্তমান Git State পরীক্ষা করবে।
+
+- Current Branch।
+- Working Tree Changes।
+- Existing Uncommitted Changes।
+- Recent Commits।
+
+User-এর Existing Uncommitted Changes কখনো Overwrite বা Discard করবে না।
+
+Implementation-কে Priority অনুযায়ী Logical Change Group-এ ভাগ করবে।
+
+প্রতিটি Group-এর পরে:
+
+1. Build চালাবে।
+2. Relevant Tests চালাবে।
+3. Diff পরীক্ষা করবে।
+4. Regression যাচাই করবে।
+5. পরিবর্তনের Summary তৈরি করবে।
+
+কোনো Permission ছাড়া Git Reset, Force Push, Destructive Clean বা Existing History Rewrite করবে না।
+
+Commit বা Push কেবল User স্পষ্টভাবে চাইলে করবে।
+
+---
+
+## 16. Final Deliverables
+
+সম্পূর্ণ Implementation শেষে নিচের Deliverables প্রদান করবে:
+
+### Documentation
+
+- Updated Design System Specification।
+- Updated UI/UX Implementation Audit।
+- Updated Accessibility Checklist।
+- Updated Implementation Roadmap।
+- Final Implementation Report।
+- Test Results।
+
+### Source Code
+
+- Improved Theme।
+- Corrected Typography।
+- Updated Navigation।
+- Unified Reusable Components।
+- Improved Screen Layouts।
+- Reduced Motion Support।
+- Accessibility Improvements।
+- Updated Tests।
+
+### Final Report Format
+
+শেষে বাংলায় বিস্তারিত Summary দেবে।
+
+**1. Project Overview**
+
+কী কী পরিবর্তন হয়েছে।
+
+**2. Priority-wise Implementation**
+
+| Priority | Planned Tasks | Completed | Remaining |
+|---|---|---|---|
+
+**3. Screen-wise Changes**
+
+Home, Servers, OTT, Saved, History, Settings এবং Navigation-এর পরিবর্তন আলাদাভাবে ব্যাখ্যা করবে।
+
+**4. Design System Changes**
+
+Colors, Typography, Icons, Shapes, Spacing, Cards এবং Motion-এর পরিবর্তন দেখাবে।
+
+**5. Accessibility Results**
+
+প্রতিটি যাচাইকৃত Contrast Ratio, Touch Target এবং Accessibility Test Result উপস্থাপন করবে।
+
+**6. Build and Test Results**
+
+কোন Build, Test, Lint এবং Validation সফল হয়েছে তার Evidence দেবে।
+
+**7. Remaining Issues**
+
+যা Implement করা যায়নি বা বাস্তবে যাচাই করা যায়নি তা স্পষ্টভাবে উল্লেখ করবে।
+
+**8. Modified Files**
+
+পরিবর্তিত প্রতিটি File Path এবং তার উদ্দেশ্য উল্লেখ করবে।
+
+**9. Final Assessment**
+
+বর্তমান Application আগের তুলনায় কীভাবে উন্নত হয়েছে এবং কোনো Known Limitation অবশিষ্ট আছে কি না জানাবে।
+
+---
+
+## 17. Definition of Done
+
+প্রজেক্টটি তখনই Complete হিসেবে বিবেচিত হবে যখন:
+
+- Existing Core Functionality সম্পূর্ণ অক্ষুণ্ণ থাকবে।
+- সব P0 Task সফলভাবে Complete হবে।
+- সব P1 Task সফলভাবে Complete হবে।
+- অনুমোদিত P2 এবং P3 Task Implement হবে।
+- Light এবং Dark Theme Consistent হবে।
+- Bengali Typography সঠিকভাবে Render হবে।
+- সব প্রধান Screen-এ Unified Design System থাকবে।
+- Navigation Responsive হবে।
+- Accessibility Requirements যাচাই করা হবে।
+- Reduced Motion কাজ করবে।
+- কোনো নতুন Critical Build Error থাকবে না।
+- Existing Regression Tests Pass করবে।
+- Documentation এবং Final Report Updated থাকবে।
+
+কোনো অসম্পূর্ণ Task-কে Complete হিসেবে দেখাবে না।
+
+---
+
+# Final Execution Instruction
+
+এই কাজটি একজন Senior Engineering Team-এর মতো Professionalভাবে সম্পন্ন করবে।
+
+প্রথমে সম্পূর্ণ Repository Audit করবে। তারপর Research Report-এর প্রতিটি Recommendation Existing Source Code-এর সঙ্গে মিলিয়ে যাচাই করবে। এরপর একটি Evidence-Based Implementation Plan তৈরি করবে।
+
+**গুরুত্বপূর্ণ: প্রথম Audit Phase-এ কোনো Source Code পরিবর্তন করবে না। Audit Report এবং Implementation Plan দেখিয়ে User-এর অনুমোদনের জন্য অপেক্ষা করবে। অনুমোদন পাওয়ার পর P0 → P1 → P2 → P3 ক্রমানুসারে বাস্তব Implementation শুরু করবে।**
+
+প্রতিটি পরিবর্তনের ক্ষেত্রে:
+
+- Preserve Existing Code।
+- Avoid Unnecessary Refactoring।
+- Follow Official Android Guidelines।
+- Follow Material Design 3।
+- Follow WCAG 2.2 AA।
+- Respect Bengali Typography।
+- Prioritize Accessibility and Performance।
+- Validate Before Claiming Success।
+- Never Introduce Fake Data or Fake Functionality।
+
+**Final Goal:** BDIX / FTP Server Tester-কে একটি World-Class, Modern, Lightweight, Accessible, Professional এবং Consistent Native Android Application হিসেবে তৈরি করা—যেখানে Design শুধু সুন্দর নয়, বরং প্রতিটি Interaction, Color, Animation, Typography এবং Layout বাস্তব ব্যবহারকারীর প্রয়োজন অনুযায়ী কার্যকর হবে।

@@ -1,0 +1,917 @@
+# BDIX / FTP Server Tester — World-Class UI/UX Research, Complete Design Audit & Redesign Recommendation Prompt
+
+## ভূমিকা ও দায়িত্ব
+
+আপনি একজন **Principal UI/UX Designer, Senior Product Designer, UX Researcher, Android Design Systems Specialist এবং Accessibility Consultant** হিসেবে কাজ করবেন।
+
+আপনার দায়িত্ব হলো আমার বিদ্যমান BDIX / FTP Server Tester Android Application-এর সম্পূর্ণ UI/UX Design গভীরভাবে পর্যালোচনা করা। আপনি যদি আমার জায়গায় থাকতেন, তাহলে কী কী পরিবর্তন করতেন, কোথায় উন্নতির সুযোগ দেখতেন এবং কীভাবে অ্যাপটিকে আরও আধুনিক, সুন্দর, পরিচ্ছন্ন, Professional, Consistent ও User-friendly করে তুলতেন—সেসব বিষয়ে বিস্তারিত ও বাস্তবসম্মত মতামত দেবেন।
+
+আপনার লক্ষ্য শুধু অ্যাপটিকে দেখতে সুন্দর করা নয়। বরং এমন একটি ব্যবহারবান্ধব Product Experience তৈরি করা, যেখানে Visual Design, Usability, Accessibility, Navigation, Responsiveness, Readability, Performance এবং Consistency—সবকিছুর মধ্যে সঠিক ভারসাম্য থাকবে।
+
+**শুধু প্রচলিত Design Trend অনুসরণ করবেন না। বাস্তব ব্যবহারকারীর প্রয়োজন, আচরণ, সমস্যা এবং ব্যবহারের সুবিধাকে সবচেয়ে বেশি গুরুত্ব দেবেন।**
+
+---
+
+# PHASE 1 — গভীর Online Research ও Reference Study
+
+কোনো Design Recommendation দেওয়ার আগে অনলাইনে গভীর Research করবেন।
+
+নিজের ধারণার ওপর নির্ভর করে সিদ্ধান্ত নেবেন না। প্রতিষ্ঠিত Design System, UX Research, Official Documentation, Industry Standards, Research Articles, Design Guidelines এবং বাস্তব Product Examples থেকে প্রাসঙ্গিক তথ্য সংগ্রহ ও যাচাই করবেন।
+
+নিচের Guidelines ও Research Sources বিশেষ গুরুত্ব দিয়ে পর্যালোচনা করবেন।
+
+### 1. UX Research ও Usability Principles
+
+- Jakob Nielsen-এর 10 Usability Heuristics।
+- Nielsen Norman Group (NN/g)-এর Usability Research, Interaction Design এবং UX Guidelines।
+- Heuristic Evaluation।
+- Cognitive Walkthrough।
+- User-Centered Design।
+- Human-Centered Design।
+- Cognitive Load Theory।
+- Recognition Rather Than Recall।
+- Error Prevention ও Error Recovery।
+- Consistency and Standards।
+- Visibility of System Status।
+- User Control and Freedom।
+- Aesthetic and Minimalist Design।
+
+### 2. প্রতিষ্ঠিত Design Systems
+
+- Google Material Design 3 (M3)।
+- Android Developers-এর Official UI/UX Guidelines।
+- Android Adaptive Design Guidelines।
+- Jetpack Compose Material 3 Component Guidelines (প্রকল্পে Compose থাকলে)।
+- Apple Human Interface Guidelines (HIG)।
+- Apple-এর Typography, Color, Navigation ও Interaction Guidelines।
+- অন্যান্য প্রতিষ্ঠিত Design Systems, যদি সেগুলো এই প্রজেক্টের জন্য বাস্তবিকভাবে প্রাসঙ্গিক হয়।
+
+Apple HIG-কে মূলত তুলনামূলক Design Reference হিসেবে ব্যবহার করবেন। Android অ্যাপে অন্ধভাবে iOS Design Pattern প্রয়োগ করবেন না। Android ব্যবহারকারীর পরিচিত Navigation, Platform Convention এবং Interaction Pattern-কে অগ্রাধিকার দেবেন।
+
+### 3. Accessibility Standards
+
+- W3C WCAG 2.2 Level AA।
+- Android Accessibility Guidelines।
+- TalkBack ও Screen Reader Support।
+- Semantic Labels ও Accessible Components।
+- Color Contrast।
+- Touch Target Size।
+- Focus এবং Selected State Visibility।
+- Font Scaling ও Readability।
+- Color Vision Deficiency।
+- Accessibility-friendly Motion ও Animation।
+
+### 4. অন্যান্য গুরুত্বপূর্ণ Research Area
+
+- Gestalt Principles।
+- Visual Hierarchy।
+- Color Theory ও Color Psychology।
+- Typography ও Readability Research।
+- Information Architecture।
+- Mobile Navigation Patterns।
+- Responsive ও Adaptive Layout।
+- Micro-interactions।
+- Design Tokens।
+- Design Systems ও Component Architecture।
+- User Feedback ও Error Handling।
+- Mobile Usability Testing।
+- Performance-aware UI Design।
+
+**Research-এর নিয়ম:**
+
+1. প্রথমে Official Documentation ও Primary Sources-কে অগ্রাধিকার দেবেন।
+2. Research Article বা Case Study ব্যবহার করলে তার উৎস ও প্রাসঙ্গিকতা যাচাই করবেন।
+3. প্রতিটি গুরুত্বপূর্ণ Design Recommendation-এর পেছনে যুক্তি ও Reference দেবেন।
+4. কোনো Design Principle ভুলভাবে ব্যাখ্যা করবেন না।
+5. পুরোনো Guidelines-এর পরিবর্তে সম্ভব হলে বর্তমান সংস্করণ ব্যবহার করবেন।
+6. কোনো বিষয় সম্পর্কে নির্ভরযোগ্য তথ্য না পেলে সেটিকে অনিশ্চিত হিসেবে উল্লেখ করবেন।
+7. শুধু জনপ্রিয় Designer-এর নাম উল্লেখ করে থেমে যাবেন না; তাঁদের Principles বাস্তবে কীভাবে এই অ্যাপে প্রয়োগ করা যায় তা ব্যাখ্যা করবেন।
+
+---
+
+# PHASE 2 — বর্তমান Project ও Design-এর সম্পূর্ণ Audit
+
+প্রথমে পুরো প্রজেক্টটি ভালোভাবে পরীক্ষা করবেন। কোনো পরিবর্তনের প্রস্তাব দেওয়ার আগে বর্তমান Implementation, UI Structure এবং User Experience বুঝে নেবেন।
+
+সম্ভব হলে নিচের বিষয়গুলো পরীক্ষা করবেন:
+
+- সম্পূর্ণ Repository ও Project Structure।
+- বর্তমান Android UI Implementation।
+- প্রতিটি Screen ও Navigation Flow।
+- বর্তমান Color Scheme ও Theme।
+- Typography ও Font Rendering।
+- Icon Library ও Icon Usage।
+- Layout, Spacing ও Alignment।
+- Buttons, Cards, Chips, Tabs, Dialogs ও অন্যান্য Components।
+- Loading, Empty, Success, Error এবং Scanning States।
+- Light ও Dark Theme।
+- Device Size অনুযায়ী Layout Behaviour।
+- System Navigation ও Status Bar Insets।
+- Accessibility ও Screen Reader Behaviour।
+- বাস্তব Device বা Emulator-এ UI Rendering।
+- বর্তমান Interaction এবং User Feedback।
+
+শুধু Source Code দেখে কোনো Visual সমস্যা নিশ্চিত বলে দাবি করবেন না। Screenshot বা বাস্তব UI পরীক্ষা করতে না পারলে সেটি স্পষ্টভাবে উল্লেখ করবেন।
+
+### Screen-by-Screen Audit
+
+প্রতিটি Screen আলাদাভাবে বিশ্লেষণ করবেন।
+
+প্রতিটি Screen-এর জন্য নিচের প্রশ্নগুলোর উত্তর দেবেন:
+
+1. Screen-এর মূল উদ্দেশ্য কী?
+2. ব্যবহারকারী এখানে এসে কী করতে চান?
+3. সবচেয়ে গুরুত্বপূর্ণ Information বা Action সহজে বোঝা যাচ্ছে কি?
+4. Visual Hierarchy সঠিক আছে কি?
+5. Layout ও Spacing যথাযথ কি?
+6. Font Size, Weight ও Typography যথাযথ কি?
+7. Icon অর্থপূর্ণ ও সহজে চেনা যায় কি?
+8. Color ও Contrast যথাযথ কি?
+9. Interactive Elements-এর Touch Target যথেষ্ট কি?
+10. অপ্রয়োজনীয় Element আছে কি?
+11. গুরুত্বপূর্ণ কোনো Element অনুপস্থিত কি?
+12. Screen-এর অন্য অংশগুলোর সঙ্গে Consistency আছে কি?
+13. Navigation ও User Flow সহজবোধ্য কি?
+14. Accessibility-এর দিক থেকে কোনো সমস্যা আছে কি?
+15. কী পরিবর্তন করলে User Experience আরও উন্নত হবে?
+
+শুধু সমস্যা চিহ্নিত করবেন না। প্রতিটি সমস্যার সম্ভাব্য কারণ, ব্যবহারকারীর ওপর প্রভাব এবং বাস্তবসম্মত সমাধানও ব্যাখ্যা করবেন।
+
+---
+
+# PHASE 3 — Project-এর Existing Design ও Product Context
+
+নিচের বিষয়গুলো বর্তমান Project-এর গুরুত্বপূর্ণ Design ও Functional Context হিসেবে বিবেচনা করবেন।
+
+এগুলোকে বিদ্যমান Product Scope হিসেবে সম্মান করবেন। তবে এগুলোর Visual Presentation, Layout, Placement ও Interaction আরও ভালো করার সুযোগ থাকলে তা প্রস্তাব করবেন।
+
+## 1. Main Navigation
+
+বর্তমান অনুমোদিত Design Direction অনুযায়ী পাঁচটি Top-level Destination রয়েছে:
+
+- Home
+- Servers
+- Saved
+- History
+- Settings
+
+পুরোনো Hamburger Menu / Navigation Drawer-এর পরিবর্তে আধুনিক Persistent Navigation Pattern ব্যবহার করার সিদ্ধান্ত রয়েছে।
+
+সম্ভাব্য Navigation Component:
+
+- Compact Window: Material 3 Navigation Bar।
+- Medium ও Expanded Window: Navigation Rail বা প্রয়োজন অনুযায়ী অন্য উপযুক্ত Adaptive Navigation Pattern।
+
+তবে এগুলো চূড়ান্ত ধরে নেবেন না। Android-এর সর্বশেষ Adaptive Design Guidelines অনুসারে Window Size Class, Available Space, Navigation Destination এবং বাস্তব Usability বিবেচনা করে সর্বোত্তম Navigation Strategy সুপারিশ করবেন।
+
+Navigation-এর ক্ষেত্রে পর্যালোচনা করবেন:
+
+- Navigation Item-এর সংখ্যা।
+- Icon ও Label-এর সামঞ্জস্য।
+- Selected ও Unselected State।
+- Active Destination বোঝার সুবিধা।
+- Navigation Switching Experience।
+- Back Navigation।
+- State Restoration।
+- Scroll Position Preservation।
+- Navigation Bar ও Content-এর মধ্যে Visual Balance।
+- Keyboard ও System Insets।
+- Landscape ও Tablet Behaviour।
+
+## 2. Home Screen
+
+বর্তমান Home Screen-এর গুরুত্বপূর্ণ Element:
+
+- Hero Circular Progress Ring।
+- Quick Scan / Full Scan Selector।
+- Start Test / Stop Control।
+- Network Summary।
+- Live IP Address।
+- Working ও Failed Server Count।
+- Average Latency।
+- Last Scan Summary।
+- বর্তমানে Test হওয়া Server-এর Progress বা Status।
+
+প্রতিটি Element-এর প্রয়োজনীয়তা ও Visual Importance যাচাই করবেন।
+
+বিশেষ করে:
+
+- Progress Ring কতটা অর্থপূর্ণ ও ব্যবহারবান্ধব?
+- Scan-এর বর্তমান অবস্থা কীভাবে আরও ভালোভাবে বোঝানো যায়?
+- Primary CTA কোথায় থাকা উচিত?
+- Network Summary কীভাবে কম জায়গায় গুরুত্বপূর্ণ তথ্য দেখাতে পারে?
+- Home Screen অতিরিক্ত Information দিয়ে ভারী হয়ে যাচ্ছে কি?
+- First-time User সহজেই Scan শুরু করতে পারবেন কি?
+
+## 3. Servers Screen
+
+বর্তমান Feature Scope:
+
+- Working
+- Not Tested
+- Not Working
+- Status অনুযায়ী Server Count।
+- All / TV / FTP / Movie Category Filter।
+- Search।
+- Add Custom Server।
+- Server Card।
+- Latency Information।
+- Bookmark / Save Action।
+- Server URL।
+- Server Details Navigation।
+- External Browser Launch।
+
+পর্যালোচনা করবেন:
+
+- Status Tabs ও Category Filter-এর Hierarchy।
+- Search Interaction।
+- Server Card Design।
+- Status Indicator।
+- Latency Display।
+- Server Title ও URL-এর Typography।
+- Bookmark Button।
+- Empty State।
+- Loading State।
+- Filtered Results।
+- No Results State।
+- Server Details Navigation।
+
+বিশেষভাবে যাচাই করবেন যে Server Card-এর Header এবং URL-এর Action আলাদা ও স্পষ্টভাবে বোঝা যায় কি না। URL-এ Tap করলে Android-এর External Browser-এ যাওয়ার Interaction যেন Server Details Navigation-এর সঙ্গে সংঘর্ষ তৈরি না করে।
+
+## 4. Saved Screen
+
+- Saved Server List।
+- Server Information।
+- Search ও Filter।
+- Remove Saved Item।
+- Server Details।
+- External Browser Launch।
+- Empty State।
+
+এই Screen-এর Information Density, Action Placement এবং Server Card Consistency পর্যালোচনা করবেন।
+
+## 5. History Screen
+
+- Previous Scan Results।
+- Scan History।
+- Search ও Filter।
+- Export Functionality।
+- Delete Individual Entry।
+- Clear All।
+- Server Details।
+- External Browser Launch।
+
+History Screen যেন তথ্যপূর্ণ হয়, কিন্তু অপ্রয়োজনীয়ভাবে জটিল না হয়।
+
+## 6. Server Details Screen
+
+Server Details Screen-এর Information Architecture, Typography, Metadata Presentation, Action Placement, URL Interaction এবং Navigation Behaviour পর্যালোচনা করবেন।
+
+ব্যবহারকারীর কাছে গুরুত্বপূর্ণ তথ্যগুলো কীভাবে আরও পরিষ্কারভাবে উপস্থাপন করা যায় তা সুপারিশ করবেন।
+
+## 7. Settings Screen
+
+বর্তমানে থাকা Settings ও Capabilities অক্ষুণ্ণ রেখে Presentation উন্নত করার পরামর্শ দেবেন।
+
+বর্তমান Scope-এর মধ্যে রয়েছে:
+
+- Appearance / Theme।
+- Language।
+- Max Concurrency।
+- Timeout Settings।
+- Speed Test Cap।
+- Manual Network Profile।
+- Remote Catalog Sync।
+- History Retention।
+- Bulk Clear।
+- Reset Data।
+- Privacy Policy।
+- About।
+
+Settings-গুলো কীভাবে Category অনুযায়ী Organize করা যায়, কোনগুলো আলাদা Section হওয়া উচিত এবং কোনগুলোর Description বা Supporting Information প্রয়োজন তা বিশ্লেষণ করবেন।
+
+---
+
+# PHASE 4 — Icon, Font, Typography ও Visual Identity Audit
+
+এটি অত্যন্ত গুরুত্বপূর্ণ অংশ। প্রতিটি Screen-এর Icon ও Typography আলাদাভাবে পর্যালোচনা করবেন।
+
+## 1. Icon System
+
+বর্তমান Icon ব্যবহার ভালো না হলে আরও ভালো Icon System প্রস্তাব করবেন।
+
+বিশেষভাবে বিবেচনা করবেন:
+
+- Material Symbols।
+- Material Symbols Rounded।
+- অন্যান্য Official বা Well-maintained Icon Libraries।
+- Filled ও Outlined Icon-এর Consistency।
+- Icon Weight ও Stroke।
+- Icon Size।
+- Optical Alignment।
+- Icon-to-Text Spacing।
+- Selected ও Unselected Icon States।
+- Accessibility Description।
+
+শুধু আধুনিক দেখানোর জন্য অপরিচিত Icon ব্যবহার করবেন না।
+
+প্রতিটি Icon-এর Meaning সহজে বোঝা যায় কি না তা বিবেচনা করবেন। প্রয়োজন অনুযায়ী Icon-এর সঙ্গে Text Label ব্যবহার করবেন।
+
+কোন Icon Library ব্যবহার করতেন, কেন সেটি নির্বাচন করতেন এবং কোন Screen-এ কোন ধরনের Icon ব্যবহার করা উচিত তা নির্দিষ্টভাবে জানাবেন।
+
+## 2. Font ও Typography
+
+বর্তমান Font উপযুক্ত না হলে ভালো বিকল্প সুপারিশ করবেন।
+
+বিশেষভাবে বিবেচনা করবেন:
+
+- English Typography।
+- বাংলা Typography।
+- Font Weight।
+- Font Size।
+- Line Height।
+- Letter Spacing।
+- Text Alignment।
+- Heading Hierarchy।
+- Body Text Readability।
+- Caption ও Supporting Text।
+- Number ও Tabular Data।
+- IP Address, URL ও Latency Display।
+
+বাংলা এবং ইংরেজি দুই ভাষার Typography-তে সমান গুরুত্ব দেবেন।
+
+বাংলা Font নির্বাচন করার আগে Glyph Coverage, Rendering Quality, Weight Availability এবং Device Compatibility পরীক্ষা করার নির্দেশনা দেবেন।
+
+সম্ভাব্য Font যেমন Noto Sans Bengali, Plus Jakarta Sans বা অন্য কোনো উপযুক্ত Typeface বিবেচনা করতে পারেন। কিন্তু শুধু নাম জনপ্রিয় বলে নির্বাচন করবেন না।
+
+প্রতিটি Font-এর ক্ষেত্রে বাস্তব Readability ও Language Support যাচাই করবেন।
+
+প্রস্তাবিত Typography System-এর মধ্যে থাকবে:
+
+- Display / Hero।
+- Headline।
+- Title।
+- Body Large।
+- Body Medium।
+- Body Small।
+- Label Large।
+- Label Medium।
+- Caption।
+
+প্রতিটি Style-এর জন্য উপযুক্ত Size, Weight ও Line Height প্রস্তাব করবেন।
+
+---
+
+# PHASE 5 — Color System ও Visual Design Audit
+
+বর্তমান Color Palette ভালো হলে সেটি বজায় রাখার কারণ ব্যাখ্যা করবেন। ভালো না হলে সম্পূর্ণ বিকল্প Color System প্রস্তাব করবেন।
+
+বর্তমান Design Direction-এ প্রস্তাবিত কিছু Color:
+
+### Dark Theme
+
+- Deep Ocean Slate Background।
+- Surface Palette: `#050B11` থেকে `#20364C`।
+- Electric Cyan: `#38BDF8`।
+- Signal Emerald: `#34D399`।
+- Warning Amber: `#FBBF24`।
+- Soft Coral: `#F87171`।
+
+### Light Theme
+
+- Crisp Alabaster: `#F4F7FA`।
+- White Surface।
+- Deep Ocean Cyan: `#0277B5`।
+- Emerald: `#059669`।
+
+এগুলোকে কেবল Existing Design Proposal হিসেবে বিবেচনা করবেন। কোনো Palette ভালো না হলে পরিবর্তনের প্রস্তাব দেবেন।
+
+### Color Analysis
+
+নিচের বিষয়গুলো বিশ্লেষণ করবেন:
+
+- Primary Color।
+- Secondary Color।
+- Tertiary Color।
+- Background Color।
+- Surface Color।
+- Elevated Surface।
+- Text Primary।
+- Text Secondary।
+- Outline ও Border।
+- Success।
+- Warning।
+- Error।
+- Informational।
+- Selected State।
+- Disabled State।
+- Focus State।
+
+### Color Theory ও Psychology
+
+- Color Harmony।
+- Contrast।
+- Saturation।
+- Brightness।
+- Warm ও Cool Tone।
+- Visual Balance।
+- Brand Identity।
+- Semantic Meaning।
+- Color Consistency।
+
+কোনো Status শুধু Color দিয়ে বোঝাবেন না। প্রয়োজন অনুযায়ী Icon, Label ও Text ব্যবহার করবেন।
+
+### Light ও Dark Theme
+
+দুই Theme-এর মধ্যে একই Semantic Meaning এবং Visual Consistency থাকতে হবে।
+
+প্রতিটি Theme-এর জন্য আলাদা Semantic Color Mapping প্রস্তাব করবেন।
+
+প্রয়োজনে Dynamic Color ব্যবহার করার সুবিধা ও সীমাবদ্ধতাও বিবেচনা করবেন। তবে Dynamic Color-এর কারণে Brand Identity, Status Color বা Accessibility ক্ষতিগ্রস্ত হলে সেটি এড়িয়ে চলার পরামর্শ দেবেন।
+
+প্রস্তাবিত Palette-এর প্রতিটি গুরুত্বপূর্ণ Color-এর:
+
+- HEX Value।
+- Semantic Name।
+- কোথায় ব্যবহার হবে।
+- Text Contrast।
+- UI Contrast।
+- Light ও Dark Theme Mapping।
+
+নির্দিষ্টভাবে উল্লেখ করবেন।
+
+---
+
+# PHASE 6 — Layout, Spacing, Alignment ও Visual Hierarchy
+
+প্রতিটি Screen-এর Layout আরও সুন্দর, পরিচ্ছন্ন ও সহজবোধ্য করার পরামর্শ দেবেন।
+
+বিশেষভাবে বিশ্লেষণ করবেন:
+
+- Content Alignment।
+- Horizontal ও Vertical Spacing।
+- Screen Padding।
+- Component Spacing।
+- Card Padding।
+- Section Separation।
+- Grid System।
+- Content Width।
+- Information Density।
+- White Space।
+- Visual Rhythm।
+- Balance।
+- Proximity।
+- Grouping।
+- Consistency।
+
+একটি Consistent Spacing Scale প্রস্তাব করবেন। যেমন 4dp ভিত্তিক Scale ব্যবহার করা যায় কি না তা পরীক্ষা করবেন।
+
+প্রয়োজনে:
+
+- 4dp
+- 8dp
+- 12dp
+- 16dp
+- 24dp
+- 32dp
+
+অথবা আরও উপযুক্ত Scale সুপারিশ করবেন।
+
+একই ধরনের Component-এর মধ্যে অপ্রয়োজনীয় Spacing Variation যেন না থাকে।
+
+### Visual Hierarchy
+
+প্রতিটি Screen-এ ব্যবহারকারীর চোখ স্বাভাবিকভাবে কোন Element-এর দিকে যাবে তা বিবেচনা করবেন।
+
+বিশেষভাবে:
+
+- Primary Action।
+- Important Information।
+- Secondary Action।
+- Supporting Information।
+- Status Information।
+- Navigation।
+- Content Grouping।
+
+কোন Element বেশি গুরুত্ব পাচ্ছে অথচ পাওয়া উচিত নয়, এবং কোন গুরুত্বপূর্ণ Element যথেষ্ট গুরুত্ব পাচ্ছে না—তা তুলে ধরবেন।
+
+---
+
+# PHASE 7 — Component ও Design System
+
+পুরো অ্যাপের জন্য একটি Consistent, Scalable ও Maintainable Design System-এর প্রস্তাব দেবেন।
+
+নিচের Component-গুলো বিশ্লেষণ করবেন:
+
+- Buttons।
+- Icon Buttons।
+- Cards।
+- Navigation Bar।
+- Navigation Rail।
+- Tabs।
+- Chips।
+- Search Field।
+- Input Field।
+- Dialog।
+- Bottom Sheet।
+- Snackbar।
+- Progress Indicator।
+- Circular Progress।
+- Status Badge।
+- List Item।
+- Settings Row।
+- Empty State।
+- Loading State।
+- Error State।
+- Section Header।
+
+প্রতিটি Component-এর জন্য প্রয়োজন অনুযায়ী Variants ও States প্রস্তাব করবেন।
+
+উদাহরণ:
+
+- Default।
+- Selected।
+- Pressed।
+- Focused।
+- Disabled।
+- Loading।
+- Success।
+- Error।
+
+### Design Tokens
+
+একটি কেন্দ্রীয় Design Token Structure প্রস্তাব করবেন।
+
+যেমন:
+
+- Color Tokens।
+- Typography Tokens।
+- Spacing Tokens।
+- Shape Tokens।
+- Elevation Tokens।
+- Icon Size Tokens।
+- Motion Tokens।
+- Component Tokens।
+
+একই Design Value যেন বিভিন্ন Screen-এ আলাদাভাবে Hardcode করতে না হয়।
+
+Theme পরিবর্তন করলেও যেন পুরো অ্যাপের Visual Consistency বজায় থাকে।
+
+---
+
+# PHASE 8 — Accessibility ও Responsive Design
+
+Accessibility-কে অতিরিক্ত Feature হিসেবে নয়, বরং মূল Design Requirement হিসেবে বিবেচনা করবেন।
+
+নিচের বিষয়গুলো যাচাই করবেন:
+
+- WCAG 2.2 AA Benchmark।
+- Android Accessibility Guidelines।
+- Minimum Touch Target।
+- Text Contrast।
+- Non-text Contrast।
+- TalkBack।
+- Content Description।
+- Semantic Structure।
+- Screen Reader Navigation।
+- Focus Order।
+- Selected State।
+- Font Scaling।
+- Large Text Support।
+- Color Vision Deficiency।
+- Keyboard ও Switch Accessibility, যেখানে প্রাসঙ্গিক।
+- Motion ও Animation।
+- Error Feedback।
+
+Android Native App-এর ক্ষেত্রে Android Platform Guidelines-কে অগ্রাধিকার দেবেন। WCAG-এর CSS Pixel-ভিত্তিক মাপকে সরাসরি Android dp-এর সমতুল্য ধরে নেবেন না।
+
+### Responsive ও Adaptive Layout
+
+নিচের পরিস্থিতিতে UI কেমন আচরণ করবে তা পর্যালোচনা করবেন:
+
+- Small Phone।
+- Standard Phone।
+- Large Phone।
+- Landscape।
+- Tablet।
+- Foldable।
+- Split-Screen।
+- Resizable Window।
+
+শুধু Screen Size নয়, Android Window Size Class ও Available Window Space বিবেচনা করবেন।
+
+প্রয়োজন অনুযায়ী:
+
+- Reflow।
+- Adaptive Navigation।
+- Responsive Grid।
+- Two-Pane Layout।
+- Navigation Rail।
+- Content Expansion।
+- Height-aware Layout।
+
+প্রস্তাব করবেন।
+
+UI যেন কোনো নির্দিষ্ট Device বা Resolution-এর জন্য আটকে না থাকে।
+
+---
+
+# PHASE 9 — Interaction Design, Feedback ও Motion
+
+প্রতিটি User Interaction কীভাবে আরও পরিষ্কার ও স্বাভাবিক করা যায় তা পর্যালোচনা করবেন।
+
+বিশেষভাবে:
+
+- Button Press Feedback।
+- Haptic Feedback।
+- Loading Feedback।
+- Scan Progress।
+- Success ও Error Feedback।
+- Search Interaction।
+- Filter Selection।
+- Bookmark Action।
+- External Browser Launch।
+- Confirmation Dialog।
+- Snackbar।
+- Empty State Guidance।
+- Destructive Action Protection।
+- Navigation Transition।
+
+Animation ব্যবহার করলে তার উদ্দেশ্য ব্যাখ্যা করবেন।
+
+শুধু Decoration-এর জন্য অতিরিক্ত Animation, Gradient, Glow, Shadow বা Blur ব্যবহার করার পরামর্শ দেবেন না।
+
+Animation যেন:
+
+- ব্যবহারকারীকে State Change বুঝতে সাহায্য করে;
+- Interaction-এর Result পরিষ্কার করে;
+- Navigation-এর Context বজায় রাখে;
+- Performance ক্ষতিগ্রস্ত না করে।
+
+Low-end Android Device-এও UI যেন Smooth থাকে তা বিবেচনা করবেন।
+
+---
+
+# PHASE 10 — প্রতিটি Screen-এর জন্য বাস্তব Redesign Proposal
+
+শুধু সাধারণ পরামর্শ দেবেন না। প্রতিটি Screen-এর জন্য নির্দিষ্ট Redesign Proposal দেবেন।
+
+প্রতিটি Screen-এর Recommendation-এ নিচের বিষয়গুলো অন্তর্ভুক্ত করবেন:
+
+1. বর্তমান Design-এর ভালো দিক।
+2. বর্তমান Design-এর দুর্বলতা।
+3. ব্যবহারকারীর সম্ভাব্য সমস্যা।
+4. Visual Hierarchy পরিবর্তনের প্রয়োজন।
+5. Layout ও Spacing পরিবর্তন।
+6. Icon ও Typography পরিবর্তন।
+7. Color ও Component পরিবর্তন।
+8. নতুন Design Element প্রয়োজন কি না।
+9. কোনো Element বাদ দেওয়া প্রয়োজন কি না।
+10. Interaction ও Accessibility Improvement।
+11. Responsive Behaviour।
+12. চূড়ান্ত প্রস্তাবিত Screen Structure।
+
+প্রয়োজনে প্রতিটি Screen-এর জন্য Text-based Wireframe বা Component Arrangement তৈরি করবেন, যাতে কোন Element কোথায় থাকবে তা পরিষ্কার বোঝা যায়।
+
+উদাহরণস্বরূপ:
+
+- Top App Bar।
+- Main Content।
+- Primary Action।
+- Secondary Information।
+- Supporting Components।
+- Bottom Navigation।
+
+প্রতিটি Element-এর Placement ও Purpose ব্যাখ্যা করবেন।
+
+---
+
+# PHASE 11 — Usability Testing ও Design Validation
+
+Design Recommendation শুধু দেখতে ভালো হলেই গ্রহণযোগ্য হবে না। ব্যবহারকারীর বাস্তব অভিজ্ঞতায় সেটি ভালো ফল দিচ্ছে কি না যাচাই করার পরিকল্পনাও তৈরি করবেন।
+
+একটি বাস্তবসম্মত Usability Testing Plan প্রস্তাব করবেন।
+
+### Suggested User Tasks
+
+- প্রথমবার অ্যাপ খুলে Scan শুরু করা।
+- Scan-এর অগ্রগতি বোঝা।
+- Working Server খুঁজে বের করা।
+- FTP বা TV Server Filter করা।
+- Server URL Open করা।
+- Server Save করা।
+- Saved Server খুঁজে পাওয়া।
+- Scan History দেখা।
+- Custom Server যোগ করা।
+- Settings পরিবর্তন করা।
+
+### Testing Metrics
+
+প্রয়োজন অনুযায়ী নিচের Metrics ব্যবহার করবেন:
+
+- Task Completion Rate।
+- Task Completion Time।
+- User Error Rate।
+- Mis-tap Rate।
+- Navigation Confusion।
+- Error Recovery।
+- User Feedback।
+- Accessibility Issues।
+- System Usability Scale (SUS), যেখানে প্রযোজ্য।
+
+কোন পরিবর্তন সফল হয়েছে তা কীভাবে যাচাই করা হবে, প্রতিটি গুরুত্বপূর্ণ Recommendation-এর জন্য Acceptance Criteria দেবেন।
+
+---
+
+# PHASE 12 — চূড়ান্ত Report-এর Format
+
+Research ও Audit সম্পন্ন করার পর নিচের Structure অনুসারে একটি পূর্ণাঙ্গ Report তৈরি করবেন।
+
+## 1. Executive Summary
+
+বর্তমান UI/UX-এর সামগ্রিক অবস্থা, প্রধান সমস্যা এবং সবচেয়ে গুরুত্বপূর্ণ উন্নতির সুযোগগুলো সংক্ষেপে তুলে ধরবেন।
+
+## 2. Research Sources & Findings
+
+কোন কোন Official Guidelines, Research Articles ও Design Systems পর্যালোচনা করেছেন তা Link ও প্রাসঙ্গিক ব্যাখ্যাসহ দেবেন।
+
+## 3. Overall Design Audit
+
+বর্তমান ডিজাইনের শক্তিশালী দিক, দুর্বলতা ও উন্নতির সুযোগ তুলে ধরবেন।
+
+## 4. Screen-by-Screen Review
+
+প্রতিটি Screen-এর বিস্তারিত Analysis ও Redesign Proposal দেবেন।
+
+## 5. Icon & Typography Recommendation
+
+প্রস্তাবিত Icon Library, Font Family, Typography Scale ও ব্যবহারবিধি নির্দিষ্ট করবেন।
+
+## 6. Color System Recommendation
+
+Light ও Dark Theme-এর সম্পূর্ণ Semantic Color Palette এবং Contrast Validation দেবেন।
+
+## 7. Layout & Component Recommendation
+
+Layout Structure, Spacing Scale, Component Variants ও Design System ব্যাখ্যা করবেন।
+
+## 8. Navigation & Responsive Strategy
+
+সব Screen-এর Navigation Flow এবং Window Size Class অনুযায়ী Layout Strategy দেবেন।
+
+## 9. Accessibility Review
+
+প্রতিটি গুরুত্বপূর্ণ Accessibility Issue এবং তার সমাধান উল্লেখ করবেন।
+
+## 10. User Experience Improvement
+
+Interaction, Feedback, Motion, Usability ও Error Prevention-এর উন্নতির প্রস্তাব দেবেন।
+
+## 11. Missing Opportunities
+
+আমার অজানা বা এখনো বিবেচনা করা হয়নি—এমন গুরুত্বপূর্ণ Design ও UX বিষয়গুলো তুলে ধরবেন।
+
+## 12. Final Recommended Design Direction
+
+আপনি নিজে এই Project-এর দায়িত্বে থাকলে কোন Design Style, Color System, Typography, Icon Library, Navigation Pattern, Layout এবং Component System নির্বাচন করতেন তা নির্দিষ্টভাবে জানাবেন।
+
+## 13. Prioritized Action Plan
+
+সব Recommendation-কে Priority অনুযায়ী ভাগ করবেন:
+
+- **P0 — Critical:** গুরুতর Usability বা Accessibility সমস্যা।
+- **P1 — High:** গুরুত্বপূর্ণ UX ও Visual সমস্যা।
+- **P2 — Medium:** Consistency, Layout ও Polish Improvement।
+- **P3 — Low:** ঐচ্ছিক Visual Enhancement।
+
+প্রতিটি Item-এর জন্য:
+
+- কী পরিবর্তন প্রয়োজন;
+- কেন প্রয়োজন;
+- ব্যবহারকারীর কী উপকার হবে;
+- কোন Screen প্রভাবিত হবে;
+- কীভাবে যাচাই করা যাবে;
+
+তা উল্লেখ করবেন।
+
+## 14. Final Design System Specification
+
+চূড়ান্ত প্রস্তাবিত Design Tokens, Typography Scale, Color Palette, Icon System, Spacing Scale, Shape System, Component Variants এবং Theme Mapping এক জায়গায় উপস্থাপন করবেন।
+
+---
+
+# অত্যন্ত গুরুত্বপূর্ণ নির্দেশনা ও সীমাবদ্ধতা
+
+### 1. আগে Audit, পরে Recommendation
+
+বর্তমান Design ভালোভাবে না বুঝে কোনো পরিবর্তনের প্রস্তাব দেবেন না।
+
+কোনো Element ভালোভাবে কাজ করলে সেটি অক্ষুণ্ণ রাখার পরামর্শ দেবেন।
+
+শুধু নতুন দেখানোর জন্য পরিবর্তন করবেন না।
+
+### 2. কোনো Existing Feature বা Functionality বাদ দেওয়া যাবে না
+
+UI/UX Improvement-এর নামে কোনো Existing Feature, Screen, Setting, Navigation Capability বা User Functionality বাদ দেওয়ার পরামর্শ দেবেন না।
+
+কোনো Feature অপ্রয়োজনীয় মনে হলে সেটি সরাসরি বাদ দেওয়ার পরিবর্তে তার প্রয়োজনীয়তা, ব্যবহারকারীর ওপর প্রভাব এবং বিকল্প Presentation বিশ্লেষণ করবেন।
+
+### 3. Business Logic ও Data Layer অক্ষুণ্ণ থাকবে
+
+এটি একটি Design Research ও UI/UX Review Task।
+
+Existing Business Logic, Scan Engine, Data Layer, Room Database, DataStore, Settings Logic, Server Catalog এবং অন্যান্য Functional Implementation পরিবর্তন করা এই Task-এর অংশ নয়।
+
+বিশেষভাবে:
+
+- Built-in Catalog-এর 369টি Existing Entry অক্ষুণ্ণ রাখতে হবে।
+- Existing Room Schema ও Data Persistence অক্ষুণ্ণ রাখতে হবে।
+- Existing ScanCoordinator ও SpeedTestEngine-এর Behaviour পরিবর্তন করা যাবে না।
+- Existing Settings Capability বাদ দেওয়া যাবে না।
+- Existing Navigation ও Data Behaviour-এর কার্যকারিতা নষ্ট করা যাবে না।
+
+### 4. Revision 3-কে Starting Baseline হিসেবে ব্যবহার করুন
+
+আগের অনুমোদিত Revision 3-এ থাকা Navigation, External Browser Launch, Adaptive Layout, Theme এবং Screen Structure-এর সিদ্ধান্তগুলো পর্যালোচনার ভিত্তি হিসেবে ব্যবহার করবেন।
+
+কিন্তু কোনো সিদ্ধান্ত কেবল পূর্বে অনুমোদিত হয়েছিল বলে সেটিকে সর্বোত্তম ধরে নেবেন না।
+
+নতুন Official Guidelines ও Research-এর সঙ্গে তুলনা করে প্রয়োজন হলে আরও ভালো বিকল্প প্রস্তাব করবেন। তবে পরিবর্তনের কারণ ও সম্ভাব্য প্রভাব পরিষ্কারভাবে ব্যাখ্যা করবেন।
+
+### 5. Design Trend-এর চেয়ে Usability গুরুত্বপূর্ণ
+
+অপ্রয়োজনীয় Gradient, Neon Glow, Glassmorphism, Heavy Shadow, Excessive Rounded Card, Decorative Animation বা অতিরিক্ত Visual Effect ব্যবহার করার পরামর্শ দেবেন না।
+
+কোনো Trend ব্যবহার করলে কেন ব্যবহার করা উচিত এবং User Experience-এ তার বাস্তব উপকার কী তা ব্যাখ্যা করবেন।
+
+### 6. বাস্তবসম্মত ও প্রমাণভিত্তিক Recommendation
+
+কোনো সমস্যা নিশ্চিতভাবে শনাক্ত না করলে সেটিকে নিশ্চিত সমস্যা হিসেবে উপস্থাপন করবেন না।
+
+প্রতিটি Recommendation-এর সঙ্গে নিচের পার্থক্য বজায় রাখবেন:
+
+- **Verified Finding:** বাস্তবে পরীক্ষা করে পাওয়া সমস্যা।
+- **Research-backed Recommendation:** স্বীকৃত Guideline বা Research দ্বারা সমর্থিত প্রস্তাব।
+- **Design Judgment:** যুক্তিসংগত Design Opinion।
+- **Unverified Assumption:** পর্যাপ্ত তথ্য না থাকায় যাচাই করা যায়নি এমন ধারণা।
+
+### 7. Implementation নয়, প্রথমে সম্পূর্ণ Research Report
+
+এই পর্যায়ে কোনো Source Code পরিবর্তন করবেন না, কোনো File Delete করবেন না এবং সরাসরি Redesign Implementation শুরু করবেন না।
+
+প্রথমে সম্পূর্ণ Online Research, Project Audit, UI/UX Analysis এবং Final Design Recommendation Report তৈরি করবেন।
+
+প্রতিটি পরিবর্তনের কারণ, প্রয়োজনীয়তা, সম্ভাব্য সুবিধা ও ঝুঁকি ব্যাখ্যা করবেন।
+
+চূড়ান্ত Report দেখানোর পরই পরবর্তী Implementation Phase নির্ধারণ করা হবে।
+
+---
+
+# Final Objective
+
+আমার মূল লক্ষ্য হলো বর্তমান BDIX / FTP Server Tester Android Application-কে একটি **Modern, Clean, Premium, Professional, Consistent, Accessible এবং Highly Usable Android Product Experience**-এ উন্নীত করা।
+
+আপনি যদি এই Product-এর সম্পূর্ণ UI/UX Design-এর দায়িত্বে থাকতেন, তাহলে একজন অভিজ্ঞ Product Designer হিসেবে যেসব পরিবর্তন করতেন, সেগুলোর কোনো গুরুত্বপূর্ণ অংশ যেন বাদ না যায়।
+
+শুধু আমার উল্লেখ করা বিষয়গুলোতেই সীমাবদ্ধ থাকবেন না। আপনার Research ও Professional Design Judgment অনুযায়ী আরও ভালো কোনো সমাধান, Design Pattern, Component, Layout বা UX Improvement থাকলে সেটিও তুলে ধরবেন।
+
+**সবচেয়ে গুরুত্বপূর্ণ হলো: কোনো পরিবর্তন করার আগে বর্তমান Design বুঝবেন, প্রতিটি সমস্যার কারণ খুঁজবেন, প্রতিষ্ঠিত Guidelines দিয়ে যাচাই করবেন এবং তারপর সবচেয়ে ভালো ও বাস্তবসম্মত সমাধান সুপারিশ করবেন।**
+
+চূড়ান্ত লক্ষ্য শুধু সুন্দর UI তৈরি করা নয়—এমন একটি Product তৈরি করা, যা ব্যবহারকারীর কাছে স্বাভাবিক, সহজ, নির্ভরযোগ্য, দ্রুত, ধারাবাহিক এবং দীর্ঘমেয়াদে ব্যবহারযোগ্য মনে হবে।
+
+---
+
+# Official Research References
+
+নিচের Reference-গুলো দিয়ে Research শুরু করবেন। প্রয়োজন হলে এগুলোর পাশাপাশি আরও প্রাসঙ্গিক ও সাম্প্রতিক Official Sources খুঁজে বের করবেন।
+
+### UX Research & Usability
+
+- Nielsen Norman Group — 10 Usability Heuristics: https://www.nngroup.com/articles/ten-usability-heuristics/
+- Nielsen Norman Group: https://www.nngroup.com/
+
+### Google & Android Design
+
+- Material Design 3: https://m3.material.io/
+- Android Design: https://developer.android.com/design
+- Android Adaptive Apps: https://developer.android.com/develop/adaptive-apps
+- Android Window Size Classes: https://developer.android.com/develop/adaptive-apps/guides/use-window-size-classes
+- Android Adaptive Navigation: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-and-nav-patterns
+- Android Accessibility: https://developer.android.com/guide/topics/ui/accessibility/apps
+- Jetpack Compose Accessibility: https://developer.android.com/develop/ui/compose/accessibility
+
+### Apple Human Interface Guidelines
+
+- Apple HIG: https://developer.apple.com/design/human-interface-guidelines/
+- Typography: https://developer.apple.com/design/human-interface-guidelines/typography
+- Color: https://developer.apple.com/design/human-interface-guidelines/color
+- Tab Bars: https://developer.apple.com/design/human-interface-guidelines/tab-bars
+
+### Accessibility Standards
+
+- W3C WCAG 2.2: https://www.w3.org/TR/WCAG22/
+- WCAG Contrast Minimum: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
+- WCAG Non-text Contrast: https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html
+- WCAG Target Size Minimum: https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+
+**এই Reference-গুলোকে Research-এর সূচনা হিসেবে ব্যবহার করবেন; এগুলোর মধ্যেই সীমাবদ্ধ থাকবেন না।**

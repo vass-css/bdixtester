@@ -1,0 +1,6 @@
+{
+  "name": "BDIX Tester",
+  "description": "Discover and test locally reachable BDIX-related servers with categorized browsing, transparent reachability status, and privacy-conscious local storage.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

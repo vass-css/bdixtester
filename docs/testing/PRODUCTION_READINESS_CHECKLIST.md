@@ -1,0 +1,22 @@
+# Production Readiness Checklist — BDIX Tester
+
+**Audit Date:** 2026-11-18  
+**Application ID:** `com.jubayerhossain.bdixtester`
+
+---
+
+## Tiered Readiness Status
+
+| Area                                              | Status                                    | Notes                                                                                                                                                                                                                                       |
+| ------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Built-In Catalog & Integrity Audit**            | **Implemented & Automated-Test Verified** | All `369` supplied `FtpLinks` entries preserved (`builtin:0..368`), `365` unique URLs, `4` exact duplicates, programmatic source-to-DB verification. Count discrepancy (`369` vs `371`) documented.                                         |
+| **Room Schema v2 & Non-Destructive Migrations**   | **Implemented & Automated-Test Verified** | Schema exported (`2.json`), `MIGRATION_1_2` tested on SQLite v1 file, interrupted `RUNNING` session recovery tested.                                                                                                                        |
+| **HTTP/HTTPS & FTP Probe Engines**                | **Implemented & Automated-Test Verified** | Verified against local `MockWebServer` & `ServerSocket` (`HEAD`, `Range GET 0-1023`, `401/403/404/500`, `2.5s` quick deadline, `220/120/421/QUIT`, flood & cancellation guards, `ftps://` unsupported).                                     |
+| **Coalesced Multi-Worker Scan Engine**            | **Implemented & Automated-Test Verified** | `scanRunId` + `probeGroupId` coalescing (`1` per host, default `3` concurrent, `isCoalescedReplica`), stop cancellation.                                                                                                                    |
+| **Opt-In Monotonic Speed Test Engine**            | **Implemented & Automated-Test Verified** | `Accept-Encoding: identity`, 32 KiB streaming stopping at `maxBytes` without extra EOF read, 5-state outcomes, cross-host prompt.                                                                                                           |
+| **ECDSA P-256 Remote Signed Sync**                | **Implemented & Automated-Test Verified** | Verified with test-generated P-256 keypair (`304`, rollback, conflict, BOM, revoked key, `StrictWifiValidator`). Live feed requires operator P-256 public key insertion into `TrustedKeyRegistry.DEFAULT_KEYS` and HTTPS URL configuration. |
+| **SAF Export, EN/BN Localization & LTR Safety**   | **Implemented & Robolectric-Verified**    | CSV neutralization, verbatim JSON, EN/BN strings (`bundle.language.enableSplit = false`), `LtrContent`, `NavigationUiTest`, `LocalizationAccessibilityUiTest`.                                                                              |
+| **Android Lint & Release Compile**                | **Verified (`0` errors)**                 | `lintDebug` (`0 errors, 62 warnings`), `lintVitalRelease` passed, `assembleDebug` passed, `compileReleaseKotlin` passed.                                                                                                                    |
+| **Release Signing Gate**                          | **Verified Strict Gate**                  | `bundleRelease` fails cleanly at `:app:signReleaseBundle` due to unprovisioned `my-upload-key.jks` / CI secrets (zero debug-key fallback).                                                                                                  |
+| **Emulator / Physical Device / Live ISP Testing** | **Not Executed (Environment Blocked)**    | No Android Emulator, ADB, or live Bangladesh BDIX ISP network available in this cloud build environment.                                                                                                                                    |
+| **External Play Console & Privacy URL Hosting**   | **Pending External Provisioning**         | Upload keystore, Play App Signing enrollment, public HTTPS privacy policy URL, and store graphics remain external tasks.                                                                                                                    |

@@ -1,0 +1,15 @@
+{
+  "name": "bdixtester-tooling",
+  "private": true,
+  "description": "Formatter for the BDIX Tester Android app",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .github/workflows package.json"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
+  },
+  "dependencies": {
+    "markdownlint-cli2": "^0.24.1"
+  }
+}

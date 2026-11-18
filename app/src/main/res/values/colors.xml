@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="midnight_indigo_background_dark">#FF0A0E1E</color>
+    <color name="midnight_indigo_surface_dark">#FF10152B</color>
+    <color name="midnight_indigo_primary_light">#FF3A41C6</color>
+    <color name="midnight_indigo_primary_dark">#FF939BFF</color>
+    <color name="midnight_indigo_background_light">#FFF6F7FB</color>
+    <color name="midnight_indigo_on_light">#FF10152B</color>
+    <color name="midnight_indigo_on_dark">#FFF0F2FB</color>
+</resources>

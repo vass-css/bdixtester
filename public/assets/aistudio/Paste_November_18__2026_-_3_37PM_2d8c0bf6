@@ -1,0 +1,1539 @@
+# BDIX Tester — Final Production Closure, Quality Assurance & Release Verification Prompt
+
+## 1. Project Objective — Final Production Closure
+
+The BDIX Tester Android application has completed its primary Phase 4–11 implementation according to the previous development report.
+
+Your task is to perform a comprehensive final repository audit, production-quality verification, defect correction, security review, device-testing preparation, and release-readiness assessment.
+
+The objective is to transform the current feature-complete development build into a verified production release candidate.
+
+**Do not rebuild the application from scratch. Do not unnecessarily redesign the architecture. Do not replace completed functionality.**
+
+Preserve all existing implementation and improve only where an actual defect, security issue, quality problem, compatibility issue, or production requirement justifies a change.
+
+The final result must be supported by reproducible build evidence, automated tests, security verification, and clearly documented external release blockers.
+
+## 2. Official Project Identity
+
+Preserve the established identity:
+
+| Property | Official value |
+|---|---|
+| Application name | BDIX Tester |
+| Application ID | `com.jubayerhossain.bdixtester` |
+| Namespace | `com.jubayerhossain.bdixtester` |
+| Developer | Jubayer Hossain |
+| Preferred Developer ID | `JubayerHossain` |
+| Platform | Native Android |
+| Language | Kotlin |
+| UI | Jetpack Compose |
+| Design system | Material 3 |
+| Architecture | Single Activity + Single Module |
+| Minimum SDK | 24 |
+| Compile SDK | 36 |
+| Target SDK | 36 |
+| Version code | 1 |
+| Version name | 1.0 |
+
+Do not modify the application ID, namespace, branding, or version information without identifying a genuine requirement.
+
+Verify current Google Play target API requirements against official documentation before release.
+
+Official source:
+
+https://developer.android.com/google/play/requirements/target-sdk
+
+Do not blindly upgrade Gradle, AGP, Kotlin, compileSdk, targetSdk, or any dependency.
+
+Inspect compatibility before making changes.
+
+## 3. Previous Implementation Report — Starting Baseline
+
+The previous development report records the following work.
+
+### 3.1 Application and Build
+
+- Correct application ID and namespace.
+- API 36 compile SDK.
+- API 36 target SDK.
+- API 24 minimum SDK.
+- English and Bangla localization.
+- AAB language splitting disabled to preserve runtime language switching.
+- Release signing exclusively through CI environment variables.
+- No debug-key fallback.
+
+### 3.2 Built-in Catalog
+
+The supplied original Dart catalog was reported to contain:
+
+- 369 source entries.
+- 365 unique exact URLs.
+- 4 duplicate records.
+- 365 HTTP URLs.
+- 4 HTTPS URLs.
+- 0 FTP URLs.
+- 0 FTPS URLs.
+
+All 369 supplied entries were reportedly preserved.
+
+However, the expected catalog size is 371.
+
+The discrepancy of two entries remains unresolved.
+
+### 3.3 Phase 4 — Data Persistence
+
+Reported implementation:
+
+- Room database.
+- Exported schema version 2.
+- Non-destructive migration from version 1 to version 2.
+- Source-index-based built-in identities.
+- Catalog integrity checks.
+- Interrupted scan recovery.
+- History retention.
+- DataStore preferences.
+
+### 3.4 Phases 5–6 — Network and Scanning
+
+Reported implementation:
+
+- HTTP/HTTPS testing.
+- OkHttp-based request handling.
+- FTP control-channel testing.
+- Explicit unsupported FTPS classification.
+- Redirect downgrade protection.
+- DNS/TCP/TLS/HTTP latency measurements.
+- Bounded concurrency.
+- Exact-URL probe coalescing.
+- Scan cancellation.
+- Progress tracking.
+
+### 3.5 Phase 7 — Speed Testing
+
+Reported implementation:
+
+- Explicit user confirmation.
+- 5 MiB default hard transfer limit.
+- 32 KiB streaming buffer.
+- `Accept-Encoding: identity`.
+- Monotonic timing with `System.nanoTime()`.
+- Five speed-test outcome states.
+- No automatic speed testing during scans.
+
+### 3.6 Phase 8 — Remote Catalog
+
+Reported implementation:
+
+- ECDSA P-256 detached-signature verification.
+- SHA-256 payload digest verification.
+- Raw UTF-8 manifest verification.
+- Trusted key registry.
+- Anti-rollback.
+- Same-origin checks.
+- Conditional HTTP caching.
+- Strict Wi-Fi validation.
+- Atomic Room catalog replacement.
+- Last-known-good catalog preservation.
+
+Important blocker:
+
+`TrustedKeyRegistry.DEFAULT_KEYS` still contains a placeholder public-key slot for `bdix-catalog-2026-v1`.
+
+### 3.7 Phase 9 — User Features
+
+Reported implementation:
+
+- Favorites and pinning.
+- Custom endpoint CRUD.
+- Test history.
+- CSV, JSON and TXT exports.
+- CSV formula-injection protection.
+- HTTPS/HTTP-only external browser navigation.
+
+### 3.8 Phase 10 — Localization and Security
+
+Reported implementation:
+
+- English resources.
+- Bangla resources.
+- 140+ paired localized resource entries.
+- Runtime language switching.
+- LTR technical content.
+- Accessibility and localization tests.
+- Merged manifest inspection.
+- Least-privilege application permissions.
+
+### 3.9 Phase 11 — CI and Release
+
+Reported results:
+
+- Debug APK build succeeded.
+- Release Kotlin compilation succeeded.
+- Release lint vital checks succeeded.
+- Release AAB packaging reached the signing stage.
+- Signing failed because release keystore and CI secrets were not provisioned.
+- Debug-key fallback was not used.
+
+### 3.10 Previous Automated Test Results
+
+The previous report records:
+
+`33 tests executed, 33 passed, 0 failed, 0 skipped`
+
+Lint reported:
+
+`0 errors, 62 informational/advisory warnings`
+
+These are previous results.
+
+**You must reproduce them against the actual current repository before treating them as verified baseline results.**
+
+Do not copy old test results into the final report as if they were just executed.
+
+## 4. Strict Repository Preservation
+
+Before making any modifications, perform a complete repository audit.
+
+Execute and inspect:
+
+- `git status`
+- Current branch.
+- Recent commits.
+- Modified files.
+- Untracked files.
+- Complete project directory structure.
+- Existing Android source files.
+- Gradle configuration.
+- Version catalog.
+- Android manifest.
+- Existing test suites.
+- Room schema files.
+- GitHub Actions workflows.
+- Release configuration.
+- Existing documentation.
+
+Record the initial repository state.
+
+### Preservation Rules
+
+- Do not delete existing useful files.
+- Do not delete tests.
+- Do not remove functioning features.
+- Do not replace the existing design system.
+- Do not replace the single-module architecture.
+- Do not rewrite existing documentation unnecessarily.
+- Do not discard uncommitted user changes.
+- Do not reset the repository destructively.
+- Do not force-push.
+- Do not overwrite user modifications silently.
+- Do not introduce unnecessary dependencies.
+- Do not create duplicate project structures.
+
+Every modification must have a technical reason.
+
+List exact modified paths in the final report.
+
+## 5. Critical Task 1 — Resolve the 371-Entry Catalog Discrepancy
+
+The expected original catalog size is 371.
+
+The previously supplied original Dart source was reported to contain 369 entries.
+
+This discrepancy must be investigated carefully.
+
+### 5.1 Source Recovery Audit
+
+Search all available sources:
+
+1. Original Kotlin `FtpLinks.kt`.
+2. Previously supplied Dart source.
+3. All existing project files.
+4. Research documents.
+5. Repository history where relevant.
+6. Available source attachments and project inputs.
+7. Any complete original catalog supplied by the user.
+
+Do not reconstruct the missing entries from memory.
+
+Do not search public websites for random replacement endpoints.
+
+Do not manufacture server addresses.
+
+Do not automatically add newly discovered endpoints to the user's original catalog.
+
+### 5.2 Exact Source Verification
+
+Independently recalculate:
+
+- Original source entry count.
+- First index.
+- Last index.
+- Unique exact URL count.
+- Exact duplicate count.
+- Duplicate source indexes.
+- Scheme distribution.
+- Hostname count.
+- Public IPv4 count.
+- Private IPv4 count.
+- Explicit port count.
+- Non-root path count.
+
+Verify that every supplied original entry is preserved exactly.
+
+### 5.3 Preserve the 369 Actual Entries
+
+If the original source still contains exactly 369 entries:
+
+- Preserve all 369 entries.
+- Preserve source order.
+- Preserve duplicate records.
+- Preserve original schemes.
+- Preserve exact URL strings.
+- Preserve paths and ports.
+- Preserve private IP addresses.
+- Do not silently generate entries 369 and 370.
+
+The application may continue operating with 369 verified source records.
+
+Keep the expected-versus-actual discrepancy documented.
+
+### 5.4 Missing Entries
+
+If the two missing original URLs cannot be recovered:
+
+- Keep the discrepancy open.
+- Record that the original 371-entry requirement is not fulfilled.
+- Identify which recovery sources were checked.
+- Request the missing original URLs from the project owner.
+- Continue every independent verification and release-preparation task.
+- Do not block unrelated application functionality.
+
+Create or update:
+
+`docs/research/ENDPOINT_CATALOG_AUDIT.md`
+
+### 5.5 Catalog Integrity Acceptance
+
+The final report must distinguish:
+
+- Expected source count: 371.
+- Actually supplied source count.
+- Actually preserved source count.
+- Missing source count.
+- Runtime database record count.
+- Unique exact URL count.
+- Actual network probe count for a scan.
+
+Never equate these different quantities.
+
+## 6. Critical Task 2 — Final HTTP, HTTPS and FTP Result Audit
+
+Inspect the actual implementations:
+
+- `HttpEndpointTester`
+- `FtpControlTester`
+- `UrlParser`
+- Result classification models.
+- Error mapping.
+- Scan coordinator.
+
+Review every status mapping.
+
+### 6.1 HTTP Classification
+
+Do not map all HTTP error responses to one misleading status.
+
+Use accurate classifications.
+
+| HTTP result | Expected interpretation |
+|---|---|
+| 2xx | HTTP response successful |
+| 3xx | Redirect |
+| 401 | Authentication required |
+| 403 | Access denied |
+| 404 | Resource not found |
+| Other 4xx | Client-side HTTP response |
+| 5xx | Server-side HTTP response |
+| DNS failure | Hostname resolution failed |
+| Connection refused | Connection rejected |
+| Timeout | Deadline exceeded |
+| TLS failure | Secure connection failed |
+
+All valid HTTP responses demonstrate some level of communication with an HTTP server.
+
+They must not automatically be reported as network-unreachable.
+
+An HTTP 404 must not be described as the same thing as a connection failure.
+
+If the UI groups several cases under a broader `HTTP Responding` category, preserve the actual status code and explanatory detail.
+
+### 6.2 FTP Classification
+
+Review FTP status semantics.
+
+A `220` greeting proves the FTP control service provided a successful greeting.
+
+It does not prove:
+
+- Authentication success.
+- Data-channel availability.
+- Passive-mode functionality.
+- File availability.
+- File download success.
+
+Classify `421` as FTP service unavailable or temporarily unavailable, rather than incorrectly treating it as an HTTP-style access restriction.
+
+Verify:
+
+- Single-line greeting.
+- Multiline greeting.
+- Preliminary `120`.
+- Subsequent `220`.
+- `421`.
+- Malformed response.
+- Greeting timeout.
+- Maximum line length.
+- Maximum banner length.
+- QUIT behavior.
+- Cancellation and socket closure.
+
+FTPS must remain explicitly unsupported unless a verified implementation exists.
+
+Never downgrade FTPS to plain FTP.
+
+### 6.3 HTTP Redirect Audit
+
+Verify:
+
+- Bounded redirect count.
+- Loop detection.
+- Correct handling of HEAD and GET.
+- HTTPS-to-HTTP downgrade rejection.
+- No credential forwarding across hosts.
+- No unsupported scheme redirect.
+- Proper response closure.
+
+### 6.4 HTTP Byte-Bounded Fallback
+
+Verify the existing HEAD and GET fallback.
+
+A server may ignore the Range header.
+
+Ensure that:
+
+- The response body is consumed through a hard bounded reader.
+- The byte limit is enforced independently of `Content-Length`.
+- The remaining body is not buffered.
+- The response is closed immediately when the limit is reached.
+- The result correctly states that the HTTP endpoint responded even when its requested resource is restricted.
+
+## 7. Critical Task 3 — Scan Coordinator and Data Integrity
+
+Inspect:
+
+- `ScanCoordinator`.
+- `probeGroupId`.
+- `scanRunId`.
+- `isCoalescedReplica`.
+- Queue management.
+- Global semaphore.
+- Per-host concurrency.
+- Cancellation handling.
+- History persistence.
+- Interrupted scan recovery.
+
+### 7.1 Probe Coalescing
+
+Exact duplicate detection must use the original URL string.
+
+Do not normalize or rewrite URLs before identifying exact duplicates.
+
+Preserve separate source records.
+
+During a single scan run:
+
+- Exact duplicates may share one network probe.
+- Each source record must retain its original identity.
+- Each mapped source record must reference the appropriate probe group.
+- One probe must not be described as multiple independent network measurements.
+
+### 7.2 Host-Level Concurrency
+
+Per-host concurrency should use parsed canonical host identity.
+
+Different ports may share a per-host concurrency limit where the policy is host-based.
+
+Original URLs must remain unchanged.
+
+### 7.3 Scan Statistics
+
+Keep these separate:
+
+- Total catalog records.
+- Total unique exact URLs.
+- Eligible records in selected scope.
+- Unique network probes.
+- Completed probe groups.
+- Source entries receiving mapped results.
+- Actual reachable endpoints.
+- Restricted HTTP responses.
+- Unreachable endpoints.
+- Inconclusive results.
+- Unsupported protocols.
+- Cancelled endpoints.
+
+Do not calculate statistics by blindly counting duplicate mapped records as independent network results.
+
+### 7.4 Scan Lifecycle
+
+Verify:
+
+- Only one active scan.
+- No duplicate scans caused by tab navigation.
+- Start and Stop behavior.
+- Active HTTP call cancellation.
+- FTP socket cancellation.
+- Queued-item cancellation.
+- Completed-result preservation.
+- Process-death recovery.
+- Interrupted-session recovery.
+- Retry-failed behavior.
+
+Ensure that cancellation does not mark all unfinished tasks as network failures.
+
+## 8. Critical Task 4 — Speed-Test Safety and Accuracy
+
+Inspect the current speed-test implementation.
+
+Verify:
+
+- Explicit user confirmation.
+- Default maximum 5 MiB.
+- Fixed 32 KiB streaming buffer.
+- `Accept-Encoding: identity`.
+- Transparent compression rejection.
+- Monotonic time measurement.
+- Hard byte limit.
+- No extra byte read after the cap.
+- No unlimited response buffering.
+- Proper stream closure.
+- Cancellation behavior.
+
+### 8.1 Result States
+
+Preserve:
+
+- `TRANSFER_COMPLETED`
+- `CAP_REACHED`
+- `INSUFFICIENT_SAMPLE`
+- `TRANSFER_FAILED`
+- `TRANSFER_CANCELLED`
+
+Where relevant, preserve a separate termination reason.
+
+### 8.2 Measurement Validation
+
+Verify that:
+
+- EOF before the cap can produce `TRANSFER_COMPLETED`.
+- Reaching the cap without observing EOF produces `CAP_REACHED`.
+- A capped transfer does not claim full-file completion.
+- Minimum sample requirements are enforced.
+- Failed or invalid transfers do not produce fake 0 Mbps results.
+- Timing uses a monotonic source.
+- Actual transferred bytes are recorded.
+- Display units are correct.
+
+### 8.3 Redirect Safety
+
+Verify:
+
+- HTTPS downgrade rejection.
+- Cross-host redirect restrictions.
+- Explicit user confirmation when a cross-host target must be followed.
+- No unexpected large data transfer.
+- No arbitrary file downloads.
+
+## 9. Critical Task 5 — ECDSA Catalog Verification and Live Feed Readiness
+
+The existing implementation uses:
+
+- `SHA256withECDSA`.
+- P-256.
+- Detached signature.
+- X.509 SPKI public keys.
+- Raw UTF-8 manifest bytes.
+- SHA-256 payload digest.
+- Key IDs.
+- Anti-rollback.
+- Client-side payload limits.
+
+However, the current default key registry reportedly contains a placeholder public-key slot.
+
+### 9.1 Signature Implementation Audit
+
+Review:
+
+- Strict UTF-8 validation.
+- BOM rejection.
+- Duplicate JSON key handling.
+- Strict `keyId` validation.
+- Public-key lookup.
+- Signature verification before trusting fields.
+- Signature length limits.
+- Payload size limits.
+- Payload digest verification.
+- Same-origin enforcement.
+- HTTPS redirect enforcement.
+- Anti-rollback.
+- Equal-sequence conflict handling.
+- `304 Not Modified` behavior.
+- Key rotation and revocation.
+
+Do not invent cryptographic success.
+
+### 9.2 Production Public Key Provisioning
+
+Inspect:
+
+`TrustedKeyRegistry.DEFAULT_KEYS`
+
+Identify the placeholder key.
+
+A valid production public key must come from a securely generated and controlled catalog-publisher keypair.
+
+Never:
+
+- Generate a fake public key and claim it is the owner's production key.
+- Commit private signing material.
+- Print private keys in logs.
+- Place private keys inside Android resources.
+- Expose signing credentials to CI build logs.
+
+If a valid production key has not been provided:
+
+- Keep the placeholder clearly marked.
+- Use test-only keys exclusively for automated tests.
+- Verify the crypto implementation using deterministic test fixtures.
+- Document the external key-provisioning blocker.
+- Continue unrelated release work.
+
+### 9.3 Catalog Publishing
+
+If hosting details are available and authorized:
+
+- Validate the catalog publishing workflow.
+- Validate the manifest.
+- Validate the signature.
+- Validate the payload digest.
+- Verify the app accepts the signed test catalog.
+- Verify a tampered catalog is rejected.
+- Verify rollback is rejected.
+- Verify an unchanged 304 response reuses the last verified catalog.
+
+Do not publish public catalog data or change an externally hosted feed without the project owner's authorization.
+
+## 10. Critical Task 6 — Database, Migration and Source Identity Audit
+
+Inspect:
+
+- `BdixDatabase`.
+- Entities.
+- DAOs.
+- Repositories.
+- Schema JSON.
+- Migration objects.
+- Initialization logic.
+- Catalog synchronization transaction.
+
+Verify:
+
+- All original records are preserved.
+- Built-in IDs are deterministic.
+- `sourceIndex` remains stable.
+- Query order is correct.
+- Duplicate IDs do not collide.
+- Custom endpoints remain isolated.
+- Favorites survive remote refresh.
+- Historical snapshots remain unchanged.
+- Remote deletions do not erase unrelated sources.
+- Interrupted scans recover safely.
+
+Review every existing migration.
+
+Do not use destructive migration fallback in production.
+
+Room schema JSON files must remain version-controlled.
+
+Run migration tests across every supported upgrade path.
+
+## 11. Critical Task 7 — Lint and Static Analysis Closure
+
+The previous report recorded:
+
+`0 errors, 62 informational/advisory warnings`
+
+Inspect the current warning set.
+
+Run Android Lint again after all other fixes.
+
+For each warning:
+
+1. Identify the exact issue ID.
+2. Identify the source file and line.
+3. Assess severity.
+4. Determine whether it affects correctness, security, performance, accessibility, compatibility, maintainability or only informational documentation.
+5. Fix genuine defects.
+6. Suppress only when technically justified.
+7. Document valid suppressions.
+
+Do not disable lint globally.
+
+Do not suppress warnings merely to obtain a clean report.
+
+Produce:
+
+`docs/testing/LINT_AUDIT_REPORT.md`
+
+Include:
+
+- Previous warning count.
+- Current warning count.
+- Errors.
+- Warnings resolved.
+- Warnings retained.
+- Reason for each justified suppression.
+
+A clean lint run is desirable, but correctness and security take precedence over an artificially empty warning list.
+
+## 12. Critical Task 8 — Localization and UI Verification
+
+Inspect all English and Bangla resources.
+
+Verify:
+
+- No missing translations.
+- No empty required strings.
+- No hardcoded user-facing strings.
+- Correct plural resources.
+- Correct date formatting.
+- Correct time formatting.
+- Correct data-unit formatting.
+- LTR URLs.
+- LTR IPv4 addresses.
+- LTR ports.
+- LTR technical metrics.
+- Compact-screen behavior.
+- Enlarged font-scale behavior.
+- Light theme.
+- Dark theme.
+- System theme.
+- Empty states.
+- Error states.
+- Offline states.
+- Loading states.
+- Dialogs.
+- Snackbar messages.
+- Export messages.
+
+Use the existing Plus Jakarta Sans and JetBrains Mono font assets.
+
+Do not replace typography or theme unnecessarily.
+
+### Accessibility
+
+Verify:
+
+- Minimum 48.dp touch targets.
+- Semantic labels.
+- Status meaning beyond color alone.
+- Screen-reader progress announcements.
+- Keyboard/focus behavior where relevant.
+- Contrast.
+- Text scaling.
+- Bangla text overflow.
+
+## 13. Critical Task 9 — Merged Manifest and Privacy Audit
+
+Inspect the final merged manifest for all relevant variants.
+
+The application explicitly requires:
+
+- `INTERNET`.
+- `ACCESS_NETWORK_STATE`.
+
+The merged manifest may also contain permissions contributed by WorkManager or other dependencies.
+
+Review:
+
+- `WAKE_LOCK`.
+- `RECEIVE_BOOT_COMPLETED`.
+- `FOREGROUND_SERVICE`.
+- Signature-protected component permissions.
+- All other transitive permissions.
+
+Document why every retained permission exists.
+
+Do not blindly remove framework or library permissions.
+
+Verify that none of the following unnecessary permissions have been introduced:
+
+- Location permissions.
+- Wi-Fi SSID access permissions.
+- Broad external storage permissions.
+- Unnecessary media permissions.
+- Unnecessary device-identification permissions.
+
+### Network Security
+
+Verify:
+
+- Cleartext behavior is documented.
+- HTTP testing remains isolated in its dedicated code path.
+- Remote catalog remains HTTPS-only.
+- TLS verification is never bypassed.
+- HTTPS-to-HTTP downgrade is rejected.
+- No trust-all certificate implementation exists.
+
+### Privacy Accuracy
+
+Verify that:
+
+- The privacy policy accurately describes network requests.
+- Tested servers can observe the user's public IP and request metadata.
+- Remote catalog hosts can observe catalog-update request metadata.
+- Local favorites, history and custom endpoints are not secretly uploaded.
+- Export operations remain user initiated.
+- No hidden analytics or advertising SDK has been introduced.
+
+## 14. Critical Task 10 — Comprehensive Automated Verification
+
+Rerun the complete test suite.
+
+At minimum, execute:
+
+```bash
+./gradlew :app:testDebugUnitTest --console=plain
+./gradlew :app:lintDebug --console=plain
+./gradlew :app:assembleDebug --console=plain
+./gradlew :app:compileReleaseKotlin --console=plain
+./gradlew :app:lintVitalRelease --console=plain
+```
+
+Run the release bundle task according to the actual signing configuration and document whether signing is available.
+
+Do not assume every command will succeed.
+
+Capture actual exit codes and output.
+
+### 14.1 Catalog Tests
+
+- Actual source count.
+- Source ordering.
+- Exact URL equality.
+- Duplicate preservation.
+- Database identity.
+- Initialization idempotency.
+- Audit report accuracy.
+
+### 14.2 Room Tests
+
+- Database initialization.
+- Insert.
+- Update.
+- Delete.
+- Query order.
+- Migration.
+- Favorite preservation.
+- History preservation.
+- Atomic catalog replacement.
+
+### 14.3 Network Tests
+
+- HTTP.
+- HTTPS.
+- HEAD.
+- GET fallback.
+- Redirect.
+- Redirect loop.
+- HTTPS downgrade.
+- TLS validation.
+- 401.
+- 403.
+- 404.
+- 5xx.
+- DNS failure.
+- Connection refusal.
+- Timeout.
+- Cancellation.
+
+### 14.4 FTP Tests
+
+- 220.
+- 120 followed by 220.
+- Multiline greeting.
+- 421.
+- Malformed response.
+- QUIT/221.
+- Timeout.
+- Maximum banner size.
+- Cancellation.
+
+### 14.5 Scan Tests
+
+- Exact URL coalescing.
+- Probe-group mapping.
+- Scan summary counts.
+- Global concurrency.
+- Per-host concurrency.
+- Queue cancellation.
+- Retry.
+- Process recovery.
+- History preservation.
+
+### 14.6 Speed Tests
+
+- Correct byte calculation.
+- Hard-cap behavior.
+- No additional-byte read.
+- Content-encoding rejection.
+- Monotonic timing.
+- Minimum sample.
+- Cancellation.
+- Redirect policy.
+- No false 0 Mbps result.
+
+### 14.7 Catalog Security Tests
+
+- Valid signature.
+- Invalid signature.
+- Unknown key.
+- Revoked key.
+- Malformed UTF-8.
+- BOM rejection.
+- Duplicate manifest keys.
+- Payload digest mismatch.
+- Oversized manifest.
+- Oversized signature.
+- Oversized payload.
+- Same-origin rejection.
+- Anti-rollback.
+- Equal-sequence conflict.
+- 304 behavior.
+
+### 14.8 Export and UI Tests
+
+- CSV injection protection.
+- CSV escaping.
+- JSON URL preservation.
+- SAF document creation.
+- External browser HTTP/HTTPS validation.
+- Unsupported scheme rejection.
+- English UI.
+- Bangla UI.
+- Enlarged font.
+- Compact screen.
+- Navigation.
+
+Do not remove or weaken existing test assertions to obtain passing results.
+
+## 15. Critical Task 11 — Android Emulator and Physical-Device Verification
+
+The previous report states that no emulator or ADB device was available.
+
+Recheck the environment.
+
+### If an emulator is available
+
+Execute appropriate instrumentation tests.
+
+Record:
+
+- Android API.
+- Emulator image.
+- Device profile.
+- Test command.
+- Test results.
+
+### If an emulator is not available locally
+
+Evaluate GitHub Actions emulator testing where technically feasible.
+
+Use a maintained and appropriately pinned workflow action.
+
+Do not fabricate emulator results.
+
+### Physical-device Testing
+
+Provide a practical device-testing checklist covering:
+
+- Minimum supported Android version.
+- Modern Android version.
+- English.
+- Bangla.
+- Light theme.
+- Dark theme.
+- Wi-Fi.
+- Mobile network.
+- Network switching.
+- App backgrounding.
+- Scan cancellation.
+- Speed-test cancellation.
+- Export.
+- Browser navigation.
+- Database persistence.
+
+### Bangladesh ISP Verification
+
+Actual BDIX availability must be tested from real Bangladesh ISP connections.
+
+Where available, test on at least two different ISP environments.
+
+Record:
+
+- ISP test label.
+- Network type.
+- Test date and time.
+- Endpoint tested.
+- Result.
+- Latency.
+- Relevant failure evidence.
+
+Do not collect SSIDs, precise locations or unnecessary personal identifiers.
+
+Do not claim universal BDIX verification from a single ISP.
+
+If physical devices or Bangladesh ISP environments are unavailable, record them as externally blocked verification gates.
+
+## 16. Critical Task 12 — Production ECDSA Key and Catalog Provisioning
+
+The project currently has a placeholder public-key slot.
+
+The production catalog cannot be considered authenticated until a real trusted public key is provisioned.
+
+Prepare:
+
+`docs/release/CATALOG_SIGNING_KEY_PROVISIONING.md`
+
+Document:
+
+- ECDSA P-256 key generation process.
+- Supported OpenSSL/JDK workflow.
+- X.509 SPKI public-key export.
+- Private-key protection.
+- Key ID.
+- Offline storage.
+- Backup.
+- Rotation.
+- Revocation.
+- Emergency recovery.
+- Catalog manifest generation.
+- Detached signature generation.
+- Payload SHA-256 calculation.
+- Verification procedure.
+
+### Security Restrictions
+
+- Never commit the production private key.
+- Never print the private key.
+- Never put the private key in Android resources.
+- Never place it in public GitHub files.
+- Never include it in application artifacts.
+
+If production key material is unavailable:
+
+- Keep the placeholder marked.
+- Keep test keys separate.
+- Run cryptographic verification tests using test-only fixtures.
+- Record production catalog provisioning as blocked.
+
+Do not claim live production catalog authentication without an actual trusted production key.
+
+## 17. Critical Task 13 — Production Signing and Release Artifacts
+
+The previous release build failed at:
+
+`:app:signReleaseBundle`
+
+because the release keystore and CI secrets were not provisioned.
+
+This is an expected fail-closed result, not a successful production release.
+
+### 17.1 Existing Signing Configuration
+
+Inspect the current release signing configuration.
+
+Preserve its intended behavior.
+
+Use the existing documented secret names where possible.
+
+Do not create conflicting alternative signing configurations.
+
+If standardizing secret names is necessary, update all workflow and documentation references together.
+
+### 17.2 Release Signing Requirements
+
+Use release secrets exclusively.
+
+Never:
+
+- Fall back to debug keys.
+- Print secret values.
+- Commit keystores.
+- Expose private signing material.
+- Upload signing credentials as build artifacts.
+- Put passwords in command output.
+
+When credentials are missing:
+
+- Signing must fail explicitly.
+- Unsigned artifacts may be produced only if the actual build tooling supports them.
+- Such outputs must be labelled unsigned validation artifacts.
+- Never describe them as Play-ready.
+
+### 17.3 Required Release Verification
+
+When valid signing credentials are available:
+
+- Build release APK.
+- Build release AAB.
+- Verify package identity.
+- Verify version code.
+- Verify version name.
+- Verify SDK configuration.
+- Verify APK signature.
+- Verify AAB signing.
+- Record certificate SHA-256 fingerprint.
+- Generate artifact SHA-256 checksum.
+- Verify final manifest permissions.
+
+Do not invent output paths.
+
+Only report paths that actually exist.
+
+### 17.4 Signing Secret Provisioning
+
+Prepare clear documentation for the necessary GitHub Actions secret configuration.
+
+Use the secure file-based or Base64-based approach supported by the existing workflow.
+
+Temporary keystore files must be protected and removed appropriately.
+
+Do not request signing passwords in repository files, source code, terminal logs or public chat.
+
+Create or update:
+
+- `docs/release/APP_SIGNING_STRATEGY.md`
+- `docs/release/RELEASE_ARTIFACTS.md`
+- `docs/release/BUILD_AND_RELEASE.md`
+
+## 18. Critical Task 14 — Privacy Policy and Store Readiness
+
+The privacy policy exists locally.
+
+Verify that it matches the actual implementation.
+
+It must accurately describe:
+
+- Local database.
+- Local favorites.
+- Local test history.
+- Custom endpoints.
+- Network probing.
+- Remote catalog requests.
+- Public IP/request metadata visibility.
+- Data export.
+- Data deletion.
+- Third-party dependencies.
+- Permissions.
+
+Do not invent a contact email or public website.
+
+### Public Hosting
+
+A local Markdown file is not automatically a published public privacy policy.
+
+If a domain or hosting service is already configured and authorized, prepare the policy for publication.
+
+Otherwise:
+
+- Keep the final policy ready.
+- Document the exact hosting requirement.
+- Mark public URL provisioning as externally blocked.
+- Do not falsely claim the policy is published.
+
+### Google Play Submission
+
+Review current official policies for:
+
+- Target API.
+- App content.
+- Data safety.
+- Privacy policy.
+- App signing.
+- App bundle.
+- Screenshots.
+- Listing information.
+- Developer verification.
+- Release tracks.
+
+Official sources:
+
+https://developer.android.com/google/play/requirements/target-sdk
+
+https://play.google.com/about/developer-content-policy/
+
+https://support.google.com/googleplay/android-developer/
+
+Never claim submission approval or publication without actual evidence.
+
+## 19. CI/CD Final Verification
+
+Inspect:
+
+`.github/workflows/android-ci.yml`
+
+Verify the workflow covers applicable jobs:
+
+- Checkout.
+- JDK.
+- Gradle wrapper.
+- Dependency caching.
+- Kotlin compilation.
+- Unit tests.
+- Robolectric tests.
+- Lint.
+- Debug APK.
+- Release validation.
+- Signing-gated release build.
+- Artifact metadata.
+- SHA-256 checksums.
+
+### Security
+
+- Least-privilege workflow permissions.
+- Secure GitHub secrets.
+- No secret printing.
+- No debug signing fallback.
+- Maintained actions.
+- Appropriate action version pinning.
+- Controlled release triggers.
+
+### CI Cache
+
+Verify that caching is actually reused where expected.
+
+Do not claim that dependency installation was skipped unless CI logs prove it.
+
+Do not use a stale cache as evidence of a successful clean build.
+
+### Workflow Acceptance
+
+A clean run must demonstrate:
+
+- Debug build works.
+- Tests pass.
+- Lint passes or all retained warnings are documented.
+- Release compilation succeeds.
+- Signing fails safely when credentials are absent.
+- Signed artifacts are produced only when valid credentials are configured.
+
+## 20. Production Documentation Closure
+
+Inspect and update all relevant existing documents.
+
+Required documents:
+
+- `docs/research/ENDPOINT_CATALOG_AUDIT.md`
+- `docs/implementation/DATA_LAYER_IMPLEMENTATION.md`
+- `docs/implementation/NETWORK_ENGINE_IMPLEMENTATION.md`
+- `docs/implementation/SCAN_ENGINE_IMPLEMENTATION.md`
+- `docs/implementation/SPEED_TEST_IMPLEMENTATION.md`
+- `docs/implementation/CATALOG_SYNC_IMPLEMENTATION.md`
+- `docs/implementation/USER_DATA_FEATURES.md`
+- `docs/testing/DATABASE_TESTING.md`
+- `docs/testing/PRODUCTION_TEST_MATRIX.md`
+- `docs/testing/PRODUCTION_READINESS_CHECKLIST.md`
+- `docs/testing/SECURITY_AUDIT.md`
+- `docs/testing/PERFORMANCE_REPORT.md`
+- `docs/testing/LINT_AUDIT_REPORT.md`
+- `docs/privacy/PRIVACY_POLICY.md`
+- `docs/privacy/PRIVACY_AND_DATA_HANDLING.md`
+- `docs/release/APP_SIGNING_STRATEGY.md`
+- `docs/release/RELEASE_ARTIFACTS.md`
+- `docs/release/BUILD_AND_RELEASE.md`
+- `docs/release/GOOGLE_PLAY_SUBMISSION_CHECKLIST.md`
+- `docs/CHANGELOG.md`
+
+Preserve previous technical decisions.
+
+Update only outdated information.
+
+Record exact verification dates.
+
+Do not claim undocumented features.
+
+## 21. Final Execution Order
+
+Follow this workflow.
+
+### Step 1 — Repository and Baseline Audit
+
+Inspect the repository and reproduce previous test results.
+
+### Step 2 — Catalog Discrepancy Investigation
+
+Verify the actual source count and investigate the two missing endpoints.
+
+Continue independent tasks even if the missing entries remain unavailable.
+
+### Step 3 — Protocol and Classification Audit
+
+Fix incorrect HTTP and FTP result semantics.
+
+### Step 4 — Scan and Speed-Test Audit
+
+Verify coalescing, concurrency, deadlines, cancellation and byte limits.
+
+### Step 5 — Database and Migration Audit
+
+Verify source identities, ordering, schema and migration safety.
+
+### Step 6 — Signature Verification Audit
+
+Verify the ECDSA implementation and report production key availability.
+
+### Step 7 — Lint and Code Quality
+
+Review all 62 previously reported warnings and fix genuine issues.
+
+### Step 8 — Localization and UI Audit
+
+Verify English, Bangla, accessibility, RTL/LTR behavior and responsive layouts.
+
+### Step 9 — Security and Manifest Review
+
+Inspect merged manifests, transitive permissions, TLS, cleartext policy and privacy.
+
+### Step 10 — Automated Verification
+
+Run all applicable tests, builds and static analysis.
+
+### Step 11 — Emulator and Device Verification
+
+Run available instrumentation tests.
+
+Document unavailable physical-device and ISP tests.
+
+### Step 12 — Release Signing
+
+Verify signing configuration and produce signed artifacts only if valid credentials exist.
+
+### Step 13 — Documentation Closure
+
+Update all relevant reports.
+
+### Step 14 — Final Production Gate
+
+Assess every acceptance criterion and report the actual release status.
+
+**Do not stop after generating another plan or checklist. Perform the authorized audit, fix defects, execute verification commands, and produce the final evidence-backed report in the current task.**
+
+## 22. Final Production Acceptance Criteria
+
+The following requirements must be separately verified.
+
+| Area | Required evidence |
+|---|---|
+| Application identity | Correct package, namespace and version |
+| Catalog | Exact source-to-database comparison |
+| Missing source entries | Actual count and documented discrepancy |
+| Database | Migration and integrity tests |
+| HTTP/HTTPS | Protocol and result-classification tests |
+| FTP | RFC 959 control-greeting tests |
+| Scanning | Coalescing, concurrency and cancellation tests |
+| Speed test | Hard-cap and monotonic-timing tests |
+| Remote catalog | Real cryptographic verification fixtures |
+| Production key | Valid trusted public key provisioned or explicitly blocked |
+| Localization | English/Bangla test results |
+| Export | CSV safety and JSON fidelity tests |
+| External browser | HTTP/HTTPS-only intent tests |
+| Permissions | Final merged manifest audit |
+| Lint | Warning-by-warning audit |
+| CI | Actual successful workflow evidence |
+| Debug APK | Actual artifact and checksum |
+| Release APK | Signature verified or explicitly blocked |
+| Release AAB | Signing verified or explicitly blocked |
+| Device testing | Actual test evidence or documented blocker |
+| Bangladesh ISP testing | Actual ISP evidence or documented blocker |
+| Privacy policy | Public HTTPS URL verified or externally blocked |
+| Play readiness | Current official-policy checklist |
+
+## 23. Final Status Classification
+
+Choose exactly one evidence-supported final status:
+
+### Status 1 — Development Build Verified
+
+The application builds and automated testing passes, but important external production requirements remain.
+
+### Status 2 — Feature-Complete, Release Verification Pending
+
+The required product features are implemented and automated testing passes, but device testing, real network verification or release provisioning remains.
+
+### Status 3 — Release Candidate Verified
+
+The signed release artifacts have been generated and verified, automated tests pass, required security checks are complete, and all known critical blockers are resolved. Any outstanding non-critical external checks must be explicitly disclosed.
+
+### Status 4 — Production Release Ready
+
+All production acceptance criteria are met, signed artifacts are verified, device testing is documented, privacy and store requirements are satisfied, and no critical release blocker remains.
+
+Do not select a higher status simply to make the project look complete.
+
+## 24. Required Final Report
+
+Produce the report in Bangla.
+
+### A. Executive Summary
+
+Describe the actual state of BDIX Tester.
+
+### B. Repository Audit
+
+Explain the initial state and files modified.
+
+### C. Catalog Integrity
+
+Report the exact source count, database count, duplicate count and unresolved discrepancy.
+
+### D. Defects Found and Fixed
+
+List every important defect and its correction.
+
+### E. HTTP/HTTPS/FTP Verification
+
+Provide protocol-specific evidence.
+
+### F. Scan and Speed-Test Verification
+
+Report actual test results.
+
+### G. Database and Catalog Security
+
+Report migration and signed-catalog test results.
+
+### H. Localization and Accessibility
+
+Report English/Bangla and responsive UI checks.
+
+### I. Lint and Code Quality
+
+Report the old and new warning counts, resolved findings and justified suppressions.
+
+### J. Automated Testing
+
+For every test suite, report:
+
+- Exact command.
+- Actual execution environment.
+- Tests executed.
+- Passed.
+- Failed.
+- Skipped.
+
+### K. Emulator and Physical Device
+
+Clearly distinguish:
+
+- Not available.
+- Not executed.
+- Executed and passed.
+- Executed and failed.
+
+### L. Release Artifacts
+
+Report:
+
+- Debug APK.
+- Release APK.
+- Release AAB.
+- Signing status.
+- Certificate fingerprint.
+- SHA-256 checksums.
+- Exact artifact paths.
+
+Do not report missing files.
+
+### M. External Blockers
+
+Identify:
+
+- Missing original endpoint entries, if unresolved.
+- Production catalog public key.
+- Catalog publishing configuration.
+- Release signing credentials.
+- Physical Android device.
+- Real Bangladesh ISP verification.
+- Public privacy-policy hosting.
+- Play Console access.
+
+### N. Final Production Status
+
+Select one of the four defined statuses.
+
+Explain the evidence supporting the selection.
+
+### O. Remaining Owner Actions
+
+List only actions that genuinely require the project owner's access, keys, domain, device or confirmation.
+
+## 25. Strict Authorization Boundary
+
+You are authorized to:
+
+- Audit the complete project.
+- Fix actual implementation defects.
+- Improve existing implementation.
+- Run all available tests.
+- Improve CI workflows.
+- Prepare release artifacts.
+- Verify release signing when credentials are available.
+- Complete documentation.
+- Prepare the application for production distribution.
+
+You are NOT authorized to:
+
+- Publish the application publicly.
+- Submit it to Google Play.
+- Create a public production catalog feed without approval.
+- Publish a privacy policy to an external domain without approval.
+- Modify or invent original catalog endpoints.
+- Expose release credentials.
+- Commit signing keys.
+- Replace existing user work unnecessarily.
+
+Do not request private keystores or passwords through source code or public logs.
+
+Public publishing remains a separate owner-authorized action.
+
+# FINAL OBJECTIVE
+
+Perform the final production audit of the existing BDIX Tester repository.
+
+Preserve the complete verified implementation.
+
+Resolve every defect that can be resolved with the available source, tools and credentials.
+
+Verify the actual 369-entry catalog against its original source and keep the two-entry discrepancy visible unless the missing original entries are supplied.
+
+Verify protocol classification, scan accuracy, speed-test safety, database integrity, signed catalog security, localization, permissions, CI and release configuration.
+
+Produce real APK/AAB artifacts only when the actual build and signing conditions permit them.
+
+Report every test using real execution evidence.
+
+**Do not fabricate catalog entries, test results, security verification, ISP compatibility, signatures, release credentials or Play Store approval.**
+
+Deliver the strongest evidence-backed production-ready result possible while preserving all existing project work.

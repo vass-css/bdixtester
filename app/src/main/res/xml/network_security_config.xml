@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+        Dynamic built-in and user-supplied BDIX endpoints include arbitrary http:// hosts and private
+        RFC 1918 IPv4 addresses that cannot be statically enumerated via domain-config.
+        Cleartext HTTP is strictly isolated in code to the endpoint connectivity/speed tester.
+        Remote catalog synchronization enforces HTTPS-only URLs and rejects HTTPS-to-HTTP redirects.
+        Only standard system Certificate Authorities are trusted; TLS verification is never weakened.
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

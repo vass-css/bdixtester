@@ -1,0 +1,49 @@
+# .taplo.toml — Taplo TOML linter & formatter configuration
+# https://taplo.tamasfe.dev/configuration/file.html
+# https://taplo.tamasfe.dev/configuration/formatter-options.html
+
+include = ["**/*.toml"]
+
+exclude = [
+    "**/.cargo/**",
+    "**/.git/**",
+    "**/.next/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/out/**",
+    "**/target/**",
+]
+
+# Schema validation disabled — do not validate non-taplo TOML files against taplo config schema.
+[schema]
+enabled = false
+
+# Global formatting options — all keys explicitly set to best-practice values.
+[formatting]
+align_entries = true
+align_comments = true
+allowed_blank_lines = 1
+array_trailing_comma = true
+array_auto_expand = true
+array_auto_collapse = true
+compact_arrays = true
+compact_entries = false
+compact_inline_tables = false
+column_width = 80
+crlf = false
+indent_entries = false
+indent_string = "    "
+indent_tables = true
+inline_table_expand = true
+reorder_keys = true
+reorder_arrays = true
+reorder_inline_tables = false
+trailing_newline = true
+
+# taplo.toml itself — preserve config key order (don't reorder its own keys).
+[[rule]]
+include = [".taplo.toml", "taplo.toml"]
+    [rule.formatting]
+    reorder_keys = false
+    align_entries = false
