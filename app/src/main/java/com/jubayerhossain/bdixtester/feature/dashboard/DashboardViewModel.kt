@@ -57,7 +57,7 @@ data class DashboardUiState(
 class DashboardViewModel(
   private val catalogRepository: CatalogRepository,
   connectivityObserver: ConnectivityObserver,
-  settingsRepository: SettingsRepository,
+  private val settingsRepository: SettingsRepository,
 ) : ViewModel() {
   val uiState: StateFlow<DashboardUiState> =
     combine(

@@ -41,9 +41,9 @@ fun buildBdixTypography(
       TextStyle(
         fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 36.sp,
-        lineHeight = scaledLineHeight(44f),
-        letterSpacing = tracking(-0.4f),
+        fontSize = 32.sp,
+        lineHeight = scaledLineHeight(40f),
+        letterSpacing = tracking(-0.3f),
       ),
     headlineMedium =
       TextStyle(
@@ -105,8 +105,8 @@ fun buildBdixTypography(
       TextStyle(
         fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.5.sp,
-        lineHeight = scaledLineHeight(18f),
+        fontSize = 12.sp,
+        lineHeight = scaledLineHeight(17f),
         letterSpacing = tracking(0f),
       ),
     labelLarge =
@@ -147,7 +147,7 @@ val BdixTypography =
 val BdixTypographyBengali =
   buildBdixTypography(
     bodyFontFamily = NotoSansBengaliFamily,
-    lineHeightScale = 1.14f,
+    lineHeightScale = 1.18f,
     disableLetterSpacing = true,
   )
 
@@ -155,8 +155,8 @@ val MonoUrlStyle =
   TextStyle(
     fontFamily = JetBrainsMonoFamily,
     fontWeight = FontWeight.Normal,
-    fontSize = 12.5.sp,
-    lineHeight = 18.sp,
+    fontSize = 12.sp,
+    lineHeight = 17.sp,
   )
 
 val MonoBadgeStyle =

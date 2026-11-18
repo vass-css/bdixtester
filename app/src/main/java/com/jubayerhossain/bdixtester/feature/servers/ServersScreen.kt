@@ -42,7 +42,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Cancel
@@ -53,11 +53,11 @@ import androidx.compose.material.icons.rounded.Dns
 import androidx.compose.material.icons.rounded.FolderShared
 import androidx.compose.material.icons.rounded.LiveTv
 import androidx.compose.material.icons.rounded.Movie
+import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SmartDisplay
 import androidx.compose.material.icons.rounded.SportsSoccer
 import androidx.compose.material.icons.rounded.Sync
-import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -67,7 +67,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -107,23 +106,27 @@ import com.jubayerhossain.bdixtester.data.catalog.OttRegion
 import com.jubayerhossain.bdixtester.data.catalog.OttRegionFilter
 import com.jubayerhossain.bdixtester.domain.model.ServerEndpoint
 import com.jubayerhossain.bdixtester.ui.components.AnimatedBookmarkIcon
+import com.jubayerhossain.bdixtester.ui.components.BdixCategoryIconBadge
 import com.jubayerhossain.bdixtester.ui.components.BdixMotionSpecs
+import com.jubayerhossain.bdixtester.ui.components.BdixSearchBar
 import com.jubayerhossain.bdixtester.ui.components.EmptyStateView
 import com.jubayerhossain.bdixtester.ui.components.LtrContent
+import com.jubayerhossain.bdixtester.ui.components.RichCardUrlFooter
 import com.jubayerhossain.bdixtester.ui.components.RollingCountText
+import com.jubayerhossain.bdixtester.ui.components.ServerDetailBottomSheet
 import com.jubayerhossain.bdixtester.ui.components.springPressScale
 import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
+import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
+import com.jubayerhossain.bdixtester.ui.theme.BdixElevation
 import com.jubayerhossain.bdixtester.ui.theme.BdixIconSize
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 import com.jubayerhossain.bdixtester.ui.theme.BdixTesterTheme
 import com.jubayerhossain.bdixtester.ui.theme.LocalBdixSemanticColors
 import com.jubayerhossain.bdixtester.ui.theme.MonoBadgeStyle
-import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
 
 private data class CategoryChipSpec(
   val tab: ServerBottomTab,
   @StringRes val labelRes: Int,
-  val count: Int,
   val icon: ImageVector,
 )
 
@@ -142,10 +145,13 @@ fun ServersScreen(
   onStartTestClick: () -> Unit,
   onOpenUrl: (String) -> Unit,
   modifier: Modifier = Modifier,
+  onCopyUrl: (String) -> Unit = {},
+  onTestSingleServer: ((ServerEndpoint) -> Unit)? = null,
 ) {
   val haptic = LocalHapticFeedback.current
   val semantic = LocalBdixSemanticColors.current
   var searchVisible by rememberSaveable { mutableStateOf(false) }
+  var inspectEndpoint by remember { mutableStateOf<ServerEndpoint?>(null) }
   val isOttMode = uiState.selectedBottomTab == ServerBottomTab.OTT
 
   Scaffold(
@@ -252,8 +258,8 @@ fun ServersScreen(
               StatusHeaderTab(
                 label = stringResource(R.string.servers_tab_not_tested),
                 count = uiState.notTestedCount,
-                icon = Icons.Rounded.Warning,
-                iconTint = semantic.restricted,
+                icon = Icons.Rounded.RadioButtonUnchecked,
+                iconTint = semantic.neutral,
                 selected = uiState.selectedStatusTab == ServerStatusTab.NOT_TESTED,
                 onClick = { onSelectStatusTab(ServerStatusTab.NOT_TESTED) },
                 modifier =
@@ -297,38 +303,16 @@ fun ServersScreen(
         enter = expandVertically() + fadeIn(),
         exit = shrinkVertically() + fadeOut(),
       ) {
-        OutlinedTextField(
-          value = uiState.searchQuery,
-          onValueChange = onSearchQueryChange,
-          modifier =
-            Modifier
-              .fillMaxWidth()
-              .widthIn(max = 840.dp)
-              .padding(horizontal = BdixSpacing.md, vertical = BdixSpacing.sm)
-              .testTag("servers_search_input"),
-          placeholder = { Text(stringResource(R.string.servers_search_placeholder)) },
-          leadingIcon = {
-            Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
-          },
-          trailingIcon = {
-            if (uiState.searchQuery.isNotEmpty()) {
-              IconButton(
-                onClick = { onSearchQueryChange("") },
-                modifier = Modifier.minimumInteractiveComponentSize(),
-              ) {
-                Icon(
-                  imageVector = Icons.Rounded.Clear,
-                  contentDescription = stringResource(R.string.action_clear_filters),
-                )
-              }
-            }
-          },
-          singleLine = true,
-          shape = MaterialTheme.shapes.medium,
+        BdixSearchBar(
+          query = uiState.searchQuery,
+          onQueryChange = onSearchQueryChange,
+          testTag = "servers_search_input",
+          maxWidth = 840.dp,
+          modifier = Modifier.padding(horizontal = BdixSpacing.md, vertical = BdixSpacing.sm),
         )
       }
 
-      // Single-row serial Category Selector (FTP -> Movies -> TV -> OTT) with live counts
+      // Single-row serial Category Selector (FTP -> Movies -> TV -> OTT) without link counts
       LazyRow(
         modifier =
           Modifier
@@ -342,26 +326,22 @@ fun ServersScreen(
           listOf(
             CategoryChipSpec(
               tab = ServerBottomTab.FTP,
-              labelRes = R.string.servers_bottom_ftp_count,
-              count = uiState.ftpCount,
+              labelRes = R.string.servers_bottom_ftp,
               icon = Icons.Rounded.FolderShared,
             ),
             CategoryChipSpec(
               tab = ServerBottomTab.MOVIE,
-              labelRes = R.string.servers_bottom_movie_count,
-              count = uiState.movieCount,
+              labelRes = R.string.servers_bottom_movie,
               icon = Icons.Rounded.Movie,
             ),
             CategoryChipSpec(
               tab = ServerBottomTab.TV,
-              labelRes = R.string.servers_bottom_tv_count,
-              count = uiState.tvCount,
+              labelRes = R.string.servers_bottom_tv,
               icon = Icons.Rounded.LiveTv,
             ),
             CategoryChipSpec(
               tab = ServerBottomTab.OTT,
-              labelRes = R.string.servers_bottom_ott_count,
-              count = uiState.ottCount,
+              labelRes = R.string.servers_bottom_ott,
               icon = Icons.Rounded.SmartDisplay,
             ),
           )
@@ -375,11 +355,8 @@ fun ServersScreen(
             },
             label = {
               Text(
-                text = stringResource(spec.labelRes, spec.count),
-                style =
-                  MaterialTheme.typography.labelLarge.copy(
-                    fontFeatureSettings = "tnum",
-                  ),
+                text = stringResource(spec.labelRes),
+                style = MaterialTheme.typography.labelLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
               )
@@ -502,6 +479,7 @@ fun ServersScreen(
                 onSelectOttRegion(OttRegionFilter.ALL)
               },
               onOpenUrl = onOpenUrl,
+              onCopyUrl = onCopyUrl,
             )
           } else if (uiState.filteredServers.isEmpty()) {
             val hasActiveFilters = uiState.searchQuery.isNotBlank()
@@ -564,6 +542,7 @@ fun ServersScreen(
               items(
                 items = uiState.filteredServers,
                 key = { it.id },
+                contentType = { "server_card" },
                 span = { GridItemSpan(1) },
               ) { endpoint ->
                 val result = uiState.latestResults[endpoint.id]
@@ -574,7 +553,9 @@ fun ServersScreen(
                   latencyMs = result?.primaryLatencyMs,
                   isFavorite = uiState.favorites.containsKey(endpoint.id),
                   onToggleFavorite = { onToggleFavorite(endpoint.id) },
+                  onInspectClick = { inspectEndpoint = endpoint },
                   onUrlClick = { onOpenUrl(endpoint.originalUrl) },
+                  onLongClickCopyUrl = { onCopyUrl(endpoint.originalUrl) },
                   modifier = Modifier.animateItem(),
                 )
               }
@@ -597,6 +578,7 @@ fun ServersScreen(
               items(
                 items = uiState.filteredServers,
                 key = { it.id },
+                contentType = { "server_card" },
               ) { endpoint ->
                 val result = uiState.latestResults[endpoint.id]
                 val statusTab = ServersViewModel.statusTabFor(result?.status)
@@ -606,7 +588,9 @@ fun ServersScreen(
                   latencyMs = result?.primaryLatencyMs,
                   isFavorite = uiState.favorites.containsKey(endpoint.id),
                   onToggleFavorite = { onToggleFavorite(endpoint.id) },
+                  onInspectClick = { inspectEndpoint = endpoint },
                   onUrlClick = { onOpenUrl(endpoint.originalUrl) },
+                  onLongClickCopyUrl = { onCopyUrl(endpoint.originalUrl) },
                   modifier = Modifier.animateItem(),
                 )
               }
@@ -615,6 +599,17 @@ fun ServersScreen(
         }
       }
     }
+  }
+
+  inspectEndpoint?.let { selectedEndpoint ->
+    ServerDetailBottomSheet(
+      endpoint = selectedEndpoint,
+      result = uiState.latestResults[selectedEndpoint.id],
+      onDismiss = { inspectEndpoint = null },
+      onOpenUrl = { onOpenUrl(selectedEndpoint.originalUrl) },
+      onCopyUrl = { onCopyUrl(selectedEndpoint.originalUrl) },
+      onTestNow = onTestSingleServer?.let { tester -> { tester(selectedEndpoint) } },
+    )
   }
 }
 
@@ -625,6 +620,7 @@ private fun OttDirectoryList(
   hasQueryOrFilter: Boolean,
   onClearFilters: () -> Unit,
   onOpenUrl: (String) -> Unit,
+  onCopyUrl: (String) -> Unit,
 ) {
   if (platforms.isEmpty()) {
     Box(
@@ -667,11 +663,13 @@ private fun OttDirectoryList(
       items(
         items = platforms,
         key = { it.id },
+        contentType = { "ott_card" },
         span = { GridItemSpan(1) },
       ) { platform ->
         OttPlatformCard(
           platform = platform,
           onOpenUrl = { onOpenUrl(platform.url) },
+          onCopyUrl = { onCopyUrl(platform.url) },
           modifier = Modifier.animateItem(),
         )
       }
@@ -695,10 +693,12 @@ private fun OttDirectoryList(
       items(
         items = platforms,
         key = { it.id },
+        contentType = { "ott_card" },
       ) { platform ->
         OttPlatformCard(
           platform = platform,
           onOpenUrl = { onOpenUrl(platform.url) },
+          onCopyUrl = { onCopyUrl(platform.url) },
           modifier = Modifier.animateItem(),
         )
       }
@@ -710,6 +710,7 @@ private fun OttDirectoryList(
 private fun OttPlatformCard(
   platform: OttPlatform,
   onOpenUrl: () -> Unit,
+  onCopyUrl: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val haptic = LocalHapticFeedback.current
@@ -741,12 +742,12 @@ private fun OttPlatformCard(
           },
         ).semantics { contentDescription = urlA11y }
         .testTag("ott_card_${platform.id}"),
-    shape = RoundedCornerShape(20.dp),
+    shape = BdixCardShapes.richCard,
     colors =
       CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
       ),
-    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    elevation = CardDefaults.cardElevation(defaultElevation = BdixElevation.card),
     border = BorderStroke(BdixBorder.hairline, MaterialTheme.colorScheme.outlineVariant),
   ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -758,20 +759,7 @@ private fun OttPlatformCard(
         horizontalArrangement = Arrangement.spacedBy(BdixSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Surface(
-          shape = RoundedCornerShape(12.dp),
-          color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
-          modifier = Modifier.size(44.dp),
-        ) {
-          Box(contentAlignment = Alignment.Center) {
-            Icon(
-              imageVector = genreIcon,
-              contentDescription = null,
-              tint = MaterialTheme.colorScheme.primary,
-              modifier = Modifier.size(22.dp),
-            )
-          }
-        }
+        BdixCategoryIconBadge(icon = genreIcon)
 
         Column(
           modifier = Modifier.weight(1f),
@@ -826,12 +814,13 @@ private fun OttPlatformCard(
         }
       }
 
-      // Elevated Rich Card Tinted Footer Strip with URL & Open Pill
+      // Elevated Rich Card Tinted Footer Strip with URL & Open Pill (long-press copies URL)
       RichCardUrlFooter(
         url = platform.url,
         urlA11y = urlA11y,
         testTag = "ott_url_${platform.id}",
         onClick = onOpenUrl,
+        onLongClick = onCopyUrl,
       )
     }
   }
@@ -933,7 +922,9 @@ private fun ServerListCard(
   latencyMs: Long?,
   isFavorite: Boolean,
   onToggleFavorite: () -> Unit,
+  onInspectClick: () -> Unit,
   onUrlClick: () -> Unit,
+  onLongClickCopyUrl: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val haptic = LocalHapticFeedback.current
@@ -949,8 +940,8 @@ private fun ServerListCard(
         )
       ServerStatusTab.NOT_TESTED ->
         Triple(
-          Icons.Rounded.Warning,
-          semantic.restricted,
+          Icons.Rounded.RadioButtonUnchecked,
+          semantic.neutral,
           stringResource(R.string.servers_tab_not_tested),
         )
       ServerStatusTab.NOT_WORKING ->
@@ -976,16 +967,16 @@ private fun ServerListCard(
         .fillMaxWidth()
         .springPressScale(interactionSource = cardInteractionSource, pressedScale = 0.975f)
         .testTag("server_card_${endpoint.id}"),
-    shape = RoundedCornerShape(20.dp),
+    shape = BdixCardShapes.richCard,
     colors =
       CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
       ),
-    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    elevation = CardDefaults.cardElevation(defaultElevation = BdixElevation.card),
     border = BorderStroke(BdixBorder.hairline, MaterialTheme.colorScheme.outlineVariant),
   ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-      // Tapping anywhere on the card launches the external browser directly (ZERO metadata page)
+      // Tier 1: Tapping the card info row launches the external browser directly (ZERO metadata page navigation)
       Row(
         modifier =
           Modifier
@@ -1001,27 +992,14 @@ private fun ServerListCard(
               },
             ).padding(
               start = BdixSpacing.lg,
-              end = BdixSpacing.sm,
+              end = BdixSpacing.xs,
               top = BdixSpacing.md,
               bottom = BdixSpacing.md,
             ),
         horizontalArrangement = Arrangement.spacedBy(BdixSpacing.md),
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Surface(
-          shape = RoundedCornerShape(12.dp),
-          color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.85f),
-          modifier = Modifier.size(44.dp),
-        ) {
-          Box(contentAlignment = Alignment.Center) {
-            Icon(
-              imageVector = categoryIcon,
-              contentDescription = null,
-              tint = MaterialTheme.colorScheme.primary,
-              modifier = Modifier.size(22.dp),
-            )
-          }
-        }
+        BdixCategoryIconBadge(icon = categoryIcon)
 
         Column(
           modifier = Modifier.weight(1f),
@@ -1049,7 +1027,7 @@ private fun ServerListCard(
           ) {
             Surface(
               color = MaterialTheme.colorScheme.surfaceContainerHigh,
-              shape = RoundedCornerShape(8.dp),
+              shape = BdixCardShapes.chip,
             ) {
               Text(
                 text = ServerDisplayClassifier.displayLabel(endpoint),
@@ -1063,7 +1041,7 @@ private fun ServerListCard(
 
             Surface(
               color = MaterialTheme.colorScheme.secondaryContainer,
-              shape = RoundedCornerShape(8.dp),
+              shape = BdixCardShapes.chip,
             ) {
               LtrContent {
                 Text(
@@ -1085,7 +1063,7 @@ private fun ServerListCard(
                   } else {
                     MaterialTheme.colorScheme.surfaceContainerHigh
                   },
-                shape = RoundedCornerShape(8.dp),
+                shape = BdixCardShapes.chip,
               ) {
                 LtrContent {
                   Text(
@@ -1130,6 +1108,24 @@ private fun ServerListCard(
             )
           }
 
+          IconButton(
+            onClick = {
+              haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+              onInspectClick()
+            },
+            modifier =
+              Modifier
+                .minimumInteractiveComponentSize()
+                .testTag("server_inspect_${endpoint.id}"),
+          ) {
+            Icon(
+              imageVector = Icons.Outlined.Info,
+              contentDescription = stringResource(R.string.action_inspect_server, endpoint.name),
+              tint = MaterialTheme.colorScheme.onSurfaceVariant,
+              modifier = Modifier.size(BdixIconSize.sm),
+            )
+          }
+
           Icon(
             imageVector = statusIcon,
             contentDescription = statusDesc,
@@ -1142,85 +1138,14 @@ private fun ServerListCard(
         }
       }
 
-      // Elevated Rich Card Tinted Footer Strip with URL & Open Pill
+      // Tier 2: Elevated Rich Card Tinted Footer Strip with URL & Open Pill (long-press copies URL)
       RichCardUrlFooter(
         url = endpoint.originalUrl,
         urlA11y = urlA11y,
         testTag = "server_url_link_${endpoint.id}",
         onClick = onUrlClick,
+        onLongClick = onLongClickCopyUrl,
       )
-    }
-  }
-}
-
-@Composable
-private fun RichCardUrlFooter(
-  url: String,
-  urlA11y: String,
-  testTag: String,
-  onClick: () -> Unit,
-) {
-  val haptic = LocalHapticFeedback.current
-  Surface(
-    color = MaterialTheme.colorScheme.surfaceContainer,
-    modifier =
-      Modifier
-        .fillMaxWidth()
-        .heightIn(min = 48.dp)
-        .clickable(
-          role = Role.Button,
-          onClickLabel = urlA11y,
-          onClick = {
-            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-            onClick()
-          },
-        ).semantics { contentDescription = urlA11y }
-        .testTag(testTag),
-  ) {
-    Row(
-      modifier =
-        Modifier
-          .fillMaxWidth()
-          .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.sm),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      LtrContent {
-        Text(
-          text = url,
-          style = MonoUrlStyle,
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-          maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
-          modifier =
-            Modifier
-              .weight(1f, fill = false)
-              .padding(end = BdixSpacing.md),
-        )
-      }
-      Surface(
-        shape = RoundedCornerShape(50),
-        color = MaterialTheme.colorScheme.primaryContainer,
-      ) {
-        Row(
-          modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-          Text(
-            text = stringResource(R.string.action_open),
-            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            maxLines = 1,
-          )
-          Icon(
-            imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(13.dp),
-          )
-        }
-      }
     }
   }
 }

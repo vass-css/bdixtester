@@ -35,12 +35,14 @@ class NavigationUiTest {
   fun homeCleanupBottomNavOttDirectoryAndModernSettingsWorkEndToEnd() {
     composeTestRule.waitForIdle()
 
-    // Home screen displays Brand Top Bar + Live IP Pill, Hero Ring & Start Test; permanently deleted blocks must NOT exist
+    // Home screen displays Brand Top Bar, Hero Ring & Start Test; permanently deleted blocks must NOT exist
     composeTestRule.onNodeWithTag("dashboard_screen").assertIsDisplayed()
     composeTestRule.onNodeWithTag("home_menu_button").assertDoesNotExist()
     composeTestRule.onNodeWithTag("home_scan_mode_selector").assertDoesNotExist()
     composeTestRule.onNodeWithTag("home_network_summary_card").assertDoesNotExist()
-    composeTestRule.onNodeWithTag("home_top_ip_pill").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("home_top_ip_pill").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_category_summary_strip").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_scan_mode_pill").assertDoesNotExist()
     composeTestRule.onNodeWithTag("home_tester_ring").assertIsDisplayed()
     composeTestRule.onNodeWithTag("home_start_test_button").assertIsDisplayed()
 
@@ -67,19 +69,19 @@ class NavigationUiTest {
       .onNodeWithTag("servers_category_ftp")
       .assertIsDisplayed()
       .assertIsSelected()
-      .assertTextEquals(activity.getString(R.string.servers_bottom_ftp_count, 542))
+      .assertTextEquals(activity.getString(R.string.servers_bottom_ftp))
     composeTestRule
       .onNodeWithTag("servers_category_movie")
       .assertIsDisplayed()
-      .assertTextEquals(activity.getString(R.string.servers_bottom_movie_count, 121))
+      .assertTextEquals(activity.getString(R.string.servers_bottom_movie))
     composeTestRule
       .onNodeWithTag("servers_category_tv")
       .assertIsDisplayed()
-      .assertTextEquals(activity.getString(R.string.servers_bottom_tv_count, 89))
+      .assertTextEquals(activity.getString(R.string.servers_bottom_tv))
     composeTestRule
       .onNodeWithTag("servers_category_ott")
       .assertIsDisplayed()
-      .assertTextEquals(activity.getString(R.string.servers_bottom_ott_count, 26))
+      .assertTextEquals(activity.getString(R.string.servers_bottom_ott))
 
     // Switch to curated Bangladesh OTT Directory (26 verified platforms)
     assertEquals(26, BdOttPlatforms.all.size)
@@ -118,16 +120,15 @@ class NavigationUiTest {
     composeTestRule.onNodeWithTag("custom_server_name_input").performTextInput("My BDIX Node")
     composeTestRule.onNodeWithTag("custom_server_url_input").performTextInput("http://10.99.99.99")
     composeTestRule.onNodeWithTag("custom_server_save_button").performClick()
-    val updatedFtpLabel = activity.getString(R.string.servers_bottom_ftp_count, 543)
     composeTestRule.waitUntil(timeoutMillis = 5_000L) {
       composeTestRule
-        .onAllNodes(hasTestTag("servers_category_ftp") and hasText(updatedFtpLabel))
+        .onAllNodes(hasTestTag("servers_tab_not_tested") and hasText("543", substring = true))
         .fetchSemanticsNodes()
         .isNotEmpty()
     }
     composeTestRule
       .onNodeWithTag("servers_category_ftp")
-      .assertTextEquals(updatedFtpLabel)
+      .assertTextEquals(activity.getString(R.string.servers_bottom_ftp))
 
     // Navigate to Saved tab
     composeTestRule.onNodeWithTag("nav_saved").performClick()
@@ -243,5 +244,33 @@ class NavigationUiTest {
     assertEquals(Intent.ACTION_VIEW, ottIntent.action)
     assertEquals(Uri.parse("https://chorki.net"), ottIntent.data)
     assertTrue(ottIntent.categories.contains(Intent.CATEGORY_BROWSABLE))
+  }
+
+  @Test
+  fun homeStaysMinimalAndServerQuickInspectSheetWorksEndToEnd() {
+    composeTestRule.waitForIdle()
+
+    // Home screen keeps Orbital Radar & Start Test cleanly without removed pills or mode toggles
+    composeTestRule.onNodeWithTag("home_top_ip_pill").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_category_summary_strip").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_scan_mode_pill").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_tester_ring").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("home_start_test_button").assertIsDisplayed()
+
+    // Navigate to Servers and verify Quick-Inspect sheet opens from inspect icon without legacy details route
+    composeTestRule.onNodeWithTag("home_view_servers_button").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("servers_screen").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("servers_tab_not_tested").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("server_inspect_builtin:0").assertIsDisplayed().performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("server_quick_inspect_sheet").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("sheet_copy_url_button").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("sheet_open_url_button").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("server_details_screen").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("sheet_copy_url_button").performClick()
+    composeTestRule.waitForIdle()
+    composeTestRule.onNodeWithTag("server_quick_inspect_sheet").assertDoesNotExist()
   }
 }

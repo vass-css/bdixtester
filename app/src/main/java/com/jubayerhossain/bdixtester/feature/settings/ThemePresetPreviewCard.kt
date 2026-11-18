@@ -49,6 +49,7 @@ import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.core.model.AppThemePreset
 import com.jubayerhossain.bdixtester.ui.components.springPressScale
 import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
+import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 import com.jubayerhossain.bdixtester.ui.theme.BdixThemeRegistry
 
@@ -104,7 +105,7 @@ internal fun ThemePresetPreviewCard(
       modifier
         .fillMaxWidth()
         .springPressScale(interactionSource = interactionSource, pressedScale = 0.985f)
-        .clip(RoundedCornerShape(20.dp))
+        .clip(BdixCardShapes.richCard)
         .clickable(
           interactionSource = interactionSource,
           indication = ripple(),
@@ -117,7 +118,7 @@ internal fun ThemePresetPreviewCard(
           selected = isSelected
           contentDescription = a11yLabel
         }.testTag("theme_preset_card_${preset.name.lowercase()}"),
-    shape = RoundedCornerShape(20.dp),
+    shape = BdixCardShapes.richCard,
     color = MaterialTheme.colorScheme.surfaceContainerLow,
     border =
       BorderStroke(
@@ -214,7 +215,7 @@ internal fun ThemePresetPreviewCard(
       // Rich Mini-UI Preview Stage (Background, Surface, Sample Card, Badge, Buttons, Typography, Nav)
       Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
+        shape = BdixCardShapes.input,
         color = previewScheme.background,
         border = BorderStroke(BdixBorder.hairline, previewScheme.outlineVariant),
       ) {

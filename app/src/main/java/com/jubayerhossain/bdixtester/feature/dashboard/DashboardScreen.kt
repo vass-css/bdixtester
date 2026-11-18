@@ -98,12 +98,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.core.model.ScanMode
-import com.jubayerhossain.bdixtester.core.network.NetworkSnapshot
-import com.jubayerhossain.bdixtester.core.network.TransportType
 import com.jubayerhossain.bdixtester.ui.components.BdixMotionSpecs
 import com.jubayerhossain.bdixtester.ui.components.LocalReducedMotion
 import com.jubayerhossain.bdixtester.ui.components.LtrContent
-import com.jubayerhossain.bdixtester.ui.components.PulsingStatusDot
 import com.jubayerhossain.bdixtester.ui.components.RollingCountText
 import com.jubayerhossain.bdixtester.ui.components.ShimmerPillOverlay
 import com.jubayerhossain.bdixtester.ui.components.springPressScale
@@ -114,7 +111,6 @@ import com.jubayerhossain.bdixtester.ui.theme.BdixTesterTheme
 import com.jubayerhossain.bdixtester.ui.theme.LocalBdixSemanticColors
 import com.jubayerhossain.bdixtester.ui.theme.MonoHeroNumberStyle
 import com.jubayerhossain.bdixtester.ui.theme.MonoHeroSubNumberStyle
-import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
 import java.util.Locale
 import kotlin.math.PI
 import kotlin.math.cos
@@ -202,7 +198,7 @@ fun DashboardScreen(
         }.testTag("dashboard_screen"),
   ) {
     val isWideLayout = maxWidth >= 600.dp
-    val isCompactHeight = maxHeight < 500.dp
+    val isCompactHeight = maxHeight < 520.dp
 
     if (isWideLayout) {
       // Adaptive Landscape / Tablet 2-Column Split
@@ -212,10 +208,7 @@ fun DashboardScreen(
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.statusBars),
       ) {
-        HomeBrandTopBar(
-          networkSnapshot = uiState.networkSnapshot,
-          isScanning = isScanning,
-        )
+        HomeBrandTopBar(isScanning = isScanning)
         Row(
           modifier =
             Modifier
@@ -271,7 +264,8 @@ fun DashboardScreen(
         }
       }
     } else if (isCompactHeight) {
-      // Ultra-compact portrait fallback (split-screen / tiny viewport) with safe scroll
+      // Compact-height portrait fallback (small phones / split-screen / multi-window) keeping radar + primary CTA cleanly visible above the fold
+      val compactRingSize = (maxHeight * 0.48f).coerceIn(170.dp, 224.dp)
       Column(
         modifier =
           Modifier
@@ -281,12 +275,12 @@ fun DashboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         HomeBrandTopBar(
-          networkSnapshot = uiState.networkSnapshot,
           isScanning = isScanning,
+          compact = true,
         )
-        Spacer(modifier = Modifier.height(BdixSpacing.md))
+        Spacer(modifier = Modifier.height(BdixSpacing.sm))
         HeroTesterRing(
-          ringSize = (this@BoxWithConstraints.maxWidth * 0.72f).coerceIn(220.dp, 280.dp),
+          ringSize = compactRingSize,
           isScanning = isScanning,
           isStarting = showWifiWarningDialog,
           progressFraction = progress.progressFraction,
@@ -297,18 +291,19 @@ fun DashboardScreen(
         CurrentlyTestingLine(
           visible = isScanning && !progress.currentServerName.isNullOrBlank(),
           serverName = progress.currentServerName.orEmpty(),
-          modifier = Modifier.padding(top = BdixSpacing.sm),
+          modifier = Modifier.padding(top = BdixSpacing.xs),
         )
-        Spacer(modifier = Modifier.height(BdixSpacing.xl))
+        Spacer(modifier = Modifier.height(BdixSpacing.md))
         Box(
           modifier =
             Modifier
               .fillMaxWidth()
-              .padding(horizontal = BdixSpacing.xl, vertical = BdixSpacing.lg),
+              .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.sm),
           contentAlignment = Alignment.Center,
         ) {
           PrimaryTestActionButton(
             isScanning = isScanning,
+            compact = true,
             onStartClick = triggerStartScan,
             onStopClick = {
               haptic.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -318,12 +313,12 @@ fun DashboardScreen(
         }
       }
     } else {
-      // Sculptural Full-Height Portrait Canvas (Zero dead lower space, zero extra clutter)
+      // Balanced Full-Height Portrait Canvas (Minimal Brand Top Bar + Hero Orbital Radar + Primary CTA)
       val heroDiameter =
         min(
-          maxWidth * 0.86f,
-          (maxHeight - 210.dp).coerceAtLeast(240.dp),
-        ).coerceIn(256.dp, 344.dp)
+          maxWidth * 0.80f,
+          (maxHeight - 220.dp).coerceAtLeast(220.dp),
+        ).coerceIn(220.dp, 316.dp)
 
       Column(
         modifier =
@@ -332,11 +327,8 @@ fun DashboardScreen(
             .windowInsetsPadding(WindowInsets.statusBars),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        // 1. Minimal Brand Top Bar + Live Pulsing IP Pill
-        HomeBrandTopBar(
-          networkSnapshot = uiState.networkSnapshot,
-          isScanning = isScanning,
-        )
+        // 1. Minimal Brand Top Bar
+        HomeBrandTopBar(isScanning = isScanning)
 
         // 2. Sculptural Center Stage — Oversized Orbital Radar Hero Ring
         Column(
@@ -365,16 +357,16 @@ fun DashboardScreen(
           )
         }
 
-        // 3. Bottom-Anchored Gradient Shimmer Start / Stop Pill (Natural Thumb Zone)
+        // 3. Primary Start/Stop CTA
         Box(
           modifier =
             Modifier
               .fillMaxWidth()
               .padding(
-                start = BdixSpacing.xl,
-                end = BdixSpacing.xl,
-                top = BdixSpacing.sm,
-                bottom = 28.dp,
+                start = BdixSpacing.lg,
+                end = BdixSpacing.lg,
+                top = BdixSpacing.xs,
+                bottom = BdixSpacing.xl,
               ),
           contentAlignment = Alignment.Center,
         ) {
@@ -459,29 +451,9 @@ fun DashboardScreen(
 
 @Composable
 private fun HomeBrandTopBar(
-  networkSnapshot: NetworkSnapshot,
   isScanning: Boolean,
+  compact: Boolean = false,
 ) {
-  val semantic = LocalBdixSemanticColors.current
-  val (dotColor, transportLabel) =
-    when {
-      !networkSnapshot.isConnected -> semantic.unreachable to stringResource(R.string.home_ip_pill_offline)
-      networkSnapshot.transportType == TransportType.WIFI ->
-        semantic.reachable to
-          stringResource(R.string.home_network_wifi)
-      networkSnapshot.transportType == TransportType.ETHERNET ->
-        semantic.reachable to
-          stringResource(R.string.home_network_ethernet)
-      else -> semantic.restricted to stringResource(R.string.home_network_mobile)
-    }
-  val ipText = networkSnapshot.localIpAddress?.takeIf { it.isNotBlank() }
-  val pillLabel =
-    if (networkSnapshot.isConnected && ipText != null) {
-      stringResource(R.string.home_ip_pill_connected, transportLabel, ipText)
-    } else {
-      transportLabel
-    }
-
   val reducedMotion = LocalReducedMotion.current
   val radarRotation =
     if (isScanning && !reducedMotion) {
@@ -505,8 +477,11 @@ private fun HomeBrandTopBar(
     modifier =
       Modifier
         .fillMaxWidth()
-        .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.md),
-    horizontalArrangement = Arrangement.SpaceBetween,
+        .padding(
+          horizontal = BdixSpacing.lg,
+          vertical = if (compact) BdixSpacing.xs else BdixSpacing.md,
+        ),
+    horizontalArrangement = Arrangement.Start,
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Row(
@@ -538,35 +513,6 @@ private fun HomeBrandTopBar(
         overflow = TextOverflow.Ellipsis,
       )
     }
-
-    Surface(
-      shape = RoundedCornerShape(50),
-      color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.92f),
-      border = BorderStroke(BdixBorder.hairline, MaterialTheme.colorScheme.outlineVariant),
-      tonalElevation = 1.dp,
-      modifier = Modifier.testTag("home_top_ip_pill"),
-    ) {
-      Row(
-        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
-      ) {
-        PulsingStatusDot(
-          color = dotColor,
-          isLive = networkSnapshot.isConnected,
-          dotSize = 7.dp,
-        )
-        LtrContent {
-          Text(
-            text = pillLabel,
-            style = MonoUrlStyle,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-          )
-        }
-      }
-    }
   }
 }
 
@@ -575,6 +521,7 @@ private fun PrimaryTestActionButton(
   isScanning: Boolean,
   onStartClick: () -> Unit,
   onStopClick: () -> Unit,
+  compact: Boolean = false,
 ) {
   val semantic = LocalBdixSemanticColors.current
   val interactionSource = remember { MutableInteractionSource() }
@@ -625,7 +572,7 @@ private fun PrimaryTestActionButton(
           role = Role.Button,
           onClickLabel = actionLabel,
           onClick = if (isScanning) onStopClick else onStartClick,
-        ).heightIn(min = 58.dp)
+        ).heightIn(min = if (compact) 52.dp else 58.dp)
         .testTag(if (isScanning) "home_stop_test_button" else "home_start_test_button"),
     contentAlignment = Alignment.Center,
   ) {
@@ -839,6 +786,10 @@ private fun HeroTesterRing(
         semantic.ringGradientStart,
       )
     }
+  val innerRingColors =
+    remember(semantic) {
+      ringColors.map { it.copy(alpha = 0.30f) }
+    }
   val dashedOrbitEffect = remember { PathEffect.dashPathEffect(floatArrayOf(10f, 14f), 0f) }
 
   val ringA11yDescription =
@@ -982,11 +933,7 @@ private fun HeroTesterRing(
       val innerArcSize = Size(innerRingRadius * 2f, innerRingRadius * 2f)
 
       val sweepBrush = Brush.sweepGradient(colors = ringColors, center = center)
-      val innerSoftBrush =
-        Brush.sweepGradient(
-          colors = ringColors.map { it.copy(alpha = 0.30f) },
-          center = center,
-        )
+      val innerSoftBrush = Brush.sweepGradient(colors = innerRingColors, center = center)
 
       // Soft ring halo
       drawArc(
@@ -1068,14 +1015,34 @@ private fun HeroTesterRing(
     }
 
     // Layer 6: Interactive Core with Rolling Counter & Spring-Bouncy VIEW Pill
+    val isCompactRing = ringSize < 205.dp
+    val heroNumberStyle =
+      if (isCompactRing) {
+        MaterialTheme.typography.headlineMedium.copy(
+          fontFamily = MonoHeroNumberStyle.fontFamily,
+          fontWeight = FontWeight.Bold,
+          fontFeatureSettings = "tnum",
+        )
+      } else {
+        MonoHeroNumberStyle
+      }
+    val heroSubStyle =
+      if (isCompactRing) {
+        MaterialTheme.typography.labelLarge.copy(
+          fontFamily = MonoHeroSubNumberStyle.fontFamily,
+          fontFeatureSettings = "tnum",
+        )
+      } else {
+        MonoHeroSubNumberStyle
+      }
     Column(
-      modifier = Modifier.padding(horizontal = BdixSpacing.xxl),
+      modifier = Modifier.padding(horizontal = if (isCompactRing) BdixSpacing.md else BdixSpacing.xxl),
       horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.spacedBy(BdixSpacing.xs),
+      verticalArrangement = Arrangement.spacedBy(if (isCompactRing) 2.dp else BdixSpacing.xs),
     ) {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BdixSpacing.xs),
+        verticalArrangement = Arrangement.spacedBy(if (isCompactRing) 2.dp else BdixSpacing.xs),
         modifier =
           Modifier.semantics(mergeDescendants = true) {
             liveRegion = LiveRegionMode.Polite
@@ -1103,14 +1070,14 @@ private fun HeroTesterRing(
               Row(verticalAlignment = Alignment.Bottom) {
                 Text(
                   text = "%.1f".format(Locale.US, animatedProgress * 100f),
-                  style = MonoHeroNumberStyle,
+                  style = heroNumberStyle,
                   color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                   text = "%",
-                  style = MonoHeroSubNumberStyle,
+                  style = heroSubStyle,
                   color = MaterialTheme.colorScheme.onSurfaceVariant,
-                  modifier = Modifier.padding(bottom = 6.dp, start = 2.dp),
+                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 6.dp, start = 2.dp),
                 )
               }
             }
@@ -1133,14 +1100,14 @@ private fun HeroTesterRing(
               Row(verticalAlignment = Alignment.Bottom) {
                 RollingCountText(
                   count = workingCount,
-                  style = MonoHeroNumberStyle,
+                  style = heroNumberStyle,
                   color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                   text = "/$totalCount",
-                  style = MonoHeroSubNumberStyle,
+                  style = heroSubStyle,
                   color = MaterialTheme.colorScheme.onSurfaceVariant,
-                  modifier = Modifier.padding(bottom = 6.dp, start = 2.dp),
+                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 6.dp, start = 2.dp),
                 )
               }
             }
@@ -1149,12 +1116,16 @@ private fun HeroTesterRing(
               style = MaterialTheme.typography.bodySmall,
               color = MaterialTheme.colorScheme.onSurfaceVariant,
               textAlign = TextAlign.Center,
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis,
             )
           }
         }
       }
 
-      Spacer(modifier = Modifier.height(BdixSpacing.xs))
+      if (!isCompactRing) {
+        Spacer(modifier = Modifier.height(BdixSpacing.xs))
+      }
 
       OutlinedButton(
         onClick = {
@@ -1164,7 +1135,12 @@ private fun HeroTesterRing(
         interactionSource = viewInteractionSource,
         shape = RoundedCornerShape(50),
         border = BorderStroke(BdixBorder.accent, MaterialTheme.colorScheme.primary),
-        contentPadding = PaddingValues(horizontal = 22.dp, vertical = 8.dp),
+        contentPadding =
+          if (isCompactRing) {
+            PaddingValues(horizontal = 16.dp, vertical = 4.dp)
+          } else {
+            PaddingValues(horizontal = 22.dp, vertical = 8.dp)
+          },
         modifier =
           Modifier
             .springPressScale(interactionSource = viewInteractionSource, pressedScale = 0.94f)
@@ -1200,13 +1176,6 @@ private fun DashboardScreenPreview() {
           testedCount = 752,
           reachableCount = 41,
           failedCount = 711,
-          networkSnapshot =
-            NetworkSnapshot(
-              isConnected = true,
-              transportType = TransportType.WIFI,
-              hasWifiTransport = true,
-              localIpAddress = "192.168.0.104",
-            ),
         ),
       onViewServers = {},
       onStartScan = {},

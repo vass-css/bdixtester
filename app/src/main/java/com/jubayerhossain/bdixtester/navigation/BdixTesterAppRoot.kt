@@ -1,5 +1,8 @@
 package com.jubayerhossain.bdixtester.navigation
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -11,16 +14,19 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -36,6 +42,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,10 +83,11 @@ import com.jubayerhossain.bdixtester.feature.settings.SettingsViewModel
 import com.jubayerhossain.bdixtester.ui.components.BdixMotionSpecs
 import com.jubayerhossain.bdixtester.ui.components.CustomServerDialog
 import com.jubayerhossain.bdixtester.ui.components.LocalReducedMotion
+import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
 import com.jubayerhossain.bdixtester.ui.theme.BdixIconSize
 import com.jubayerhossain.bdixtester.ui.theme.LocalBdixSemanticColors
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @Composable
 fun BdixTesterAppRoot(
@@ -150,6 +158,19 @@ fun BdixTesterAppRoot(
       }
       launchSingleTop = true
       restoreState = true
+    }
+  }
+
+  fun copyUrlWithSnackbar(rawUrl: String) {
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+    clipboard?.setPrimaryClip(ClipData.newPlainText("BDIX Server URL", rawUrl))
+    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+    val copiedMessage = context.getString(R.string.servers_url_copied, rawUrl)
+    scope.launch {
+      snackbarHostState.showSnackbar(
+        message = copiedMessage,
+        duration = SnackbarDuration.Short,
+      )
     }
   }
 
@@ -266,6 +287,8 @@ fun BdixTesterAppRoot(
               scanViewModel.startScan(overrideMode = dashboardUiState.selectedScanMode)
             },
             onOpenUrl = ::openExternalUrl,
+            onCopyUrl = ::copyUrlWithSnackbar,
+            onTestSingleServer = serversViewModel::testSingleServer,
           )
         }
 
@@ -278,6 +301,8 @@ fun BdixTesterAppRoot(
             onSetPinned = favoritesViewModel::setPinned,
             onOpenUrl = ::openExternalUrl,
             onExportFavorites = favoritesViewModel::exportFavorites,
+            onCopyUrl = ::copyUrlWithSnackbar,
+            onTestSingleServer = serversViewModel::testSingleServer,
           )
         }
 
@@ -292,6 +317,7 @@ fun BdixTesterAppRoot(
             onDeleteHistoryEntry = favoritesViewModel::deleteHistoryEntry,
             onClearAllHistory = favoritesViewModel::clearAllHistory,
             onExportHistory = favoritesViewModel::exportHistory,
+            onCopyUrl = ::copyUrlWithSnackbar,
           )
         }
 
@@ -423,12 +449,17 @@ private fun BdixBottomNavigationBar(
 ) {
   val semantic = LocalBdixSemanticColors.current
   val activeRoute = currentRoute ?: BdixRoutes.HOME
-  NavigationBar(
-    containerColor = semantic.navBackground,
-    tonalElevation = 0.dp,
-    windowInsets = WindowInsets.navigationBars,
-    modifier = Modifier.testTag("main_bottom_navigation_bar"),
-  ) {
+  Column(modifier = Modifier.fillMaxWidth()) {
+    HorizontalDivider(
+      thickness = BdixBorder.hairline,
+      color = MaterialTheme.colorScheme.outlineVariant,
+    )
+    NavigationBar(
+      containerColor = semantic.navBackground,
+      tonalElevation = 0.dp,
+      windowInsets = WindowInsets.navigationBars,
+      modifier = Modifier.testTag("main_bottom_navigation_bar"),
+    ) {
     val colors =
       NavigationBarItemDefaults.colors(
         selectedIconColor = MaterialTheme.colorScheme.primary,
@@ -481,6 +512,7 @@ private fun BdixBottomNavigationBar(
       )
     }
   }
+  }
 }
 
 @Composable
@@ -490,14 +522,15 @@ private fun BdixNavigationRail(
 ) {
   val semantic = LocalBdixSemanticColors.current
   val activeRoute = currentRoute ?: BdixRoutes.HOME
-  NavigationRail(
-    containerColor = semantic.navBackground,
-    modifier =
-      Modifier
-        .fillMaxHeight()
-        .statusBarsPadding()
-        .testTag("main_navigation_rail"),
-  ) {
+  Row(modifier = Modifier.fillMaxHeight()) {
+    NavigationRail(
+      containerColor = semantic.navBackground,
+      modifier =
+        Modifier
+          .fillMaxHeight()
+          .statusBarsPadding()
+          .testTag("main_navigation_rail"),
+    ) {
     Spacer(modifier = Modifier.weight(0.5f))
     val colors =
       NavigationRailItemDefaults.colors(
@@ -548,5 +581,10 @@ private fun BdixNavigationRail(
       )
     }
     Spacer(modifier = Modifier.weight(1f))
+    }
+    VerticalDivider(
+      thickness = BdixBorder.hairline,
+      color = MaterialTheme.colorScheme.outlineVariant,
+    )
   }
 }

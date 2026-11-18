@@ -58,6 +58,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -186,36 +187,47 @@ fun SettingsScreen(
     containerColor = MaterialTheme.colorScheme.background,
     contentWindowInsets = WindowInsets.statusBars,
     topBar = {
-      TopAppBar(
-        title = {
-          Text(
-            text = stringResource(R.string.settings_title),
-            style = MaterialTheme.typography.titleLarge,
-          )
-        },
-        navigationIcon = {
-          if (onNavigateBack != null) {
-            IconButton(
-              onClick = onNavigateBack,
-              modifier =
-                Modifier
-                  .minimumInteractiveComponentSize()
-                  .testTag("settings_back_button"),
-            ) {
-              Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                contentDescription = stringResource(R.string.action_back),
+      Surface(
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        tonalElevation = 1.dp,
+      ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+          TopAppBar(
+            title = {
+              Text(
+                text = stringResource(R.string.settings_title),
+                style = MaterialTheme.typography.titleLarge,
               )
-            }
-          }
-        },
-        colors =
-          TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-          ),
-      )
+            },
+            navigationIcon = {
+              if (onNavigateBack != null) {
+                IconButton(
+                  onClick = onNavigateBack,
+                  modifier =
+                    Modifier
+                      .minimumInteractiveComponentSize()
+                      .testTag("settings_back_button"),
+                ) {
+                  Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.action_back),
+                  )
+                }
+              }
+            },
+            colors =
+              TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+              ),
+          )
+          HorizontalDivider(
+            thickness = BdixBorder.hairline,
+            color = MaterialTheme.colorScheme.outlineVariant,
+          )
+        }
+      }
     },
   ) { innerPadding ->
     LazyColumn(

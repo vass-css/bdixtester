@@ -36,6 +36,7 @@ import com.jubayerhossain.bdixtester.ui.theme.LocalBdixSemanticColors
 fun StatusBadge(
   status: TestStatus,
   modifier: Modifier = Modifier,
+  latencyMs: Long? = null,
 ) {
   val semantic = LocalBdixSemanticColors.current
   val (icon: ImageVector, tint: Color, container: Color) =
@@ -96,13 +97,20 @@ fun StatusBadge(
         )
     }
 
+  val badgeText =
+    if (latencyMs != null) {
+      "${status.displayLabel} · $latencyMs ms"
+    } else {
+      status.displayLabel
+    }
+
   Surface(
     color = container,
     shape = MaterialTheme.shapes.extraSmall,
     modifier =
       modifier
         .testTag("status_badge_${status.name.lowercase()}")
-        .semantics { contentDescription = "Status: ${status.displayLabel}" },
+        .semantics { contentDescription = "Status: $badgeText" },
   ) {
     Row(
       modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
@@ -115,11 +123,14 @@ fun StatusBadge(
         tint = tint,
         modifier = Modifier.size(BdixIconSize.xs),
       )
-      Text(
-        text = status.displayLabel,
-        style = MaterialTheme.typography.labelMedium,
-        color = tint,
-      )
+      LtrContent {
+        Text(
+          text = badgeText,
+          style = MaterialTheme.typography.labelMedium,
+          color = tint,
+          maxLines = 1,
+        )
+      }
     }
   }
 }

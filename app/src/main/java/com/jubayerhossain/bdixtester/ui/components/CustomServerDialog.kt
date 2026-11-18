@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.core.model.ServerCategory
 import com.jubayerhossain.bdixtester.domain.model.ServerEndpoint
+import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -63,16 +65,20 @@ fun CustomServerDialog(
 
   AlertDialog(
     onDismissRequest = onDismiss,
+    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
     modifier = Modifier.testTag("custom_server_dialog"),
     title = {
       Text(
-        stringResource(
-          if (initialEndpoint == null) {
-            R.string.servers_dialog_add_title
-          } else {
-            R.string.servers_dialog_edit_title
-          },
-        ),
+        text =
+          stringResource(
+            if (initialEndpoint == null) {
+              R.string.servers_dialog_add_title
+            } else {
+              R.string.servers_dialog_edit_title
+            },
+          ),
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.onSurface,
       )
     },
     text = {
@@ -88,6 +94,7 @@ fun CustomServerDialog(
           onValueChange = { name = it },
           label = { Text(stringResource(R.string.servers_dialog_name_label)) },
           singleLine = true,
+          shape = BdixCardShapes.input,
           modifier =
             Modifier
               .fillMaxWidth()
@@ -99,6 +106,7 @@ fun CustomServerDialog(
             onValueChange = { rawUrl = it },
             label = { Text(stringResource(R.string.servers_dialog_url_label)) },
             singleLine = true,
+            shape = BdixCardShapes.input,
             modifier =
               Modifier
                 .fillMaxWidth()
@@ -111,6 +119,7 @@ fun CustomServerDialog(
             onValueChange = { speedUrl = it },
             label = { Text(stringResource(R.string.servers_dialog_speed_url_label)) },
             singleLine = true,
+            shape = BdixCardShapes.input,
             modifier =
               Modifier
                 .fillMaxWidth()
@@ -123,10 +132,25 @@ fun CustomServerDialog(
           verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
           selectableCategories.forEach { category ->
+            val selected = selectedCategory == category
             FilterChip(
-              selected = selectedCategory == category,
+              selected = selected,
               onClick = { selectedCategory = category },
               label = { Text(category.displayName) },
+              colors =
+                FilterChipDefaults.filterChipColors(
+                  selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                  selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                  containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                  labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
+              border =
+                FilterChipDefaults.filterChipBorder(
+                  enabled = true,
+                  selected = selected,
+                  borderColor = MaterialTheme.colorScheme.outlineVariant,
+                  selectedBorderColor = MaterialTheme.colorScheme.primary,
+                ),
               modifier =
                 Modifier
                   .heightIn(min = 48.dp)

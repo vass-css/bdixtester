@@ -1,6 +1,7 @@
 package com.jubayerhossain.bdixtester
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -37,7 +38,10 @@ class LocalizationAccessibilityUiTest {
     composeTestRule.onNodeWithTag("home_menu_button").assertDoesNotExist()
     composeTestRule.onNodeWithTag("home_scan_mode_selector").assertDoesNotExist()
     composeTestRule.onNodeWithTag("home_network_summary_card").assertDoesNotExist()
-    composeTestRule.onNodeWithTag("home_top_ip_pill").assertIsDisplayed()
+    composeTestRule.onNodeWithTag("home_top_ip_pill").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_category_summary_strip").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_scan_mode_pill").assertDoesNotExist()
+    composeTestRule.onNodeWithTag("home_tester_ring").assertIsDisplayed()
     composeTestRule.onNodeWithTag("home_start_test_button").assertIsDisplayed()
     composeTestRule.onNodeWithTag("main_bottom_navigation_bar").assertIsDisplayed()
 
@@ -52,6 +56,16 @@ class LocalizationAccessibilityUiTest {
     composeTestRule.onNodeWithTag("nav_servers").performClick()
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithTag("servers_screen").assertIsDisplayed()
+    val activity = composeTestRule.activity
+    composeTestRule
+      .onNodeWithTag("servers_category_ftp")
+      .assertTextEquals(activity.getString(R.string.servers_bottom_ftp))
+    composeTestRule
+      .onNodeWithTag("servers_category_movie")
+      .assertTextEquals(activity.getString(R.string.servers_bottom_movie))
+    composeTestRule
+      .onNodeWithTag("servers_category_tv")
+      .assertTextEquals(activity.getString(R.string.servers_bottom_tv))
     composeTestRule.onNodeWithTag("servers_category_ott").performClick()
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithTag("ott_card_ott_chorki").assertIsDisplayed()

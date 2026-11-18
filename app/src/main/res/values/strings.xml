@@ -191,10 +191,6 @@
     <string name="servers_bottom_tv">TV</string>
     <string name="servers_bottom_ftp">FTP</string>
     <string name="servers_bottom_movie">Movies</string>
-    <string name="servers_bottom_ftp_count">FTP (%1$d)</string>
-    <string name="servers_bottom_movie_count">Movies (%1$d)</string>
-    <string name="servers_bottom_tv_count">TV (%1$d)</string>
-    <string name="servers_bottom_ott_count">OTT (%1$d)</string>
     <string name="servers_bottom_search">Search</string>
     <string name="servers_empty_working_desc">No working servers found yet. Tap Start Test below to scan your BDIX network.</string>
     <string name="servers_empty_not_working_desc">No failing servers in this category yet.</string>
@@ -265,8 +261,6 @@
 
     <!-- Elevated Server Cards, Home Top Bar & Settings Screenshot Integrations -->
     <string name="action_open">Open</string>
-    <string name="home_ip_pill_connected">%1$s · %2$s</string>
-    <string name="home_ip_pill_offline">Offline</string>
     <string name="settings_header_catalog_summary">%1$d BDIX · %2$d OTT</string>
     <string name="settings_quick_actions_section">Servers &amp; Catalog Actions</string>
     <string name="settings_update_server_list_subtitle">Fetch the latest signed server catalog updates</string>
@@ -340,4 +334,13 @@
     <string name="theme_preview_primary_btn">Scan</string>
     <string name="theme_preview_secondary_btn">Servers</string>
     <string name="theme_preview_card_a11y">%1$s theme preset, %2$s</string>
+
+    <!-- Unified 2-Tier Design System & Quick-Inspect Details -->
+    <string name="details_source_label">Catalog Source</string>
+    <string name="details_protocol_label">Protocol</string>
+    <string name="details_host_label">Host / IP</string>
+    <string name="details_category_label">Category</string>
+    <string name="details_latency_label">Latency</string>
+    <string name="details_throughput_label">Throughput</string>
+    <string name="action_inspect_server">Inspect details for %1$s</string>
 </resources>

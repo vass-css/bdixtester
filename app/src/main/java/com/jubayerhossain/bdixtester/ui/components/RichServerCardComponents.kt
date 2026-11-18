@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jubayerhossain.bdixtester.R
+import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
 import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
@@ -99,48 +102,54 @@ fun RichCardUrlFooter(
         ).semantics { contentDescription = urlA11y }
         .testTag(testTag),
   ) {
-    Row(
-      modifier =
-        Modifier
-          .fillMaxWidth()
-          .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.sm),
-      horizontalArrangement = Arrangement.SpaceBetween,
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      LtrContent {
-        Text(
-          text = url,
-          style = MonoUrlStyle,
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-          maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
-          modifier =
-            Modifier
-              .weight(1f, fill = false)
-              .padding(end = BdixSpacing.md),
-        )
-      }
-      Surface(
-        shape = BdixCardShapes.pill,
-        color = MaterialTheme.colorScheme.primaryContainer,
+    Column(modifier = Modifier.fillMaxWidth()) {
+      HorizontalDivider(
+        thickness = BdixBorder.hairline,
+        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.55f),
+      )
+      Row(
+        modifier =
+          Modifier
+            .fillMaxWidth()
+            .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.sm),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
       ) {
-        Row(
-          modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
+        LtrContent {
           Text(
-            text = stringResource(R.string.action_open),
-            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            text = url,
+            style = MonoUrlStyle,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier =
+              Modifier
+                .weight(1f, fill = false)
+                .padding(end = BdixSpacing.md),
           )
-          Icon(
-            imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(13.dp),
-          )
+        }
+        Surface(
+          shape = BdixCardShapes.pill,
+          color = MaterialTheme.colorScheme.primaryContainer,
+        ) {
+          Row(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+          ) {
+            Text(
+              text = stringResource(R.string.action_open),
+              style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
+              color = MaterialTheme.colorScheme.onPrimaryContainer,
+              maxLines = 1,
+            )
+            Icon(
+              imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
+              contentDescription = null,
+              tint = MaterialTheme.colorScheme.primary,
+              modifier = Modifier.size(13.dp),
+            )
+          }
         }
       }
     }

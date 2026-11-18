@@ -9,18 +9,19 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.FolderShared
+import androidx.compose.material.icons.rounded.LiveTv
+import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.PushPin
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,8 +38,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,17 +48,24 @@ import com.jubayerhossain.bdixtester.core.model.ServerCategory
 import com.jubayerhossain.bdixtester.core.model.ServerProtocol
 import com.jubayerhossain.bdixtester.core.model.TestStatus
 import com.jubayerhossain.bdixtester.core.model.VerificationState
+import com.jubayerhossain.bdixtester.core.util.ServerDisplayCategory
+import com.jubayerhossain.bdixtester.core.util.ServerDisplayClassifier
 import com.jubayerhossain.bdixtester.core.validation.UrlParser
 import com.jubayerhossain.bdixtester.domain.model.ServerEndpoint
 import com.jubayerhossain.bdixtester.domain.model.ServerTestResult
 import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
+import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
+import com.jubayerhossain.bdixtester.ui.theme.BdixElevation
 import com.jubayerhossain.bdixtester.ui.theme.BdixIconSize
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 import com.jubayerhossain.bdixtester.ui.theme.BdixTesterTheme
 import com.jubayerhossain.bdixtester.ui.theme.MonoBadgeStyle
-import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
-import java.util.Locale
 
+/**
+ * Unified 2-tier server card used across Saved Servers and custom server views:
+ * - Tier 1: Category squircle, server name, Status+Latency badge & concise Host/Category pill, plus quick actions.
+ * - Tier 2: Shared [RichCardUrlFooter] with direct Open pill and long-press URL copy.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ServerCard(
@@ -72,11 +79,20 @@ fun ServerCard(
   onTogglePin: (() -> Unit)? = null,
   onEditCustomClick: (() -> Unit)? = null,
   onDeleteCustomClick: (() -> Unit)? = null,
+  onInspectClick: (() -> Unit)? = null,
+  onLongClickCopyUrl: (() -> Unit)? = null,
+  footerTestTag: String = "visit_website_button_${endpoint.id}",
 ) {
   val haptic = LocalHapticFeedback.current
   val cardInteractionSource = remember { MutableInteractionSource() }
   val status = result?.status ?: TestStatus.NOT_TESTED
   val urlA11y = stringResource(R.string.servers_open_url_a11y, endpoint.name)
+  val categoryIcon =
+    when (ServerDisplayClassifier.classify(endpoint)) {
+      ServerDisplayCategory.TV -> Icons.Rounded.LiveTv
+      ServerDisplayCategory.FTP -> Icons.Rounded.FolderShared
+      ServerDisplayCategory.MOVIE -> Icons.Rounded.Movie
+    }
 
   Card(
     modifier =
@@ -84,13 +100,14 @@ fun ServerCard(
         .fillMaxWidth()
         .springPressScale(interactionSource = cardInteractionSource, pressedScale = 0.975f)
         .testTag("server_card_${endpoint.id}"),
-    shape = MaterialTheme.shapes.medium,
+    shape = BdixCardShapes.richCard,
     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    elevation = CardDefaults.cardElevation(defaultElevation = BdixElevation.card),
     border = BorderStroke(BdixBorder.hairline, MaterialTheme.colorScheme.outlineVariant),
   ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-      // Card info area opens external browser directly (no in-app Server Metadata page)
-      Column(
+      // Tier 1: Essential Server Summary & Actions
+      Row(
         modifier =
           Modifier
             .fillMaxWidth()
@@ -105,19 +122,20 @@ fun ServerCard(
               },
             ).padding(
               start = BdixSpacing.lg,
-              end = BdixSpacing.md,
+              end = BdixSpacing.xs,
               top = BdixSpacing.md,
-              bottom = BdixSpacing.sm,
+              bottom = BdixSpacing.md,
             ),
-        verticalArrangement = Arrangement.spacedBy(BdixSpacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(BdixSpacing.md),
+        verticalAlignment = Alignment.CenterVertically,
       ) {
-        Row(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically,
+        BdixCategoryIconBadge(icon = categoryIcon)
+
+        Column(
+          modifier = Modifier.weight(1f),
+          verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
           Row(
-            modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
           ) {
@@ -129,41 +147,75 @@ fun ServerCard(
                 modifier = Modifier.size(BdixIconSize.xs),
               )
             }
+            if (endpoint.isFeatured) {
+              Icon(
+                imageVector = Icons.Rounded.Star,
+                contentDescription = stringResource(R.string.label_featured),
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(BdixIconSize.xs),
+              )
+            }
             Text(
               text = endpoint.name,
-              style = MaterialTheme.typography.titleMedium,
+              style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
               color = MaterialTheme.colorScheme.onSurface,
-              maxLines = 1,
+              maxLines = 2,
               overflow = TextOverflow.Ellipsis,
+              modifier = Modifier.weight(1f, fill = false),
             )
           }
 
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            if (endpoint.isFeatured) {
-              Surface(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.extraSmall,
-              ) {
-                Row(
-                  modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                  verticalAlignment = Alignment.CenterVertically,
-                  horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                  Icon(
-                    imageVector = Icons.Rounded.Star,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(12.dp),
-                  )
-                  Text(
-                    text = stringResource(R.string.label_featured),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                  )
-                }
+          val hostOrIpLabel = UrlParser.hostAndPortLabel(endpoint.host, endpoint.explicitPort)
+          val isIpHost = UrlParser.isValidIpv4Host(endpoint.host)
+          val hostBadgeText =
+            stringResource(
+              if (isIpHost) R.string.server_badge_ip else R.string.server_badge_host,
+              hostOrIpLabel,
+            )
+
+          FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+          ) {
+            StatusBadge(status = status, latencyMs = result?.primaryLatencyMs)
+
+            Surface(
+              color = MaterialTheme.colorScheme.secondaryContainer,
+              shape = BdixCardShapes.chip,
+            ) {
+              LtrContent {
+                Text(
+                  text = hostBadgeText,
+                  style = MonoBadgeStyle,
+                  color = MaterialTheme.colorScheme.onSecondaryContainer,
+                  modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                  maxLines = 1,
+                  overflow = TextOverflow.Ellipsis,
+                )
               }
             }
 
+            Surface(
+              color = MaterialTheme.colorScheme.surfaceContainerHigh,
+              shape = BdixCardShapes.chip,
+            ) {
+              Text(
+                text = ServerDisplayClassifier.displayLabel(endpoint),
+                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Medium),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+              )
+            }
+          }
+        }
+
+        Column(
+          horizontalAlignment = Alignment.End,
+          verticalArrangement = Arrangement.Center,
+        ) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
             if (onTogglePin != null) {
               IconButton(
                 onClick = {
@@ -205,188 +257,73 @@ fun ServerCard(
                 )
               }
             }
-          }
-        }
 
-        val hostOrIpLabel = UrlParser.hostAndPortLabel(endpoint.host, endpoint.explicitPort)
-        val isIpHost = UrlParser.isValidIpv4Host(endpoint.host)
-        val hostBadgeText =
-          stringResource(
-            if (isIpHost) R.string.server_badge_ip else R.string.server_badge_host,
-            hostOrIpLabel,
-          )
-
-        FlowRow(
-          horizontalArrangement = Arrangement.spacedBy(6.dp),
-          verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-          StatusBadge(status = status)
-          MetadataPill(label = endpoint.category.displayName)
-          Surface(
-            color = MaterialTheme.colorScheme.secondaryContainer,
-            shape = MaterialTheme.shapes.extraSmall,
-          ) {
-            LtrContent {
-              Text(
-                text = hostBadgeText,
-                style = MonoBadgeStyle,
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-              )
-            }
-          }
-          MetadataPill(label = endpoint.protocol.displayLabel)
-          if (endpoint.sourceType != CatalogSourceType.BUILT_IN) {
-            MetadataPill(label = endpoint.sourceType.displayLabel)
-          } else if (endpoint.sourceIndex != null) {
-            LtrContent {
-              MetadataPill(label = "#${endpoint.sourceIndex + 1}")
-            }
-          }
-          if (endpoint.isPrivateIp) {
-            MetadataPill(label = stringResource(R.string.label_private_ip))
-          }
-        }
-
-        Row(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween,
-          verticalAlignment = Alignment.CenterVertically,
-        ) {
-          Column(modifier = Modifier.weight(1f)) {
-            val latency = result?.primaryLatencyMs
-            val throughput = result?.downloadMbps
-            if (latency != null) {
-              LtrContent {
-                Text(
-                  text = stringResource(R.string.label_latency_ms, latency),
-                  style = MaterialTheme.typography.labelSmall,
-                  color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-              }
-            }
-            if (throughput != null) {
-              LtrContent {
-                Text(
-                  text =
-                    stringResource(
-                      R.string.label_throughput_mbps,
-                      "%.2f".format(Locale.US, throughput),
-                    ),
-                  style = MaterialTheme.typography.labelSmall,
-                  color = MaterialTheme.colorScheme.primary,
-                )
-              }
-            }
-            if (latency == null && throughput == null) {
-              Text(
-                text = result?.failureMessage ?: stringResource(R.string.label_not_yet_tested),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-              )
-            }
-          }
-
-          Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-          ) {
-            if (onEditCustomClick != null) {
+            if (onInspectClick != null) {
               IconButton(
-                onClick = onEditCustomClick,
+                onClick = {
+                  haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                  onInspectClick()
+                },
                 modifier =
                   Modifier
                     .minimumInteractiveComponentSize()
-                    .testTag("edit_custom_${endpoint.id}"),
+                    .testTag("inspect_server_${endpoint.id}"),
               ) {
                 Icon(
-                  imageVector = Icons.Rounded.Edit,
-                  contentDescription = stringResource(R.string.action_edit),
+                  imageVector = Icons.Outlined.Info,
+                  contentDescription = stringResource(R.string.action_inspect_server, endpoint.name),
+                  tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
               }
             }
-            if (onDeleteCustomClick != null) {
-              IconButton(
-                onClick = onDeleteCustomClick,
-                modifier =
-                  Modifier
-                    .minimumInteractiveComponentSize()
-                    .testTag("delete_custom_${endpoint.id}"),
-              ) {
-                Icon(
-                  imageVector = Icons.Rounded.DeleteOutline,
-                  contentDescription = stringResource(R.string.action_delete),
-                )
+          }
+
+          if (onEditCustomClick != null || onDeleteCustomClick != null) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              if (onEditCustomClick != null) {
+                IconButton(
+                  onClick = onEditCustomClick,
+                  modifier =
+                    Modifier
+                      .minimumInteractiveComponentSize()
+                      .testTag("edit_custom_${endpoint.id}"),
+                ) {
+                  Icon(
+                    imageVector = Icons.Rounded.Edit,
+                    contentDescription = stringResource(R.string.action_edit),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                  )
+                }
+              }
+              if (onDeleteCustomClick != null) {
+                IconButton(
+                  onClick = onDeleteCustomClick,
+                  modifier =
+                    Modifier
+                      .minimumInteractiveComponentSize()
+                      .testTag("delete_custom_${endpoint.id}"),
+                ) {
+                  Icon(
+                    imageVector = Icons.Rounded.DeleteOutline,
+                    contentDescription = stringResource(R.string.action_delete),
+                    tint = MaterialTheme.colorScheme.error,
+                  )
+                }
               }
             }
           }
         }
       }
 
-      HorizontalDivider(
-        thickness = BdixBorder.hairline,
-        color = MaterialTheme.colorScheme.outlineVariant,
+      // Tier 2: Shared Monospace URL & Open Footer (long-press copies URL)
+      RichCardUrlFooter(
+        url = endpoint.originalUrl,
+        urlA11y = urlA11y,
+        testTag = footerTestTag,
+        onClick = onVisitWebsiteClick,
+        onLongClick = onLongClickCopyUrl,
       )
-
-      // Isolated full-width >= 48dp External Browser URL action row
-      Row(
-        modifier =
-          Modifier
-            .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .clickable(
-              role = Role.Button,
-              onClickLabel = urlA11y,
-              onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                onVisitWebsiteClick()
-              },
-            ).semantics { contentDescription = urlA11y }
-            .padding(horizontal = BdixSpacing.lg, vertical = BdixSpacing.sm)
-            .testTag("visit_website_button_${endpoint.id}"),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        LtrContent {
-          Text(
-            text = endpoint.originalUrl,
-            style = MonoUrlStyle,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier =
-              Modifier
-                .weight(1f, fill = false)
-                .padding(end = BdixSpacing.sm),
-          )
-        }
-        Icon(
-          imageVector = Icons.AutoMirrored.Rounded.OpenInNew,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.primary,
-          modifier = Modifier.size(BdixIconSize.sm),
-        )
-      }
     }
-  }
-}
-
-@Composable
-private fun MetadataPill(label: String) {
-  Surface(
-    color = MaterialTheme.colorScheme.surfaceVariant,
-    shape = MaterialTheme.shapes.extraSmall,
-  ) {
-    Text(
-      text = label,
-      style = MaterialTheme.typography.labelMedium,
-      color = MaterialTheme.colorScheme.onSurfaceVariant,
-      modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-    )
   }
 }
 
@@ -403,7 +340,7 @@ private fun ServerCardPreview() {
           host = "sample-bdix.local",
           explicitPort = null,
           protocol = ServerProtocol.HTTP,
-          category = ServerCategory.UNCATEGORIZED,
+          category = ServerCategory.MOVIES,
           isFeatured = false,
           sourceType = CatalogSourceType.BUILT_IN,
           sourceIndex = 0,

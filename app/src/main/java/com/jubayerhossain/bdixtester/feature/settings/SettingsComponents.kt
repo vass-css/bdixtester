@@ -54,6 +54,7 @@ import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.ui.components.LtrContent
 import com.jubayerhossain.bdixtester.ui.components.springPressScale
 import com.jubayerhossain.bdixtester.ui.theme.BdixBorder
+import com.jubayerhossain.bdixtester.ui.theme.BdixCardShapes
 import com.jubayerhossain.bdixtester.ui.theme.BdixSpacing
 import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
 
@@ -84,7 +85,7 @@ internal fun SettingsGroupCard(
       modifier
         .fillMaxWidth()
         .widthIn(max = 720.dp),
-    shape = RoundedCornerShape(20.dp),
+    shape = BdixCardShapes.richCard,
     color = MaterialTheme.colorScheme.surfaceContainerLow,
     border = BorderStroke(BdixBorder.hairline, MaterialTheme.colorScheme.outlineVariant),
   ) {
@@ -375,7 +376,7 @@ internal fun <T> SettingsRadioPickerDialog(
         options.forEach { option ->
           val selected = option.value == selectedValue
           Surface(
-            shape = RoundedCornerShape(12.dp),
+            shape = BdixCardShapes.iconSquircle,
             color =
               if (selected) {
                 MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.55f)
@@ -490,7 +491,7 @@ internal fun SettingsTextInputDialog(
               }
             }
           },
-          shape = MaterialTheme.shapes.medium,
+          shape = BdixCardShapes.input,
           modifier =
             Modifier
               .fillMaxWidth()

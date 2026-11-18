@@ -4,8 +4,8 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Dns
+import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Bookmark
 import androidx.compose.material.icons.rounded.Dns
@@ -56,7 +56,7 @@ enum class TopLevelDestination(
     route = BdixRoutes.HISTORY,
     labelRes = R.string.nav_history,
     selectedIcon = Icons.Rounded.History,
-    unselectedIcon = Icons.Outlined.Schedule,
+    unselectedIcon = Icons.Outlined.History,
     testTag = "nav_history",
   ),
   SETTINGS(

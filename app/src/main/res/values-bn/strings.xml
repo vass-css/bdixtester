@@ -191,10 +191,6 @@
     <string name="servers_bottom_tv">টিভি</string>
     <string name="servers_bottom_ftp">FTP</string>
     <string name="servers_bottom_movie">মুভি</string>
-    <string name="servers_bottom_ftp_count">FTP (%1$d)</string>
-    <string name="servers_bottom_movie_count">মুভি (%1$d)</string>
-    <string name="servers_bottom_tv_count">টিভি (%1$d)</string>
-    <string name="servers_bottom_ott_count">OTT (%1$d)</string>
     <string name="servers_bottom_search">অনুসন্ধান</string>
     <string name="servers_empty_working_desc">এখনো কোনো সচল সার্ভার পাওয়া যায়নি। BDIX নেটওয়ার্ক যাচাই করতে নিচের বাটনে ট্যাপ করুন।</string>
     <string name="servers_empty_not_working_desc">এই ক্যাটাগরিতে এখনো কোনো অচল সার্ভার নেই।</string>
@@ -265,8 +261,6 @@
 
     <!-- Elevated Server Cards, Home Top Bar & Settings Screenshot Integrations -->
     <string name="action_open">খুলুন</string>
-    <string name="home_ip_pill_connected">%1$s · %2$s</string>
-    <string name="home_ip_pill_offline">অফলাইন</string>
     <string name="settings_header_catalog_summary">%1$d BDIX · %2$d OTT</string>
     <string name="settings_quick_actions_section">সার্ভার ও ক্যাটালগ অ্যাকশন</string>
     <string name="settings_update_server_list_subtitle">সর্বশেষ স্বাক্ষরিত সার্ভার তালিকা আপডেট যাচাই করুন</string>
@@ -340,4 +334,13 @@
     <string name="theme_preview_primary_btn">স্ক্যান</string>
     <string name="theme_preview_secondary_btn">সার্ভার</string>
     <string name="theme_preview_card_a11y">%1$s থিম প্রিসেট, %2$s</string>
+
+    <!-- Unified 2-Tier Design System & Quick-Inspect Details -->
+    <string name="details_source_label">ক্যাটালগ উৎস</string>
+    <string name="details_protocol_label">প্রোটোকল</string>
+    <string name="details_host_label">হোস্ট / আইপি</string>
+    <string name="details_category_label">ক্যাটাগরি</string>
+    <string name="details_latency_label">লেটেন্সি</string>
+    <string name="details_throughput_label">গতি</string>
+    <string name="action_inspect_server">%1$s-এর বিস্তারিত দেখুন</string>
 </resources>
