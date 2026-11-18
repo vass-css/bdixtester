@@ -181,9 +181,9 @@ val MonoHeroNumberStyle =
   TextStyle(
     fontFamily = JetBrainsMonoFamily,
     fontWeight = FontWeight.Bold,
-    fontSize = 44.sp,
-    lineHeight = 52.sp,
-    letterSpacing = (-1.0).sp,
+    fontSize = 52.sp,
+    lineHeight = 58.sp,
+    letterSpacing = (-1.2).sp,
     fontFeatureSettings = "tnum",
   )
 
@@ -191,7 +191,7 @@ val MonoHeroSubNumberStyle =
   TextStyle(
     fontFamily = JetBrainsMonoFamily,
     fontWeight = FontWeight.Medium,
-    fontSize = 24.sp,
-    lineHeight = 32.sp,
+    fontSize = 26.sp,
+    lineHeight = 34.sp,
     fontFeatureSettings = "tnum",
   )

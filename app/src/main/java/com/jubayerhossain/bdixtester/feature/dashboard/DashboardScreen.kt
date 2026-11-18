@@ -21,13 +21,13 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -53,7 +53,6 @@ import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -79,6 +78,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -96,6 +96,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
+import androidx.compose.ui.unit.sp
 import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.core.model.ScanMode
 import com.jubayerhossain.bdixtester.ui.components.BdixMotionSpecs
@@ -226,7 +227,11 @@ fun DashboardScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
           ) {
-            val ringDiameter = (this@BoxWithConstraints.maxHeight * 0.68f).coerceIn(220.dp, 320.dp)
+            val ringDiameter =
+              min(
+                this@BoxWithConstraints.maxHeight * 0.78f,
+                (this@BoxWithConstraints.maxWidth * 0.50f).coerceAtLeast(248.dp),
+              ).coerceIn(248.dp, 372.dp)
             HeroTesterRing(
               ringSize = ringDiameter,
               isScanning = isScanning,
@@ -265,7 +270,11 @@ fun DashboardScreen(
       }
     } else if (isCompactHeight) {
       // Compact-height portrait fallback (small phones / split-screen / multi-window) keeping radar + primary CTA cleanly visible above the fold
-      val compactRingSize = (maxHeight * 0.48f).coerceIn(170.dp, 224.dp)
+      val compactRingSize =
+        min(
+          maxWidth * 0.88f,
+          maxHeight * 0.50f,
+        ).coerceIn(186.dp, 240.dp)
       Column(
         modifier =
           Modifier
@@ -313,12 +322,12 @@ fun DashboardScreen(
         }
       }
     } else {
-      // Balanced Full-Height Portrait Canvas (Minimal Brand Top Bar + Hero Orbital Radar + Primary CTA)
+      // Balanced Full-Height Portrait Canvas (Minimal Brand Top Bar + Enlarged Glassmorphic Hero Radar + Primary CTA)
       val heroDiameter =
         min(
-          maxWidth * 0.80f,
-          (maxHeight - 220.dp).coerceAtLeast(220.dp),
-        ).coerceIn(220.dp, 316.dp)
+          maxWidth * 0.88f,
+          (maxHeight - 196.dp).coerceAtLeast(248.dp),
+        ).coerceIn(248.dp, 368.dp)
 
       Column(
         modifier =
@@ -330,13 +339,13 @@ fun DashboardScreen(
         // 1. Minimal Brand Top Bar
         HomeBrandTopBar(isScanning = isScanning)
 
-        // 2. Sculptural Center Stage — Oversized Orbital Radar Hero Ring
+        // 2. Sculptural Center Stage — Enlarged Glassmorphic Orbital Radar Hero Ring
         Column(
           modifier =
             Modifier
               .weight(1f)
               .fillMaxWidth()
-              .padding(horizontal = BdixSpacing.lg),
+              .padding(horizontal = BdixSpacing.sm),
           horizontalAlignment = Alignment.CenterHorizontally,
           verticalArrangement = Arrangement.Center,
         ) {
@@ -778,6 +787,9 @@ private fun HeroTesterRing(
     glowAlpha = 0.14f
   }
 
+  val colorScheme = MaterialTheme.colorScheme
+  val isDarkSurface = colorScheme.surface.luminance() < 0.5f
+
   val ringColors =
     remember(semantic) {
       listOf(
@@ -788,9 +800,28 @@ private fun HeroTesterRing(
     }
   val innerRingColors =
     remember(semantic) {
-      ringColors.map { it.copy(alpha = 0.30f) }
+      ringColors.map { it.copy(alpha = 0.34f) }
     }
   val dashedOrbitEffect = remember { PathEffect.dashPathEffect(floatArrayOf(10f, 14f), 0f) }
+
+  val glassCoreTop =
+    colorScheme.surfaceContainerLowest.copy(alpha = if (isDarkSurface) 0.50f else 0.84f)
+  val glassCoreMid =
+    colorScheme.surfaceContainerLow.copy(alpha = if (isDarkSurface) 0.44f else 0.72f)
+  val glassCoreEdge =
+    colorScheme.surfaceContainerHigh.copy(alpha = if (isDarkSurface) 0.72f else 0.78f)
+  val glassTintColor =
+    semantic.ringGradientStart.copy(alpha = if (isDarkSurface) 0.16f else 0.08f)
+  val specularHighlightColor =
+    if (isDarkSurface) {
+      colorScheme.onSurface.copy(alpha = 0.34f)
+    } else {
+      colorScheme.surfaceContainerLowest.copy(alpha = 0.88f)
+    }
+  val secondaryRimColor =
+    semantic.ringGradientEnd.copy(alpha = if (isDarkSurface) 0.28f else 0.22f)
+  val innerShadowColor =
+    colorScheme.outlineVariant.copy(alpha = if (isDarkSurface) 0.48f else 0.58f)
 
   val ringA11yDescription =
     if (isScanning) {
@@ -817,13 +848,13 @@ private fun HeroTesterRing(
       val center = Offset(size.width / 2f, size.height / 2f)
       val fullRadius = size.minDimension / 2f
 
-      // Layer 1: Soft ambient radial nebula aura
+      // Layer 1: Dual-layer ambient radial nebula backdrop aura
       drawCircle(
         brush =
           Brush.radialGradient(
             colors =
               listOf(
-                semantic.ringGradientEnd.copy(alpha = glowAlpha),
+                semantic.ringGradientEnd.copy(alpha = glowAlpha * 0.90f),
                 semantic.ringGradientStart.copy(alpha = glowAlpha * 0.42f),
                 Color.Transparent,
               ),
@@ -835,30 +866,76 @@ private fun HeroTesterRing(
       )
 
       val mainRingRadius = fullRadius * 0.77f
-      val orbitRadius = fullRadius * 0.91f
+      val segmentedOuterRadius = fullRadius * 0.855f
+      val orbitRadius = fullRadius * 0.93f
       val tickOuterRadius = mainRingRadius + 13.dp.toPx()
       val tickInnerRadius = mainRingRadius + 8.dp.toPx()
+
+      drawCircle(
+        brush =
+          Brush.radialGradient(
+            colors =
+              listOf(
+                semantic.ringGradientStart.copy(alpha = glowAlpha * 0.65f),
+                semantic.ringGradientEnd.copy(alpha = glowAlpha * 0.22f),
+                Color.Transparent,
+              ),
+            center = center,
+            radius = mainRingRadius * 1.16f,
+          ),
+        radius = mainRingRadius * 1.16f,
+        center = center,
+      )
 
       // Layer 2: Two staggered expanding sonar pulse waves (active scan only)
       if (activeMotion) {
         listOf(sonarWave1, sonarWave2).forEach { wave ->
           if (wave >= 0f) {
             val waveRadius = mainRingRadius + (fullRadius - mainRingRadius) * wave
-            val waveAlpha = (1f - wave) * 0.34f
+            val waveAlpha = (1f - wave) * 0.36f
             drawCircle(
               color = semantic.ringGradientEnd.copy(alpha = waveAlpha),
               radius = waveRadius,
               center = center,
-              style = Stroke(width = (2.2f - wave * 1.4f).dp.toPx()),
+              style = Stroke(width = (2.4f - wave * 1.5f).dp.toPx()),
             )
           }
         }
       }
 
-      // Layer 3: Outer rotating dashed orbital track + 3 glowing orbiting particles
+      // Layer 3A: 4-quadrant luminous segmented outer arcs
+      val segTopLeft = Offset(center.x - segmentedOuterRadius, center.y - segmentedOuterRadius)
+      val segArcSize = Size(segmentedOuterRadius * 2f, segmentedOuterRadius * 2f)
+      val segRotation = if (activeMotion) scanSpinAngle * 0.45f else orbitAngle * 0.25f
+      rotate(degrees = segRotation, pivot = center) {
+        val quadrantAngles = listOf(-30f, 60f, 150f, 240f)
+        quadrantAngles.forEachIndexed { idx, startDeg ->
+          val arcColor = if (idx % 2 == 0) semantic.ringGradientStart else semantic.ringGradientEnd
+          drawArc(
+            color = arcColor.copy(alpha = if (isScanning) 0.26f else 0.14f),
+            startAngle = startDeg,
+            sweepAngle = 56f,
+            useCenter = false,
+            topLeft = segTopLeft,
+            size = segArcSize,
+            style = Stroke(width = 6.dp.toPx(), cap = StrokeCap.Round),
+          )
+          drawArc(
+            color = arcColor.copy(alpha = if (isScanning) 0.82f else 0.46f),
+            startAngle = startDeg,
+            sweepAngle = 56f,
+            useCenter = false,
+            topLeft = segTopLeft,
+            size = segArcSize,
+            style = Stroke(width = 2.2.dp.toPx(), cap = StrokeCap.Round),
+          )
+        }
+      }
+
+      // Layer 3B: Outer rotating dashed orbital track + 3 glowing orbiting particles
       rotate(degrees = orbitAngle, pivot = center) {
         drawCircle(
-          color = semantic.ringGradientStart.copy(alpha = if (isScanning) 0.32f else 0.22f),
+          color = semantic.ringGradientStart.copy(alpha = if (isScanning) 0.34f else 0.22f),
           radius = orbitRadius,
           center = center,
           style = Stroke(width = 1.4.dp.toPx(), pathEffect = dashedOrbitEffect),
@@ -879,13 +956,11 @@ private fun HeroTesterRing(
           val pColor = particleColors[idx]
           val coreRadius = if (idx == 0) 4.2.dp.toPx() else 3.2.dp.toPx()
 
-          // Particle halo glow
           drawCircle(
             color = pColor.copy(alpha = 0.28f),
             radius = coreRadius * 2.4f,
             center = pos,
           )
-          // Particle crisp luminous core
           drawCircle(
             color = pColor,
             radius = coreRadius,
@@ -913,7 +988,7 @@ private fun HeroTesterRing(
               center.y + (tickOuterRadius * sin(rad)).toFloat(),
             )
           drawLine(
-            color = semantic.ringGradientEnd.copy(alpha = if (isMajor) 0.42f else 0.18f),
+            color = semantic.ringGradientEnd.copy(alpha = if (isMajor) 0.44f else 0.20f),
             start = start,
             end = end,
             strokeWidth = if (isMajor) 1.6.dp.toPx() else 1.dp.toPx(),
@@ -922,28 +997,102 @@ private fun HeroTesterRing(
         }
       }
 
-      // Layer 5: Primary gradient ring + inner soft ring + scanning sweep comet
-      val outerStrokePx = 12.dp.toPx()
-      val innerStrokePx = 4.dp.toPx()
+      // Layer 5: Frosted Glassmorphic Inner Disc + Depth Bevel + Specular Top-Left Rim
+      val outerStrokePx = (size.minDimension * 0.036f).coerceIn(9.dp.toPx(), 13.5.dp.toPx())
+      val innerStrokePx = 3.5.dp.toPx()
       val outerTopLeft = Offset(center.x - mainRingRadius, center.y - mainRingRadius)
       val outerArcSize = Size(mainRingRadius * 2f, mainRingRadius * 2f)
 
-      val innerRingRadius = (mainRingRadius - outerStrokePx * 0.95f).coerceAtLeast(0f)
+      val innerRingRadius = (mainRingRadius - outerStrokePx * 0.92f).coerceAtLeast(0f)
       val innerTopLeft = Offset(center.x - innerRingRadius, center.y - innerRingRadius)
       val innerArcSize = Size(innerRingRadius * 2f, innerRingRadius * 2f)
 
+      val glassRadius = (mainRingRadius - outerStrokePx * 0.45f).coerceAtLeast(0f)
+      val glassHighlightCenter =
+        Offset(
+          center.x - glassRadius * 0.28f,
+          center.y - glassRadius * 0.30f,
+        )
+
+      drawCircle(
+        brush =
+          Brush.radialGradient(
+            colors = listOf(glassCoreTop, glassCoreMid, glassCoreEdge),
+            center = glassHighlightCenter,
+            radius = (glassRadius * 1.38f).coerceAtLeast(1f),
+          ),
+        radius = glassRadius,
+        center = center,
+      )
+
+      drawCircle(
+        brush =
+          Brush.radialGradient(
+            colors = listOf(glassTintColor, Color.Transparent),
+            center = center,
+            radius = glassRadius.coerceAtLeast(1f),
+          ),
+        radius = glassRadius,
+        center = center,
+      )
+
+      // Inner depth shadow ring & subtle perimeter bevel
+      if (glassRadius > 4f) {
+        drawCircle(
+          color = innerShadowColor,
+          radius = (glassRadius - 2.dp.toPx()).coerceAtLeast(1f),
+          center = center,
+          style = Stroke(width = 2.5.dp.toPx()),
+        )
+
+        val specRadius = (glassRadius - 3.5.dp.toPx()).coerceAtLeast(1f)
+        val specTopLeft = Offset(center.x - specRadius, center.y - specRadius)
+        val specSize = Size(specRadius * 2f, specRadius * 2f)
+
+        // Top-left specular glass rim highlight (soft bloom + crisp specular line)
+        drawArc(
+          color = specularHighlightColor.copy(alpha = specularHighlightColor.alpha * 0.45f),
+          startAngle = 192f,
+          sweepAngle = 78f,
+          useCenter = false,
+          topLeft = specTopLeft,
+          size = specSize,
+          style = Stroke(width = 4.5.dp.toPx(), cap = StrokeCap.Round),
+        )
+        drawArc(
+          color = specularHighlightColor,
+          startAngle = 200f,
+          sweepAngle = 64f,
+          useCenter = false,
+          topLeft = specTopLeft,
+          size = specSize,
+          style = Stroke(width = 1.6.dp.toPx(), cap = StrokeCap.Round),
+        )
+        // Subtle bottom-right counter-reflection arc
+        drawArc(
+          color = secondaryRimColor,
+          startAngle = 22f,
+          sweepAngle = 46f,
+          useCenter = false,
+          topLeft = specTopLeft,
+          size = specSize,
+          style = Stroke(width = 1.6.dp.toPx(), cap = StrokeCap.Round),
+        )
+      }
+
+      // Layer 6: Primary luminous gradient ring + inner soft ring + scanning sweep comet
       val sweepBrush = Brush.sweepGradient(colors = ringColors, center = center)
       val innerSoftBrush = Brush.sweepGradient(colors = innerRingColors, center = center)
 
       // Soft ring halo
       drawArc(
-        color = semantic.ringGradientEnd.copy(alpha = if (isScanning) 0.24f else glowAlpha * 0.78f),
+        color = semantic.ringGradientEnd.copy(alpha = if (isScanning) 0.28f else glowAlpha * 0.88f),
         startAngle = 0f,
         sweepAngle = 360f,
         useCenter = false,
         topLeft = outerTopLeft,
         size = outerArcSize,
-        style = Stroke(width = outerStrokePx + 12.dp.toPx()),
+        style = Stroke(width = outerStrokePx + 14.dp.toPx()),
       )
 
       if (isScanning || isStarting) {
@@ -977,7 +1126,7 @@ private fun HeroTesterRing(
             style = Stroke(width = innerStrokePx),
           )
 
-          // Bright luminous comet head at the leading edge of the scan arc
+          // Bright luminous comet head + halo at the leading edge of the scan arc
           val headRad = (-90.0 + sweepDegrees) * PI / 180.0
           val headPos =
             Offset(
@@ -985,8 +1134,13 @@ private fun HeroTesterRing(
               center.y + (mainRingRadius * sin(headRad)).toFloat(),
             )
           drawCircle(
-            color = semantic.ringCometHead.copy(alpha = 0.92f),
-            radius = 4.5.dp.toPx(),
+            color = semantic.ringCometHead.copy(alpha = 0.34f),
+            radius = 9.dp.toPx(),
+            center = headPos,
+          )
+          drawCircle(
+            color = semantic.ringCometHead.copy(alpha = 0.96f),
+            radius = 4.6.dp.toPx(),
             center = headPos,
           )
         }
@@ -1014,31 +1168,44 @@ private fun HeroTesterRing(
       }
     }
 
-    // Layer 6: Interactive Core with Rolling Counter & Spring-Bouncy VIEW Pill
-    val isCompactRing = ringSize < 205.dp
+    // Layer 7: Interactive Core with Enlarged Rolling Counter & Frosted Glassmorphic VIEW Pill
+    val isCompactRing = ringSize < 220.dp
+    val isMediumRing = ringSize in 220.dp..279.dp
     val heroNumberStyle =
-      if (isCompactRing) {
-        MaterialTheme.typography.headlineMedium.copy(
-          fontFamily = MonoHeroNumberStyle.fontFamily,
-          fontWeight = FontWeight.Bold,
-          fontFeatureSettings = "tnum",
-        )
-      } else {
-        MonoHeroNumberStyle
+      when {
+        isCompactRing ->
+          MonoHeroNumberStyle.copy(
+            fontSize = 32.sp,
+            lineHeight = 38.sp,
+            letterSpacing = (-0.8).sp,
+          )
+        isMediumRing ->
+          MonoHeroNumberStyle.copy(
+            fontSize = 42.sp,
+            lineHeight = 48.sp,
+            letterSpacing = (-1.0).sp,
+          )
+        else -> MonoHeroNumberStyle
       }
     val heroSubStyle =
-      if (isCompactRing) {
-        MaterialTheme.typography.labelLarge.copy(
-          fontFamily = MonoHeroSubNumberStyle.fontFamily,
-          fontFeatureSettings = "tnum",
-        )
-      } else {
-        MonoHeroSubNumberStyle
+      when {
+        isCompactRing ->
+          MonoHeroSubNumberStyle.copy(
+            fontSize = 17.sp,
+            lineHeight = 22.sp,
+          )
+        isMediumRing ->
+          MonoHeroSubNumberStyle.copy(
+            fontSize = 22.sp,
+            lineHeight = 28.sp,
+          )
+        else -> MonoHeroSubNumberStyle
       }
+
     Column(
-      modifier = Modifier.padding(horizontal = if (isCompactRing) BdixSpacing.md else BdixSpacing.xxl),
+      modifier = Modifier.padding(horizontal = if (isCompactRing) BdixSpacing.md else BdixSpacing.xl),
       horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.spacedBy(if (isCompactRing) 2.dp else BdixSpacing.xs),
+      verticalArrangement = Arrangement.spacedBy(if (isCompactRing) 3.dp else BdixSpacing.xs),
     ) {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -1054,13 +1221,13 @@ private fun HeroTesterRing(
             Text(
               text = stringResource(R.string.home_starting_title),
               style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-              color = MaterialTheme.colorScheme.onSurface,
+              color = colorScheme.onSurface,
               textAlign = TextAlign.Center,
             )
             Text(
               text = stringResource(R.string.home_checking_internet),
               style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
+              color = colorScheme.onSurfaceVariant,
               textAlign = TextAlign.Center,
             )
           }
@@ -1071,20 +1238,20 @@ private fun HeroTesterRing(
                 Text(
                   text = "%.1f".format(Locale.US, animatedProgress * 100f),
                   style = heroNumberStyle,
-                  color = MaterialTheme.colorScheme.onSurface,
+                  color = colorScheme.onSurface,
                 )
                 Text(
                   text = "%",
                   style = heroSubStyle,
-                  color = MaterialTheme.colorScheme.onSurfaceVariant,
-                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 6.dp, start = 2.dp),
+                  color = colorScheme.onSurfaceVariant,
+                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 7.dp, start = 2.dp),
                 )
               }
             }
             Text(
               text = stringResource(R.string.home_testing_wait),
               style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
+              color = colorScheme.onSurfaceVariant,
               textAlign = TextAlign.Center,
             )
             Text(
@@ -1101,20 +1268,25 @@ private fun HeroTesterRing(
                 RollingCountText(
                   count = workingCount,
                   style = heroNumberStyle,
-                  color = MaterialTheme.colorScheme.onSurface,
+                  color = colorScheme.onSurface,
                 )
                 Text(
                   text = "/$totalCount",
                   style = heroSubStyle,
-                  color = MaterialTheme.colorScheme.onSurfaceVariant,
-                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 6.dp, start = 2.dp),
+                  color = colorScheme.onSurfaceVariant,
+                  modifier = Modifier.padding(bottom = if (isCompactRing) 3.dp else 7.dp, start = 2.dp),
                 )
               }
             }
             Text(
               text = stringResource(R.string.home_working_servers_found),
-              style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
+              style =
+                if (isCompactRing) {
+                  MaterialTheme.typography.bodySmall
+                } else {
+                  MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+                },
+              color = colorScheme.onSurfaceVariant,
               textAlign = TextAlign.Center,
               maxLines = 1,
               overflow = TextOverflow.Ellipsis,
@@ -1127,39 +1299,74 @@ private fun HeroTesterRing(
         Spacer(modifier = Modifier.height(BdixSpacing.xs))
       }
 
-      OutlinedButton(
-        onClick = {
-          haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-          onViewClick()
-        },
-        interactionSource = viewInteractionSource,
-        shape = RoundedCornerShape(50),
-        border = BorderStroke(BdixBorder.accent, MaterialTheme.colorScheme.primary),
-        contentPadding =
-          if (isCompactRing) {
-            PaddingValues(horizontal = 16.dp, vertical = 4.dp)
-          } else {
-            PaddingValues(horizontal = 22.dp, vertical = 8.dp)
-          },
+      // Modern Frosted Glassmorphic Pill VIEW CTA
+      val viewPillShape = RoundedCornerShape(50)
+      val viewPillLabel = stringResource(R.string.home_action_view)
+      val pillGlassBrush =
+        Brush.verticalGradient(
+          colors =
+            listOf(
+              colorScheme.surfaceContainerLowest.copy(alpha = if (isDarkSurface) 0.22f else 0.90f),
+              colorScheme.primaryContainer.copy(alpha = if (isDarkSurface) 0.42f else 0.46f),
+            ),
+        )
+      val pillBorderBrush =
+        Brush.linearGradient(
+          colors =
+            listOf(
+              colorScheme.primary.copy(alpha = 0.78f),
+              semantic.ringGradientEnd.copy(alpha = 0.48f),
+            ),
+        )
+
+      Box(
         modifier =
           Modifier
             .springPressScale(interactionSource = viewInteractionSource, pressedScale = 0.94f)
             .heightIn(min = 48.dp)
             .minimumInteractiveComponentSize()
-            .testTag("home_view_servers_button"),
+            .shadow(
+              elevation = if (isDarkSurface) 8.dp else 4.dp,
+              shape = viewPillShape,
+              ambientColor = colorScheme.primary.copy(alpha = 0.24f),
+              spotColor = colorScheme.primary.copy(alpha = 0.28f),
+            ).clip(viewPillShape)
+            .background(brush = pillGlassBrush)
+            .border(
+              width = 1.25.dp,
+              brush = pillBorderBrush,
+              shape = viewPillShape,
+            ).clickable(
+              interactionSource = viewInteractionSource,
+              indication = ripple(color = colorScheme.primary.copy(alpha = 0.22f)),
+              role = Role.Button,
+              onClickLabel = viewPillLabel,
+              onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                onViewClick()
+              },
+            ).padding(
+              horizontal = if (isCompactRing) 18.dp else 26.dp,
+              vertical = if (isCompactRing) 8.dp else 11.dp,
+            ).testTag("home_view_servers_button"),
+        contentAlignment = Alignment.Center,
       ) {
-        Icon(
-          imageVector = Icons.Rounded.Dns,
-          contentDescription = null,
-          tint = MaterialTheme.colorScheme.primary,
-          modifier = Modifier.size(16.dp),
-        )
-        Spacer(modifier = Modifier.width(6.dp))
-        Text(
-          text = stringResource(R.string.home_action_view),
-          style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
-          color = MaterialTheme.colorScheme.onSurface,
-        )
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(BdixSpacing.xs),
+        ) {
+          Icon(
+            imageVector = Icons.Rounded.Dns,
+            contentDescription = null,
+            tint = colorScheme.primary,
+            modifier = Modifier.size(16.dp),
+          )
+          Text(
+            text = viewPillLabel,
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+            color = colorScheme.onSurface,
+          )
+        }
       }
     }
   }
