@@ -1,0 +1,1179 @@
+# MASTER PROMPT — Android AdMob Monetization & Multi-Store Publishing Readiness
+
+## Project: Existing Kotlin Android Application
+
+**Role:** Senior Android Architect, Google AdMob Monetization Specialist, Android Release Engineer, Multi-Store Publishing Specialist, Security Auditor and CI/CD Engineer.
+
+---
+
+# 1. Project Mission
+
+I have an existing Android application developed using Kotlin.
+
+Your mission is to deeply research, audit, evaluate, and prepare this existing Android project for professional publication across all relevant Android application stores and distribution platforms that are compatible with Google AdMob.
+
+The objective is not simply to make the application publishable on Google Play Store.
+
+I want a professionally engineered, secure, policy-compliant, scalable, maintainable, and future-proof Android publishing system that supports one shared application codebase and multiple distribution channels.
+
+The project must be evaluated from five major perspectives:
+
+1. Android application architecture and technical quality.
+2. Google AdMob integration and monetization compliance.
+3. Multi-store compatibility and publishing requirements.
+4. Security, privacy, and legal compliance.
+5. Automated build, testing, and release management.
+
+**Critical execution rule: Research and audit first. Implementation must not begin until I explicitly approve the proposed implementation plan.**
+
+---
+
+# 2. Mandatory Execution Strategy
+
+Follow these phases in order.
+
+| Phase | Objective | Modification Permission |
+|---|---|---|
+| Phase 1 | Official documentation research | Read-only |
+| Phase 2 | Complete existing project audit | Read-only |
+| Phase 3 | Platform compatibility analysis | Read-only |
+| Phase 4 | Architecture and implementation planning | Read-only |
+| Phase 5 | Final audit report and approval | Wait for approval |
+| Phase 6 | Approved implementation | Explicitly authorized only |
+| Phase 7 | Build, testing and validation | Within approved scope |
+| Phase 8 | Release readiness assessment | Within approved scope |
+
+## Strict Approval Gate
+
+During Phases 1–5:
+
+- Do not modify existing source code.
+- Do not modify Gradle configuration.
+- Do not add or remove dependencies.
+- Do not modify AndroidManifest.xml.
+- Do not modify application IDs.
+- Do not change SDK versions.
+- Do not modify signing configurations.
+- Do not modify GitHub Actions workflows.
+- Do not generate or replace production credentials.
+- Do not publish applications.
+- Do not create developer accounts.
+- Do not configure external services.
+- Do not modify existing documentation or project files.
+
+Perform all initial research and inspection in read-only mode.
+
+Present the complete findings, proposed architecture, implementation sequence, risks, and required decisions.
+
+Then STOP and wait for my explicit approval.
+
+An approval for one task does not automatically authorize unrelated changes.
+
+---
+
+# 3. Deep Official Documentation Research
+
+Before auditing the codebase, research the current official documentation relevant to the project.
+
+## Research Requirements
+
+Use official primary sources wherever possible.
+
+Prioritize:
+
+1. Google Developers documentation.
+2. Android Developers documentation.
+3. Official Google Play Console Help.
+4. Official AdMob Help Center.
+5. Official Amazon Developer documentation.
+6. Official Samsung Developer documentation.
+7. Official Huawei Developer documentation.
+8. Official Xiaomi Developer documentation.
+9. Official OPPO Developer documentation.
+10. Official vivo Developer documentation.
+
+Use community articles only when official documentation does not provide the necessary technical details.
+
+Clearly distinguish official requirements from recommendations and third-party interpretations.
+
+## Mandatory Source Verification
+
+For every important technical or policy claim, record:
+
+- Documentation title.
+- Organization or publisher.
+- Direct official URL.
+- Relevant section or documentation reference.
+- Date accessed.
+- Requirement or policy being verified.
+- Technical implications for this project.
+- Whether the information is confirmed or requires further verification.
+
+Never invent documentation URLs, policy requirements, or compatibility claims.
+
+When official sources conflict, identify the conflict and explain which source is more authoritative or current.
+
+Do not silently rely on outdated documentation.
+
+Use the latest applicable requirements available at the time of research.
+
+---
+
+# 4. AdMob-Supported Android App Stores Research
+
+Identify every relevant Android application store and distribution platform.
+
+Do not limit the investigation to Google Play Store.
+
+## Platforms to Investigate
+
+### Major Android Application Stores
+
+- Google Play Store.
+- Samsung Galaxy Store.
+- Xiaomi GetApps.
+- OPPO App Market.
+- vivo App Store.
+- Amazon Appstore.
+- Huawei AppGallery.
+
+### Additional Distribution Platforms
+
+Investigate the relevance and eligibility of:
+
+- F-Droid.
+- APKPure.
+- Aptoide.
+- Direct APK distribution through an official website.
+- Enterprise and private Android application distribution.
+- Other relevant regional or manufacturer-operated Android stores.
+
+This list is a research starting point, not a declaration that every platform supports AdMob.
+
+## Critical AdMob Compatibility Distinction
+
+For each platform, independently investigate these three questions:
+
+**A. Store Eligibility**
+
+Does Google AdMob officially recognize or support this store for app registration, store linking, verification, and monetization?
+
+**B. SDK Compatibility**
+
+Can the Google Mobile Ads SDK technically operate on Android devices distributed through this platform?
+
+**C. Device and Service Compatibility**
+
+Does the target device provide Google Mobile Services (GMS), Google Play services, or other dependencies required by the current Google Mobile Ads SDK?
+
+These are separate compatibility dimensions.
+
+For example, publishing on an Android store does not automatically establish that AdMob advertisements will work on every device using that store.
+
+Pay particular attention to:
+
+- Huawei devices without GMS.
+- Amazon Fire devices.
+- Manufacturer-specific Android environments.
+- Devices without Google Play services.
+- Devices with restricted Google service availability.
+
+Never assume that an application can successfully serve AdMob advertisements just because it can be installed.
+
+Where official evidence is unavailable, explicitly mark the compatibility as unverified.
+
+## Required Platform Comparison
+
+Create a detailed comparison table containing:
+
+| Requirement | Details |
+|---|---|
+| Platform | Store name |
+| Operating Environment | Android / Fire OS / Other |
+| Developer Account | Registration requirements |
+| Bangladesh Eligibility | Verified country availability |
+| App Submission | Submission process |
+| Supported Artifacts | APK / AAB / Other |
+| Signing Requirements | Required signing method |
+| Package Name | Application ID restrictions |
+| Target SDK | Current mandatory requirements |
+| Minimum SDK | Applicable requirements |
+| Privacy Policy | Required disclosures |
+| Data Safety | Applicable declarations |
+| Advertising Policy | Advertising restrictions |
+| AdMob Store Eligibility | Officially supported / Not listed / Unverified |
+| SDK Compatibility | Verified / Conditional / Unverified |
+| GMS Dependency | Applicable device restrictions |
+| app-ads.txt | Applicable requirements |
+| App Verification | Verification requirements |
+| Review Process | Approval procedure |
+| Updates | Update and versioning process |
+| Country Restrictions | Distribution limitations |
+| Final Status | Publication readiness |
+
+Do not use a single generic compatibility label to describe every dimension.
+
+Distinguish between:
+
+- Officially supported.
+- Technically compatible.
+- Conditionally compatible.
+- Not officially listed.
+- Not technically compatible.
+- Unable to verify.
+
+Also investigate whether a store is still accepting new developer registrations and app submissions at the time of research.
+
+For Amazon Appstore, specifically verify its current distribution scope and Fire OS availability. Do not rely on historical Android mobile distribution announcements.
+
+---
+
+# 5. Existing Kotlin Android Project — Complete Technical Audit
+
+After completing the initial platform research, inspect the entire existing repository.
+
+Do not assume its architecture, dependencies, configuration, or implementation details.
+
+Use actual source code and repository evidence.
+
+## 5.1 Project Structure
+
+Inspect:
+
+- Complete directory structure.
+- Application modules.
+- Library modules.
+- Kotlin source files.
+- Java source files, if present.
+- Resource directories.
+- Assets.
+- Build scripts.
+- Gradle wrapper.
+- Dependency catalogs.
+- Configuration files.
+- Existing documentation.
+- Tests.
+- GitHub Actions.
+- Existing release scripts.
+
+Identify the actual architecture and responsibilities of each module.
+
+## 5.2 Android Build Configuration
+
+Audit:
+
+- Android Gradle Plugin version.
+- Gradle version.
+- Kotlin version.
+- JDK requirements.
+- Compile SDK.
+- Target SDK.
+- Minimum SDK.
+- Namespace.
+- Application ID.
+- Build types.
+- Product flavors.
+- Build variants.
+- Java compatibility.
+- Kotlin JVM target.
+- Android packaging configuration.
+- Dependency repositories.
+- Dependency management.
+- Version catalog.
+- Build performance configuration.
+
+Compare the current configuration with official Android requirements.
+
+Do not upgrade versions simply because newer versions exist.
+
+Recommend changes only when supported by compatibility requirements, security considerations, or measurable project benefits.
+
+## 5.3 AndroidManifest.xml
+
+Inspect:
+
+- Application configuration.
+- Activities.
+- Services.
+- Broadcast receivers.
+- Content providers.
+- Intent filters.
+- Network permissions.
+- Internet permissions.
+- Advertising-related permissions.
+- Exported component declarations.
+- Cleartext traffic configuration.
+- Backup configuration.
+- Data extraction rules.
+- Hardware requirements.
+- Deep links.
+- App links.
+- SDK-related manifest merging.
+
+Identify unnecessary permissions and risky configurations.
+
+Do not remove permissions without understanding their actual use.
+
+## 5.4 Dependencies and Plugins
+
+Review:
+
+- Google Mobile Ads SDK.
+- Google Play services dependencies.
+- User Messaging Platform SDK.
+- Kotlin libraries.
+- AndroidX libraries.
+- Third-party SDKs.
+- Analytics SDKs.
+- Crash reporting libraries.
+- Advertising dependencies.
+- Plugins.
+- Transitive dependencies.
+
+Investigate:
+
+- Dependency compatibility.
+- Known security vulnerabilities.
+- Deprecated APIs.
+- Duplicate dependencies.
+- Unnecessary libraries.
+- License compatibility.
+- Maintenance status.
+- Dependency update risks.
+
+Do not introduce replacement libraries without demonstrating why they are necessary.
+
+## 5.5 Application Architecture
+
+Evaluate:
+
+- Existing architectural patterns.
+- Separation of concerns.
+- Lifecycle management.
+- Memory management.
+- Threading.
+- Coroutine usage.
+- UI architecture.
+- Navigation.
+- Repository and data layers.
+- Error handling.
+- Logging.
+- Configuration management.
+- Testability.
+- Maintainability.
+
+Preserve the existing architecture unless evidence demonstrates a meaningful problem.
+
+---
+
+# 6. Google AdMob Integration and Monetization Audit
+
+Perform a detailed audit of the application's existing advertising implementation.
+
+## 6.1 AdMob Account and Application Configuration
+
+Investigate:
+
+- AdMob application registration.
+- AdMob App ID.
+- Application package name.
+- Store listing association.
+- App verification.
+- App readiness review.
+- Ad unit registration.
+- Ad serving status.
+- Test advertisement configuration.
+- Production advertisement configuration.
+
+Never expose actual production Ad Unit IDs in public documentation or logs unnecessarily.
+
+Do not replace existing AdMob identifiers without understanding the current configuration.
+
+## 6.2 Supported Advertising Formats
+
+Evaluate the relevance of:
+
+- Banner Ads.
+- Adaptive Banner Ads.
+- Interstitial Ads.
+- Rewarded Ads.
+- Rewarded Interstitial Ads.
+- Native Ads.
+- App Open Ads.
+
+For every relevant format, assess:
+
+- Implementation complexity.
+- User experience.
+- Placement.
+- Lifecycle safety.
+- Loading strategy.
+- Failure handling.
+- Refresh behavior.
+- Frequency controls.
+- Policy compliance.
+
+Recommend only formats that make sense for the application's real functionality.
+
+Do not maximize advertising frequency at the expense of usability.
+
+## 6.3 Google Mobile Ads SDK
+
+Verify:
+
+- Current stable SDK version.
+- Official initialization requirements.
+- Application lifecycle integration.
+- Main-thread requirements.
+- Manifest configuration.
+- Google Play services requirements.
+- SDK initialization behavior.
+- Ad request configuration.
+- Error handling.
+- Test device configuration.
+- Compatibility with current Android versions.
+
+Use the official SDK documentation as the source of truth.
+
+## 6.4 Consent and Privacy
+
+Evaluate Google User Messaging Platform (UMP) integration.
+
+Investigate:
+
+- Consent information updates.
+- Consent form availability.
+- Consent status.
+- Privacy options entry point.
+- EEA and UK requirements.
+- Applicable US state privacy requirements.
+- Other relevant regional privacy requirements.
+- Consent revocation and updates.
+- Privacy policy disclosures.
+
+Determine which requirements actually apply to the application based on its audience, geographical availability, data collection, and advertising configuration.
+
+Do not claim that displaying a consent dialog automatically makes an application legally compliant.
+
+## 6.5 Advertising Identifier and Data Collection
+
+Audit:
+
+- Advertising ID usage.
+- Android advertising permissions.
+- SDK data collection.
+- Diagnostics.
+- Analytics.
+- Device identifiers.
+- Data Safety declarations.
+- Privacy disclosures.
+- Data sharing with third parties.
+
+Identify mismatches between actual SDK behavior and declared privacy information.
+
+## 6.6 Invalid Traffic Prevention
+
+Review:
+
+- Accidental ad clicks.
+- Misleading UI placement.
+- Excessive advertisements.
+- Ad overlays.
+- Ads near frequently tapped controls.
+- Artificial impressions.
+- Automated ad interactions.
+- Test advertisements in production.
+- Suspicious traffic generation.
+- Ad refresh policies.
+
+Do not implement anything that artificially increases impressions, clicks, or advertising revenue.
+
+---
+
+# 7. Multi-Store Publishing Architecture
+
+Design the most maintainable architecture for publishing one Android application across multiple stores.
+
+Evaluate the following approaches:
+
+- Single shared codebase.
+- Store-specific build configurations.
+- Product flavors.
+- Build types.
+- Manifest placeholders.
+- Store-specific metadata.
+- Store-specific SDK integrations, if genuinely required.
+- APK generation.
+- AAB generation.
+- Separate signing configurations.
+- Version management.
+- Release automation.
+
+## Important Architectural Rules
+
+1. Avoid unnecessary application variants.
+2. Avoid duplicating the entire application for different stores.
+3. Preserve the existing application ID unless a documented requirement makes a change necessary.
+4. Separate distribution-specific configuration from application business logic.
+5. Keep store-specific integrations isolated.
+6. Avoid injecting unnecessary store-specific SDKs into the main application.
+7. Keep AdMob configuration centralized where technically appropriate.
+8. Ensure every build variant can be identified and validated.
+9. Preserve backward compatibility.
+10. Do not introduce architectural complexity without a measurable benefit.
+
+## Application ID and Signing Strategy
+
+Investigate the implications of using the same or different application IDs across multiple stores.
+
+Consider:
+
+- Application identity.
+- Store listing association.
+- AdMob application registration.
+- Store-specific signing.
+- Certificate fingerprints.
+- App update compatibility.
+- Cross-store installation conflicts.
+- Google Play App Signing.
+- Upload keys.
+- Signing key backup.
+- Key rotation and recovery.
+
+Do not assume that different signing keys can automatically update the same installed package.
+
+Provide a technically justified signing strategy for each distribution channel.
+
+Never generate, replace, or expose production signing keys during the audit phase.
+
+---
+
+# 8. Android Store Publication Requirements
+
+For every eligible platform, research its current submission process.
+
+Investigate:
+
+### Developer Account
+
+- Developer registration.
+- Identity verification.
+- Country availability.
+- Business or individual requirements.
+- Registration fees, if any.
+- Required tax and payment information.
+- Account verification.
+
+### Application Submission
+
+- Package name.
+- Application signing.
+- APK/AAB format.
+- Target SDK.
+- Minimum Android version.
+- Version code.
+- Version name.
+- Permissions.
+- Application categories.
+- Content rating.
+- Screenshots.
+- App icons.
+- Feature graphics.
+- Descriptions.
+- Privacy policy.
+- Support information.
+- Release notes.
+- Required declarations.
+
+### App Review
+
+- Automated checks.
+- Manual review.
+- Security review.
+- Privacy review.
+- Advertising policy review.
+- Intellectual property checks.
+- App functionality requirements.
+- Common rejection reasons.
+
+### Application Updates
+
+- Update submission.
+- Versioning.
+- Signing continuity.
+- Rollout strategy.
+- Staged releases, where supported.
+- Rollback limitations.
+- Store-specific maintenance.
+
+Clearly identify which requirements are mandatory, recommended, optional, or unverified.
+
+---
+
+# 9. Application Content, Copyright and Policy Compliance
+
+Inspect the application's actual functionality and content model.
+
+This is especially important if the application contains FTP catalogs, movie servers, streaming endpoints, live television links, OTT references, or third-party content directories.
+
+Evaluate:
+
+- Ownership of catalog data.
+- Permission to distribute external links.
+- Copyright risks.
+- Trademark usage.
+- Streaming authorization.
+- Download functionality.
+- Third-party content policies.
+- User-generated content, if any.
+- External website interactions.
+- Malware and suspicious endpoint risks.
+- Legal notices.
+- Content removal procedures.
+- Reporting mechanisms.
+
+Distinguish between:
+
+- Linking to an authorized external service.
+- Indexing publicly accessible endpoints.
+- Hosting copyrighted material.
+- Providing access to unauthorized streams.
+- Enabling unauthorized downloads.
+- Circumventing access controls.
+
+Do not automatically assume that every external endpoint is illegal, and do not automatically assume that public accessibility proves authorization.
+
+Where content ownership or distribution permission cannot be established, report it as an unresolved compliance risk.
+
+Do not access private systems, bypass authentication, download suspicious files, or perform unauthorized security testing.
+
+Review relevant Google Play policies, AdMob Publisher Policies, copyright requirements, and the distribution platform's own content policies.
+
+Do not weaken application functionality or remove catalog entries without explicit approval and evidence.
+
+---
+
+# 10. Security and Privacy Audit
+
+Perform a security review of the application and its release process.
+
+Investigate:
+
+- Hardcoded secrets.
+- API keys.
+- Keystore credentials.
+- Sensitive configuration.
+- Logging of personal information.
+- Network security.
+- Cleartext traffic.
+- TLS usage.
+- WebView configuration.
+- Exported components.
+- Intent validation.
+- Deep-link validation.
+- File handling.
+- Input validation.
+- Backup configuration.
+- Dependency vulnerabilities.
+- Third-party SDK risks.
+- Release build protections.
+- R8 and ProGuard configuration.
+
+Evaluate whether sensitive configuration is stored securely.
+
+Check whether credentials have accidentally entered Git history.
+
+Never print passwords, tokens, private keys, or other sensitive values in reports.
+
+Provide redacted evidence instead.
+
+---
+
+# 11. CI/CD and Release Automation Architecture
+
+Design a professional release workflow using GitHub Actions and the existing build system.
+
+The proposed system should support:
+
+## Automated Validation
+
+- Gradle configuration validation.
+- Unit tests.
+- Android Lint.
+- Kotlin compilation.
+- Dependency verification.
+- Dependency vulnerability checks.
+- Release build validation.
+- APK validation.
+- AAB validation.
+- Manifest validation.
+- Signing certificate verification.
+- Artifact integrity verification.
+
+## Build Artifacts
+
+Prepare a consistent naming strategy for:
+
+- Universal APK, if applicable.
+- Architecture-specific APKs, if applicable.
+- Android App Bundle.
+- Release metadata.
+- Build reports.
+- Test reports.
+- Checksums.
+
+Do not create redundant artifacts unnecessarily.
+
+## GitHub Actions
+
+Design workflows for:
+
+1. Pull request validation.
+2. Main branch validation.
+3. Release candidate generation.
+4. Signed release builds.
+5. Artifact publication.
+6. Store-specific release preparation.
+7. Manual publishing approval.
+
+Use least-privilege permissions.
+
+Protect secrets using GitHub Actions secrets and appropriate environment protection rules.
+
+Never store:
+
+- Keystore files.
+- Keystore passwords.
+- Signing passwords.
+- Service account credentials.
+- API tokens.
+
+inside the source repository.
+
+Do not automatically upload or publish releases without explicit authorization.
+
+---
+
+# 12. Testing and Validation Strategy
+
+Prepare a layered testing strategy.
+
+## Static Validation
+
+- Kotlin compilation.
+- Android Lint.
+- Gradle checks.
+- Manifest inspection.
+- Dependency verification.
+- Security checks.
+- Configuration validation.
+
+## Automated Testing
+
+- Existing unit tests.
+- Existing integration tests.
+- Existing UI tests.
+- New tests only when approved.
+- Regression testing.
+- Build variant verification.
+
+## AdMob Testing
+
+- Test ad unit configuration.
+- Test device configuration.
+- Ad loading behavior.
+- Ad display behavior.
+- Lifecycle behavior.
+- Consent behavior.
+- Failure handling.
+- Production/test configuration separation.
+
+## Device Compatibility
+
+Evaluate the supported Android versions and device environments.
+
+Distinguish emulator testing, physical-device testing, cloud-device testing, and static validation.
+
+Never claim that a device-level test passed without actual device-level evidence.
+
+When physical devices or emulators are unavailable, identify the limitation and complete every possible non-device validation step.
+
+---
+
+# 13. Required Documentation Structure
+
+After approval, create a well-organized documentation system.
+
+Proposed directory structure:
+
+```text
+docs/
+├── README.md
+│
+├── research/
+│   ├── official-sources.md
+│   ├── admob-supported-stores.md
+│   ├── android-platform-compatibility.md
+│   └── research-methodology.md
+│
+├── platforms/
+│   ├── google-play.md
+│   ├── samsung-galaxy-store.md
+│   ├── xiaomi-getapps.md
+│   ├── oppo-app-market.md
+│   ├── vivo-app-store.md
+│   ├── amazon-appstore.md
+│   ├── huawei-appgallery.md
+│   └── alternative-distribution.md
+│
+├── admob/
+│   ├── integration-audit.md
+│   ├── sdk-compatibility.md
+│   ├── advertising-formats.md
+│   ├── consent-management.md
+│   ├── app-verification.md
+│   ├── app-ads-txt.md
+│   └── policy-compliance.md
+│
+├── audit/
+│   ├── project-overview.md
+│   ├── architecture-audit.md
+│   ├── dependency-audit.md
+│   ├── manifest-audit.md
+│   ├── security-audit.md
+│   └── identified-issues.md
+│
+├── architecture/
+│   ├── publishing-architecture.md
+│   ├── build-variants.md
+│   ├── signing-strategy.md
+│   └── versioning-strategy.md
+│
+├── release/
+│   ├── release-checklist.md
+│   ├── store-metadata.md
+│   ├── asset-requirements.md
+│   └── submission-guide.md
+│
+├── ci-cd/
+│   ├── workflow-architecture.md
+│   ├── build-validation.md
+│   ├── artifact-management.md
+│   └── release-automation.md
+│
+├── security/
+│   ├── security-requirements.md
+│   ├── privacy-requirements.md
+│   └── secrets-management.md
+│
+└── reports/
+    ├── final-audit-report.md
+    ├── implementation-plan.md
+    └── release-readiness.md
+```
+
+This is a proposed structure, not a requirement to create every file.
+
+Only create documentation that provides meaningful value.
+
+Preserve all existing documentation and avoid duplication.
+
+---
+
+# 14. Evidence-Based Audit and Reporting
+
+Every important finding must have supporting evidence.
+
+Use this format:
+
+| Field | Description |
+|---|---|
+| Finding ID | Unique identifier |
+| Category | Technical / AdMob / Security / Store |
+| Severity | Critical / High / Medium / Low / Informational |
+| Current State | What actually exists |
+| Evidence | File path, source reference, or command output |
+| Official Reference | Relevant documentation URL |
+| Expected State | Required or recommended condition |
+| Gap | Difference between current and expected |
+| Recommendation | Proposed solution |
+| Risk | Consequences of not addressing it |
+| Validation | How the solution will be tested |
+| Approval Required | Yes / No |
+
+Do not classify a problem as Critical or High without explaining its actual impact.
+
+## Requirement Classification
+
+Use these labels:
+
+- **MANDATORY:** Required by the platform, policy, or technical specification.
+- **RECOMMENDED:** Strongly advisable for reliability, maintainability, or security.
+- **OPTIONAL:** Improvement that is not necessary for publication.
+- **UNVERIFIED:** Insufficient official evidence.
+- **BLOCKED:** Cannot proceed without missing access, information, or external action.
+
+Never present a recommendation as an official requirement.
+
+---
+
+# 15. Final Deliverables Before Implementation
+
+At the end of Phases 1–5, provide a comprehensive report containing:
+
+## A. Executive Summary
+
+Explain the current project condition and its overall publication readiness.
+
+## B. Research Findings
+
+List all investigated platforms and their verified AdMob compatibility.
+
+## C. Platform Comparison
+
+Provide the detailed store-by-store publishing requirements.
+
+## D. Existing Project Audit
+
+Identify:
+
+- What already works.
+- What is correctly configured.
+- What needs improvement.
+- What is missing.
+- What creates publication or monetization risks.
+
+## E. AdMob Compliance Report
+
+Explain the state of:
+
+- SDK integration.
+- AdMob configuration.
+- Ad units.
+- App verification.
+- Consent management.
+- Privacy requirements.
+- Advertising policies.
+- GMS compatibility.
+
+## F. Proposed Multi-Store Architecture
+
+Show the recommended build and release architecture.
+
+Include diagrams where useful.
+
+## G. Security and Privacy Findings
+
+Report the risks and proposed mitigations.
+
+## H. CI/CD Plan
+
+Explain the proposed automated validation and publishing workflow.
+
+## I. Implementation Roadmap
+
+Organize the implementation into logical phases.
+
+For every proposed change, provide:
+
+- File or module affected.
+- Current implementation.
+- Proposed modification.
+- Reason.
+- Impact.
+- Dependencies.
+- Risks.
+- Validation procedure.
+
+## J. User-Supplied Information and Assets
+
+Create a separate checklist of everything that requires my involvement.
+
+For example:
+
+- AdMob account access.
+- AdMob App ID and Ad Unit IDs, where unavailable.
+- Developer account registration.
+- Application ownership verification.
+- Privacy Policy URL.
+- Support email.
+- Official website and domain ownership.
+- Store listing graphics.
+- Screenshots.
+- Application descriptions.
+- Copyright and content authorization evidence.
+- Signing credentials, only through a secure and approved workflow.
+
+Never invent missing information.
+
+## K. Final Publication Readiness Matrix
+
+Use these statuses:
+
+- READY.
+- READY AFTER REQUIRED CHANGES.
+- BLOCKED BY MISSING INFORMATION.
+- ADMOB COMPATIBILITY UNVERIFIED.
+- NOT SUPPORTED.
+- NOT RECOMMENDED.
+
+Provide a separate status for store eligibility, SDK compatibility, and device compatibility.
+
+---
+
+# 16. Strict Source Code Preservation Rules
+
+These rules apply throughout the entire task.
+
+1. Preserve all existing source code unless an approved change explicitly requires modification.
+2. Do not delete files unnecessarily.
+3. Do not reorder unrelated code.
+4. Do not rename classes, methods, properties, packages, or modules without an approved technical reason.
+5. Do not remove existing features.
+6. Do not remove existing tests.
+7. Do not rewrite unrelated documentation.
+8. Do not replace the existing architecture just to introduce a preferred pattern.
+9. Do not upgrade every dependency indiscriminately.
+10. Do not introduce unnecessary abstraction or complexity.
+11. Preserve public APIs and backward compatibility.
+12. Maintain the existing application identity unless a justified migration is approved.
+13. Keep changes narrowly scoped.
+14. Verify every modification with a Git diff.
+15. Never overwrite unrelated user changes.
+
+Before implementation, inspect:
+
+```bash
+git status --short
+git diff
+git diff --cached
+```
+
+Do not discard, reset, stash, or overwrite user changes without explicit permission.
+
+Do not commit, tag, push, or publish without authorization.
+
+---
+
+# 17. Implementation Rules After Explicit Approval
+
+Only after I approve the final implementation plan:
+
+1. Implement the approved changes in logical, small phases.
+2. Preserve all unrelated functionality.
+3. Make no unapproved scope expansions.
+4. Follow official Android and Google engineering guidance.
+5. Keep dependencies minimal.
+6. Update relevant documentation.
+7. Run the applicable tests after each logical change.
+8. Validate all affected build variants.
+9. Inspect the complete Git diff.
+10. Report actual results, including failures.
+
+For every completed task, provide:
+
+- Files modified.
+- Reason for modification.
+- Technical details.
+- Build results.
+- Test results.
+- Validation evidence.
+- Remaining limitations.
+
+If a build or test fails, investigate the real cause.
+
+Do not hide failures, disable tests, or weaken compiler checks merely to obtain a successful build.
+
+---
+
+# 18. Definition of Done
+
+The project is considered prepared for publication only when the relevant requirements have been verified.
+
+### Technical Readiness
+
+- Existing application builds successfully.
+- Required SDK versions are compatible.
+- Gradle configuration is validated.
+- Manifest configuration is valid.
+- Dependencies are reviewed.
+- Release artifacts are generated and verified.
+
+### AdMob Readiness
+
+- SDK configuration is correct.
+- App identity is consistent.
+- Ad units are configured correctly.
+- Consent requirements are addressed.
+- Advertising placements follow applicable policies.
+- Test and production configurations are separated.
+- Store and device compatibility are independently assessed.
+
+### Store Readiness
+
+- Submission requirements are documented.
+- Signing requirements are understood.
+- Required metadata is prepared.
+- Privacy declarations are reviewed.
+- Content and intellectual property risks are addressed.
+- Platform-specific restrictions are documented.
+
+### Security Readiness
+
+- No exposed signing credentials.
+- No unnecessary permissions.
+- No unresolved critical security findings.
+- Sensitive data handling is reviewed.
+- Release configuration is validated.
+
+### Automation Readiness
+
+- Build validation is automated where appropriate.
+- Tests run successfully.
+- Release artifacts are reproducible or their limitations are documented.
+- Signing secrets are protected.
+- Publishing requires an explicit approval gate.
+
+A successful local build alone does not mean that an application is approved by an app store or authorized to serve AdMob advertisements.
+
+Keep these statuses separate.
+
+---
+
+# 19. Final Instructions to the AI Agent
+
+Approach this project as a senior engineer responsible for a real production Android application.
+
+Be evidence-driven, technically precise, conservative with existing code, and transparent about limitations.
+
+Do not optimize for the number of stores at the expense of compatibility, security, policy compliance, or maintainability.
+
+Do not assume that all Android devices support Google Mobile Ads SDK.
+
+Do not assume that an app store's acceptance of an application guarantees AdMob eligibility.
+
+Do not assume that AdMob eligibility guarantees successful ad serving.
+
+Do not assume that a successful build guarantees successful store publication.
+
+Verify every relevant requirement independently.
+
+Prefer official documentation over assumptions.
+
+Prefer simple, maintainable architecture over unnecessary complexity.
+
+Preserve the existing application and its functionality.
+
+Never claim that a task has been completed without evidence.
+
+## MOST IMPORTANT — STOP BEFORE IMPLEMENTATION
+
+Your first assignment is limited to:
+
+**Official Research → Complete Project Audit → Compatibility Verification → Architecture Proposal → Implementation Plan → Final Readiness Report.**
+
+After completing these tasks, present the findings and wait for my explicit approval.
+
+Do not begin implementation until I approve it.
+
+**The final objective is to prepare my existing Kotlin Android application for reliable, secure, policy-compliant, AdMob-compatible multi-store distribution using a maintainable shared codebase.**

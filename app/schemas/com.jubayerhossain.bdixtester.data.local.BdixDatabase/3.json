@@ -1,0 +1,838 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "a57be7fde7bd430a9c9e44169d47c4df",
+    "entities": [
+      {
+        "tableName": "servers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `sourceType` TEXT NOT NULL, `sourceIndex` INTEGER, `feedId` TEXT, `remoteEntryId` TEXT, `name` TEXT NOT NULL, `originalUrl` TEXT NOT NULL, `host` TEXT NOT NULL, `explicitPort` INTEGER, `protocol` TEXT NOT NULL, `category` TEXT NOT NULL, `isFeatured` INTEGER NOT NULL, `description` TEXT, `sourceAttribution` TEXT, `verificationState` TEXT NOT NULL, `lastReviewedAtEpochMs` INTEGER, `speedTestUrl` TEXT, `speedTestMaxBytes` INTEGER, `isPrivateIp` INTEGER NOT NULL, `createdAtEpochMs` INTEGER NOT NULL, `updatedAtEpochMs` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceType",
+            "columnName": "sourceType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceIndex",
+            "columnName": "sourceIndex",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "feedId",
+            "columnName": "feedId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "remoteEntryId",
+            "columnName": "remoteEntryId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalUrl",
+            "columnName": "originalUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "host",
+            "columnName": "host",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "explicitPort",
+            "columnName": "explicitPort",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFeatured",
+            "columnName": "isFeatured",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sourceAttribution",
+            "columnName": "sourceAttribution",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "verificationState",
+            "columnName": "verificationState",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastReviewedAtEpochMs",
+            "columnName": "lastReviewedAtEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "speedTestUrl",
+            "columnName": "speedTestUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "speedTestMaxBytes",
+            "columnName": "speedTestMaxBytes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isPrivateIp",
+            "columnName": "isPrivateIp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMs",
+            "columnName": "createdAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAtEpochMs",
+            "columnName": "updatedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_servers_sourceType_sourceIndex",
+            "unique": true,
+            "columnNames": [
+              "sourceType",
+              "sourceIndex"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_servers_sourceType_sourceIndex` ON `${TABLE_NAME}` (`sourceType`, `sourceIndex`)"
+          },
+          {
+            "name": "index_servers_category",
+            "unique": false,
+            "columnNames": [
+              "category"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_servers_category` ON `${TABLE_NAME}` (`category`)"
+          },
+          {
+            "name": "index_servers_protocol",
+            "unique": false,
+            "columnNames": [
+              "protocol"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_servers_protocol` ON `${TABLE_NAME}` (`protocol`)"
+          },
+          {
+            "name": "index_servers_originalUrl",
+            "unique": false,
+            "columnNames": [
+              "originalUrl"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_servers_originalUrl` ON `${TABLE_NAME}` (`originalUrl`)"
+          }
+        ]
+      },
+      {
+        "tableName": "favorites",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`serverId` TEXT NOT NULL, `isPinned` INTEGER NOT NULL, `displayOrder` INTEGER NOT NULL, `addedAtEpochMs` INTEGER NOT NULL, `note` TEXT, PRIMARY KEY(`serverId`))",
+        "fields": [
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPinned",
+            "columnName": "isPinned",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayOrder",
+            "columnName": "displayOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addedAtEpochMs",
+            "columnName": "addedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "serverId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_favorites_isPinned_displayOrder",
+            "unique": false,
+            "columnNames": [
+              "isPinned",
+              "displayOrder"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_favorites_isPinned_displayOrder` ON `${TABLE_NAME}` (`isPinned`, `displayOrder`)"
+          }
+        ]
+      },
+      {
+        "tableName": "test_history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`historyId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serverId` TEXT NOT NULL, `scanRunId` TEXT, `probeGroupId` TEXT, `isCoalescedReplica` INTEGER NOT NULL, `serverNameSnapshot` TEXT NOT NULL, `urlSnapshot` TEXT NOT NULL, `protocol` TEXT NOT NULL, `scanMode` TEXT NOT NULL, `status` TEXT NOT NULL, `errorClassification` TEXT NOT NULL, `testedAtEpochMs` INTEGER NOT NULL, `dnsTimeMs` INTEGER, `tcpConnectTimeMs` INTEGER, `tlsHandshakeTimeMs` INTEGER, `httpResponseLatencyMs` INTEGER, `ftpGreetingLatencyMs` INTEGER, `ftpGreetingCode` INTEGER, `httpStatusCode` INTEGER, `finalUrl` TEXT, `failureMessage` TEXT, `downloadMbps` REAL, `downloadMibPerSec` REAL, `transferredBytes` INTEGER, `speedElapsedNanos` INTEGER, `speedTestState` TEXT, `speedTerminationReason` TEXT, `networkProfileLabel` TEXT, `isQuickScanInconclusive` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "historyId",
+            "columnName": "historyId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scanRunId",
+            "columnName": "scanRunId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "probeGroupId",
+            "columnName": "probeGroupId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isCoalescedReplica",
+            "columnName": "isCoalescedReplica",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverNameSnapshot",
+            "columnName": "serverNameSnapshot",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "urlSnapshot",
+            "columnName": "urlSnapshot",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scanMode",
+            "columnName": "scanMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "errorClassification",
+            "columnName": "errorClassification",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "testedAtEpochMs",
+            "columnName": "testedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dnsTimeMs",
+            "columnName": "dnsTimeMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tcpConnectTimeMs",
+            "columnName": "tcpConnectTimeMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tlsHandshakeTimeMs",
+            "columnName": "tlsHandshakeTimeMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "httpResponseLatencyMs",
+            "columnName": "httpResponseLatencyMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ftpGreetingLatencyMs",
+            "columnName": "ftpGreetingLatencyMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "ftpGreetingCode",
+            "columnName": "ftpGreetingCode",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "httpStatusCode",
+            "columnName": "httpStatusCode",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "finalUrl",
+            "columnName": "finalUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "failureMessage",
+            "columnName": "failureMessage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "downloadMbps",
+            "columnName": "downloadMbps",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "downloadMibPerSec",
+            "columnName": "downloadMibPerSec",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "transferredBytes",
+            "columnName": "transferredBytes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "speedElapsedNanos",
+            "columnName": "speedElapsedNanos",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "speedTestState",
+            "columnName": "speedTestState",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "speedTerminationReason",
+            "columnName": "speedTerminationReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "networkProfileLabel",
+            "columnName": "networkProfileLabel",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isQuickScanInconclusive",
+            "columnName": "isQuickScanInconclusive",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "historyId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_test_history_serverId_testedAtEpochMs",
+            "unique": false,
+            "columnNames": [
+              "serverId",
+              "testedAtEpochMs"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_test_history_serverId_testedAtEpochMs` ON `${TABLE_NAME}` (`serverId`, `testedAtEpochMs`)"
+          },
+          {
+            "name": "index_test_history_testedAtEpochMs",
+            "unique": false,
+            "columnNames": [
+              "testedAtEpochMs"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_test_history_testedAtEpochMs` ON `${TABLE_NAME}` (`testedAtEpochMs`)"
+          },
+          {
+            "name": "index_test_history_scanRunId",
+            "unique": false,
+            "columnNames": [
+              "scanRunId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_test_history_scanRunId` ON `${TABLE_NAME}` (`scanRunId`)"
+          },
+          {
+            "name": "index_test_history_probeGroupId",
+            "unique": false,
+            "columnNames": [
+              "probeGroupId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_test_history_probeGroupId` ON `${TABLE_NAME}` (`probeGroupId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "scan_sessions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`scanRunId` TEXT NOT NULL, `scanMode` TEXT NOT NULL, `scopeLabel` TEXT NOT NULL, `state` TEXT NOT NULL, `totalCatalogEntries` INTEGER NOT NULL, `uniqueExactUrlCount` INTEGER NOT NULL, `executedUniqueProbeCount` INTEGER NOT NULL, `mappedSourceEntryCount` INTEGER NOT NULL, `startedAtEpochMs` INTEGER NOT NULL, `updatedAtEpochMs` INTEGER NOT NULL, `finishedAtEpochMs` INTEGER, PRIMARY KEY(`scanRunId`))",
+        "fields": [
+          {
+            "fieldPath": "scanRunId",
+            "columnName": "scanRunId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scanMode",
+            "columnName": "scanMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scopeLabel",
+            "columnName": "scopeLabel",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalCatalogEntries",
+            "columnName": "totalCatalogEntries",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniqueExactUrlCount",
+            "columnName": "uniqueExactUrlCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "executedUniqueProbeCount",
+            "columnName": "executedUniqueProbeCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mappedSourceEntryCount",
+            "columnName": "mappedSourceEntryCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startedAtEpochMs",
+            "columnName": "startedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAtEpochMs",
+            "columnName": "updatedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "finishedAtEpochMs",
+            "columnName": "finishedAtEpochMs",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "scanRunId"
+          ]
+        }
+      },
+      {
+        "tableName": "catalog_metadata",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feedId` TEXT NOT NULL, `sourceUrl` TEXT, `keyId` TEXT, `catalogSequence` INTEGER NOT NULL, `schemaVersion` INTEGER NOT NULL, `minAppVersionCode` INTEGER NOT NULL, `payloadSha256` TEXT, `payloadSizeBytes` INTEGER, `etag` TEXT, `lastModified` TEXT, `generatedAtIso` TEXT, `publishedAtIso` TEXT, `lastSyncAttemptAtEpochMs` INTEGER, `lastSuccessfulSyncAtEpochMs` INTEGER, `lastSyncStatus` TEXT NOT NULL, `lastSyncMessage` TEXT, `entryCount` INTEGER NOT NULL, PRIMARY KEY(`feedId`))",
+        "fields": [
+          {
+            "fieldPath": "feedId",
+            "columnName": "feedId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceUrl",
+            "columnName": "sourceUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "keyId",
+            "columnName": "keyId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "catalogSequence",
+            "columnName": "catalogSequence",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schemaVersion",
+            "columnName": "schemaVersion",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minAppVersionCode",
+            "columnName": "minAppVersionCode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "payloadSha256",
+            "columnName": "payloadSha256",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "payloadSizeBytes",
+            "columnName": "payloadSizeBytes",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "etag",
+            "columnName": "etag",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastModified",
+            "columnName": "lastModified",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "generatedAtIso",
+            "columnName": "generatedAtIso",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "publishedAtIso",
+            "columnName": "publishedAtIso",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastSyncAttemptAtEpochMs",
+            "columnName": "lastSyncAttemptAtEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastSuccessfulSyncAtEpochMs",
+            "columnName": "lastSuccessfulSyncAtEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastSyncStatus",
+            "columnName": "lastSyncStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastSyncMessage",
+            "columnName": "lastSyncMessage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "entryCount",
+            "columnName": "entryCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "feedId"
+          ]
+        }
+      },
+      {
+        "tableName": "endpoint_governance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`serverId` TEXT NOT NULL, `lifecycleStatus` TEXT NOT NULL, `confidence` TEXT NOT NULL, `reason` TEXT NOT NULL, `recommendedAction` TEXT NOT NULL, `removalEligible` INTEGER NOT NULL, `normalizedDomain` TEXT, `dnsSummary` TEXT NOT NULL, `registrationStatus` TEXT NOT NULL, `evidenceJson` TEXT NOT NULL, `checkedSourcesCsv` TEXT NOT NULL, `missingEvidenceCsv` TEXT NOT NULL, `recheckAfterEpochMs` INTEGER, `lastVerifiedAtEpochMs` INTEGER, `archivedAtEpochMs` INTEGER, `archivedByUser` INTEGER NOT NULL, `updatedAtEpochMs` INTEGER NOT NULL, PRIMARY KEY(`serverId`))",
+        "fields": [
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lifecycleStatus",
+            "columnName": "lifecycleStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confidence",
+            "columnName": "confidence",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recommendedAction",
+            "columnName": "recommendedAction",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "removalEligible",
+            "columnName": "removalEligible",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "normalizedDomain",
+            "columnName": "normalizedDomain",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dnsSummary",
+            "columnName": "dnsSummary",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "registrationStatus",
+            "columnName": "registrationStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "evidenceJson",
+            "columnName": "evidenceJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "checkedSourcesCsv",
+            "columnName": "checkedSourcesCsv",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "missingEvidenceCsv",
+            "columnName": "missingEvidenceCsv",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recheckAfterEpochMs",
+            "columnName": "recheckAfterEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lastVerifiedAtEpochMs",
+            "columnName": "lastVerifiedAtEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "archivedAtEpochMs",
+            "columnName": "archivedAtEpochMs",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "archivedByUser",
+            "columnName": "archivedByUser",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAtEpochMs",
+            "columnName": "updatedAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "serverId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_endpoint_governance_lifecycleStatus",
+            "unique": false,
+            "columnNames": [
+              "lifecycleStatus"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_endpoint_governance_lifecycleStatus` ON `${TABLE_NAME}` (`lifecycleStatus`)"
+          },
+          {
+            "name": "index_endpoint_governance_lastVerifiedAtEpochMs",
+            "unique": false,
+            "columnNames": [
+              "lastVerifiedAtEpochMs"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_endpoint_governance_lastVerifiedAtEpochMs` ON `${TABLE_NAME}` (`lastVerifiedAtEpochMs`)"
+          }
+        ]
+      },
+      {
+        "tableName": "verification_events",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`eventId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `serverId` TEXT NOT NULL, `previousStatus` TEXT NOT NULL, `newStatus` TEXT NOT NULL, `confidence` TEXT NOT NULL, `triggerSource` TEXT NOT NULL, `summary` TEXT NOT NULL, `detailsJson` TEXT NOT NULL, `createdAtEpochMs` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "eventId",
+            "columnName": "eventId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "serverId",
+            "columnName": "serverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "previousStatus",
+            "columnName": "previousStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "newStatus",
+            "columnName": "newStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confidence",
+            "columnName": "confidence",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "triggerSource",
+            "columnName": "triggerSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "detailsJson",
+            "columnName": "detailsJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMs",
+            "columnName": "createdAtEpochMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "eventId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_verification_events_serverId_createdAtEpochMs",
+            "unique": false,
+            "columnNames": [
+              "serverId",
+              "createdAtEpochMs"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_verification_events_serverId_createdAtEpochMs` ON `${TABLE_NAME}` (`serverId`, `createdAtEpochMs`)"
+          },
+          {
+            "name": "index_verification_events_createdAtEpochMs",
+            "unique": false,
+            "columnNames": [
+              "createdAtEpochMs"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_verification_events_createdAtEpochMs` ON `${TABLE_NAME}` (`createdAtEpochMs`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a57be7fde7bd430a9c9e44169d47c4df')"
+    ]
+  }
+}
