@@ -1,68 +1,104 @@
-# GitHub Actions Diagnostic Report — BDIX Tester
+# GitHub Actions Diagnostic Report - BDIX Tester
 
-- **Audit Date:** 2026-11-19
-- **Workspace Environment:** AI Studio Cloud Android Container (`/app/applet`)
+- Audit date: 2026-11-19
+- Repository: `vass-css/bdixtester`
+- Repository URL: https://github.com/vass-css/bdixtester
+- Default branch: `main`
+- Audited HEAD: `47ea1a69e2dce9b62d5b219eb60f0a275313605e`
 
-## 1. Environment & CLI Availability Findings
+## GitHub CLI
 
-| Check | Command | Actual Output / Status |
-| --- | --- | --- |
-| Git Repository Check | `git status` | **ABSENT:** `fatal: not a git repository (or any of the parent directories): .git` |
-| Git Remote / Tags Check | `git remote -v` / `git tag -l` | **BLOCKED:** Not a Git repository in this workspace |
-| GitHub CLI Check | `gh --version` | **ABSENT:** `sh: 1: gh: not found` |
-| Remote Workflow Run History | `gh run list` | **NOT EXECUTABLE:** Requires local workstation with Git remote + `gh` authentication |
+- GitHub CLI: `gh 2.103.3`
+- Authentication: GitHub account `vass-css`
+- Repository access and workflow history were available.
 
-Because this container has no `.git` history, no GitHub remote, and no `gh` CLI binary, live GitHub Actions execution telemetry cannot be fetched or re-run automatically from inside the container.
+## Workflows Inspected
 
-## 2. Static Workflow Architecture Verification
+- `.github/workflows/android-ci.yml`
+- `.github/workflows/android-release.yml`
+- `.github/workflows/catalog-live-verification.yml`
+- `.github/workflows/dependency-audit.yml`
+- `.github/workflows/release-integrity.yml`
 
-All five workflows under `.github/workflows/` were inspected and validated locally:
+Third-party actions are pinned to full commit SHAs. The release publication job alone requests `contents: write`; other CI jobs use `contents: read`.
 
-| Workflow File | Trigger Scope | Permissions | Key Purpose |
-| --- | --- | --- | --- |
-| `.github/workflows/android-ci.yml` | `push`/`pull_request` (`main`), `workflow_dispatch` | `contents: read` | Catalog invariants, Python tests, JSON check, `:app:compileDebugKotlin`, `:app:testDebugUnitTest`, `:app:lintDebug`, `:app:assembleDebug`, `:app:compileReleaseKotlin`, test timing summary |
-| `.github/workflows/android-release.yml` | `push` tags `v*`, `workflow_dispatch` (dry-run only) | Top-level `contents: read`; `publish_release` job `contents: write` | Tag-to-`versionName` parity, `android-release` secret check, unit tests + `:app:lintVitalRelease` + `:app:assembleRelease` (APK-only), `apksigner` + `aapt2` verification, `SHA256SUMS.txt` + `release-manifest.json` + `RELEASE-NOTES.md`, protected release creation |
-| `.github/workflows/dependency-audit.yml` | Gradle file changes (`push`/`PR`), weekly cron, `workflow_dispatch` | `contents: read` | Exports `releaseRuntimeClasspath` dependencies, blocks unapproved ad/telemetry SDKs, checks for tracked secrets/keystores and `dependenciesInfo.includeInApk = false` |
-| `.github/workflows/release-integrity.yml` | Workflow/manifest/release-doc changes (`push`/`PR`), `workflow_dispatch` | `contents: read` | Enforces 40-char SHA pinning across all workflow `uses:`, validates `metadata.json` capability flag, audits `AndroidManifest.xml` permissions, optionally verifies published release checksums |
-| `.github/workflows/catalog-live-verification.yml` | Weekly cron, `workflow_dispatch` | `contents: read` | Conservative DNS/RDAP & ISP-probe evidence audit (`tools.catalog_verifier verify-live`) |
+## Recent Runs
 
-## 3. Immutable Action Pinning Verification
+- Android CI run `44487701540`
+  - Branch/HEAD: `main` / `47ea1a69e2dce9b62d5b219eb60f0a275313605e`
+  - Event: `push`
+  - Conclusion: `failure`
+  - Job: `Build, test, lint, and catalog audit`
+  - Failed step: `Validate Gradle build, unit tests, lint, and debug APK`
+  - Failure: 65 tests ran; `NavigationUiTest.homeStaysMinimalAndServerQuickInspectSheetWorksEndToEnd` failed with `java.lang.AssertionError at NavigationUiTest.kt:266`
+- Dependency & License Audit run `44487701325`: success
+- Release Integrity Audit run `44487701353`: success
 
-All third-party actions across `.github/workflows/*.yml` are pinned to full 40-character commit SHAs:
+No Android Release run or GitHub Release was found for this audit.
 
-- `actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1` (`v7.0.1`)
-- `actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78` (`v6.2.0`)
-- `actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1` (`v6.3.0`)
-- `actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38` (`v6.5.0`, runs conditionally only when `package-lock.json` exists)
-- `actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` (`v7.0.2`)
-- `actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131` (`v7.0.0`)
+## Failure Classification
 
-## 4. Defect Identified & Fixed in Legacy `android-ci.yml`
+Application test failure. The test assumed the built-in server inspect control was already in the Compose viewport. The UI implementation is unchanged; the test now scrolls to the stable `servers_list` test tag before clicking `server_inspect_builtin:0`.
 
-- **Previous Root Cause Defect:** Legacy `android-ci.yml` enabled `cache: npm` and ran `npm ci` unconditionally even though no `package-lock.json` exists in the repository root, which would cause immediate runner failure before Gradle validation starts.
-- **Fix Applied:** Gated Node/npm formatting steps on `hashFiles('package-lock.json') != ''`, and added deterministic Python JSON and catalog verification steps that execute cleanly with zero Node lockfile dependency.
-- **Legacy `android-release.yml` Defect Fixed:** Previous `android-release.yml` built an unrequested AAB bundle (`bundleRelease`), omitted `apksigner` / `aapt2` verification, omitted `SHA256SUMS.txt` and `release-manifest.json`, and granted `contents: write` at top-level instead of scoping write privileges solely to the `publish_release` job.
+## Signing Configuration
 
-## 5. Local Maintainer GitHub CLI (`gh`) Monitoring & Verification Commands
+- Existing keystore: `my-upload-key.p12`
+- Format: PKCS12
+- Alias: `upload`
+- Gradle fallback: `${rootDir}/my-upload-key.p12`
+- Gradle `storeType`: `PKCS12`
+- Existing public certificate fingerprint: `E2:1B:27:62:1C:99:86:50:B5:7F:F7:C7:49:A2:63:F5:29:2B:B2:E1:7D:1F:BB:4F:08:59:1E:3A:8B:69:AA:7A`
+- The public certificate fingerprint matched `upload-certificate.pem`.
+- The private keystore and public certificate remain ignored by Git.
+- Signing passwords were not requested or exposed.
 
-Run these commands on your workstation after pushing the repository to GitHub (`gh auth login` first):
+GitHub Environment secret names:
 
-```bash
-# 1. Inspect configured workflows
-gh workflow list
+- `KEYSTORE_BASE64`
+- `STORE_PASSWORD`
+- `KEY_PASSWORD`
 
-# 2. Trigger Android CI manually and watch progress
-gh workflow run android-ci.yml -f suite=full
-gh run list --limit 10
-gh run watch
+The Environment API did not expose `android-release` or its secret configuration to the authenticated token. A protected Environment named `android-release` and these Environment Secrets must be configured before a release build.
 
-# 3. Inspect a failed run's logs
-gh run view <RUN_ID> --log-failed
+## Files Changed
 
-# 4. Run a non-publishing release build & signing dry-run (after setting secrets in android-release environment)
-gh workflow run android-release.yml -f dry_run_note="Pre-release dry run"
-gh run watch
+- `app/src/main/java/com/jubayerhossain/bdixtester/feature/servers/ServersScreen.kt`
+- `app/src/test/java/com/jubayerhossain/bdixtester/NavigationUiTest.kt`
+- `docs/release/APP_SIGNING_STRATEGY.md`
+- `docs/release/SIGNING_AND_KEY_MANAGEMENT.md`
+- `docs/release/GITHUB_ACTIONS_DIAGNOSTIC_REPORT.md`
 
-# 5. Audit release integrity against a published tag
-gh workflow run release-integrity.yml -f release_tag=v1.0
-```
+## Fixes Applied
+
+- Explicitly configured Gradle and `keytool` to use PKCS12.
+- Preserved alias `upload`.
+- Added APK signer fingerprint comparison against the existing certificate fingerprint.
+- Added a stable `servers_list` test tag and updated the navigation test to scroll before clicking.
+- Updated release signing documentation to reference the existing `.p12` keystore.
+
+## Local Validation
+
+- Gradle wrapper tasks were discovered, including `assembleRelease`, `lintVitalRelease`, and `testDebugUnitTest`.
+- The Gradle wrapper is executable.
+- `git diff --check` passed.
+- The public certificate SHA-256 fingerprint matched the expected fingerprint.
+- Private signing files remain ignored.
+- Android SDK validation is blocked because no SDK location is configured in this environment.
+- Local tests, lint, APK assembly, and `apksigner` verification could not complete without an Android SDK.
+
+## APK and Release Status
+
+- Expected artifact: `BDIX-Tester-v1.0.apk`
+- APK signature verification: not executed because no signed release APK or Android SDK was available locally.
+- Observed APK signer fingerprint: unavailable.
+- GitHub Release publication: not attempted.
+- Published GitHub Release URL: none.
+
+## Remaining Blockers
+
+1. Configure protected GitHub Environment `android-release`.
+2. Add `KEYSTORE_BASE64`, `STORE_PASSWORD`, and `KEY_PASSWORD` as Environment Secrets without exposing values.
+3. Confirm the environment deployment approver policy.
+4. Push the reviewed changes and rerun Android CI.
+5. Trigger Android Release only on a verified `v1.0` tag after CI passes and environment secrets are available.
+6. Monitor with `gh run watch` and independently verify the published APK fingerprint.
