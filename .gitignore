@@ -1,3 +1,4 @@
+# Tooling & Node
 node_modules/
 *.tgz
 .DS_Store
@@ -5,12 +6,30 @@ coverage/
 .tmp/
 dist/
 
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
 # Gradle & Android
 .gradle/
 **/build/
+.cxx/
+captures/
 
-# Local Android SDK and signing files
+# IDE
+.idea/
+*.iml
+
+# Local SDK, secrets, and signing files
+.env
 local.properties
 debug.keystore
 *.keystore
 *.jks
+*.p12
+*.pkcs12
+*.pem
+release-assets/
+*.apk
+*.aab

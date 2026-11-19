@@ -2,6 +2,7 @@ package com.jubayerhossain.bdixtester.feature.settings
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -39,7 +40,7 @@ import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.DataUsage
 import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.DeleteSweep
-import androidx.compose.material.icons.rounded.Groups
+import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MotionPhotosOff
@@ -109,7 +110,8 @@ import com.jubayerhossain.bdixtester.ui.theme.MonoUrlStyle
 import com.jubayerhossain.bdixtester.ui.theme.resolveUseDarkTheme
 import kotlin.math.roundToInt
 
-private const val FACEBOOK_COMMUNITY_URL = "https://www.facebook.com/search/top/?q=BDIX%20Tester"
+private const val DEVELOPER_SUPPORT_MAILTO =
+  "mailto:jubayerhossainbarisal@gmail.com?subject=BDIX%20Tester%20Support"
 
 private enum class BulkDeleteAction {
   HISTORY,
@@ -694,10 +696,17 @@ fun SettingsScreen(
           )
           SettingsRowDivider()
           SettingsNavigationRow(
-            icon = Icons.Rounded.Groups,
+            icon = Icons.Rounded.Email,
             title = stringResource(R.string.settings_facebook_page_title),
             subtitle = stringResource(R.string.settings_facebook_page_subtitle),
-            onClick = { onOpenExternalUrl(FACEBOOK_COMMUNITY_URL) },
+            onClick = {
+              val supportIntent = Intent(Intent.ACTION_SENDTO, Uri.parse(DEVELOPER_SUPPORT_MAILTO))
+              try {
+                context.startActivity(supportIntent)
+              } catch (_: ActivityNotFoundException) {
+                // Ignore when no email client is installed on the device
+              }
+            },
             testTag = "settings_facebook_row",
           )
           SettingsRowDivider()

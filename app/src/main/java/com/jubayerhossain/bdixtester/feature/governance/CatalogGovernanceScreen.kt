@@ -60,6 +60,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -102,6 +103,7 @@ fun CatalogGovernanceScreen(
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
+  val resources = LocalResources.current
   val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val semantic = LocalBdixSemanticColors.current
@@ -128,7 +130,7 @@ fun CatalogGovernanceScreen(
             onSuccess = { result ->
               scope.launch {
                 snackbarHostState.showSnackbar(
-                  message = context.getString(R.string.governance_isp_import_success, result.freshCount, result.staleCount),
+                  message = resources.getString(R.string.governance_isp_import_success, result.freshCount, result.staleCount),
                   duration = SnackbarDuration.Short,
                 )
               }
@@ -136,7 +138,7 @@ fun CatalogGovernanceScreen(
             onFailure = { err ->
               scope.launch {
                 snackbarHostState.showSnackbar(
-                  message = context.getString(R.string.governance_isp_import_error, err.message ?: "Parse failed"),
+                  message = resources.getString(R.string.governance_isp_import_error, err.message ?: "Parse failed"),
                   duration = SnackbarDuration.Long,
                 )
               }
@@ -146,7 +148,7 @@ fun CatalogGovernanceScreen(
         onFailure = { err ->
           scope.launch {
             snackbarHostState.showSnackbar(
-              message = context.getString(R.string.governance_isp_import_error, err.message ?: "Read failed"),
+              message = resources.getString(R.string.governance_isp_import_error, err.message ?: "Read failed"),
               duration = SnackbarDuration.Long,
             )
           }

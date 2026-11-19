@@ -1,0 +1,114 @@
+name: Release Integrity Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'app/build.gradle.kts'
+      - 'app/src/main/AndroidManifest.xml'
+      - 'app/src/main/res/xml/**'
+      - 'docs/release/**'
+      - 'metadata.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'app/build.gradle.kts'
+      - 'app/src/main/AndroidManifest.xml'
+      - 'app/src/main/res/xml/**'
+      - 'docs/release/**'
+      - 'metadata.json'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Optional published GitHub Release tag (e.g. v1.0) to verify downloaded assets
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-integrity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integrity_checks:
+    name: Workflow, Manifest, and Release Asset Integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Verify SHA pinning of all GitHub Actions and manifest/metadata invariants
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          sha_pin_re = re.compile(r"^\s*-?\s*uses:\s*([A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+)@([0-9a-f]{40})\b")
+          any_uses_re = re.compile(r"^\s*-?\s*uses:\s*(.+)$")
+
+          for wf in sorted(Path(".github/workflows").glob("*.yml")):
+              for lineno, line in enumerate(wf.read_text(encoding="utf-8").splitlines(), start=1):
+                  m_any = any_uses_re.match(line)
+                  if m_any and not m_any.group(1).strip().startswith("./"):
+                      if not sha_pin_re.match(line):
+                          print(f"::error::{wf}:{lineno} action is not pinned to a 40-char immutable SHA: {line.strip()}")
+                          sys.exit(1)
+
+          meta = json.loads(Path("metadata.json").read_text(encoding="utf-8"))
+          if "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API" not in meta.get("majorCapabilities", []):
+              print("::error::metadata.json missing required MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API")
+              sys.exit(1)
+
+          manifest_xml = ET.parse("app/src/main/AndroidManifest.xml").getroot()
+          android_ns = "{http://schemas.android.com/apk/res/android}"
+          perms = {
+              el.get(f"{android_ns}name")
+              for el in manifest_xml.findall("uses-permission")
+          }
+          allowed_perms = {
+              "android.permission.ACCESS_NETWORK_STATE",
+              "android.permission.INTERNET",
+              "android.permission.POST_NOTIFICATIONS",
+          }
+          unexpected = perms - allowed_perms
+          if unexpected:
+              print(f"::error::Unexpected AndroidManifest permissions detected: {sorted(unexpected)}")
+              sys.exit(1)
+
+          print("Workflow SHA-pinning, metadata.json, and AndroidManifest permission checks passed.")
+          PY
+
+      - name: Verify published GitHub Release assets (when tag provided)
+        if: github.event_name == 'workflow_dispatch' && inputs.release_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          mkdir -p verify-release
+          gh release download "$RELEASE_TAG" --dir verify-release
+          cd verify-release
+          sha256sum -c SHA256SUMS.txt
+          python3 - <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+
+          manifest = json.loads(Path("release-manifest.json").read_text(encoding="utf-8"))
+          apk_path = Path(manifest["artifact_filename"])
+          actual_sha = hashlib.sha256(apk_path.read_bytes()).hexdigest()
+          if actual_sha != manifest["apk_sha256"]:
+              print(f"::error::APK SHA-256 mismatch: manifest={manifest['apk_sha256']} actual={actual_sha}")
+              sys.exit(1)
+          print(f"Verified release manifest and APK checksum for {manifest['git_tag']}: {actual_sha}")
+          PY

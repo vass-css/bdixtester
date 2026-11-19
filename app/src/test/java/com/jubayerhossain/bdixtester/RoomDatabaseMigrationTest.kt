@@ -341,7 +341,9 @@ class RoomDatabaseMigrationTest {
           )
         },
       )
-      val upgradeReport = repo.ensureInitialized()
+      repo.closeAndJoin()
+      val upgradedRepo = RoomCatalogRepository(database = db).also { activeRepo = it }
+      val upgradeReport = upgradedRepo.ensureInitialized()
       assertTrue(upgradeReport.isConsistent)
       assertEquals(curatedCatalog.size, db.serverDao().countBuiltInServers())
 
@@ -421,6 +423,12 @@ class RoomDatabaseMigrationTest {
             """.trimIndent(),
           )
           v2.execSQL(
+            "CREATE UNIQUE INDEX IF NOT EXISTS `index_servers_sourceType_sourceIndex` ON `servers` (`sourceType`, `sourceIndex`)",
+          )
+          v2.execSQL("CREATE INDEX IF NOT EXISTS `index_servers_category` ON `servers` (`category`)")
+          v2.execSQL("CREATE INDEX IF NOT EXISTS `index_servers_protocol` ON `servers` (`protocol`)")
+          v2.execSQL("CREATE INDEX IF NOT EXISTS `index_servers_originalUrl` ON `servers` (`originalUrl`)")
+          v2.execSQL(
             """
             CREATE TABLE IF NOT EXISTS favorites (
                 serverId TEXT NOT NULL PRIMARY KEY,
@@ -430,6 +438,9 @@ class RoomDatabaseMigrationTest {
                 note TEXT
             )
             """.trimIndent(),
+          )
+          v2.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_favorites_isPinned_displayOrder` ON `favorites` (`isPinned`, `displayOrder`)",
           )
           v2.execSQL(
             """
@@ -467,6 +478,18 @@ class RoomDatabaseMigrationTest {
             """.trimIndent(),
           )
           v2.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_test_history_serverId_testedAtEpochMs` ON `test_history` (`serverId`, `testedAtEpochMs`)",
+          )
+          v2.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_test_history_testedAtEpochMs` ON `test_history` (`testedAtEpochMs`)",
+          )
+          v2.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_test_history_scanRunId` ON `test_history` (`scanRunId`)",
+          )
+          v2.execSQL(
+            "CREATE INDEX IF NOT EXISTS `index_test_history_probeGroupId` ON `test_history` (`probeGroupId`)",
+          )
+          v2.execSQL(
             """
             CREATE TABLE IF NOT EXISTS scan_sessions (
                 scanRunId TEXT NOT NULL PRIMARY KEY,
@@ -486,17 +509,23 @@ class RoomDatabaseMigrationTest {
           v2.execSQL(
             """
             CREATE TABLE IF NOT EXISTS catalog_metadata (
-                id INTEGER NOT NULL PRIMARY KEY,
-                builtInSourceCount INTEGER NOT NULL,
-                builtInDatabaseCount INTEGER NOT NULL,
-                remoteFeedId TEXT,
-                remoteFeedVersion TEXT,
-                remoteSequence INTEGER NOT NULL,
-                remoteEntryCount INTEGER NOT NULL,
+                feedId TEXT NOT NULL PRIMARY KEY,
+                sourceUrl TEXT,
+                keyId TEXT,
+                catalogSequence INTEGER NOT NULL,
+                schemaVersion INTEGER NOT NULL,
+                minAppVersionCode INTEGER NOT NULL,
+                payloadSha256 TEXT,
+                payloadSizeBytes INTEGER,
+                etag TEXT,
+                lastModified TEXT,
+                generatedAtIso TEXT,
+                publishedAtIso TEXT,
+                lastSyncAttemptAtEpochMs INTEGER,
+                lastSuccessfulSyncAtEpochMs INTEGER,
                 lastSyncStatus TEXT NOT NULL,
                 lastSyncMessage TEXT,
-                lastSyncAttemptEpochMs INTEGER,
-                lastSuccessfulSyncEpochMs INTEGER
+                entryCount INTEGER NOT NULL
             )
             """.trimIndent(),
           )
@@ -520,25 +549,30 @@ class RoomDatabaseMigrationTest {
           val repo = RoomCatalogRepository(database = migratedDb)
           repo.ensureInitialized()
 
-          assertTrue(repo.endpoints.first().any { it.id == "custom:v2node" })
+          assertTrue(repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
 
           repo.markRemovalCandidate("custom:v2node", "Test candidate")
-          assertEquals(
-            VerificationLifecycleStatus.REMOVAL_CANDIDATE,
-            repo.governanceRecords.first()["custom:v2node"]?.lifecycleStatus,
-          )
+          val markedStatus =
+            repo.governanceRecords
+              .first { it["custom:v2node"]?.lifecycleStatus == VerificationLifecycleStatus.REMOVAL_CANDIDATE }["custom:v2node"]
+              ?.lifecycleStatus
+          assertEquals(VerificationLifecycleStatus.REMOVAL_CANDIDATE, markedStatus)
 
           repo.archiveEndpoint("custom:v2node", "Reversible archive test")
-          assertTrue(repo.endpoints.first().none { it.id == "custom:v2node" })
-          assertTrue(repo.allCatalogEndpoints.first().any { it.id == "custom:v2node" })
+          assertTrue(repo.endpoints.first { list -> list.none { it.id == "custom:v2node" } }.none { it.id == "custom:v2node" })
+          assertTrue(repo.allCatalogEndpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
           assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
 
           repo.restoreEndpoint("custom:v2node", "Restored in test")
-          assertTrue(repo.endpoints.first().any { it.id == "custom:v2node" })
-          assertEquals(VerificationLifecycleStatus.ACTIVE, repo.governanceRecords.first()["custom:v2node"]?.lifecycleStatus)
+          assertTrue(repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
+          val restoredStatus =
+            repo.governanceRecords
+              .first { it["custom:v2node"]?.lifecycleStatus == VerificationLifecycleStatus.ACTIVE }["custom:v2node"]
+              ?.lifecycleStatus
+          assertEquals(VerificationLifecycleStatus.ACTIVE, restoredStatus)
           assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
 
-          val events = repo.observeVerificationEvents("custom:v2node").first()
+          val events = repo.observeVerificationEvents("custom:v2node").first { it.size >= 3 }
           assertTrue(events.size >= 3)
           repo.closeAndJoin()
         } finally {

@@ -268,8 +268,8 @@
     <string name="settings_community_section">Community, Privacy &amp; About</string>
     <string name="settings_privacy_policy_subtitle">Local-first architecture with zero tracking or ads</string>
     <string name="settings_privacy_policy_full_body">BDIX Tester is built with a strict local-first privacy architecture.\n\n• No Accounts or Sign-In: Use every feature without creating an account.\n• No Analytics or Ads: Zero advertising SDKs and zero third-party behavioral tracking.\n• No Location or Wi-Fi SSID Collection: Network checks only observe local transport status and IP on-device.\n• On-Device Storage: Your saved favorites, custom servers, scan history, and manual ISP labels stay exclusively on your device and can be cleared anytime from Settings.</string>
-    <string name="settings_facebook_page_title">Facebook Community</string>
-    <string name="settings_facebook_page_subtitle">Explore BDIX Tester community tips &amp; updates</string>
+    <string name="settings_facebook_page_title">Developer Support</string>
+    <string name="settings_facebook_page_subtitle">Contact jubayerhossainbarisal@gmail.com for help or feedback</string>
     <string name="settings_share_app_title">Share App</string>
     <string name="settings_share_app_subtitle">Recommend BDIX Tester to friends</string>
     <string name="settings_share_app_message">Try BDIX Tester — find fast working BDIX FTP, Movie, and TV servers plus 26 Bangladesh OTT platforms right from your broadband connection!</string>

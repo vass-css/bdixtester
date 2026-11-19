@@ -33,29 +33,29 @@ android {
       keyAlias = "upload"
       keyPassword = System.getenv("KEY_PASSWORD")
     }
-
-    lint {
-      disable += setOf(
-        "UnusedResources",
-        "PluralsCandidate",
-        "GradleDependency",
-        "NewerVersionAvailable",
-        "IconLauncherShape",
-        "IconLocation",
-        "InsecureBaseConfiguration",
-        "OldTargetApi",
-        "ModifierParameter",
-        "UseKtx",
-        "MonochromeLauncherIcon",
-        "RedundantLabel"
-      )
-    }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")
       storePassword = "android"
       keyAlias = "androiddebugkey"
       keyPassword = "android"
     }
+  }
+
+  lint {
+    disable += setOf(
+      "UnusedResources",
+      "PluralsCandidate",
+      "GradleDependency",
+      "NewerVersionAvailable",
+      "IconLauncherShape",
+      "IconLocation",
+      "InsecureBaseConfiguration",
+      "OldTargetApi",
+      "ModifierParameter",
+      "UseKtx",
+      "MonochromeLauncherIcon",
+      "RedundantLabel"
+    )
   }
 
   buildTypes {
@@ -86,6 +86,7 @@ android {
     unitTests { isIncludeAndroidResources = true }
   }
   tasks.withType<Test>().configureEach {
+    maxHeapSize = "2g"
     jvmArgs("--enable-native-access=ALL-UNNAMED")
     if (JavaVersion.current().majorVersion.toInt() >= 24) {
       jvmArgs("--sun-misc-unsafe-memory-access=allow")

@@ -29,6 +29,7 @@ import com.jubayerhossain.bdixtester.feature.servers.ServerSortOrder
 import com.jubayerhossain.bdixtester.feature.servers.ServerStatusTab
 import com.jubayerhossain.bdixtester.feature.servers.ServersViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -177,65 +180,73 @@ class PerformanceBenchmarkTest {
       }
     }
 
+  @OptIn(ExperimentalCoroutinesApi::class)
   @Test
-  fun benchmark_05_serversViewModelFilterSort_752() =
-    runBlocking {
-      val context: Context = ApplicationProvider.getApplicationContext()
-      val db =
-        Room
-          .inMemoryDatabaseBuilder(context, BdixDatabase::class.java)
-          .allowMainThreadQueries()
-          .build()
-      val repo = RoomCatalogRepository(database = db)
-      val fakeSettings = InMemorySettingsRepository()
+  fun benchmark_05_serversViewModelFilterSort_752() {
+    Dispatchers.setMain(Dispatchers.Default)
+    try {
+      runBlocking {
+        val context: Context = ApplicationProvider.getApplicationContext()
+        val db =
+          Room
+            .inMemoryDatabaseBuilder(context, BdixDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+        val repo = RoomCatalogRepository(database = db)
+        val fakeSettings = InMemorySettingsRepository()
 
-      try {
-        repo.ensureInitialized()
-        repo.endpoints.first { it.size == BuiltInCatalog.DEFAULT_CURATED_COUNT }
-        val noopExecutor =
-          object : EndpointProbeExecutor {
-            override suspend fun probe(
-              endpoint: ServerEndpoint,
-              config: EndpointProbeConfig,
-            ): ServerTestResult {
-              error("Unused")
+        var collectorJob: kotlinx.coroutines.Job? = null
+        try {
+          repo.ensureInitialized()
+          repo.endpoints.first { it.size == BuiltInCatalog.DEFAULT_CURATED_COUNT }
+          val noopExecutor =
+            object : EndpointProbeExecutor {
+              override suspend fun probe(
+                endpoint: ServerEndpoint,
+                config: EndpointProbeConfig,
+              ): ServerTestResult {
+                error("Unused")
+              }
             }
-          }
-        val scanCoordinator = ScanCoordinator(repo, noopExecutor)
-        val vm = ServersViewModel(repo, scanCoordinator, fakeSettings)
+          val scanCoordinator = ScanCoordinator(repo, noopExecutor)
+          val vm = ServersViewModel(repo, scanCoordinator, fakeSettings)
 
-        val collectorJob =
-          launch(Dispatchers.Main.immediate) {
-            vm.uiState.collect { }
-          }
-        vm.selectStatusTab(ServerStatusTab.NOT_TESTED)
-        vm.uiState.first { it.ftpCount == 542 && it.filteredServers.size == 542 }
+          collectorJob =
+            launch(Dispatchers.Main.immediate) {
+              vm.uiState.collect { }
+            }
+          vm.selectStatusTab(ServerStatusTab.NOT_TESTED)
+          vm.uiState.first { it.ftpCount == 542 && it.filteredServers.size == 542 }
 
-        val filterStart = System.nanoTime()
-        val queries = listOf("bdix", "dhaka", "ftp", "10.", "tv", "")
-        for (q in queries) {
-          vm.updateSearchQuery(q)
-          vm.uiState.first { it.searchQuery == q }
+          val filterStart = System.nanoTime()
+          val queries = listOf("bdix", "dhaka", "ftp", "10.", "tv", "")
+          for (q in queries) {
+            vm.updateSearchQuery(q)
+            vm.uiState.first { it.searchQuery == q }
+          }
+          vm.selectBottomTab(ServerBottomTab.MOVIE)
+          vm.uiState.first { it.selectedBottomTab == ServerBottomTab.MOVIE }
+          vm.updateSortOrder(ServerSortOrder.NAME_ASC)
+          vm.uiState.first { it.sortOrder == ServerSortOrder.NAME_ASC }
+          vm.selectBottomTab(ServerBottomTab.TV)
+          vm.uiState.first { it.selectedBottomTab == ServerBottomTab.TV }
+          vm.selectBottomTab(ServerBottomTab.OTT)
+          vm.uiState.first { it.selectedBottomTab == ServerBottomTab.OTT }
+          vm.selectBottomTab(ServerBottomTab.FTP)
+          vm.uiState.first { it.selectedBottomTab == ServerBottomTab.FTP }
+          val totalFilterSortMs = msSince(filterStart)
+
+          report("servers_vm_filter_sort_cycle_ms", totalFilterSortMs, "ms")
+        } finally {
+          collectorJob?.cancel()
+          repo.closeAndJoin()
+          db.close()
         }
-        vm.selectBottomTab(ServerBottomTab.MOVIE)
-        vm.uiState.first { it.selectedBottomTab == ServerBottomTab.MOVIE }
-        vm.updateSortOrder(ServerSortOrder.NAME_ASC)
-        vm.uiState.first { it.sortOrder == ServerSortOrder.NAME_ASC }
-        vm.selectBottomTab(ServerBottomTab.TV)
-        vm.uiState.first { it.selectedBottomTab == ServerBottomTab.TV }
-        vm.selectBottomTab(ServerBottomTab.OTT)
-        vm.uiState.first { it.selectedBottomTab == ServerBottomTab.OTT }
-        vm.selectBottomTab(ServerBottomTab.FTP)
-        vm.uiState.first { it.selectedBottomTab == ServerBottomTab.FTP }
-        val totalFilterSortMs = msSince(filterStart)
-
-        collectorJob.cancel()
-        report("servers_vm_filter_sort_cycle_ms", totalFilterSortMs, "ms")
-      } finally {
-        repo.closeAndJoin()
-        db.close()
       }
+    } finally {
+      Dispatchers.resetMain()
     }
+  }
 
   @Test
   fun benchmark_06_scan200Endpoints_dbInvalidationsAndProgressEmissions() =

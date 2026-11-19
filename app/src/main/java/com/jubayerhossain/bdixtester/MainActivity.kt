@@ -12,6 +12,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jubayerhossain.bdixtester.core.util.LocaleHelper
 import com.jubayerhossain.bdixtester.navigation.BdixTesterAppRoot
@@ -56,6 +57,7 @@ class MainActivity : ComponentActivity() {
         }
       CompositionLocalProvider(
         LocalContext provides localizedContext,
+        LocalResources provides localizedContext.resources,
         LocalActivityResultRegistryOwner provides this@MainActivity,
         LocalOnBackPressedDispatcherOwner provides this@MainActivity,
       ) {

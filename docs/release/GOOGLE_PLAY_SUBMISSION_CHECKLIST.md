@@ -1,9 +1,10 @@
 # Google Play Submission Checklist — BDIX Tester
 
-**Updated:** 2026-11-18  
-**Policy Reference Date:** 2026-11-18  
-**Application ID:** `com.jubayerhossain.bdixtester`  
-**Developer:** `Jubayer Hossain` (`JubayerHossain`)
+- **Updated:** 2026-11-19
+- **Policy Reference Date:** 2026-11-19
+- **Application ID:** `com.jubayerhossain.bdixtester`
+- **Developer:** `Jubayer Hossain` (`JubayerHossain`)
+- **Current Distribution Note:** Active release cycle targets GitHub Releases (signed APK only); items below govern future Play Store enrollment if requested later.
 
 ---
 

@@ -1,0 +1,52 @@
+name: Bug Report
+description: Report a crash, incorrect probe classification, UI issue, or build failure
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve BDIX Tester! Please avoid including private passwords, ISP credentials, or unrelated logs.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Open Settings / Servers / Home...
+        2. Tap '...'
+        3. Observe error...
+    validations:
+      required: true
+  - type: input
+    id: app_version
+    attributes:
+      label: App Version & Source
+      description: e.g., v1.0 (build 1) from GitHub Releases
+      placeholder: v1.0 (build 1)
+    validations:
+      required: true
+  - type: input
+    id: android_device
+    attributes:
+      label: Android Version & Device
+      placeholder: e.g., Android 15 / Pixel / Xiaomi / Samsung
+    validations:
+      required: true
+  - type: dropdown
+    id: network_type
+    attributes:
+      label: Connection Type
+      options:
+        - Broadband Wi-Fi (BDIX ISP)
+        - Mobile Data
+        - Ethernet / VPN
+        - Offline
+    validations:
+      required: false

@@ -54,6 +54,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -99,6 +100,7 @@ fun BdixTesterAppRoot(
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
+  val resources = LocalResources.current
   val haptic = LocalHapticFeedback.current
   val navController = rememberNavController()
   val snackbarHostState = remember { SnackbarHostState() }
@@ -168,7 +170,7 @@ fun BdixTesterAppRoot(
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
     clipboard?.setPrimaryClip(ClipData.newPlainText("BDIX Server URL", rawUrl))
     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-    val copiedMessage = context.getString(R.string.servers_url_copied, rawUrl)
+    val copiedMessage = resources.getString(R.string.servers_url_copied, rawUrl)
     scope.launch {
       snackbarHostState.showSnackbar(
         message = copiedMessage,
@@ -202,7 +204,7 @@ fun BdixTesterAppRoot(
       val feedbackText =
         when (feedback) {
           is SettingsSyncFeedback.BuiltInRefreshed -> {
-            context.getString(
+            resources.getString(
               R.string.settings_sync_builtin_verified,
               feedback.bdixCount,
               feedback.ottCount,
@@ -212,19 +214,19 @@ fun BdixTesterAppRoot(
           is SettingsSyncFeedback.RemoteSyncCompleted -> {
             when (feedback.status) {
               SyncStatus.UPDATED -> {
-                context.getString(R.string.settings_sync_feedback_updated, feedback.entryCount)
+                resources.getString(R.string.settings_sync_feedback_updated, feedback.entryCount)
               }
 
               SyncStatus.NOT_MODIFIED -> {
-                context.getString(R.string.settings_sync_feedback_not_modified)
+                resources.getString(R.string.settings_sync_feedback_not_modified)
               }
 
               SyncStatus.WIFI_REQUIRED -> {
-                context.getString(R.string.settings_sync_feedback_wifi_required)
+                resources.getString(R.string.settings_sync_feedback_wifi_required)
               }
 
               else -> {
-                context.getString(R.string.settings_sync_feedback_failed, feedback.message)
+                resources.getString(R.string.settings_sync_feedback_failed, feedback.message)
               }
             }
           }

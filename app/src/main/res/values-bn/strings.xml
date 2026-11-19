@@ -268,8 +268,8 @@
     <string name="settings_community_section">কমিউনিটি, গোপনীয়তা ও অ্যাপ তথ্য</string>
     <string name="settings_privacy_policy_subtitle">লোকাল-ফার্স্ট ডিজাইন — কোনো ট্র্যাকিং বা বিজ্ঞাপন নেই</string>
     <string name="settings_privacy_policy_full_body">BDIX Tester সম্পূর্ণ লোকাল-ফার্স্ট গোপনীয়তা নীতিতে তৈরি।\n\n• কোনো অ্যাকাউন্ট বা লগইন নেই: সাইন-ইন ছাড়াই প্রতিটি ফিচার ব্যবহার করতে পারবেন।\n• কোনো অ্যানালিটিক্স বা বিজ্ঞাপন নেই: কোনো অ্যাড SDK বা তৃতীয় পক্ষের ট্র্যাকিং ব্যবহার করা হয়নি।\n• লোকেশন বা Wi-Fi SSID সংগ্রহ নেই: কেবল স্থানীয় নেটওয়ার্ক অবস্থা ও IP ডিভাইসে দেখানো হয়।\n• ডিভাইস-ভিত্তিক ডেটা: আপনার পছন্দের সার্ভার, কাস্টম সার্ভার, ইতিহাস এবং লেবেল কেবল আপনার ফোনেই সংরক্ষিত থাকে এবং যেকোনো সময় মুছে ফেলা যায়।</string>
-    <string name="settings_facebook_page_title">ফেসবুক কমিউনিটি</string>
-    <string name="settings_facebook_page_subtitle">BDIX Tester আপডেট ও কমিউনিটি টিপস দেখুন</string>
+    <string name="settings_facebook_page_title">ডেভেলপার সহায়তা</string>
+    <string name="settings_facebook_page_subtitle">সহায়তা বা মতামতের জন্য jubayerhossainbarisal@gmail.com-এ যোগাযোগ করুন</string>
     <string name="settings_share_app_title">অ্যাপ শেয়ার করুন</string>
     <string name="settings_share_app_subtitle">বন্ধুদের সাথে BDIX Tester শেয়ার করুন</string>
     <string name="settings_share_app_message">BDIX Tester ব্যবহার করে দেখুন — আপনার ব্রডব্যান্ড সংযোগে সচল BDIX FTP, মুভি, টিভি সার্ভার এবং বাংলাদেশের ২৬টি OTT প্ল্যাটফর্ম সহজেই খুঁজে নিন!</string>

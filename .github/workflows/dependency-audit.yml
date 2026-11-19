@@ -1,0 +1,103 @@
+name: Dependency & License Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'gradle/**'
+      - 'app/build.gradle.kts'
+      - 'build.gradle.kts'
+      - 'settings.gradle.kts'
+      - '.github/workflows/dependency-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'gradle/**'
+      - 'app/build.gradle.kts'
+      - 'build.gradle.kts'
+      - 'settings.gradle.kts'
+      - '.github/workflows/dependency-audit.yml'
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Gradle Dependency & Repository Hygiene Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Java
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Audit Gradle configuration and resolve releaseRuntimeClasspath
+        run: |
+          mkdir -p build/reports/dependency-audit
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:dependencies \
+            --configuration releaseRuntimeClasspath \
+            > build/reports/dependency-audit/release-runtime-dependencies.txt
+
+      - name: Verify absence of unapproved monetization SDKs and hardcoded secrets
+        run: |
+          python3 - <<'PY'
+          import re, sys
+          from pathlib import Path
+
+          deps = Path("build/reports/dependency-audit/release-runtime-dependencies.txt").read_text(encoding="utf-8")
+          blocked_deps = [
+              "com.google.android.gms:play-services-ads",
+              "com.google.ump",
+              "com.google.firebase:firebase-analytics",
+          ]
+          found_blocked = [d for d in blocked_deps if d in deps]
+          if found_blocked:
+              print(f"::error::Unapproved runtime dependencies detected: {found_blocked}")
+              sys.exit(1)
+
+          gradle_app = Path("app/build.gradle.kts").read_text(encoding="utf-8")
+          if "includeInApk = false" not in gradle_app:
+              print("::error::app/build.gradle.kts must keep dependenciesInfo.includeInApk = false")
+              sys.exit(1)
+
+          forbidden_files = []
+          for p in Path(".").rglob("*"):
+              if any(part in {".git", "build", ".gradle", "node_modules"} for part in p.parts):
+                  continue
+              if p.is_file() and (p.suffix in {".jks", ".keystore", ".p12", ".pkcs12", ".pem"} or p.name in {".env", "local.properties"}):
+                  forbidden_files.append(str(p))
+          if forbidden_files:
+              print(f"::error::Tracked secret/keystore/local files present: {forbidden_files}")
+              sys.exit(1)
+
+          print("Dependency and secret-hygiene audit passed.")
+          PY
+
+      - name: Upload dependency audit report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
+        with:
+          name: dependency-audit-report
+          path: build/reports/dependency-audit/release-runtime-dependencies.txt
+          if-no-files-found: warn
+          retention-days: 30

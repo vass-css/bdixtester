@@ -13,7 +13,7 @@ on:
         options:
           - performance
           - full
-        default: performance
+        default: full
         required: true
 
 permissions:
@@ -25,18 +25,18 @@ concurrency:
 
 jobs:
   build:
-    name: Build, test, lint, and analyze
+    name: Build, test, lint, and catalog audit
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
 
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Java
         id: setup-java
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: '21'
@@ -47,42 +47,51 @@ jobs:
         env:
           GRADLE_CACHE_HIT: ${{ steps.setup-java.outputs.cache-hit }}
         run: |
-          printf '%s\n' "Gradle dependency cache exact hit: \`${GRADLE_CACHE_HIT:-unavailable}\`" >> "$GITHUB_STEP_SUMMARY"
+          printf '%s\n' "Gradle cache hit: \`${GRADLE_CACHE_HIT:-unavailable}\`" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Setup Node.js
+      - name: Setup Python
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        uses: actions/setup-node@v7.1.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js (optional formatter check)
+        if: (github.event_name != 'workflow_dispatch' || inputs.suite == 'full') && hashFiles('package-lock.json') != ''
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: '24'
           cache: npm
 
-      - name: Install formatter dependencies
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: npm ci
-
-      - name: Check formatting
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: npm run format:check
-
-      - name: Setup Python
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      - name: Check formatting when lockfile present
+        if: (github.event_name != 'workflow_dispatch' || inputs.suite == 'full') && hashFiles('package-lock.json') != ''
+        run: |
+          npm ci
+          npm run format:check
 
       - name: Validate catalogs and governance manifest
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: python3 -m tools.catalog_verifier validate-catalog --repo-root .
+        run: |
+          python3 -m tools.catalog_verifier validate-catalog --repo-root .
+          python3 -m unittest discover -s tools/catalog_verifier/tests -v
 
-      - name: Run Python verification tests
+      - name: Validate JSON metadata files
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: python3 -m unittest discover -s tools/catalog_verifier/tests -v
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for path in sorted(Path(".").rglob("*.json")):
+              if any(p in {".git", "node_modules", "build", ".gradle"} for p in path.parts):
+                  continue
+              json.loads(path.read_text(encoding="utf-8"))
+              print(f"OK JSON: {path}")
+          PY
 
-      - name: Generate debug keystore
+      - name: Generate ephemeral debug keystore for CI debug build
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
         run: |
           if [[ ! -f debug.keystore ]]; then
-            keytool -genkeypair -v \
+            keytool -genkeypair -noprompt \
               -keystore debug.keystore \
               -storepass android \
               -alias androiddebugkey \
@@ -101,18 +110,18 @@ jobs:
             :app:testDebugUnitTest \
             --tests 'com.jubayerhossain.bdixtester.PerformanceBenchmarkTest'
 
-      - name: Build and Run Checks
+      - name: Validate Gradle build, unit tests, lint, and debug APK
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
         run: |
           chmod +x gradlew
-          ./gradlew --continue --stacktrace --warning-mode all --profile \
+          ./gradlew --no-daemon --stacktrace --profile \
             :app:compileDebugKotlin \
             :app:testDebugUnitTest \
             :app:lintDebug \
             :app:assembleDebug \
             :app:compileReleaseKotlin
 
-      - name: Generate test timing reports
+      - name: Generate test timing summary
         if: always() && steps.checkout.outcome == 'success'
         env:
           TEST_CLASS_FILTER: ${{ github.event_name == 'workflow_dispatch' && inputs.suite == 'performance' && 'com.jubayerhossain.bdixtester.PerformanceBenchmarkTest' || '' }}
@@ -128,11 +137,11 @@ jobs:
             --metrics-output app/build/reports/benchmark-metrics.csv \
             "${filter_args[@]}"
 
-      - name: Upload APK and Reports
+      - name: Upload CI Debug APK and Reports
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
         with:
-          name: bdix-tester-debug
+          name: bdix-tester-ci-artifacts
           path: |
             app/build/outputs/apk/debug/*.apk
             app/build/reports/

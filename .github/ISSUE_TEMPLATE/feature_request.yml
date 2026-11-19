@@ -1,0 +1,28 @@
+name: Feature or Catalog Report
+description: Suggest an app improvement or submit verified Bangladesh ISP catalog feedback
+title: "[Request]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Summary of Request
+      description: Describe the feature, UX improvement, or catalog verification note.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why is this useful?
+      description: Explain how it benefits BDIX Tester users without compromising local-first privacy.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues to avoid duplicates.
+          required: true
+        - label: If suggesting an endpoint, it is an authorized, public ISP/OTT/diagnostic URL.
+          required: false
