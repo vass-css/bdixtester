@@ -60,10 +60,19 @@ jobs:
         run: |
           APK="app/build/outputs/apk/release/app-release.apk"
           BUILD_TOOLS_DIR="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
-          VERIFY_OUT="$("$BUILD_TOOLS_DIR/apksigner" verify --verbose --print-certs "$APK" 2>&1)"
-          CERT_SHA256="$(printf '%s\n' "$VERIFY_OUT" | awk -F': ' 'tolower($1) ~ /certificate sha-256 digest/{print $2; exit}' | tr -d ':' | tr '[:lower:]' '[:upper:]')"
+          if [[ ! -f "$APK" ]]; then
+            echo "::error::Release APK not found at $APK."
+            exit 1
+          fi
+          if ! VERIFY_OUT="$("$BUILD_TOOLS_DIR/apksigner" verify --verbose --print-certs "$APK" 2>&1)"; then
+            printf '%s\n' "$VERIFY_OUT"
+            echo "::error::apksigner failed to verify the release APK."
+            exit 1
+          fi
+          CERT_SHA256="$(printf '%s\n' "$VERIFY_OUT" | sed -nE 's/.*certificate SHA-256 digest:[[:space:]]*([[:xdigit:]:]+).*/\1/ip' | head -n 1 | tr -d ':' | tr '[:lower:]' '[:upper:]')"
           EXPECTED_CERT_SHA256="E21B27621C998650B57FF7C749A263F5292BB2E17D1FBB4F08591E3A8B69AA7A"
           if [[ -z "$CERT_SHA256" ]]; then
+            printf '%s\n' "$VERIFY_OUT"
             echo "::error::apksigner did not return a certificate SHA-256 digest."
             exit 1
           fi
