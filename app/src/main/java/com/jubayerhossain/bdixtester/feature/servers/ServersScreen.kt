@@ -528,7 +528,7 @@ fun ServersScreen(
           } else if (useTwoColumns) {
             LazyVerticalGrid(
               columns = GridCells.Fixed(2),
-              modifier = Modifier.fillMaxSize(),
+              modifier = Modifier.fillMaxSize().testTag("servers_list"),
               contentPadding =
                 PaddingValues(
                   start = BdixSpacing.lg,
@@ -565,7 +565,8 @@ fun ServersScreen(
               modifier =
                 Modifier
                   .fillMaxSize()
-                  .widthIn(max = 720.dp),
+                  .widthIn(max = 720.dp)
+                  .testTag("servers_list"),
               contentPadding =
                 PaddingValues(
                   start = BdixSpacing.lg,

@@ -2,7 +2,8 @@
 
 - **Primary Release Distribution:** Signed release APK via GitHub Releases (`BDIX-Tester-v<versionName>.apk`). AAB bundling (`bundleRelease`) is omitted in this release cycle per maintainer preference unless future Google Play Store enrollment is requested.
 - **Release Key Configuration (`app/build.gradle.kts`):**
-  - `storeFile` read from `KEYSTORE_PATH` environment variable (fallback `${rootDir}/my-upload-key.jks`)
+  - `storeFile` read from `KEYSTORE_PATH` environment variable (fallback `${rootDir}/my-upload-key.p12`)
+  - `storeType = "PKCS12"`
   - `storePassword` read from `STORE_PASSWORD`
   - `keyAlias = "upload"`
   - `keyPassword` read from `KEY_PASSWORD`

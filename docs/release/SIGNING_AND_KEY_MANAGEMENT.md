@@ -11,7 +11,8 @@
 Inspected `app/build.gradle.kts:28–76`, `.gitignore:13–16`, and `debug.keystore.base64`:
 
 - **Release Signing Configuration (`app/build.gradle.kts:29–35, 69`):**
-  - `storeFile = file(System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks")`
+  - `storeFile = file(System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.p12")`
+  - `storeType = "PKCS12"`
   - `storePassword = System.getenv("STORE_PASSWORD")`
   - `keyAlias = "upload"` *(configurable or matched during keystore generation)*
   - `keyPassword = System.getenv("KEY_PASSWORD")`
