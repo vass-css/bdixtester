@@ -6,6 +6,7 @@ import random
 import socket
 import ssl
 import struct
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -330,25 +331,29 @@ class RdapClient:
   def __init__(self, timeout_sec: float = 5.0):
     self.timeout_sec = timeout_sec
     self._bootstrap: dict[str, list[str]] | None = None
+    self._bootstrap_lock = threading.Lock()
 
   def _load_bootstrap(self) -> dict[str, list[str]]:
     if self._bootstrap is not None:
       return self._bootstrap
-    req = urllib.request.Request(
-      IANA_RDAP_BOOTSTRAP_URL,
-      headers={"Accept": "application/json", "User-Agent": "BDIX-Tester-Verifier/1.0"},
-    )
-    mapping: dict[str, list[str]] = {}
-    with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
-      data = json.loads(resp.read(512 * 1024).decode("utf-8", errors="replace"))
-    for service in data.get("services", []):
-      if not isinstance(service, list) or len(service) < 2:
-        continue
-      tlds, urls = service[0], service[1]
-      for tld in tlds:
-        mapping[str(tld).lower().lstrip(".")] = [str(u).rstrip("/") for u in urls]
-    self._bootstrap = mapping
-    return mapping
+    with self._bootstrap_lock:
+      if self._bootstrap is not None:
+        return self._bootstrap
+      req = urllib.request.Request(
+        IANA_RDAP_BOOTSTRAP_URL,
+        headers={"Accept": "application/json", "User-Agent": "BDIX-Tester-Verifier/1.0"},
+      )
+      mapping: dict[str, list[str]] = {}
+      with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
+        data = json.loads(resp.read(512 * 1024).decode("utf-8", errors="replace"))
+      for service in data.get("services", []):
+        if not isinstance(service, list) or len(service) < 2:
+          continue
+        tlds, urls = service[0], service[1]
+        for tld in tlds:
+          mapping[str(tld).lower().lstrip(".")] = [str(u).rstrip("/") for u in urls]
+      self._bootstrap = mapping
+      return mapping
 
   def lookup_domain(self, registrable_domain: str | None) -> RegistrationObservation:
     now = utc_now_iso()
