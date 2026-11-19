@@ -248,7 +248,7 @@ fun ServerDetailBottomSheet(
               color = MaterialTheme.colorScheme.outlineVariant,
             )
             Text(
-              text = result?.failureMessage.orEmpty(),
+              text = result.failureMessage.orEmpty(),
               style = MaterialTheme.typography.bodySmall,
               color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

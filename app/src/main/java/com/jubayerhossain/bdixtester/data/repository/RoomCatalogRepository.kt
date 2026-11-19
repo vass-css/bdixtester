@@ -617,7 +617,6 @@ class RoomCatalogRepository(
           ),
         )
       }
-      Unit
     }
 
   override suspend fun archiveEndpoint(
@@ -659,7 +658,6 @@ class RoomCatalogRepository(
           ),
         )
       }
-      Unit
     }
 
   override suspend fun restoreEndpoint(
@@ -702,7 +700,6 @@ class RoomCatalogRepository(
           ),
         )
       }
-      Unit
     }
 
   override fun updateVerificationProgress(progress: VerificationRunProgress) {
