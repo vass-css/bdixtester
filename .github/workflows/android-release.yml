@@ -103,12 +103,12 @@ jobs:
       - name: Decode keystore, run unit tests, vital lint, and build signed release APK
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEYSTORE_PATH: ${{ runner.temp }}/bdixtester-release.jks
+          KEYSTORE_PATH: ${{ runner.temp }}/bdixtester-release.p12
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
-          keytool -list -keystore "$KEYSTORE_PATH" -storepass "$STORE_PASSWORD" -alias upload >/dev/null
+          keytool -list -keystore "$KEYSTORE_PATH" -storetype PKCS12 -storepass "$STORE_PASSWORD" -alias upload >/dev/null
 
           # Provide ephemeral debug.keystore solely if debug tasks are invoked by unit test dependencies
           if [[ ! -f debug.keystore ]]; then
@@ -154,6 +154,12 @@ jobs:
           CERT_SHA256="$(echo "$VERIFY_OUT" | awk -F': ' '/Signer #1 certificate SHA-256 digest/{print $2; exit}')"
           if [[ -z "$CERT_SHA256" ]]; then
             echo "::error::Could not extract signing certificate SHA-256 fingerprint."
+            exit 1
+          fi
+          EXPECTED_CERT_SHA256="E2:1B:27:62:1C:99:86:50:B5:7F:F7:C7:49:A2:63:F5:29:2B:B2:E1:7D:1F:BB:4F:08:59:1E:3A:8B:69:AA:7A"
+          CERT_SHA256_NORMALIZED="$(echo "$CERT_SHA256" | tr '[:lower:]' '[:upper:]')"
+          if [[ "$CERT_SHA256_NORMALIZED" != "$EXPECTED_CERT_SHA256" ]]; then
+            echo "::error::APK signer fingerprint does not match the existing upload certificate."
             exit 1
           fi
 
@@ -222,7 +228,7 @@ jobs:
 
       - name: Remove temporary keystore from runner
         if: always()
-        run: rm -f "${{ runner.temp }}/bdixtester-release.jks"
+        run: rm -f "${{ runner.temp }}/bdixtester-release.p12"
 
       - name: Upload Release Assets Artifact
         if: always()

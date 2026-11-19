@@ -1,5 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: Security Vulnerability Disclosure
-    url: mailto:jubayerhossainbarisal@gmail.com?subject=BDIX%20Tester%20Security%20Report
-    about: Report security issues privately via email instead of opening a public issue (see SECURITY.md).

@@ -263,6 +263,9 @@ class NavigationUiTest {
     composeTestRule.onNodeWithTag("servers_screen").assertIsDisplayed()
     composeTestRule.onNodeWithTag("servers_tab_not_tested").performClick()
     composeTestRule.waitForIdle()
+    composeTestRule
+      .onNodeWithTag("servers_list")
+      .performScrollToNode(hasTestTag("server_inspect_builtin:0"))
     composeTestRule.onNodeWithTag("server_inspect_builtin:0").assertIsDisplayed().performClick()
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithTag("server_quick_inspect_sheet").assertIsDisplayed()
