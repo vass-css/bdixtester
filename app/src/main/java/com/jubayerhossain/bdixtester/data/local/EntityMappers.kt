@@ -173,3 +173,106 @@ private inline fun <reified T : Enum<T>> parseNullableEnum(raw: String): T? =
   enumValues<T>().firstOrNull {
     it.name == raw
   }
+
+fun com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity.toDomain():
+  com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord {
+  val payload = VerificationEvidenceJson.decode(evidenceJson)
+  return com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord(
+    serverId = serverId,
+    lifecycleStatus =
+      com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
+        .fromWireOrName(lifecycleStatus),
+    confidence =
+      com.jubayerhossain.bdixtester.core.model.ConfidenceLevel
+        .fromWireOrName(confidence),
+    reason = reason,
+    recommendedAction = recommendedAction,
+    removalEligible = removalEligible,
+    normalizedDomain = normalizedDomain,
+    dnsSummary =
+      com.jubayerhossain.bdixtester.core.model.DnsSummary
+        .fromWire(dnsSummary),
+    registrationStatus =
+      com.jubayerhossain.bdixtester.core.model.RegistrationLookupStatus
+        .fromWire(registrationStatus),
+    checkedSources = checkedSourcesCsv.split("|").map { it.trim() }.filter { it.isNotEmpty() },
+    observedEvidence = payload.observedEvidence,
+    missingEvidence = missingEvidenceCsv.split("|").map { it.trim() }.filter { it.isNotEmpty() },
+    dns = payload.dns,
+    registration = payload.registration,
+    http = payload.http,
+    ftp = payload.ftp,
+    ispProbes = payload.ispProbes,
+    recheckAfterEpochMs = recheckAfterEpochMs,
+    lastVerifiedAtEpochMs = lastVerifiedAtEpochMs,
+    archivedAtEpochMs = archivedAtEpochMs,
+    archivedByUser = archivedByUser,
+    updatedAtEpochMs = updatedAtEpochMs,
+  )
+}
+
+fun com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord.toEntity():
+  com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity =
+  com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity(
+    serverId = serverId,
+    lifecycleStatus = lifecycleStatus.wireName,
+    confidence = confidence.wireName,
+    reason = reason,
+    recommendedAction = recommendedAction,
+    removalEligible = removalEligible,
+    normalizedDomain = normalizedDomain,
+    dnsSummary = dnsSummary.wireName,
+    registrationStatus = registrationStatus.wireName,
+    evidenceJson =
+      VerificationEvidenceJson.encode(
+        StoredEvidencePayload(
+          observedEvidence = observedEvidence,
+          dns = dns,
+          registration = registration,
+          http = http,
+          ftp = ftp,
+          ispProbes = ispProbes,
+        ),
+      ),
+    checkedSourcesCsv = checkedSources.joinToString("|"),
+    missingEvidenceCsv = missingEvidence.joinToString("|"),
+    recheckAfterEpochMs = recheckAfterEpochMs,
+    lastVerifiedAtEpochMs = lastVerifiedAtEpochMs,
+    archivedAtEpochMs = archivedAtEpochMs,
+    archivedByUser = archivedByUser,
+    updatedAtEpochMs = updatedAtEpochMs,
+  )
+
+fun com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity.toDomain():
+  com.jubayerhossain.bdixtester.core.model.VerificationEventRecord =
+  com.jubayerhossain.bdixtester.core.model.VerificationEventRecord(
+    eventId = eventId,
+    serverId = serverId,
+    previousStatus =
+      com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
+        .fromWireOrName(previousStatus),
+    newStatus =
+      com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
+        .fromWireOrName(newStatus),
+    confidence =
+      com.jubayerhossain.bdixtester.core.model.ConfidenceLevel
+        .fromWireOrName(confidence),
+    triggerSource = triggerSource,
+    summary = summary,
+    detailsJson = detailsJson,
+    createdAtEpochMs = createdAtEpochMs,
+  )
+
+fun com.jubayerhossain.bdixtester.core.model.VerificationEventRecord.toEntity():
+  com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity =
+  com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity(
+    eventId = eventId,
+    serverId = serverId,
+    previousStatus = previousStatus.wireName,
+    newStatus = newStatus.wireName,
+    confidence = confidence.wireName,
+    triggerSource = triggerSource,
+    summary = summary,
+    detailsJson = detailsJson,
+    createdAtEpochMs = createdAtEpochMs,
+  )

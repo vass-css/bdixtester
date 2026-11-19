@@ -11,6 +11,7 @@ import com.jubayerhossain.bdixtester.core.model.ScanSessionState
 import com.jubayerhossain.bdixtester.core.model.ServerCategory
 import com.jubayerhossain.bdixtester.core.model.ServerProtocol
 import com.jubayerhossain.bdixtester.core.model.TestStatus
+import com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
 import com.jubayerhossain.bdixtester.data.catalog.BuiltInCatalog
 import com.jubayerhossain.bdixtester.data.catalog.FtpLinks
 import com.jubayerhossain.bdixtester.data.local.BdixDatabase
@@ -46,7 +47,7 @@ class RoomDatabaseMigrationTest {
     db =
       Room
         .inMemoryDatabaseBuilder(context, BdixDatabase::class.java)
-        .addMigrations(BdixDatabase.MIGRATION_1_2)
+        .addMigrations(BdixDatabase.MIGRATION_1_2, BdixDatabase.MIGRATION_2_3)
         .allowMainThreadQueries()
         .build()
   }
@@ -79,6 +80,30 @@ class RoomDatabaseMigrationTest {
       }
     val json = JSONObject(schemaText)
     assertEquals(2, json.getJSONObject("database").getInt("version"))
+  }
+
+  @Test
+  fun exportedRoomSchemaV3ExistsAndIsValidJson() {
+    val resourceStream =
+      javaClass.classLoader?.getResourceAsStream(
+        "com.jubayerhossain.bdixtester.data.local.BdixDatabase/3.json",
+      )
+    val schemaText =
+      if (resourceStream != null) {
+        resourceStream.bufferedReader().use { it.readText() }
+      } else {
+        val candidates =
+          listOf(
+            File("schemas/com.jubayerhossain.bdixtester.data.local.BdixDatabase/3.json"),
+            File("app/schemas/com.jubayerhossain.bdixtester.data.local.BdixDatabase/3.json"),
+          )
+        val file =
+          candidates.firstOrNull { it.exists() }
+            ?: error("Exported Room schema 3.json not found in test resources or workspace.")
+        file.readText()
+      }
+    val json = JSONObject(schemaText)
+    assertEquals(3, json.getJSONObject("database").getInt("version"))
   }
 
   @Test
@@ -360,5 +385,167 @@ class RoomDatabaseMigrationTest {
           .first()
           .size,
       )
+    }
+
+  @Test
+  fun migration2To3PreservesV2DataAndReversibleArchiveRestorePreservesFavorites() =
+    runTest {
+      val tempDbFile = File.createTempFile("bdix_v2_test", ".db")
+      try {
+        SQLiteDatabase.openOrCreateDatabase(tempDbFile, null).use { v2 ->
+          v2.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS servers (
+                id TEXT NOT NULL PRIMARY KEY,
+                sourceType TEXT NOT NULL,
+                sourceIndex INTEGER,
+                feedId TEXT,
+                remoteEntryId TEXT,
+                name TEXT NOT NULL,
+                originalUrl TEXT NOT NULL,
+                host TEXT NOT NULL,
+                explicitPort INTEGER,
+                protocol TEXT NOT NULL,
+                category TEXT NOT NULL,
+                isFeatured INTEGER NOT NULL,
+                description TEXT,
+                sourceAttribution TEXT,
+                verificationState TEXT NOT NULL,
+                lastReviewedAtEpochMs INTEGER,
+                speedTestUrl TEXT,
+                speedTestMaxBytes INTEGER,
+                isPrivateIp INTEGER NOT NULL,
+                createdAtEpochMs INTEGER NOT NULL,
+                updatedAtEpochMs INTEGER NOT NULL
+            )
+            """.trimIndent(),
+          )
+          v2.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS favorites (
+                serverId TEXT NOT NULL PRIMARY KEY,
+                isPinned INTEGER NOT NULL,
+                displayOrder INTEGER NOT NULL,
+                addedAtEpochMs INTEGER NOT NULL,
+                note TEXT
+            )
+            """.trimIndent(),
+          )
+          v2.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS test_history (
+                historyId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                serverId TEXT NOT NULL,
+                scanRunId TEXT,
+                probeGroupId TEXT,
+                isCoalescedReplica INTEGER NOT NULL,
+                serverNameSnapshot TEXT NOT NULL,
+                urlSnapshot TEXT NOT NULL,
+                protocol TEXT NOT NULL,
+                scanMode TEXT NOT NULL,
+                status TEXT NOT NULL,
+                errorClassification TEXT NOT NULL,
+                testedAtEpochMs INTEGER NOT NULL,
+                dnsTimeMs INTEGER,
+                tcpConnectTimeMs INTEGER,
+                tlsHandshakeTimeMs INTEGER,
+                httpResponseLatencyMs INTEGER,
+                ftpGreetingLatencyMs INTEGER,
+                ftpGreetingCode INTEGER,
+                httpStatusCode INTEGER,
+                finalUrl TEXT,
+                failureMessage TEXT,
+                downloadMbps REAL,
+                downloadMibPerSec REAL,
+                transferredBytes INTEGER,
+                speedElapsedNanos INTEGER,
+                speedTestState TEXT,
+                speedTerminationReason TEXT,
+                networkProfileLabel TEXT,
+                isQuickScanInconclusive INTEGER NOT NULL DEFAULT 0
+            )
+            """.trimIndent(),
+          )
+          v2.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS scan_sessions (
+                scanRunId TEXT NOT NULL PRIMARY KEY,
+                scanMode TEXT NOT NULL,
+                scopeLabel TEXT NOT NULL,
+                state TEXT NOT NULL,
+                totalCatalogEntries INTEGER NOT NULL,
+                uniqueExactUrlCount INTEGER NOT NULL,
+                executedUniqueProbeCount INTEGER NOT NULL,
+                mappedSourceEntryCount INTEGER NOT NULL,
+                startedAtEpochMs INTEGER NOT NULL,
+                updatedAtEpochMs INTEGER NOT NULL,
+                finishedAtEpochMs INTEGER
+            )
+            """.trimIndent(),
+          )
+          v2.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS catalog_metadata (
+                id INTEGER NOT NULL PRIMARY KEY,
+                builtInSourceCount INTEGER NOT NULL,
+                builtInDatabaseCount INTEGER NOT NULL,
+                remoteFeedId TEXT,
+                remoteFeedVersion TEXT,
+                remoteSequence INTEGER NOT NULL,
+                remoteEntryCount INTEGER NOT NULL,
+                lastSyncStatus TEXT NOT NULL,
+                lastSyncMessage TEXT,
+                lastSyncAttemptEpochMs INTEGER,
+                lastSuccessfulSyncEpochMs INTEGER
+            )
+            """.trimIndent(),
+          )
+          v2.execSQL(
+            "INSERT INTO servers VALUES ('custom:v2node','USER_CUSTOM',NULL,NULL,NULL,'V2 Node','http://10.88.88.88','10.88.88.88',NULL,'HTTP','MOVIES',0,NULL,NULL,'UNKNOWN',NULL,NULL,NULL,1,1000,1000)",
+          )
+          v2.execSQL("INSERT INTO favorites VALUES ('custom:v2node',1,0,1000,'Pinned v2 fav')")
+          v2.version = 2
+        }
+
+        val migratedDb =
+          Room
+            .databaseBuilder(context, BdixDatabase::class.java, tempDbFile.path)
+            .addMigrations(BdixDatabase.MIGRATION_1_2, BdixDatabase.MIGRATION_2_3)
+            .allowMainThreadQueries()
+            .build()
+        try {
+          assertNotNull(migratedDb.serverDao().getServerById("custom:v2node"))
+          assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
+
+          val repo = RoomCatalogRepository(database = migratedDb)
+          repo.ensureInitialized()
+
+          assertTrue(repo.endpoints.first().any { it.id == "custom:v2node" })
+
+          repo.markRemovalCandidate("custom:v2node", "Test candidate")
+          assertEquals(
+            VerificationLifecycleStatus.REMOVAL_CANDIDATE,
+            repo.governanceRecords.first()["custom:v2node"]?.lifecycleStatus,
+          )
+
+          repo.archiveEndpoint("custom:v2node", "Reversible archive test")
+          assertTrue(repo.endpoints.first().none { it.id == "custom:v2node" })
+          assertTrue(repo.allCatalogEndpoints.first().any { it.id == "custom:v2node" })
+          assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
+
+          repo.restoreEndpoint("custom:v2node", "Restored in test")
+          assertTrue(repo.endpoints.first().any { it.id == "custom:v2node" })
+          assertEquals(VerificationLifecycleStatus.ACTIVE, repo.governanceRecords.first()["custom:v2node"]?.lifecycleStatus)
+          assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
+
+          val events = repo.observeVerificationEvents("custom:v2node").first()
+          assertTrue(events.size >= 3)
+          repo.closeAndJoin()
+        } finally {
+          migratedDb.close()
+        }
+      } finally {
+        tempDbFile.delete()
+      }
     }
 }

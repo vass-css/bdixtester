@@ -3,17 +3,30 @@ package com.jubayerhossain.bdixtester.data.repository
 import androidx.room.withTransaction
 import com.jubayerhossain.bdixtester.core.model.CatalogAuditSummary
 import com.jubayerhossain.bdixtester.core.model.CatalogSourceType
+import com.jubayerhossain.bdixtester.core.model.ConfidenceLevel
+import com.jubayerhossain.bdixtester.core.model.DnsSummary
+import com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord
+import com.jubayerhossain.bdixtester.core.model.GovernanceDecision
+import com.jubayerhossain.bdixtester.core.model.RegistrationLookupStatus
 import com.jubayerhossain.bdixtester.core.model.ScanSessionState
 import com.jubayerhossain.bdixtester.core.model.ServerCategory
 import com.jubayerhossain.bdixtester.core.model.ServerProtocol
+import com.jubayerhossain.bdixtester.core.model.VerificationEventRecord
+import com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
+import com.jubayerhossain.bdixtester.core.model.VerificationRunProgress
 import com.jubayerhossain.bdixtester.core.model.VerificationState
 import com.jubayerhossain.bdixtester.core.validation.UrlParser
 import com.jubayerhossain.bdixtester.data.catalog.BuiltInCatalog
 import com.jubayerhossain.bdixtester.data.local.BdixDatabase
+import com.jubayerhossain.bdixtester.data.local.StoredEvidencePayload
+import com.jubayerhossain.bdixtester.data.local.VerificationEvidenceJson
+import com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity
 import com.jubayerhossain.bdixtester.data.local.entity.FavoriteEntity
 import com.jubayerhossain.bdixtester.data.local.entity.ScanSessionEntity
+import com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity
 import com.jubayerhossain.bdixtester.data.local.toDomain
 import com.jubayerhossain.bdixtester.data.local.toEntity
+import com.jubayerhossain.bdixtester.data.verification.DomainExtractor
 import com.jubayerhossain.bdixtester.domain.model.CatalogIntegrityReport
 import com.jubayerhossain.bdixtester.domain.model.CatalogSyncState
 import com.jubayerhossain.bdixtester.domain.model.FavoriteInfo
@@ -32,6 +45,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.sync.Mutex
@@ -54,12 +68,41 @@ class RoomCatalogRepository(
   private val historyDao = database.testHistoryDao()
   private val scanSessionDao = database.scanSessionDao()
   private val metadataDao = database.catalogMetadataDao()
+  private val governanceDao = database.governanceDao()
 
-  override val endpoints: StateFlow<List<ServerEndpoint>> =
+  override val allCatalogEndpoints: StateFlow<List<ServerEndpoint>> =
     serverDao
       .observeAllServers()
       .map { rows -> rows.map { it.toDomain() } }
       .stateIn(repoScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+  override val governanceRecords: StateFlow<Map<String, EndpointGovernanceRecord>> =
+    governanceDao
+      .observeAllGovernance()
+      .map { rows -> rows.associate { it.serverId to it.toDomain() } }
+      .stateIn(repoScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
+
+  private val _verificationRunProgress = MutableStateFlow(VerificationRunProgress())
+  override val verificationRunProgress: StateFlow<VerificationRunProgress> = _verificationRunProgress.asStateFlow()
+
+  override val endpoints: StateFlow<List<ServerEndpoint>> =
+    combine(
+      serverDao.observeAllServers(),
+      governanceDao.observeAllGovernance(),
+    ) { serverRows, govRows ->
+      val archivedIds =
+        govRows
+          .asSequence()
+          .filter {
+            VerificationLifecycleStatus.fromWireOrName(it.lifecycleStatus) == VerificationLifecycleStatus.ARCHIVED
+          }.map { it.serverId }
+          .toSet()
+      serverRows
+        .asSequence()
+        .filterNot { it.id in archivedIds }
+        .map { it.toDomain() }
+        .toList()
+    }.stateIn(repoScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
   override val latestResults: StateFlow<Map<String, ServerTestResult>> =
     historyDao
@@ -111,9 +154,17 @@ class RoomCatalogRepository(
   override val catalogIntegrity: StateFlow<CatalogIntegrityReport?> = _catalogIntegrity.asStateFlow()
 
   override suspend fun ensureInitialized(): CatalogIntegrityReport =
+    initializeOrRefreshBuiltIn(forceVerify = false)
+
+  override suspend fun refreshBuiltInCatalog(): CatalogIntegrityReport =
+    initializeOrRefreshBuiltIn(forceVerify = true)
+
+  private suspend fun initializeOrRefreshBuiltIn(forceVerify: Boolean): CatalogIntegrityReport =
     withContext(ioDispatcher) {
       initMutex.withLock {
-        cachedIntegrityReport?.let { return@withLock it }
+        if (!forceVerify) {
+          cachedIntegrityReport?.let { return@withLock it }
+        }
 
         val now = clock()
         val expectedSource =
@@ -130,13 +181,30 @@ class RoomCatalogRepository(
             val entities = expectedSource.map { it.toEntity(nowEpochMs = now) }
             serverDao.syncBuiltInServersAtomically(entities)
           }
-          val runningSessions = scanSessionDao.getRunningSessions()
-          if (runningSessions.isNotEmpty()) {
-            scanSessionDao.markRunningSessionsAs(
-              newState = ScanSessionState.INTERRUPTED.name,
-              updatedAtEpochMs = now,
-              finishedAtEpochMs = now,
-            )
+          val existingGovIds = governanceDao.getAllGovernanceOnce().map { it.serverId }.toSet()
+          val allServers = serverDao.getAllServersOnce()
+          val missingGov =
+            allServers
+              .filterNot { it.id in existingGovIds }
+              .map { ep ->
+                EndpointGovernanceRecord(
+                  serverId = ep.id,
+                  normalizedDomain = DomainExtractor.extractNormalizedDomain(ep.host),
+                  updatedAtEpochMs = now,
+                ).toEntity()
+              }
+          if (missingGov.isNotEmpty()) {
+            governanceDao.upsertGovernanceBatch(missingGov)
+          }
+          if (!forceVerify) {
+            val runningSessions = scanSessionDao.getRunningSessions()
+            if (runningSessions.isNotEmpty()) {
+              scanSessionDao.markRunningSessionsAs(
+                newState = ScanSessionState.INTERRUPTED.name,
+                updatedAtEpochMs = now,
+                finishedAtEpochMs = now,
+              )
+            }
           }
         }
 
@@ -226,13 +294,20 @@ class RoomCatalogRepository(
     )
   }
 
-  override fun getEndpointById(serverId: String): ServerEndpoint? = endpoints.value.firstOrNull { it.id == serverId }
+  override fun getEndpointById(serverId: String): ServerEndpoint? =
+    endpoints.value.firstOrNull { it.id == serverId }
+      ?: allCatalogEndpoints.value.firstOrNull { it.id == serverId }
 
   override fun observeHistoryForServer(serverId: String): Flow<List<ServerTestResult>> =
     historyDao.observeHistoryForServer(serverId).map { rows ->
       rows.map {
         it.toDomain()
       }
+    }
+
+  override fun observeVerificationEvents(serverId: String): Flow<List<VerificationEventRecord>> =
+    governanceDao.observeEventsForServer(serverId).map { rows ->
+      rows.map { it.toDomain() }
     }
 
   override suspend fun toggleFavorite(serverId: String) =
@@ -425,6 +500,217 @@ class RoomCatalogRepository(
       historyDao.deleteOlderThan(cutoff)
     }
 
+  override suspend fun applyGovernanceDecision(
+    decision: GovernanceDecision,
+    triggerSource: String,
+  ) = applyGovernanceDecisions(listOf(decision), triggerSource)
+
+  override suspend fun applyGovernanceDecisions(
+    decisions: List<GovernanceDecision>,
+    triggerSource: String,
+  ) = withContext(ioDispatcher) {
+    if (decisions.isEmpty()) return@withContext
+    val now = clock()
+    database.withTransaction {
+      val existingMap = governanceDao.getAllGovernanceOnce().associateBy { it.serverId }
+      val toUpsert = mutableListOf<EndpointGovernanceEntity>()
+      val eventsToInsert = mutableListOf<VerificationEventEntity>()
+      for (decision in decisions) {
+        val existing = existingMap[decision.serverId]
+        val prevStatus =
+          VerificationLifecycleStatus.fromWireOrName(existing?.lifecycleStatus)
+        val preservedArchived =
+          prevStatus == VerificationLifecycleStatus.ARCHIVED &&
+            decision.status == VerificationLifecycleStatus.ARCHIVED
+        val entity =
+          EndpointGovernanceRecord(
+            serverId = decision.serverId,
+            lifecycleStatus = decision.status,
+            confidence = decision.confidence,
+            reason = decision.reason,
+            recommendedAction = decision.recommendedAction,
+            removalEligible = decision.removalEligible,
+            normalizedDomain = decision.normalizedDomain,
+            dnsSummary =
+              decision.dns?.summary
+                ?: DnsSummary.fromWire(existing?.dnsSummary),
+            registrationStatus =
+              decision.registration?.lookupStatus
+                ?: RegistrationLookupStatus.fromWire(existing?.registrationStatus),
+            checkedSources = decision.checkedSources,
+            observedEvidence = decision.observedEvidence,
+            missingEvidence = decision.missingEvidence,
+            dns = decision.dns,
+            registration = decision.registration,
+            http = decision.http,
+            ftp = decision.ftp,
+            ispProbes = decision.ispProbes,
+            recheckAfterEpochMs = decision.recheckAfterEpochMs,
+            lastVerifiedAtEpochMs = decision.checkedAtEpochMs,
+            archivedAtEpochMs = if (preservedArchived) existing?.archivedAtEpochMs else null,
+            archivedByUser = preservedArchived && (existing?.archivedByUser == true),
+            updatedAtEpochMs = now,
+          ).toEntity()
+        toUpsert += entity
+        eventsToInsert +=
+          VerificationEventEntity(
+            serverId = decision.serverId,
+            previousStatus = prevStatus.wireName,
+            newStatus = decision.status.wireName,
+            confidence = decision.confidence.wireName,
+            triggerSource = triggerSource,
+            summary = decision.reason,
+            detailsJson =
+              VerificationEvidenceJson.encode(
+                StoredEvidencePayload(
+                  observedEvidence = decision.observedEvidence,
+                  dns = decision.dns,
+                  registration = decision.registration,
+                  http = decision.http,
+                  ftp = decision.ftp,
+                  ispProbes = decision.ispProbes,
+                ),
+              ),
+            createdAtEpochMs = now,
+          )
+      }
+      governanceDao.upsertGovernanceBatch(toUpsert)
+      governanceDao.insertEventsBatch(eventsToInsert)
+    }
+  }
+
+  override suspend fun markRemovalCandidate(
+    serverId: String,
+    reason: String,
+  ): Unit =
+    withContext(ioDispatcher) {
+      val now = clock()
+      database.withTransaction {
+        val existing = governanceDao.getGovernanceByServerId(serverId)?.toDomain()
+        val prevStatus = existing?.lifecycleStatus ?: VerificationLifecycleStatus.PENDING_VERIFICATION
+        val server = serverDao.getServerById(serverId)
+        val updated =
+          (
+            existing ?: EndpointGovernanceRecord(
+              serverId = serverId,
+              normalizedDomain = server?.host?.let { DomainExtractor.extractNormalizedDomain(it) },
+            )
+          ).copy(
+            lifecycleStatus = VerificationLifecycleStatus.REMOVAL_CANDIDATE,
+            confidence = ConfidenceLevel.MEDIUM,
+            reason = reason,
+            recommendedAction = "Review evidence before optional archival.",
+            removalEligible = true,
+            archivedAtEpochMs = null,
+            archivedByUser = false,
+            updatedAtEpochMs = now,
+          )
+        governanceDao.upsertGovernance(updated.toEntity())
+        governanceDao.insertEvent(
+          VerificationEventEntity(
+            serverId = serverId,
+            previousStatus = prevStatus.wireName,
+            newStatus = VerificationLifecycleStatus.REMOVAL_CANDIDATE.wireName,
+            confidence = ConfidenceLevel.MEDIUM.wireName,
+            triggerSource = "user_candidate",
+            summary = reason,
+            detailsJson = "{}",
+            createdAtEpochMs = now,
+          ),
+        )
+      }
+      Unit
+    }
+
+  override suspend fun archiveEndpoint(
+    serverId: String,
+    reason: String,
+  ): Unit =
+    withContext(ioDispatcher) {
+      val now = clock()
+      database.withTransaction {
+        val existing = governanceDao.getGovernanceByServerId(serverId)?.toDomain()
+        val prevStatus = existing?.lifecycleStatus ?: VerificationLifecycleStatus.PENDING_VERIFICATION
+        val server = serverDao.getServerById(serverId)
+        val updated =
+          (
+            existing ?: EndpointGovernanceRecord(
+              serverId = serverId,
+              normalizedDomain = server?.host?.let { DomainExtractor.extractNormalizedDomain(it) },
+            )
+          ).copy(
+            lifecycleStatus = VerificationLifecycleStatus.ARCHIVED,
+            confidence = ConfidenceLevel.HIGH,
+            reason = reason,
+            recommendedAction = "Archived reversibly. Tap Restore anytime to bring back to active catalog.",
+            archivedAtEpochMs = now,
+            archivedByUser = true,
+            updatedAtEpochMs = now,
+          )
+        governanceDao.upsertGovernance(updated.toEntity())
+        governanceDao.insertEvent(
+          VerificationEventEntity(
+            serverId = serverId,
+            previousStatus = prevStatus.wireName,
+            newStatus = VerificationLifecycleStatus.ARCHIVED.wireName,
+            confidence = ConfidenceLevel.HIGH.wireName,
+            triggerSource = "user_archive",
+            summary = reason,
+            detailsJson = "{}",
+            createdAtEpochMs = now,
+          ),
+        )
+      }
+      Unit
+    }
+
+  override suspend fun restoreEndpoint(
+    serverId: String,
+    reason: String,
+  ): Unit =
+    withContext(ioDispatcher) {
+      val now = clock()
+      database.withTransaction {
+        val existing = governanceDao.getGovernanceByServerId(serverId)?.toDomain()
+        val prevStatus = existing?.lifecycleStatus ?: VerificationLifecycleStatus.ARCHIVED
+        val server = serverDao.getServerById(serverId)
+        val updated =
+          (
+            existing ?: EndpointGovernanceRecord(
+              serverId = serverId,
+              normalizedDomain = server?.host?.let { DomainExtractor.extractNormalizedDomain(it) },
+            )
+          ).copy(
+            lifecycleStatus = VerificationLifecycleStatus.ACTIVE,
+            confidence = ConfidenceLevel.MEDIUM,
+            reason = reason,
+            recommendedAction = "Restored to active catalog.",
+            removalEligible = false,
+            archivedAtEpochMs = null,
+            archivedByUser = false,
+            updatedAtEpochMs = now,
+          )
+        governanceDao.upsertGovernance(updated.toEntity())
+        governanceDao.insertEvent(
+          VerificationEventEntity(
+            serverId = serverId,
+            previousStatus = prevStatus.wireName,
+            newStatus = VerificationLifecycleStatus.ACTIVE.wireName,
+            confidence = ConfidenceLevel.MEDIUM.wireName,
+            triggerSource = "user_restore",
+            summary = reason,
+            detailsJson = "{}",
+            createdAtEpochMs = now,
+          ),
+        )
+      }
+      Unit
+    }
+
+  override fun updateVerificationProgress(progress: VerificationRunProgress) {
+    _verificationRunProgress.value = progress
+  }
+
   override suspend fun resetAllLocalUserData() =
     withContext(ioDispatcher) {
       database.withTransaction {
@@ -434,6 +720,8 @@ class RoomCatalogRepository(
         serverDao.deleteAllCustomServers()
         serverDao.deleteRemoteCatalogServers()
         metadataDao.deleteMetadata(REMOTE_FEED_ID)
+        governanceDao.clearAllEvents()
+        governanceDao.clearAllGovernance()
       }
     }
 

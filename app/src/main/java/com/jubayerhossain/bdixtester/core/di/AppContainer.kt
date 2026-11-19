@@ -18,8 +18,12 @@ import com.jubayerhossain.bdixtester.data.preferences.SettingsDataStoreRepositor
 import com.jubayerhossain.bdixtester.data.preferences.SettingsRepository
 import com.jubayerhossain.bdixtester.data.remote.CatalogSignatureVerifier
 import com.jubayerhossain.bdixtester.data.remote.CatalogSyncScheduler
+import com.jubayerhossain.bdixtester.data.remote.CatalogVerificationScheduler
 import com.jubayerhossain.bdixtester.data.remote.RemoteCatalogSyncManager
 import com.jubayerhossain.bdixtester.data.repository.RoomCatalogRepository
+import com.jubayerhossain.bdixtester.data.verification.CatalogGovernanceCoordinator
+import com.jubayerhossain.bdixtester.data.verification.DohDnsResolver
+import com.jubayerhossain.bdixtester.data.verification.RdapLookupClient
 import com.jubayerhossain.bdixtester.domain.repository.CatalogRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,6 +82,18 @@ class AppContainer(
     )
   }
   val catalogSyncScheduler by lazy { CatalogSyncScheduler(appContext) }
+
+  val dohDnsResolver by lazy { DohDnsResolver(baseClient = okHttpClient) }
+  val rdapLookupClient by lazy { RdapLookupClient(baseClient = okHttpClient) }
+  val catalogGovernanceCoordinator by lazy {
+    CatalogGovernanceCoordinator(
+      catalogRepository = catalogRepository,
+      probeExecutor = probeExecutor,
+      dnsResolver = dohDnsResolver,
+      rdapClient = rdapLookupClient,
+    )
+  }
+  val catalogVerificationScheduler by lazy { CatalogVerificationScheduler(appContext) }
 
   val appSettings: StateFlow<AppSettings> =
     settingsRepository.settings

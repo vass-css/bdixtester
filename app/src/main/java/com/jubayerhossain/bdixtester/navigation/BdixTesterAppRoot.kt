@@ -40,10 +40,10 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +68,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.jubayerhossain.bdixtester.R
 import com.jubayerhossain.bdixtester.core.di.AppContainer
+import com.jubayerhossain.bdixtester.core.model.SyncStatus
 import com.jubayerhossain.bdixtester.core.util.BrowserLaunchResult
 import com.jubayerhossain.bdixtester.core.util.ExternalBrowserHelper
 import com.jubayerhossain.bdixtester.feature.dashboard.DashboardScreen
@@ -75,10 +76,13 @@ import com.jubayerhossain.bdixtester.feature.dashboard.DashboardViewModel
 import com.jubayerhossain.bdixtester.feature.favorites.FavoritesViewModel
 import com.jubayerhossain.bdixtester.feature.favorites.HistoryScreen
 import com.jubayerhossain.bdixtester.feature.favorites.SavedServersScreen
+import com.jubayerhossain.bdixtester.feature.governance.CatalogGovernanceScreen
+import com.jubayerhossain.bdixtester.feature.governance.CatalogGovernanceViewModel
 import com.jubayerhossain.bdixtester.feature.scan.ScanViewModel
 import com.jubayerhossain.bdixtester.feature.servers.ServersScreen
 import com.jubayerhossain.bdixtester.feature.servers.ServersViewModel
 import com.jubayerhossain.bdixtester.feature.settings.SettingsScreen
+import com.jubayerhossain.bdixtester.feature.settings.SettingsSyncFeedback
 import com.jubayerhossain.bdixtester.feature.settings.SettingsViewModel
 import com.jubayerhossain.bdixtester.ui.components.BdixMotionSpecs
 import com.jubayerhossain.bdixtester.ui.components.CustomServerDialog
@@ -138,12 +142,11 @@ fun BdixTesterAppRoot(
     viewModel(factory = FavoritesViewModel.factory(appContainer.catalogRepository))
   val settingsViewModel: SettingsViewModel =
     viewModel(factory = SettingsViewModel.factory(appContainer))
+  val catalogGovernanceViewModel: CatalogGovernanceViewModel =
+    viewModel(factory = CatalogGovernanceViewModel.factory(appContainer, context))
 
   val dashboardUiState by dashboardViewModel.uiState.collectAsStateWithLifecycle()
   val serversUiState by serversViewModel.uiState.collectAsStateWithLifecycle()
-  val updateTriggeredMessage = stringResource(R.string.drawer_update_triggered)
-  val configureHintMessage = stringResource(R.string.drawer_update_configure_hint)
-  val settingsLabel = stringResource(R.string.nav_settings)
   val ftpUnsupportedMessage = stringResource(R.string.details_open_browser_ftp_unsupported)
   val invalidUrlMessage = stringResource(R.string.details_open_browser_invalid_scheme)
   val browserErrorMessage = stringResource(R.string.details_open_browser_error)
@@ -194,27 +197,52 @@ fun BdixTesterAppRoot(
     }
   }
 
+  LaunchedEffect(settingsViewModel) {
+    settingsViewModel.syncFeedback.collect { feedback ->
+      val feedbackText =
+        when (feedback) {
+          is SettingsSyncFeedback.BuiltInRefreshed -> {
+            context.getString(
+              R.string.settings_sync_builtin_verified,
+              feedback.bdixCount,
+              feedback.ottCount,
+            )
+          }
+
+          is SettingsSyncFeedback.RemoteSyncCompleted -> {
+            when (feedback.status) {
+              SyncStatus.UPDATED -> {
+                context.getString(R.string.settings_sync_feedback_updated, feedback.entryCount)
+              }
+
+              SyncStatus.NOT_MODIFIED -> {
+                context.getString(R.string.settings_sync_feedback_not_modified)
+              }
+
+              SyncStatus.WIFI_REQUIRED -> {
+                context.getString(R.string.settings_sync_feedback_wifi_required)
+              }
+
+              else -> {
+                context.getString(R.string.settings_sync_feedback_failed, feedback.message)
+              }
+            }
+          }
+        }
+      snackbarHostState.showSnackbar(
+        message = feedbackText,
+        duration = SnackbarDuration.Short,
+      )
+    }
+  }
+
   fun triggerCatalogSyncFromToolbar() {
     scope.launch {
       val remoteUrl = appContainer.settingsRepository.settings.first().remoteCatalogUrl
       if (remoteUrl.isNotBlank()) {
         settingsViewModel.syncCatalogNow(remoteUrl)
-        scope.launch {
-          snackbarHostState.showSnackbar(
-            message = updateTriggeredMessage,
-            duration = SnackbarDuration.Short,
-          )
-        }
       } else {
-        val result =
-          snackbarHostState.showSnackbar(
-            message = configureHintMessage,
-            actionLabel = settingsLabel,
-            duration = SnackbarDuration.Long,
-          )
-        if (result == SnackbarResult.ActionPerformed) {
-          navigateToTopLevel(BdixRoutes.SETTINGS)
-        }
+        settingsViewModel.refreshBuiltInCatalogNow()
       }
     }
   }
@@ -334,6 +362,8 @@ fun BdixTesterAppRoot(
             onSpeedTestMaxBytesChange = settingsViewModel::setSpeedTestMaxBytes,
             onManualNetworkLabelSave = settingsViewModel::setManualNetworkLabel,
             onRemoteCatalogUrlSave = settingsViewModel::setRemoteCatalogUrl,
+            onSaveRemoteCatalogUrlAndSync = settingsViewModel::saveRemoteUrlAndSync,
+            onRefreshBuiltInCatalog = settingsViewModel::refreshBuiltInCatalogNow,
             onAutoUpdatesChange = settingsViewModel::setAutoCatalogUpdates,
             onWifiOnlyChange = settingsViewModel::setWifiOnlyCatalogUpdates,
             onCrossOriginChange = settingsViewModel::setAllowCrossOriginPayload,
@@ -348,7 +378,31 @@ fun BdixTesterAppRoot(
               serversViewModel.clearCustomServerError()
               showAddServerDialog = true
             },
+            onOpenCatalogGovernance = {
+              navController.navigate(BdixRoutes.CATALOG_GOVERNANCE) {
+                launchSingleTop = true
+              }
+            },
             onOpenExternalUrl = ::openExternalUrl,
+          )
+        }
+
+        composable(BdixRoutes.CATALOG_GOVERNANCE) {
+          val governanceUiState by catalogGovernanceViewModel.uiState.collectAsStateWithLifecycle()
+          CatalogGovernanceScreen(
+            uiState = governanceUiState,
+            onNavigateBack = { navController.popBackStack() },
+            onSelectFilter = catalogGovernanceViewModel::selectFilter,
+            onSearchQueryChange = catalogGovernanceViewModel::updateSearchQuery,
+            onRunVerification = { catalogGovernanceViewModel.runSafeVerification() },
+            onImportIspProbesJson = catalogGovernanceViewModel::importIspProbesJson,
+            onOpenEvidence = catalogGovernanceViewModel::openEvidenceSheet,
+            onDismissEvidence = catalogGovernanceViewModel::closeEvidenceSheet,
+            onVerifySingle = catalogGovernanceViewModel::verifySingleEndpoint,
+            onMarkCandidate = catalogGovernanceViewModel::markRemovalCandidate,
+            onArchive = catalogGovernanceViewModel::archiveEndpoint,
+            onRestore = catalogGovernanceViewModel::restoreEndpoint,
+            observeEventsFor = catalogGovernanceViewModel::observeEventsFor,
           )
         }
       }

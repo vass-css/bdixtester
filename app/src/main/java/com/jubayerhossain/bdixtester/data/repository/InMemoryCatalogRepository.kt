@@ -1,7 +1,13 @@
 package com.jubayerhossain.bdixtester.data.repository
 
 import com.jubayerhossain.bdixtester.core.model.CatalogAuditSummary
+import com.jubayerhossain.bdixtester.core.model.ConfidenceLevel
+import com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord
+import com.jubayerhossain.bdixtester.core.model.GovernanceDecision
 import com.jubayerhossain.bdixtester.core.model.ServerCategory
+import com.jubayerhossain.bdixtester.core.model.VerificationEventRecord
+import com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus
+import com.jubayerhossain.bdixtester.core.model.VerificationRunProgress
 import com.jubayerhossain.bdixtester.data.catalog.BuiltInCatalog
 import com.jubayerhossain.bdixtester.domain.model.CatalogIntegrityReport
 import com.jubayerhossain.bdixtester.domain.model.CatalogSyncState
@@ -29,6 +35,22 @@ class InMemoryCatalogRepository(
     } else {
       BuiltInCatalog.parseSourceCatalog(rawLinks)
     }
+
+  private val _allCatalogEndpoints = MutableStateFlow(parsedEndpoints)
+  override val allCatalogEndpoints: StateFlow<List<ServerEndpoint>> = _allCatalogEndpoints.asStateFlow()
+
+  private val _governanceRecords =
+    MutableStateFlow(
+      parsedEndpoints.associate { ep ->
+        ep.id to EndpointGovernanceRecord(serverId = ep.id)
+      },
+    )
+  override val governanceRecords: StateFlow<Map<String, EndpointGovernanceRecord>> = _governanceRecords.asStateFlow()
+
+  private val _verificationRunProgress = MutableStateFlow(VerificationRunProgress())
+  override val verificationRunProgress: StateFlow<VerificationRunProgress> = _verificationRunProgress.asStateFlow()
+
+  private val _verificationEvents = MutableStateFlow<List<VerificationEventRecord>>(emptyList())
 
   private val _endpoints = MutableStateFlow(parsedEndpoints)
   override val endpoints: StateFlow<List<ServerEndpoint>> = _endpoints.asStateFlow()
@@ -83,10 +105,17 @@ class InMemoryCatalogRepository(
 
   override suspend fun ensureInitialized(): CatalogIntegrityReport = _catalogIntegrity.value!!
 
-  override fun getEndpointById(serverId: String): ServerEndpoint? = _endpoints.value.firstOrNull { it.id == serverId }
+  override suspend fun refreshBuiltInCatalog(): CatalogIntegrityReport = _catalogIntegrity.value!!
+
+  override fun getEndpointById(serverId: String): ServerEndpoint? =
+    _endpoints.value.firstOrNull { it.id == serverId }
+      ?: _allCatalogEndpoints.value.firstOrNull { it.id == serverId }
 
   override fun observeHistoryForServer(serverId: String): Flow<List<ServerTestResult>> =
     _history.map { list -> list.filter { it.serverId == serverId } }
+
+  override fun observeVerificationEvents(serverId: String): Flow<List<VerificationEventRecord>> =
+    _verificationEvents.map { list -> list.filter { it.serverId == serverId } }
 
   override suspend fun toggleFavorite(serverId: String) {
     val current = _favorites.value.toMutableMap()
@@ -164,6 +193,177 @@ class InMemoryCatalogRepository(
   }
 
   override suspend fun pruneExpiredHistory(retentionDays: Int) = Unit
+
+  override suspend fun applyGovernanceDecision(
+    decision: GovernanceDecision,
+    triggerSource: String,
+  ) {
+    applyGovernanceDecisions(listOf(decision), triggerSource)
+  }
+
+  override suspend fun applyGovernanceDecisions(
+    decisions: List<GovernanceDecision>,
+    triggerSource: String,
+  ) {
+    if (decisions.isEmpty()) return
+    val map = _governanceRecords.value.toMutableMap()
+    val events = _verificationEvents.value.toMutableList()
+    decisions.forEach { d ->
+      val prev = map[d.serverId]?.lifecycleStatus ?: VerificationLifecycleStatus.PENDING_VERIFICATION
+      map[d.serverId] =
+        EndpointGovernanceRecord(
+          serverId = d.serverId,
+          lifecycleStatus = d.status,
+          confidence = d.confidence,
+          reason = d.reason,
+          recommendedAction = d.recommendedAction,
+          removalEligible = d.removalEligible,
+          normalizedDomain = d.normalizedDomain,
+          dnsSummary = d.dns?.summary ?: map[d.serverId]?.dnsSummary ?: com.jubayerhossain.bdixtester.core.model.DnsSummary.NOT_CHECKED,
+          registrationStatus =
+            d.registration?.lookupStatus
+              ?: map[d.serverId]?.registrationStatus
+              ?: com.jubayerhossain.bdixtester.core.model.RegistrationLookupStatus.NOT_CHECKED,
+          checkedSources = d.checkedSources,
+          observedEvidence = d.observedEvidence,
+          missingEvidence = d.missingEvidence,
+          dns = d.dns,
+          registration = d.registration,
+          http = d.http,
+          ftp = d.ftp,
+          ispProbes = d.ispProbes,
+          recheckAfterEpochMs = d.recheckAfterEpochMs,
+          lastVerifiedAtEpochMs = d.checkedAtEpochMs,
+          archivedAtEpochMs = if (d.status == VerificationLifecycleStatus.ARCHIVED) d.checkedAtEpochMs else null,
+          archivedByUser = d.status == VerificationLifecycleStatus.ARCHIVED,
+          updatedAtEpochMs = d.checkedAtEpochMs,
+        )
+      events.add(
+        0,
+        VerificationEventRecord(
+          eventId = events.size + 1L,
+          serverId = d.serverId,
+          previousStatus = prev,
+          newStatus = d.status,
+          confidence = d.confidence,
+          triggerSource = triggerSource,
+          summary = d.reason,
+          createdAtEpochMs = d.checkedAtEpochMs,
+        ),
+      )
+    }
+    _governanceRecords.value = map
+    _verificationEvents.value = events
+    recomputeVisibleEndpoints()
+  }
+
+  override suspend fun markRemovalCandidate(
+    serverId: String,
+    reason: String,
+  ) {
+    val now = System.currentTimeMillis()
+    val current = _governanceRecords.value[serverId] ?: EndpointGovernanceRecord(serverId = serverId)
+    val updated =
+      current.copy(
+        lifecycleStatus = VerificationLifecycleStatus.REMOVAL_CANDIDATE,
+        confidence = ConfidenceLevel.MEDIUM,
+        reason = reason,
+        removalEligible = true,
+        updatedAtEpochMs = now,
+      )
+    _governanceRecords.value = _governanceRecords.value + (serverId to updated)
+    _verificationEvents.value =
+      listOf(
+        VerificationEventRecord(
+          eventId = _verificationEvents.value.size + 1L,
+          serverId = serverId,
+          previousStatus = current.lifecycleStatus,
+          newStatus = VerificationLifecycleStatus.REMOVAL_CANDIDATE,
+          confidence = ConfidenceLevel.MEDIUM,
+          triggerSource = "user_candidate",
+          summary = reason,
+          createdAtEpochMs = now,
+        ),
+      ) + _verificationEvents.value
+    recomputeVisibleEndpoints()
+  }
+
+  override suspend fun archiveEndpoint(
+    serverId: String,
+    reason: String,
+  ) {
+    val now = System.currentTimeMillis()
+    val current = _governanceRecords.value[serverId] ?: EndpointGovernanceRecord(serverId = serverId)
+    val updated =
+      current.copy(
+        lifecycleStatus = VerificationLifecycleStatus.ARCHIVED,
+        confidence = ConfidenceLevel.HIGH,
+        reason = reason,
+        archivedAtEpochMs = now,
+        archivedByUser = true,
+        updatedAtEpochMs = now,
+      )
+    _governanceRecords.value = _governanceRecords.value + (serverId to updated)
+    _verificationEvents.value =
+      listOf(
+        VerificationEventRecord(
+          eventId = _verificationEvents.value.size + 1L,
+          serverId = serverId,
+          previousStatus = current.lifecycleStatus,
+          newStatus = VerificationLifecycleStatus.ARCHIVED,
+          confidence = ConfidenceLevel.HIGH,
+          triggerSource = "user_archive",
+          summary = reason,
+          createdAtEpochMs = now,
+        ),
+      ) + _verificationEvents.value
+    recomputeVisibleEndpoints()
+  }
+
+  override suspend fun restoreEndpoint(
+    serverId: String,
+    reason: String,
+  ) {
+    val now = System.currentTimeMillis()
+    val current = _governanceRecords.value[serverId] ?: EndpointGovernanceRecord(serverId = serverId)
+    val updated =
+      current.copy(
+        lifecycleStatus = VerificationLifecycleStatus.ACTIVE,
+        confidence = ConfidenceLevel.MEDIUM,
+        reason = reason,
+        removalEligible = false,
+        archivedAtEpochMs = null,
+        archivedByUser = false,
+        updatedAtEpochMs = now,
+      )
+    _governanceRecords.value = _governanceRecords.value + (serverId to updated)
+    _verificationEvents.value =
+      listOf(
+        VerificationEventRecord(
+          eventId = _verificationEvents.value.size + 1L,
+          serverId = serverId,
+          previousStatus = current.lifecycleStatus,
+          newStatus = VerificationLifecycleStatus.ACTIVE,
+          confidence = ConfidenceLevel.MEDIUM,
+          triggerSource = "user_restore",
+          summary = reason,
+          createdAtEpochMs = now,
+        ),
+      ) + _verificationEvents.value
+    recomputeVisibleEndpoints()
+  }
+
+  override fun updateVerificationProgress(progress: VerificationRunProgress) {
+    _verificationRunProgress.value = progress
+  }
+
+  private fun recomputeVisibleEndpoints() {
+    val gov = _governanceRecords.value
+    _endpoints.value =
+      _allCatalogEndpoints.value.filter {
+        gov[it.id]?.lifecycleStatus != VerificationLifecycleStatus.ARCHIVED
+      }
+  }
 
   override suspend fun resetAllLocalUserData() {
     _favorites.value = emptyMap()

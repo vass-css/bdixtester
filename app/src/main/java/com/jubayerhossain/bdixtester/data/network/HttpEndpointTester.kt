@@ -168,6 +168,10 @@ class TooManyRedirectsException(
   message: String,
 ) : IOException(message)
 
+class SsrfRedirectBlockedException(
+  message: String,
+) : IOException(message)
+
 class HttpEndpointTester(
   baseClient: OkHttpClient = OkHttpClient(),
   private val clock: () -> Long = { System.currentTimeMillis() },
@@ -427,6 +431,10 @@ class HttpEndpointTester(
         "Blocked HTTPS-to-HTTP downgrade redirect from ${base.host} to ${resolved.host}.",
       )
     }
+    val ssrfResult = SsrfGuard.validateRedirectTarget(base, resolved)
+    if (ssrfResult is SsrfCheckResult.Blocked) {
+      throw SsrfRedirectBlockedException(ssrfResult.reason)
+    }
     return resolved.toString()
   }
 
@@ -442,6 +450,8 @@ class HttpEndpointTester(
       401 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_AUTH_REQUIRED
       403 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_FORBIDDEN
       404 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_NOT_FOUND
+      410 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_GONE
+      429 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_RATE_LIMITED
       in 400..499 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_CLIENT_ERROR
       in 500..599 -> TestStatus.RESTRICTED to ErrorClassification.HTTP_SERVER_ERROR
       else -> TestStatus.RESTRICTED to ErrorClassification.HTTP_CLIENT_ERROR
@@ -461,6 +471,12 @@ class HttpEndpointTester(
             TestStatus.UNREACHABLE,
             ErrorClassification.PROTOCOL_DOWNGRADE_BLOCKED,
             exception.message ?: "HTTPS downgrade redirect blocked.",
+          )
+        is SsrfRedirectBlockedException ->
+          Triple(
+            TestStatus.UNREACHABLE,
+            ErrorClassification.SSRF_REDIRECT_BLOCKED,
+            exception.message ?: "Unsafe redirect to non-public target blocked.",
           )
         is UnsupportedRedirectSchemeException ->
           Triple(

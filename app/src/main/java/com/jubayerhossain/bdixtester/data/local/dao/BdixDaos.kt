@@ -179,3 +179,45 @@ interface CatalogMetadataDao {
   @Query("DELETE FROM catalog_metadata WHERE feedId = :feedId")
   suspend fun deleteMetadata(feedId: String)
 }
+
+@Dao
+interface GovernanceDao {
+  @Query("SELECT * FROM endpoint_governance")
+  fun observeAllGovernance(): Flow<List<com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity>>
+
+  @Query("SELECT * FROM endpoint_governance")
+  suspend fun getAllGovernanceOnce(): List<com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity>
+
+  @Query("SELECT * FROM endpoint_governance WHERE serverId = :serverId LIMIT 1")
+  suspend fun getGovernanceByServerId(
+    serverId: String,
+  ): com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity?
+
+  @Query("SELECT * FROM verification_events WHERE serverId = :serverId ORDER BY createdAtEpochMs DESC, eventId DESC")
+  fun observeEventsForServer(
+    serverId: String,
+  ): Flow<List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>>
+
+  @Query("SELECT * FROM verification_events ORDER BY createdAtEpochMs DESC, eventId DESC LIMIT :limit")
+  suspend fun getRecentEvents(limit: Int = 100): List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>
+
+  @Upsert
+  suspend fun upsertGovernance(entity: com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity)
+
+  @Upsert
+  suspend fun upsertGovernanceBatch(
+    entities: List<com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity>,
+  )
+
+  @Insert(onConflict = OnConflictStrategy.ABORT)
+  suspend fun insertEvent(event: com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity): Long
+
+  @Insert(onConflict = OnConflictStrategy.ABORT)
+  suspend fun insertEventsBatch(events: List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>)
+
+  @Query("DELETE FROM verification_events")
+  suspend fun clearAllEvents()
+
+  @Query("DELETE FROM endpoint_governance")
+  suspend fun clearAllGovernance()
+}

@@ -64,6 +64,20 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
         run: npm run format:check
 
+      - name: Setup Python
+        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate catalogs and governance manifest
+        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
+        run: python3 -m tools.catalog_verifier validate-catalog --repo-root .
+
+      - name: Run Python verification tests
+        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
+        run: python3 -m unittest discover -s tools/catalog_verifier/tests -v
+
       - name: Generate debug keystore
         if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
         run: |

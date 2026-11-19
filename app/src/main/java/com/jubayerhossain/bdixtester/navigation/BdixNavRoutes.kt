@@ -22,6 +22,7 @@ object BdixRoutes {
   const val FAVORITES = "favorites"
   const val HISTORY = "history"
   const val SETTINGS = "settings"
+  const val CATALOG_GOVERNANCE = "catalog_governance"
 }
 
 enum class TopLevelDestination(

@@ -343,4 +343,65 @@
     <string name="details_latency_label">Latency</string>
     <string name="details_throughput_label">Throughput</string>
     <string name="action_inspect_server">Inspect details for %1$s</string>
+
+    <!-- Catalog Governance & Restore -->
+    <string name="settings_governance_row_title">Catalog Governance &amp; Restore</string>
+    <string name="settings_governance_row_subtitle">%1$d active · %2$d candidates · %3$d archived</string>
+    <string name="governance_title">Catalog Governance &amp; Restore</string>
+    <string name="governance_overview_title">Multi-Layer Verification Overview</string>
+    <string name="governance_policy_note">Conservative policy: unreachable from your current ISP, private IPv4 ranges, TLS errors, HTTP 401/403/404/429/5xx, and temporary DNS errors never delete endpoints. Only corroborated dead domains become Removal Candidates.</string>
+    <string name="governance_run_verification">Run Safe Verification</string>
+    <string name="governance_running_progress">Verifying %1$d / %2$d (%3$s)</string>
+    <string name="governance_import_isp_probes">Import ISP Probes JSON</string>
+    <string name="governance_isp_import_success">Loaded %1$d fresh Bangladesh ISP probe(s) (%2$d stale skipped).</string>
+    <string name="governance_isp_import_error">Invalid ISP probe JSON: %1$s</string>
+    <string name="governance_search_placeholder">Search endpoint, domain, or host…</string>
+    <string name="governance_filter_all">All (%1$d)</string>
+    <string name="governance_filter_active">Active (%1$d)</string>
+    <string name="governance_filter_isp_restricted">ISP Restricted (%1$d)</string>
+    <string name="governance_filter_unreachable">Unreachable (%1$d)</string>
+    <string name="governance_filter_temp_unavailable">Temp Unavailable (%1$d)</string>
+    <string name="governance_filter_expired_suspected">Expired Suspected (%1$d)</string>
+    <string name="governance_filter_candidates">Candidates (%1$d)</string>
+    <string name="governance_filter_archived">Archived (%1$d)</string>
+    <string name="governance_filter_unverified">Unverified (%1$d)</string>
+    <string name="governance_empty_title">No endpoints match this filter</string>
+    <string name="governance_empty_desc">Try switching filter chips or run safe verification to gather multi-resolver DNS and RDAP evidence.</string>
+    <string name="governance_evidence_sheet_title">Verification Evidence &amp; Lifecycle</string>
+    <string name="governance_section_summary">Decision &amp; Confidence</string>
+    <string name="governance_section_dns">Domain &amp; Multi-Resolver DNS</string>
+    <string name="governance_section_registration">Domain Registration (RDAP)</string>
+    <string name="governance_section_http_ftp">Current Network Connectivity Probe</string>
+    <string name="governance_section_isp_probes">Bangladesh ISP Probe Evidence</string>
+    <string name="governance_section_missing">Missing Evidence &amp; Limitations</string>
+    <string name="governance_section_history">Verification Audit Timeline</string>
+    <string name="governance_no_isp_probes">No external Bangladesh ISP probe JSON supplied yet. Unreachable endpoints remain protected.</string>
+    <string name="governance_action_verify_one">Verify Now</string>
+    <string name="governance_action_mark_candidate">Mark Candidate</string>
+    <string name="governance_action_archive">Archive</string>
+    <string name="governance_action_restore">Restore to Catalog</string>
+    <string name="governance_archive_dialog_title">Archive \"%1$s\"?</string>
+    <string name="governance_archive_dialog_body">Archiving hides this endpoint from active server lists and scans. Your saved favorites, pin state, and history remain preserved and can be restored anytime in 1 tap.</string>
+    <string name="governance_action_completed_candidate">Marked as removal candidate.</string>
+    <string name="governance_action_completed_archive">Endpoint archived reversibly.</string>
+    <string name="governance_action_completed_restore">Endpoint restored to active catalog.</string>
+    <string name="governance_notif_channel_name">Catalog Verification Status</string>
+    <string name="governance_notif_channel_desc">Summary updates when conservative catalog verification finishes.</string>
+    <string name="governance_notif_title">Catalog Verification Complete</string>
+    <string name="governance_notif_summary_candidates">Checked %1$d endpoints · %2$d removal candidate(s) ready for review.</string>
+    <string name="governance_notif_summary_clean">Checked %1$d endpoints · No removal candidates detected.</string>
+    <string name="governance_notif_failed">Verification paused: %1$s</string>
+
+    <!-- Catalog Sync Options & Feedback -->
+    <string name="settings_sync_options_title">Choose Catalog Sync Action</string>
+    <string name="settings_sync_options_body">No external remote manifest URL is set yet. Refresh and verify the bundled offline catalog, or configure a signed HTTPS manifest URL.</string>
+    <string name="settings_sync_option_builtin">Refresh Built-in Catalog (%1$d BDIX + %2$d OTT)</string>
+    <string name="settings_sync_option_remote">Set Remote Signed URL</string>
+    <string name="settings_sync_save_and_sync">Save &amp; Sync</string>
+    <string name="settings_sync_builtin_verified">Built-in catalog verified · %1$d BDIX + %2$d OTT ready.</string>
+    <string name="settings_sync_builtin_badge">Built-in verified · %1$d BDIX · %2$d OTT</string>
+    <string name="settings_sync_feedback_updated">Remote catalog updated (%1$d entries synced).</string>
+    <string name="settings_sync_feedback_not_modified">Remote catalog is already up to date.</string>
+    <string name="settings_sync_feedback_wifi_required">Wi-Fi connection required for remote catalog sync.</string>
+    <string name="settings_sync_feedback_failed">Catalog sync failed: %1$s</string>
 </resources>

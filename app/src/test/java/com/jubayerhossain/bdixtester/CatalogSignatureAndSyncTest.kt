@@ -296,4 +296,33 @@ class CatalogSignatureAndSyncTest {
       assertEquals(SyncStatus.REJECTED_ROLLBACK, resRollback.status)
       assertEquals(2L, resRollback.catalogSequence)
     }
+
+  @Test
+  fun refreshBuiltInCatalogPreservesUserDataGovernanceAndRemoteSequence() =
+    runTest {
+      val repo = RoomCatalogRepository(db).also { activeRepo = it }
+      val initial = repo.ensureInitialized()
+      assertTrue(initial.isConsistent)
+
+      repo.saveCustomServer(
+        name = "Local Custom Node",
+        rawUrl = "http://192.168.0.10",
+        category = com.jubayerhossain.bdixtester.core.model.ServerCategory.FTP_FILES,
+      )
+      repo.toggleFavorite("builtin:0")
+      repo.archiveEndpoint("builtin:1", "Manually archived in test")
+
+      val refreshed = repo.refreshBuiltInCatalog()
+      assertTrue(refreshed.isConsistent)
+      assertEquals(BuiltInCatalog.DEFAULT_CURATED_COUNT, refreshed.builtInDatabaseCount)
+      assertTrue(db.favoriteDao().getFavorite("builtin:0") != null)
+      assertEquals(
+        com.jubayerhossain.bdixtester.core.model.VerificationLifecycleStatus.ARCHIVED.wireName,
+        db.governanceDao().getGovernanceByServerId("builtin:1")?.lifecycleStatus,
+      )
+      assertTrue(
+        db.serverDao().getAllServersOnce().any { it.name == "Local Custom Node" },
+      )
+      assertEquals(null, db.catalogMetadataDao().getMetadata(RoomCatalogRepository.REMOTE_FEED_ID))
+    }
 }

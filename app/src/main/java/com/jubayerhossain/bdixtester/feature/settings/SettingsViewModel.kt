@@ -6,20 +6,41 @@ import androidx.lifecycle.viewModelScope
 import com.jubayerhossain.bdixtester.core.di.AppContainer
 import com.jubayerhossain.bdixtester.core.model.AppLanguage
 import com.jubayerhossain.bdixtester.core.model.AppThemePreset
+import com.jubayerhossain.bdixtester.core.model.GovernanceOverviewCounts
 import com.jubayerhossain.bdixtester.core.model.ScanMode
+import com.jubayerhossain.bdixtester.core.model.SyncStatus
 import com.jubayerhossain.bdixtester.core.model.ThemePreference
 import com.jubayerhossain.bdixtester.core.network.NetworkSnapshot
+import com.jubayerhossain.bdixtester.data.catalog.BdOttPlatforms
 import com.jubayerhossain.bdixtester.data.catalog.BuiltInCatalog
 import com.jubayerhossain.bdixtester.data.preferences.AppSettings
 import com.jubayerhossain.bdixtester.domain.model.CatalogIntegrityReport
 import com.jubayerhossain.bdixtester.domain.model.CatalogSyncState
+import com.jubayerhossain.bdixtester.feature.governance.computeGovernanceOverviewCounts
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
+sealed interface SettingsSyncFeedback {
+  data class BuiltInRefreshed(
+    val bdixCount: Int,
+    val ottCount: Int,
+    val isConsistent: Boolean,
+  ) : SettingsSyncFeedback
+
+  data class RemoteSyncCompleted(
+    val status: SyncStatus,
+    val message: String,
+    val entryCount: Int,
+  ) : SettingsSyncFeedback
+}
 
 data class SettingsUiState(
   val settings: AppSettings = AppSettings(),
@@ -27,7 +48,9 @@ data class SettingsUiState(
   val catalogIntegrity: CatalogIntegrityReport? = null,
   val networkSnapshot: NetworkSnapshot = NetworkSnapshot(),
   val totalServerCount: Int = BuiltInCatalog.DEFAULT_CURATED_COUNT,
+  val governanceCounts: GovernanceOverviewCounts = GovernanceOverviewCounts(),
   val isSyncing: Boolean = false,
+  val lastBuiltInVerifiedEpochMs: Long? = null,
 )
 
 class SettingsViewModel(
@@ -36,6 +59,9 @@ class SettingsViewModel(
   private val settingsRepo = appContainer.settingsRepository
   private val catalogRepo = appContainer.catalogRepository
   private val _isSyncing = MutableStateFlow(false)
+  private val _lastBuiltInVerifiedEpochMs = MutableStateFlow<Long?>(null)
+  private val _syncFeedback = MutableSharedFlow<SettingsSyncFeedback>(extraBufferCapacity = 8)
+  val syncFeedback: SharedFlow<SettingsSyncFeedback> = _syncFeedback.asSharedFlow()
 
   private val catalogSummaryFlow =
     combine(
@@ -46,20 +72,39 @@ class SettingsViewModel(
       Triple(syncState, integrity, endpoints.size.takeIf { it > 0 } ?: BuiltInCatalog.DEFAULT_CURATED_COUNT)
     }
 
+  private val governanceCountsFlow =
+    combine(
+      catalogRepo.allCatalogEndpoints,
+      catalogRepo.governanceRecords,
+    ) { allEndpoints, records ->
+      computeGovernanceOverviewCounts(allEndpoints, records)
+    }
+
+  private val syncRuntimeFlow =
+    combine(
+      _isSyncing,
+      _lastBuiltInVerifiedEpochMs,
+    ) { isSyncing, verifiedAt ->
+      isSyncing to verifiedAt
+    }
+
   val uiState: StateFlow<SettingsUiState> =
     combine(
       settingsRepo.settings,
       catalogSummaryFlow,
+      governanceCountsFlow,
       appContainer.connectivityObserver.observeConnectivity(),
-      _isSyncing,
-    ) { settings, (syncState, integrity, totalServers), network, isSyncing ->
+      syncRuntimeFlow,
+    ) { settings, (syncState, integrity, totalServers), governanceCounts, network, (isSyncing, builtInVerifiedAt) ->
       SettingsUiState(
         settings = settings,
         catalogSyncState = syncState,
         catalogIntegrity = integrity,
         networkSnapshot = network,
         totalServerCount = totalServers,
+        governanceCounts = governanceCounts,
         isSyncing = isSyncing,
+        lastBuiltInVerifiedEpochMs = builtInVerifiedAt,
       )
     }.stateIn(
       scope = viewModelScope,
@@ -115,7 +160,7 @@ class SettingsViewModel(
   }
 
   fun setRemoteCatalogUrl(url: String) {
-    viewModelScope.launch { settingsRepo.setRemoteCatalogUrl(url) }
+    viewModelScope.launch { settingsRepo.setRemoteCatalogUrl(url.trim()) }
   }
 
   fun setAutoCatalogUpdates(enabled: Boolean) {
@@ -137,17 +182,67 @@ class SettingsViewModel(
     }
   }
 
+  fun refreshBuiltInCatalogNow() {
+    if (_isSyncing.value) return
+    viewModelScope.launch {
+      _isSyncing.value = true
+      try {
+        val report = catalogRepo.refreshBuiltInCatalog()
+        _lastBuiltInVerifiedEpochMs.value = System.currentTimeMillis()
+        _syncFeedback.tryEmit(
+          SettingsSyncFeedback.BuiltInRefreshed(
+            bdixCount = report.builtInDatabaseCount,
+            ottCount = BdOttPlatforms.all.size,
+            isConsistent = report.isConsistent,
+          ),
+        )
+      } finally {
+        _isSyncing.value = false
+      }
+    }
+  }
+
+  fun saveRemoteUrlAndSync(rawUrl: String) {
+    val trimmed = rawUrl.trim()
+    if (trimmed.isEmpty()) {
+      setRemoteCatalogUrl("")
+      return
+    }
+    syncCatalogNow(trimmed)
+  }
+
   fun syncCatalogNow(overrideUrl: String? = null) {
     if (_isSyncing.value) return
     viewModelScope.launch {
       _isSyncing.value = true
       try {
+        val trimmedOverride = overrideUrl?.trim()
         val current = settingsRepo.settings.first()
-        if (overrideUrl != null && overrideUrl.trim() != current.remoteCatalogUrl) {
-          settingsRepo.setRemoteCatalogUrl(overrideUrl)
+        if (trimmedOverride != null && trimmedOverride != current.remoteCatalogUrl) {
+          settingsRepo.setRemoteCatalogUrl(trimmedOverride)
         }
         val effective = settingsRepo.settings.first()
-        appContainer.remoteCatalogSyncManager.syncCatalog(effective, overrideUrl)
+        val effectiveUrl = trimmedOverride ?: effective.remoteCatalogUrl.trim()
+        if (effectiveUrl.isEmpty()) {
+          val report = catalogRepo.refreshBuiltInCatalog()
+          _lastBuiltInVerifiedEpochMs.value = System.currentTimeMillis()
+          _syncFeedback.tryEmit(
+            SettingsSyncFeedback.BuiltInRefreshed(
+              bdixCount = report.builtInDatabaseCount,
+              ottCount = BdOttPlatforms.all.size,
+              isConsistent = report.isConsistent,
+            ),
+          )
+          return@launch
+        }
+        val result = appContainer.remoteCatalogSyncManager.syncCatalog(effective, effectiveUrl)
+        _syncFeedback.tryEmit(
+          SettingsSyncFeedback.RemoteSyncCompleted(
+            status = result.status,
+            message = result.message,
+            entryCount = result.entryCount,
+          ),
+        )
       } finally {
         _isSyncing.value = false
       }

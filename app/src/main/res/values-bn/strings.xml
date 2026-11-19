@@ -343,4 +343,65 @@
     <string name="details_latency_label">লেটেন্সি</string>
     <string name="details_throughput_label">গতি</string>
     <string name="action_inspect_server">%1$s-এর বিস্তারিত দেখুন</string>
+
+    <!-- Catalog Governance & Restore -->
+    <string name="settings_governance_row_title">ক্যাটালগ গভর্ন্যান্স ও পুনরুদ্ধার</string>
+    <string name="settings_governance_row_subtitle">%1$d সক্রিয় · %2$d অপসারণ প্রার্থী · %3$d আর্কাইভ</string>
+    <string name="governance_title">ক্যাটালগ গভর্ন্যান্স ও পুনরুদ্ধার</string>
+    <string name="governance_overview_title">বহু-স্তরীয় যাচাইকরণ সারসংক্ষেপ</string>
+    <string name="governance_policy_note">নিরাপদ নীতি: আপনার বর্তমান আইএসপি থেকে না পাওয়া গেলেই, প্রাইভেট IPv4, TLS ত্রুটি, HTTP 401/403/404/429/5xx বা সাময়িক DNS ত্রুটিতে কোনো সার্ভার মুছে ফেলা হয় না। কেবল নিশ্চিত মৃত ডোমেইন অপসারণ প্রার্থী হয়।</string>
+    <string name="governance_run_verification">নিরাপদ যাচাইকরণ চালান</string>
+    <string name="governance_running_progress">যাচাই চলছে: %1$d / %2$d (%3$s)</string>
+    <string name="governance_import_isp_probes">ISP প্রোব JSON ইমপোর্ট করুন</string>
+    <string name="governance_isp_import_success">%1$dটি নতুন বাংলাদেশ ISP প্রোব লোড হয়েছে (%2$dটি মেয়াদোত্তীর্ণ বাদ)।</string>
+    <string name="governance_isp_import_error">অবৈধ ISP প্রোব JSON: %1$s</string>
+    <string name="governance_search_placeholder">সার্ভার, ডোমেইন বা হোস্ট খুঁজুন…</string>
+    <string name="governance_filter_all">সব (%1$d)</string>
+    <string name="governance_filter_active">সক্রিয় (%1$d)</string>
+    <string name="governance_filter_isp_restricted">আইএসপি সীমাবদ্ধ (%1$d)</string>
+    <string name="governance_filter_unreachable">বর্তমান নেটওয়ার্কে অচল (%1$d)</string>
+    <string name="governance_filter_temp_unavailable">সাময়িক অনুপলব্ধ (%1$d)</string>
+    <string name="governance_filter_expired_suspected">মেয়াদোত্তীর্ণ সন্দেহ (%1$d)</string>
+    <string name="governance_filter_candidates">অপসারণ প্রার্থী (%1$d)</string>
+    <string name="governance_filter_archived">আর্কাইভকৃত (%1$d)</string>
+    <string name="governance_filter_unverified">অযাচাইকৃত (%1$d)</string>
+    <string name="governance_empty_title">এই ফিল্টারে কোনো এন্ডপয়েন্ট নেই</string>
+    <string name="governance_empty_desc">অন্য ফিল্টার বেছে নিন অথবা একাধিক DNS রিজলভার ও RDAP তথ্য সংগ্রহ করতে নিরাপদ যাচাইকরণ চালান।</string>
+    <string name="governance_evidence_sheet_title">যাচাইকরণ প্রমাণ ও লাইফসাইকেল</string>
+    <string name="governance_section_summary">সিদ্ধান্ত ও নির্ভরযোগ্যতা</string>
+    <string name="governance_section_dns">ডোমেইন ও বহু-রিজলভার DNS</string>
+    <string name="governance_section_registration">ডোমেইন নিবন্ধন (RDAP)</string>
+    <string name="governance_section_http_ftp">বর্তমান নেটওয়ার্ক সংযোগ প্রোব</string>
+    <string name="governance_section_isp_probes">বাংলাদেশ ISP প্রোব প্রমাণ</string>
+    <string name="governance_section_missing">অসম্পূর্ণ প্রমাণ ও সীমাবদ্ধতা</string>
+    <string name="governance_section_history">যাচাইকরণ ইতিহাস টাইমলাইন</string>
+    <string name="governance_no_isp_probes">এখনো কোনো বহিরাগত বাংলাদেশ ISP প্রোব JSON যুক্ত করা হয়নি। প্রমাণের অভাবে অচল এন্ডপয়েন্টগুলো সুরক্ষিত থাকবে।</string>
+    <string name="governance_action_verify_one">এখনই যাচাই</string>
+    <string name="governance_action_mark_candidate">প্রার্থী চিহ্নিত</string>
+    <string name="governance_action_archive">আর্কাইভ</string>
+    <string name="governance_action_restore">ক্যাটালগে ফেরান</string>
+    <string name="governance_archive_dialog_title">\"%1$s\" আর্কাইভ করবেন?</string>
+    <string name="governance_archive_dialog_body">আর্কাইভ করলে এটি সক্রিয় তালিকা ও স্ক্যান থেকে লুকানো থাকবে। আপনার পছন্দের সার্ভার, পিন এবং ইতিহাস সংরক্ষিত থাকবে এবং যেকোনো সময় ১ ট্যাপেই পুনরুদ্ধার করতে পারবেন।</string>
+    <string name="governance_action_completed_candidate">অপসারণ প্রার্থী হিসেবে চিহ্নিত হয়েছে।</string>
+    <string name="governance_action_completed_archive">এন্ডপয়েন্ট নিরাপদভাবে আর্কাইভ করা হয়েছে।</string>
+    <string name="governance_action_completed_restore">এন্ডপয়েন্ট সক্রিয় ক্যাটালগে পুনরুদ্ধার হয়েছে।</string>
+    <string name="governance_notif_channel_name">ক্যাটালগ যাচাইকরণ অবস্থা</string>
+    <string name="governance_notif_channel_desc">নিরাপদ ক্যাটালগ যাচাইকরণ শেষ হলে সংক্ষিপ্ত ফলাফল জানায়।</string>
+    <string name="governance_notif_title">ক্যাটালগ যাচাইকরণ সম্পন্ন</string>
+    <string name="governance_notif_summary_candidates">%1$dটি এন্ডপয়েন্ট পরীক্ষা হয়েছে · %2$dটি অপসারণ প্রার্থী পর্যালোচনার জন্য প্রস্তুত।</string>
+    <string name="governance_notif_summary_clean">%1$dটি এন্ডপয়েন্ট পরীক্ষা হয়েছে · কোনো নিশ্চিত অপসারণ প্রার্থী পাওয়া যায়নি।</string>
+    <string name="governance_notif_failed">যাচাইকরণ বিরতি: %1$s</string>
+
+    <!-- Catalog Sync Options & Feedback -->
+    <string name="settings_sync_options_title">ক্যাটালগ সিঙ্ক পদ্ধতি বেছে নিন</string>
+    <string name="settings_sync_options_body">এখনো কোনো রিমোট ক্যাটালগ URL সেট করা নেই। চাইলে অ্যাপের বিল্ট-ইন ক্যাটালগ যাচাই ও রিফ্রেশ করুন অথবা স্বাক্ষরিত HTTPS ম্যানিফেস্ট URL যোগ করুন।</string>
+    <string name="settings_sync_option_builtin">বিল্ট-ইন ক্যাটালগ রিফ্রেশ (%1$d BDIX + %2$d OTT)</string>
+    <string name="settings_sync_option_remote">রিমোট স্বাক্ষরিত URL সেট করুন</string>
+    <string name="settings_sync_save_and_sync">সংরক্ষণ ও সিঙ্ক</string>
+    <string name="settings_sync_builtin_verified">বিল্ট-ইন ক্যাটালগ যাচাই সম্পন্ন · %1$dটি BDIX এবং %2$dটি OTT প্রস্তুত।</string>
+    <string name="settings_sync_builtin_badge">বিল্ট-ইন যাচাইকৃত · %1$d BDIX · %2$d OTT</string>
+    <string name="settings_sync_feedback_updated">রিমোট ক্যাটালগ আপডেট হয়েছে (%1$dটি সার্ভার সিঙ্ক)।</string>
+    <string name="settings_sync_feedback_not_modified">রিমোট ক্যাটালগ ইতোমধ্যেই সর্বশেষ অবস্থায় আছে।</string>
+    <string name="settings_sync_feedback_wifi_required">রিমোট ক্যাটালগ সিঙ্কের জন্য Wi-Fi সংযোগ প্রয়োজন।</string>
+    <string name="settings_sync_feedback_failed">ক্যাটালগ সিঙ্ক ব্যর্থ হয়েছে: %1$s</string>
 </resources>

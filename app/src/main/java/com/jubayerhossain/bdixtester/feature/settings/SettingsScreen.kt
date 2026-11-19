@@ -49,6 +49,7 @@ import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material.icons.rounded.Router
 import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Shield
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material.icons.rounded.Translate
@@ -124,6 +125,7 @@ private enum class ActiveSettingsDialog {
   SPEED_CAP,
   NETWORK_LABEL,
   REMOTE_URL,
+  SYNC_OPTIONS,
   RETENTION,
 }
 
@@ -142,6 +144,8 @@ fun SettingsScreen(
   onSpeedTestMaxBytesChange: (Long) -> Unit,
   onManualNetworkLabelSave: (String) -> Unit,
   onRemoteCatalogUrlSave: (String) -> Unit,
+  onSaveRemoteCatalogUrlAndSync: ((String) -> Unit)? = null,
+  onRefreshBuiltInCatalog: () -> Unit = {},
   onAutoUpdatesChange: (Boolean) -> Unit,
   onWifiOnlyChange: (Boolean) -> Unit,
   onCrossOriginChange: (Boolean) -> Unit,
@@ -153,6 +157,7 @@ fun SettingsScreen(
   onResetAllData: () -> Unit,
   onUpdateServerListClick: () -> Unit = {},
   onAddServerRequestClick: () -> Unit = {},
+  onOpenCatalogGovernance: () -> Unit = {},
   onOpenExternalUrl: (String) -> Unit = {},
 ) {
   val context = LocalContext.current
@@ -267,7 +272,7 @@ fun SettingsScreen(
             subtitle = stringResource(R.string.settings_update_server_list_subtitle),
             onClick = {
               if (settings.remoteCatalogUrl.isBlank()) {
-                activeDialog = ActiveSettingsDialog.REMOTE_URL
+                activeDialog = ActiveSettingsDialog.SYNC_OPTIONS
               } else {
                 onUpdateServerListClick()
               }
@@ -281,6 +286,20 @@ fun SettingsScreen(
             subtitle = stringResource(R.string.settings_add_server_request_subtitle),
             onClick = onAddServerRequestClick,
             testTag = "settings_add_server_request_row",
+          )
+          SettingsRowDivider()
+          SettingsNavigationRow(
+            icon = Icons.Rounded.Shield,
+            title = stringResource(R.string.settings_governance_row_title),
+            subtitle =
+              stringResource(
+                R.string.settings_governance_row_subtitle,
+                uiState.governanceCounts.activeCount,
+                uiState.governanceCounts.removalCandidateCount,
+                uiState.governanceCounts.archivedCount,
+              ),
+            onClick = onOpenCatalogGovernance,
+            testTag = "settings_catalog_governance_row",
           )
         }
       }
@@ -525,6 +544,17 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                   )
+                } ?: uiState.lastBuiltInVerifiedEpochMs?.let {
+                  Text(
+                    text =
+                      stringResource(
+                        R.string.settings_sync_builtin_badge,
+                        uiState.totalServerCount,
+                        BdOttPlatforms.all.size,
+                      ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                  )
                 }
               }
             }
@@ -549,8 +579,14 @@ fun SettingsScreen(
               }
 
             Button(
-              onClick = { onSyncNowClick(settings.remoteCatalogUrl) },
-              enabled = !uiState.isSyncing && settings.remoteCatalogUrl.isNotBlank(),
+              onClick = {
+                if (settings.remoteCatalogUrl.isBlank()) {
+                  activeDialog = ActiveSettingsDialog.SYNC_OPTIONS
+                } else {
+                  onSyncNowClick(settings.remoteCatalogUrl)
+                }
+              },
+              enabled = !uiState.isSyncing,
               shape = RoundedCornerShape(14.dp),
               colors =
                 ButtonDefaults.buttonColors(
@@ -790,14 +826,28 @@ fun SettingsScreen(
     }
 
     ActiveSettingsDialog.REMOTE_URL -> {
-      SettingsTextInputDialog(
-        title = stringResource(R.string.settings_remote_url_title),
-        initialValue = settings.remoteCatalogUrl,
-        placeholder = stringResource(R.string.settings_remote_url_dialog_hint),
-        inputTestTag = "settings_remote_url_input",
-        saveTestTag = "settings_remote_url_save",
-        isLtr = true,
-        onSave = onRemoteCatalogUrlSave,
+      RemoteCatalogUrlDialog(
+        initialUrl = settings.remoteCatalogUrl,
+        onClearOrSaveUrl = onRemoteCatalogUrlSave,
+        onSaveAndSync = { url ->
+          val handler = onSaveRemoteCatalogUrlAndSync
+          if (handler != null) {
+            handler(url)
+          } else {
+            onRemoteCatalogUrlSave(url)
+            if (url.isNotBlank()) onSyncNowClick(url)
+          }
+        },
+        onDismiss = { activeDialog = null },
+      )
+    }
+
+    ActiveSettingsDialog.SYNC_OPTIONS -> {
+      CatalogSyncOptionsDialog(
+        totalBdixCount = uiState.totalServerCount,
+        totalOttCount = BdOttPlatforms.all.size,
+        onRefreshBuiltIn = onRefreshBuiltInCatalog,
+        onConfigureRemoteUrl = { activeDialog = ActiveSettingsDialog.REMOTE_URL },
         onDismiss = { activeDialog = null },
       )
     }

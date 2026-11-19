@@ -1,7 +1,11 @@
 package com.jubayerhossain.bdixtester.domain.repository
 
 import com.jubayerhossain.bdixtester.core.model.CatalogAuditSummary
+import com.jubayerhossain.bdixtester.core.model.EndpointGovernanceRecord
+import com.jubayerhossain.bdixtester.core.model.GovernanceDecision
 import com.jubayerhossain.bdixtester.core.model.ServerCategory
+import com.jubayerhossain.bdixtester.core.model.VerificationEventRecord
+import com.jubayerhossain.bdixtester.core.model.VerificationRunProgress
 import com.jubayerhossain.bdixtester.domain.model.CatalogIntegrityReport
 import com.jubayerhossain.bdixtester.domain.model.CatalogSyncState
 import com.jubayerhossain.bdixtester.domain.model.FavoriteInfo
@@ -13,6 +17,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface CatalogRepository {
   val endpoints: StateFlow<List<ServerEndpoint>>
+  val allCatalogEndpoints: StateFlow<List<ServerEndpoint>>
+  val governanceRecords: StateFlow<Map<String, EndpointGovernanceRecord>>
+  val verificationRunProgress: StateFlow<VerificationRunProgress>
   val latestResults: StateFlow<Map<String, ServerTestResult>>
   val favorites: StateFlow<Map<String, FavoriteInfo>>
   val history: StateFlow<List<ServerTestResult>>
@@ -24,9 +31,13 @@ interface CatalogRepository {
 
   suspend fun ensureInitialized(): CatalogIntegrityReport
 
+  suspend fun refreshBuiltInCatalog(): CatalogIntegrityReport
+
   fun getEndpointById(serverId: String): ServerEndpoint?
 
   fun observeHistoryForServer(serverId: String): Flow<List<ServerTestResult>>
+
+  fun observeVerificationEvents(serverId: String): Flow<List<VerificationEventRecord>>
 
   suspend fun toggleFavorite(serverId: String)
 
@@ -60,6 +71,33 @@ interface CatalogRepository {
   suspend fun clearAllHistory()
 
   suspend fun pruneExpiredHistory(retentionDays: Int)
+
+  suspend fun applyGovernanceDecision(
+    decision: GovernanceDecision,
+    triggerSource: String,
+  )
+
+  suspend fun applyGovernanceDecisions(
+    decisions: List<GovernanceDecision>,
+    triggerSource: String,
+  )
+
+  suspend fun markRemovalCandidate(
+    serverId: String,
+    reason: String,
+  )
+
+  suspend fun archiveEndpoint(
+    serverId: String,
+    reason: String,
+  )
+
+  suspend fun restoreEndpoint(
+    serverId: String,
+    reason: String = "Restored by user from Catalog Governance & Restore",
+  )
+
+  fun updateVerificationProgress(progress: VerificationRunProgress)
 
   suspend fun resetAllLocalUserData()
 }
