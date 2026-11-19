@@ -2,6 +2,13 @@ name: Android Release
 
 on:
   workflow_call:
+    secrets:
+      KEYSTORE_BASE64:
+        required: true
+      STORE_PASSWORD:
+        required: true
+      KEY_PASSWORD:
+        required: true
 
 permissions:
   contents: read
