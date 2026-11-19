@@ -60,9 +60,13 @@ jobs:
         run: |
           APK="app/build/outputs/apk/release/app-release.apk"
           BUILD_TOOLS_DIR="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
-          VERIFY_OUT="$("$BUILD_TOOLS_DIR/apksigner" verify --verbose --print-certs "$APK")"
-          CERT_SHA256="$(printf '%s\n' "$VERIFY_OUT" | awk -F': ' '/Signer #1 certificate SHA-256 digest/{print $2; exit}' | tr -d ':' | tr '[:lower:]' '[:upper:]')"
+          VERIFY_OUT="$("$BUILD_TOOLS_DIR/apksigner" verify --verbose --print-certs "$APK" 2>&1)"
+          CERT_SHA256="$(printf '%s\n' "$VERIFY_OUT" | awk -F': ' 'tolower($1) ~ /certificate sha-256 digest/{print $2; exit}' | tr -d ':' | tr '[:lower:]' '[:upper:]')"
           EXPECTED_CERT_SHA256="E21B27621C998650B57FF7C749A263F5292BB2E17D1FBB4F08591E3A8B69AA7A"
+          if [[ -z "$CERT_SHA256" ]]; then
+            echo "::error::apksigner did not return a certificate SHA-256 digest."
+            exit 1
+          fi
           if [[ "$CERT_SHA256" != "$EXPECTED_CERT_SHA256" ]]; then
             echo "::error::APK signing certificate does not match the existing upload certificate (expected $EXPECTED_CERT_SHA256, got $CERT_SHA256)."
             exit 1
