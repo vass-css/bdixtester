@@ -12,9 +12,6 @@ gradlew text eol=lf
 *.sh text eol=lf
 *.bat text eol=crlf
 
-# Python & Scripts
-*.py text eol=lf
-
 # Docs & Config
 *.md text eol=lf
 *.toml text eol=lf

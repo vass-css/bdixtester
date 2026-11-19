@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Removed the Python catalog-verification tooling; catalog checks now run through Kotlin tests and Android CI.
 - Updated `LICENSE` copyright attribution to `Jubayer Hossain`.
 - Replaced placeholder community search URL in `SettingsScreen` with a direct `mailto:jubayerhossainbarisal@gmail.com` Developer Support action (EN/BN localized).
 - Fixed Android Lint errors across `VerificationNotificationHelper` (`POST_NOTIFICATIONS` inline check), `BdixTesterAppRoot`, and `CatalogGovernanceScreen` (`LocalResources.current` synced with `MainActivity` locale override).

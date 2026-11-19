@@ -13,15 +13,11 @@ Thank you for helping improve **BDIX Tester** (`com.jubayerhossain.bdixtester`).
 
 - **JDK:** Java 21 (Temurin recommended)
 - **Android SDK:** Compile SDK `36` (`minorApiLevel = 1`), Min SDK `24`, Target SDK `36`
-- **Python:** 3.11+ (for catalog invariants verifier and test timing scripts)
-- **Node.js:** 24+ (for Prettier workflow checks, optional)
 
 ### Required Checks Before Opening a Pull Request
 
 ```bash
-python3 -m tools.catalog_verifier validate-catalog --repo-root .
-python3 -m unittest discover -s tools/catalog_verifier/tests -v
-./gradlew :app:testDebugUnitTest :app:lintDebug :app:compileReleaseKotlin --console=plain
+./gradlew :app:ktlintCheck :app:lintDebug :app:testDebugUnitTest :app:assembleDebug --console=plain
 ```
 
 *(In environments where the system Gradle binary is pre-installed without wrapper cache, `gradle` may be used equivalently.)*

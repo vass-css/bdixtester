@@ -6,11 +6,6 @@ coverage/
 .tmp/
 dist/
 
-# Python
-__pycache__/
-*.py[cod]
-.pytest_cache/
-
 # Gradle & Android
 .gradle/
 **/build/
