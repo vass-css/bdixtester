@@ -221,7 +221,12 @@ class GovernanceDecisionEngineTest {
     }
 
     // Single HTTP 410 without multi-ISP corroboration stays temporarily unavailable
-    val singleGone = ConservativeDecisionEngine.evaluate(ep, http = HttpProbeEvidence("gone_410", 410), nowEpochMs = nowMs)
+    val singleGone =
+      ConservativeDecisionEngine.evaluate(
+        ep,
+        http = HttpProbeEvidence("gone_410", 410),
+        nowEpochMs = nowMs,
+      )
     assertEquals(VerificationLifecycleStatus.TEMPORARILY_UNAVAILABLE, singleGone.status)
   }
 
@@ -250,7 +255,8 @@ class GovernanceDecisionEngineTest {
   fun strongDeadDomainRequiresCorroboratedRdap404MultiNxdomainAndRecheckWindow() {
     val ep = makeEndpoint("http://dead-site.example")
     val dns = DnsEvidence(domain = "dead-site.example", summary = DnsSummary.MULTI_NXDOMAIN)
-    val reg = RegistrationEvidence(domain = "dead-site.example", lookupStatus = RegistrationLookupStatus.UNREGISTERED_404)
+    val reg =
+      RegistrationEvidence(domain = "dead-site.example", lookupStatus = RegistrationLookupStatus.UNREGISTERED_404)
 
     // First observation waits recheck window
     val firstPass = ConservativeDecisionEngine.evaluate(ep, dns = dns, registration = reg, nowEpochMs = nowMs)
@@ -265,7 +271,14 @@ class GovernanceDecisionEngineTest {
         dnsSummary = DnsSummary.MULTI_NXDOMAIN,
         registrationStatus = RegistrationLookupStatus.UNREGISTERED_404,
       )
-    val secondPass = ConservativeDecisionEngine.evaluate(ep, dns = dns, registration = reg, prior = prior, nowEpochMs = nowMs)
+    val secondPass =
+      ConservativeDecisionEngine.evaluate(
+        ep,
+        dns = dns,
+        registration = reg,
+        prior = prior,
+        nowEpochMs = nowMs,
+      )
     assertEquals(VerificationLifecycleStatus.REMOVAL_CANDIDATE, secondPass.status)
     assertTrue(secondPass.removalEligible)
   }
@@ -280,7 +293,11 @@ class GovernanceDecisionEngineTest {
       ConservativeDecisionEngine.evaluate(
         endpoint = bdEp,
         dns = DnsEvidence("example.com.bd", summary = DnsSummary.MULTI_NXDOMAIN),
-        registration = RegistrationEvidence("example.com.bd", lookupStatus = RegistrationLookupStatus.REGISTRATION_LOOKUP_UNAVAILABLE),
+        registration =
+          RegistrationEvidence(
+            "example.com.bd",
+            lookupStatus = RegistrationLookupStatus.REGISTRATION_LOOKUP_UNAVAILABLE,
+          ),
         nowEpochMs = nowMs,
       )
     assertEquals(VerificationLifecycleStatus.UNKNOWN, bdDecision.status)
@@ -289,7 +306,12 @@ class GovernanceDecisionEngineTest {
     val ftpEp = makeEndpoint("ftp://files.example.net")
     assertEquals(
       VerificationLifecycleStatus.ISP_RESTRICTED,
-      ConservativeDecisionEngine.evaluate(ftpEp, ftp = FtpProbeEvidence("auth_required", 530), nowEpochMs = nowMs).status,
+      ConservativeDecisionEngine
+        .evaluate(
+          ftpEp,
+          ftp = FtpProbeEvidence("auth_required", 530),
+          nowEpochMs = nowMs,
+        ).status,
     )
 
     val archivedPreserved =
@@ -307,12 +329,25 @@ class GovernanceDecisionEngineTest {
     runTest {
       val pub = "https://public-bdix.example".toHttpUrl()
       assertTrue(SsrfGuard.validateRedirectTarget(pub, "http://127.0.0.1/admin".toHttpUrl()) is SsrfCheckResult.Blocked)
-      assertTrue(SsrfGuard.validateRedirectTarget(pub, "http://169.254.169.254/latest".toHttpUrl()) is SsrfCheckResult.Blocked)
-      assertTrue(SsrfGuard.validateRedirectTarget(pub, "http://10.0.0.1/internal".toHttpUrl()) is SsrfCheckResult.Blocked)
-      assertTrue(SsrfGuard.validateRedirectTarget(pub, "http://100.64.0.1/cgnat".toHttpUrl()) is SsrfCheckResult.Blocked)
+      assertTrue(
+        SsrfGuard.validateRedirectTarget(pub, "http://169.254.169.254/latest".toHttpUrl()) is SsrfCheckResult.Blocked,
+      )
+      assertTrue(
+        SsrfGuard.validateRedirectTarget(pub, "http://10.0.0.1/internal".toHttpUrl()) is SsrfCheckResult.Blocked,
+      )
+      assertTrue(
+        SsrfGuard.validateRedirectTarget(pub, "http://100.64.0.1/cgnat".toHttpUrl()) is SsrfCheckResult.Blocked,
+      )
       assertTrue(SsrfGuard.validateRedirectTarget(pub, "http://[fd00::1]/ula".toHttpUrl()) is SsrfCheckResult.Blocked)
-      assertTrue(SsrfGuard.validateRedirectTarget(pub, "https://user:pass@other.example/".toHttpUrl()) is SsrfCheckResult.Blocked)
-      assertTrue(SsrfGuard.validateRedirectTarget(pub, "https://mirror.example.net/".toHttpUrl()) is SsrfCheckResult.Allowed)
+      assertTrue(
+        SsrfGuard.validateRedirectTarget(
+          pub,
+          "https://user:pass@other.example/".toHttpUrl(),
+        ) is SsrfCheckResult.Blocked,
+      )
+      assertTrue(
+        SsrfGuard.validateRedirectTarget(pub, "https://mirror.example.net/".toHttpUrl()) is SsrfCheckResult.Allowed,
+      )
 
       val server = MockWebServer()
       server.start()
@@ -331,7 +366,9 @@ class GovernanceDecisionEngineTest {
         assertEquals(ErrorClassification.HTTP_RATE_LIMITED, rateRes.errorClassification)
         assertEquals("rate_limited_429", ConservativeDecisionEngine.toHttpEvidence(rateRes).outcome)
 
-        server.enqueue(MockResponse().setResponseCode(302).addHeader("Location", "http://169.254.169.254/latest/meta-data"))
+        server.enqueue(
+          MockResponse().setResponseCode(302).addHeader("Location", "http://169.254.169.254/latest/meta-data"),
+        )
         val ssrfRes = tester.probe(makeEndpoint(server.url("/redir").toString()), cfg)
         assertEquals(TestStatus.UNREACHABLE, ssrfRes.status)
         assertEquals(ErrorClassification.SSRF_REDIRECT_BLOCKED, ssrfRes.errorClassification)
@@ -378,7 +415,10 @@ class GovernanceDecisionEngineTest {
         val rdap = RdapLookupClient(bootstrapUrl = server.url("/bootstrap.json").toString())
         assertEquals(RegistrationLookupStatus.UNREGISTERED_404, rdap.lookupDomain("missing.example").lookupStatus)
         assertEquals(RegistrationLookupStatus.HOLD, rdap.lookupDomain("hold.example").lookupStatus)
-        assertEquals(RegistrationLookupStatus.REGISTRATION_LOOKUP_UNAVAILABLE, rdap.lookupDomain("portal.gov.bd").lookupStatus)
+        assertEquals(
+          RegistrationLookupStatus.REGISTRATION_LOOKUP_UNAVAILABLE,
+          rdap.lookupDomain("portal.gov.bd").lookupStatus,
+        )
 
         assertEquals(
           DnsSummary.DISAGREED,
@@ -420,11 +460,12 @@ class GovernanceDecisionEngineTest {
           }
           """.trimIndent()
         val parsedProbes =
-          IspProbeJsonParser.parseJson(
-            rawJson = ispJson,
-            freshnessTtlHours = 168,
-            nowEpochMs = 1_794_996_000_000L, // ~2026-11-18T10:00:00Z + some hours
-          ).getOrThrow()
+          IspProbeJsonParser
+            .parseJson(
+              rawJson = ispJson,
+              freshnessTtlHours = 168,
+              nowEpochMs = 1_794_996_000_000L, // ~2026-11-18T10:00:00Z + some hours
+            ).getOrThrow()
         assertEquals(1, parsedProbes.freshCount)
         assertEquals(1, parsedProbes.staleCount)
       } finally {

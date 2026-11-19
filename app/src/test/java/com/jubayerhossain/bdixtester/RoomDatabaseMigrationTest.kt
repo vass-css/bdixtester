@@ -549,22 +549,44 @@ class RoomDatabaseMigrationTest {
           val repo = RoomCatalogRepository(database = migratedDb)
           repo.ensureInitialized()
 
-          assertTrue(repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
+          assertTrue(
+            repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any {
+              it.id ==
+                "custom:v2node"
+            },
+          )
 
           repo.markRemovalCandidate("custom:v2node", "Test candidate")
           val markedStatus =
             repo.governanceRecords
-              .first { it["custom:v2node"]?.lifecycleStatus == VerificationLifecycleStatus.REMOVAL_CANDIDATE }["custom:v2node"]
+              .first {
+                it["custom:v2node"]?.lifecycleStatus == VerificationLifecycleStatus.REMOVAL_CANDIDATE
+              }["custom:v2node"]
               ?.lifecycleStatus
           assertEquals(VerificationLifecycleStatus.REMOVAL_CANDIDATE, markedStatus)
 
           repo.archiveEndpoint("custom:v2node", "Reversible archive test")
-          assertTrue(repo.endpoints.first { list -> list.none { it.id == "custom:v2node" } }.none { it.id == "custom:v2node" })
-          assertTrue(repo.allCatalogEndpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
+          assertTrue(
+            repo.endpoints.first { list -> list.none { it.id == "custom:v2node" } }.none {
+              it.id ==
+                "custom:v2node"
+            },
+          )
+          assertTrue(
+            repo.allCatalogEndpoints.first { list -> list.any { it.id == "custom:v2node" } }.any {
+              it.id ==
+                "custom:v2node"
+            },
+          )
           assertEquals(true, migratedDb.favoriteDao().getFavorite("custom:v2node")?.isPinned)
 
           repo.restoreEndpoint("custom:v2node", "Restored in test")
-          assertTrue(repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any { it.id == "custom:v2node" })
+          assertTrue(
+            repo.endpoints.first { list -> list.any { it.id == "custom:v2node" } }.any {
+              it.id ==
+                "custom:v2node"
+            },
+          )
           val restoredStatus =
             repo.governanceRecords
               .first { it["custom:v2node"]?.lifecycleStatus == VerificationLifecycleStatus.ACTIVE }["custom:v2node"]

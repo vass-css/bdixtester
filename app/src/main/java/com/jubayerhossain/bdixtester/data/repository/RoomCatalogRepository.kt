@@ -153,11 +153,9 @@ class RoomCatalogRepository(
   private val _catalogIntegrity = MutableStateFlow<CatalogIntegrityReport?>(null)
   override val catalogIntegrity: StateFlow<CatalogIntegrityReport?> = _catalogIntegrity.asStateFlow()
 
-  override suspend fun ensureInitialized(): CatalogIntegrityReport =
-    initializeOrRefreshBuiltIn(forceVerify = false)
+  override suspend fun ensureInitialized(): CatalogIntegrityReport = initializeOrRefreshBuiltIn(forceVerify = false)
 
-  override suspend fun refreshBuiltInCatalog(): CatalogIntegrityReport =
-    initializeOrRefreshBuiltIn(forceVerify = true)
+  override suspend fun refreshBuiltInCatalog(): CatalogIntegrityReport = initializeOrRefreshBuiltIn(forceVerify = true)
 
   private suspend fun initializeOrRefreshBuiltIn(forceVerify: Boolean): CatalogIntegrityReport =
     withContext(ioDispatcher) {

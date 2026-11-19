@@ -162,8 +162,11 @@ object ConservativeDecisionEngine {
     // Rule 3: Multi-ISP Bangladesh probe corroboration overrides current-network unreachability
     val positiveIsps =
       freshProbes
-        .filter { it.connectionResult in setOf("reachable", "ok") || it.httpOrFtpResult.startsWith("2") || it.httpOrFtpResult.startsWith("3") }
-        .map { it.ispId }
+        .filter {
+          it.connectionResult in setOf("reachable", "ok") ||
+            it.httpOrFtpResult.startsWith("2") ||
+            it.httpOrFtpResult.startsWith("3")
+        }.map { it.ispId }
         .toSet()
     val restrictedIsps =
       freshProbes
@@ -238,7 +241,12 @@ object ConservativeDecisionEngine {
           )
         }
         "gone_410" -> {
-          val multiIspGone = freshProbes.filter { it.httpOrFtpResult == "410" }.map { it.ispId }.distinct().size >= 2
+          val multiIspGone =
+            freshProbes
+              .filter { it.httpOrFtpResult == "410" }
+              .map { it.ispId }
+              .distinct()
+              .size >= 2
           val elapsedHours = elapsedHours(prior, nowEpochMs)
           return if (multiIspGone && elapsedHours >= recheckHours) {
             buildDecision(
@@ -297,7 +305,9 @@ object ConservativeDecisionEngine {
         buildDecision(
           status = VerificationLifecycleStatus.UNREACHABLE_FROM_CURRENT_ISP,
           confidence = ConfidenceLevel.LOW,
-          reason = "Public/BDIX IP literal unreachable from current network; BDIX routing varies across Bangladesh ISPs.",
+          reason =
+            "Public/BDIX IP literal unreachable from current network; " +
+              "BDIX routing varies across Bangladesh ISPs.",
           recommendedAction = "Preserve entry; verify with partner BD ISP probes.",
         )
       } else {
@@ -389,7 +399,9 @@ object ConservativeDecisionEngine {
         buildDecision(
           status = VerificationLifecycleStatus.DOMAIN_EXPIRED_CONFIRMED,
           confidence = ConfidenceLevel.HIGH,
-          reason = "Authoritative RDAP 404 + multi-resolver NXDOMAIN observed; waiting ${recheckHours}h recheck window.",
+          reason =
+            "Authoritative RDAP 404 + multi-resolver NXDOMAIN observed; " +
+              "waiting ${recheckHours}h recheck window.",
           recommendedAction = "Recheck after ${recheckHours}h before marking Removal Candidate.",
           recheckAfterHours = recheckHours,
         )
@@ -414,7 +426,14 @@ object ConservativeDecisionEngine {
           )
         } else {
           buildDecision(
-            status = if (prior == null) VerificationLifecycleStatus.UNKNOWN else VerificationLifecycleStatus.DNS_NXDOMAIN_SUSPECTED,
+            status =
+              if (prior ==
+                null
+              ) {
+                VerificationLifecycleStatus.UNKNOWN
+              } else {
+                VerificationLifecycleStatus.DNS_NXDOMAIN_SUSPECTED
+              },
             confidence = ConfidenceLevel.LOW,
             reason = "Multi-resolver NXDOMAIN observed, but registration lookup is unavailable (e.g. .bd / BTCL TLD).",
             recommendedAction = "Retain conservatively and recheck after ${recheckHours}h.",
@@ -448,7 +467,9 @@ object ConservativeDecisionEngine {
       return buildDecision(
         status = status,
         confidence = ConfidenceLevel.MEDIUM,
-        reason = "Domain resolves via DNS but is unreachable from current network (typical for ISP-scoped BDIX routing).",
+        reason =
+          "Domain resolves via DNS but is unreachable from current network " +
+            "(typical for ISP-scoped BDIX routing).",
         recommendedAction = "Preserve in catalog; do not remove without multi-ISP confirmation.",
       )
     }

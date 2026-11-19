@@ -50,7 +50,12 @@ object SsrfGuard {
    * returns true if it falls inside loopback, RFC1918, link-local, metadata, or CGNAT space.
    */
   fun isNonPublicHostLiteral(host: String): Boolean {
-    val clean = host.trim().trimStart('[').trimEnd(']').lowercase()
+    val clean =
+      host
+        .trim()
+        .trimStart('[')
+        .trimEnd(']')
+        .lowercase()
     if (clean in BLOCKED_HOSTNAMES || clean.endsWith(".local") || clean.endsWith(".internal")) {
       return true
     }

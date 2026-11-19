@@ -7,6 +7,7 @@ plugins {
   alias(libs.plugins.google.devtools.ksp)
   alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
+  alias(libs.plugins.ktlint)
 }
 
 android {
@@ -27,7 +28,7 @@ android {
   // and updating Android apps in AI Studio.
   signingConfigs {
     create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.p12"
+      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "$rootDir/my-upload-key.p12"
       storeFile = file(keystorePath)
       storeType = "PKCS12"
       storePassword = System.getenv("STORE_PASSWORD")
@@ -35,7 +36,7 @@ android {
       keyPassword = System.getenv("KEY_PASSWORD")
     }
     create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
+      storeFile = file("$rootDir/debug.keystore")
       storePassword = "android"
       keyAlias = "androiddebugkey"
       keyPassword = "android"
@@ -43,20 +44,21 @@ android {
   }
 
   lint {
-    disable += setOf(
-      "UnusedResources",
-      "PluralsCandidate",
-      "GradleDependency",
-      "NewerVersionAvailable",
-      "IconLauncherShape",
-      "IconLocation",
-      "InsecureBaseConfiguration",
-      "OldTargetApi",
-      "ModifierParameter",
-      "UseKtx",
-      "MonochromeLauncherIcon",
-      "RedundantLabel"
-    )
+    disable +=
+      setOf(
+        "UnusedResources",
+        "PluralsCandidate",
+        "GradleDependency",
+        "NewerVersionAvailable",
+        "IconLauncherShape",
+        "IconLocation",
+        "InsecureBaseConfiguration",
+        "OldTargetApi",
+        "ModifierParameter",
+        "UseKtx",
+        "MonochromeLauncherIcon",
+        "RedundantLabel",
+      )
   }
 
   buildTypes {

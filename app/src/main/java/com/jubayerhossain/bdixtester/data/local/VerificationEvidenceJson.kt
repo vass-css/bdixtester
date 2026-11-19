@@ -151,7 +151,14 @@ internal object VerificationEvidenceJson {
             statusCode = if (h.has("statusCode") && !h.isNull("statusCode")) h.optInt("statusCode") else null,
             finalUrl = h.optNullableString("finalUrl"),
             redirectChain = decodeStringArray(h.optJSONArray("redirectChain")),
-            responseTimeMs = if (h.has("responseTimeMs") && !h.isNull("responseTimeMs")) h.optLong("responseTimeMs") else null,
+            responseTimeMs =
+              if (h.has("responseTimeMs") &&
+                !h.isNull("responseTimeMs")
+              ) {
+                h.optLong("responseTimeMs")
+              } else {
+                null
+              },
             tlsError = h.optNullableString("tlsError"),
             errorDetail = h.optNullableString("errorDetail"),
             checkedAtEpochMs = h.optLong("checkedAtEpochMs", 0L),
@@ -164,7 +171,14 @@ internal object VerificationEvidenceJson {
             outcome = f.optString("outcome"),
             greetingCode = if (f.has("greetingCode") && !f.isNull("greetingCode")) f.optInt("greetingCode") else null,
             bannerExcerpt = f.optNullableString("bannerExcerpt"),
-            responseTimeMs = if (f.has("responseTimeMs") && !f.isNull("responseTimeMs")) f.optLong("responseTimeMs") else null,
+            responseTimeMs =
+              if (f.has("responseTimeMs") &&
+                !f.isNull("responseTimeMs")
+              ) {
+                f.optLong("responseTimeMs")
+              } else {
+                null
+              },
             errorDetail = f.optNullableString("errorDetail"),
             checkedAtEpochMs = f.optLong("checkedAtEpochMs", 0L),
           )
@@ -184,7 +198,14 @@ internal object VerificationEvidenceJson {
               dnsResult = p.optString("dnsResult"),
               connectionResult = p.optString("connectionResult"),
               httpOrFtpResult = p.optString("httpOrFtpResult"),
-              responseTimeMs = if (p.has("responseTimeMs") && !p.isNull("responseTimeMs")) p.optLong("responseTimeMs") else null,
+              responseTimeMs =
+                if (p.has("responseTimeMs") &&
+                  !p.isNull("responseTimeMs")
+                ) {
+                  p.optLong("responseTimeMs")
+                } else {
+                  null
+                },
               errorInfo = p.optNullableString("errorInfo"),
               probeSoftwareVersion = p.optString("probeSoftwareVersion", "unknown"),
               isStale = p.optBoolean("isStale", false),

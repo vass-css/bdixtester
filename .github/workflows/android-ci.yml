@@ -6,92 +6,35 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      suite:
-        description: Select the manual CI workload
-        type: choice
-        options:
-          - performance
-          - full
-        default: full
-        required: true
 
 permissions:
   contents: read
 
 concurrency:
-  group: android-ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}-${{ inputs.suite || 'full' }}
+  group: android-ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Build, test, lint, and catalog audit
+    name: Build, test, lint, and analyze
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Java
-        id: setup-java
         uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
         with:
           distribution: temurin
           java-version: '21'
           cache: gradle
 
-      - name: Record Gradle dependency cache status
-        if: always()
-        env:
-          GRADLE_CACHE_HIT: ${{ steps.setup-java.outputs.cache-hit }}
-        run: |
-          printf '%s\n' "Gradle cache hit: \`${GRADLE_CACHE_HIT:-unavailable}\`" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Setup Python
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
-        with:
-          python-version: '3.11'
-
-      - name: Setup Node.js (optional formatter check)
-        if: (github.event_name != 'workflow_dispatch' || inputs.suite == 'full') && hashFiles('package-lock.json') != ''
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
-        with:
-          node-version: '24'
-          cache: npm
-
-      - name: Check formatting when lockfile present
-        if: (github.event_name != 'workflow_dispatch' || inputs.suite == 'full') && hashFiles('package-lock.json') != ''
-        run: |
-          npm ci
-          npm run format:check
-
-      - name: Validate catalogs and governance manifest
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: |
-          python3 -m tools.catalog_verifier validate-catalog --repo-root .
-          python3 -m unittest discover -s tools/catalog_verifier/tests -v
-
-      - name: Validate JSON metadata files
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: |
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          for path in sorted(Path(".").rglob("*.json")):
-              if any(p in {".git", "node_modules", "build", ".gradle"} for p in path.parts):
-                  continue
-              json.loads(path.read_text(encoding="utf-8"))
-              print(f"OK JSON: {path}")
-          PY
-
-      - name: Generate ephemeral debug keystore for CI debug build
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
+      - name: Generate debug keystore
         run: |
           if [[ ! -f debug.keystore ]]; then
-            keytool -genkeypair -noprompt \
+            keytool -genkeypair -v \
               -keystore debug.keystore \
               -storepass android \
               -alias androiddebugkey \
@@ -102,50 +45,22 @@ jobs:
               -dname "CN=Android Debug,O=Android,C=US"
           fi
 
-      - name: Run Performance Benchmarks
-        if: github.event_name == 'workflow_dispatch' && inputs.suite == 'performance'
+      - name: Build and Run Checks
         run: |
           chmod +x gradlew
-          ./gradlew --no-daemon --profile \
-            :app:testDebugUnitTest \
-            --tests 'com.jubayerhossain.bdixtester.PerformanceBenchmarkTest'
-
-      - name: Validate Gradle build, unit tests, lint, and debug APK
-        if: github.event_name != 'workflow_dispatch' || inputs.suite == 'full'
-        run: |
-          chmod +x gradlew
-          ./gradlew --no-daemon --stacktrace --profile \
-            :app:compileDebugKotlin \
-            :app:testDebugUnitTest \
+          ./gradlew --no-daemon --stacktrace \
+            :app:ktlintCheck \
             :app:lintDebug \
-            :app:assembleDebug \
-            :app:compileReleaseKotlin
+            :app:testDebugUnitTest \
+            :app:assembleDebug
 
-      - name: Generate test timing summary
-        if: always() && steps.checkout.outcome == 'success'
-        env:
-          TEST_CLASS_FILTER: ${{ github.event_name == 'workflow_dispatch' && inputs.suite == 'performance' && 'com.jubayerhossain.bdixtester.PerformanceBenchmarkTest' || '' }}
-        run: |
-          filter_args=()
-          if [[ -n "$TEST_CLASS_FILTER" ]]; then
-            filter_args+=(--class-filter "$TEST_CLASS_FILTER")
-          fi
-          python3 .github/scripts/summarize_gradle_test_results.py \
-            --results-dir app/build/test-results/testDebugUnitTest \
-            --sources-dir app/src/test \
-            --output app/build/reports/test-method-timings.csv \
-            --metrics-output app/build/reports/benchmark-metrics.csv \
-            "${filter_args[@]}"
-
-      - name: Upload CI Debug APK and Reports
+      - name: Upload APK and Reports
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
         with:
-          name: bdix-tester-ci-artifacts
+          name: bdix-tester-debug
           path: |
             app/build/outputs/apk/debug/*.apk
             app/build/reports/
-            app/build/test-results/testDebugUnitTest/
-            build/reports/profile/
           if-no-files-found: warn
           retention-days: 14

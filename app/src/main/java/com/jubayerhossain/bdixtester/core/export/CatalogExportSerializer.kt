@@ -140,13 +140,14 @@ object CatalogExportSerializer {
           appendLine()
           resultsForRun.forEach { result ->
             appendLine(
-              "${result.serverId} | ${result.urlSnapshot} | ${result.status.name} | latency=${result.primaryLatencyMs ?: "-"}ms | mbps=${result.downloadMbps?.let {
-                "%.2f"
-                  .format(
-                    Locale.US,
-                    it,
-                  )
-              } ?: "-"}",
+              "${result.serverId} | ${result.urlSnapshot} | ${result.status.name} | " +
+                "latency=${result.primaryLatencyMs ?: "-"}ms | mbps=${result.downloadMbps?.let {
+                  "%.2f"
+                    .format(
+                      Locale.US,
+                      it,
+                    )
+                } ?: "-"}",
             )
           }
         }
@@ -354,13 +355,15 @@ object CatalogExportSerializer {
       appendLine("BDIX Tester History Export (${history.size} records)")
       history.forEach { item ->
         appendLine(
-          "${item.testedAtEpochMs} | ${item.serverId} | ${item.urlSnapshot} | ${item.scanMode.name} | ${item.status.name} | latency=${item.primaryLatencyMs ?: "-"}ms | mbps=${item.downloadMbps?.let {
-            "%.2f"
-              .format(
-                Locale.US,
-                it,
-              )
-          } ?: "-"} | label=${item.networkProfileLabel ?: "-"}",
+          "${item.testedAtEpochMs} | ${item.serverId} | ${item.urlSnapshot} | ${item.scanMode.name} | " +
+            "${item.status.name} | latency=${item.primaryLatencyMs ?: "-"}ms | " +
+            "mbps=${item.downloadMbps?.let {
+              "%.2f"
+                .format(
+                  Locale.US,
+                  it,
+                )
+            } ?: "-"} | label=${item.networkProfileLabel ?: "-"}",
         )
       }
     }

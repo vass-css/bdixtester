@@ -40,7 +40,9 @@ class RdapLookupClient(
         return@withContext RegistrationEvidence(
           domain = cleanDomain,
           lookupStatus = RegistrationLookupStatus.REGISTRATION_LOOKUP_UNAVAILABLE,
-          limitationNote = ".bd / BTCL registry has no public ICANN RDAP bootstrap endpoint; manual check on BTCL portal required.",
+          limitationNote =
+            ".bd / BTCL registry has no public ICANN RDAP bootstrap endpoint; " +
+              "manual check on BTCL portal required.",
           checkedAtEpochMs = now,
         )
       }

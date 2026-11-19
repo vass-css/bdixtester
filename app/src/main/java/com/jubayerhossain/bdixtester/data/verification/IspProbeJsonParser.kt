@@ -79,7 +79,14 @@ object IspProbeJsonParser {
             dnsResult = obj.getString("dns_result").trim(),
             connectionResult = obj.getString("connection_result").trim().lowercase(),
             httpOrFtpResult = obj.getString("http_or_ftp_result").trim(),
-            responseTimeMs = if (obj.has("response_time_ms") && !obj.isNull("response_time_ms")) obj.optLong("response_time_ms") else null,
+            responseTimeMs =
+              if (obj.has("response_time_ms") &&
+                !obj.isNull("response_time_ms")
+              ) {
+                obj.optLong("response_time_ms")
+              } else {
+                null
+              },
             errorInfo = obj.optString("error_info").takeIf { it.isNotBlank() && it != "null" },
             probeSoftwareVersion = obj.optString("probe_software_version").ifBlank { "unknown" },
             isStale = isStale,

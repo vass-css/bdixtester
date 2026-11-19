@@ -77,9 +77,7 @@ class CatalogVerificationWorker(
 class CatalogVerificationScheduler(
   private val context: Context,
 ) {
-  fun enqueueImmediateVerification(
-    maxEndpoints: Int = CatalogGovernanceCoordinator.DEFAULT_BATCH_LIMIT,
-  ) {
+  fun enqueueImmediateVerification(maxEndpoints: Int = CatalogGovernanceCoordinator.DEFAULT_BATCH_LIMIT) {
     val workManager = runCatching { WorkManager.getInstance(context) }.getOrNull() ?: return
     val constraints =
       Constraints

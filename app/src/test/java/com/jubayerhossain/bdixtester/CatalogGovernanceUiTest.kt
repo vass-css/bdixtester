@@ -54,9 +54,19 @@ class CatalogGovernanceUiTest {
     composeTestRule.onNodeWithTag("governance_section_registration").performScrollTo().assertIsDisplayed()
 
     // Mark Candidate, then tap Archive and verify confirmation dialog gates archival
-    composeTestRule.onNodeWithTag("governance_sheet_candidate_button").performScrollTo().assertIsDisplayed().performClick()
+    composeTestRule
+      .onNodeWithTag(
+        "governance_sheet_candidate_button",
+      ).performScrollTo()
+      .assertIsDisplayed()
+      .performClick()
     composeTestRule.waitForIdle()
-    composeTestRule.onNodeWithTag("governance_sheet_archive_button").performScrollTo().assertIsDisplayed().performClick()
+    composeTestRule
+      .onNodeWithTag(
+        "governance_sheet_archive_button",
+      ).performScrollTo()
+      .assertIsDisplayed()
+      .performClick()
     composeTestRule.waitForIdle()
     composeTestRule.onNodeWithTag("governance_archive_confirm_dialog").assertIsDisplayed()
     composeTestRule.onNodeWithTag("governance_archive_confirm_button").performClick()
@@ -65,7 +75,12 @@ class CatalogGovernanceUiTest {
     }
 
     // Verify Archived state shows quick restore chip -> tap Restore -> active catalog retains endpoint
-    composeTestRule.onNodeWithTag("governance_sheet_restore_button").performScrollTo().assertIsDisplayed().performClick()
+    composeTestRule
+      .onNodeWithTag(
+        "governance_sheet_restore_button",
+      ).performScrollTo()
+      .assertIsDisplayed()
+      .performClick()
     composeTestRule.waitUntil(timeoutMillis = 5_000L) {
       composeTestRule.onAllNodesWithTag("governance_sheet_archive_button").fetchSemanticsNodes().isNotEmpty()
     }

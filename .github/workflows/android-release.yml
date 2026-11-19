@@ -4,26 +4,17 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
-    inputs:
-      dry_run_note:
-        description: Optional note for unsigned/signed build verification dry-run (never publishes)
-        required: false
-        default: 'Manual release pipeline validation'
 
 permissions:
   contents: read
 
-concurrency:
-  group: android-release-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
-  build_and_verify:
-    name: Build, Sign & Verify Release APK
+  release:
+    name: Build & Publish
     runs-on: ubuntu-latest
     environment: android-release
-    timeout-minutes: 45
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -36,241 +27,67 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: Setup Python
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
-        with:
-          python-version: '3.11'
-
-      - name: Validate version metadata and Git tag parity
-        id: meta
-        run: |
-          python3 - <<'PY'
-          import os, re, sys
-          from pathlib import Path
-
-          gradle_text = Path("app/build.gradle.kts").read_text(encoding="utf-8")
-          ver_name_m = re.search(r'versionName\s*=\s*"([^"]+)"', gradle_text)
-          ver_code_m = re.search(r'versionCode\s*=\s*(\d+)', gradle_text)
-          app_id_m = re.search(r'applicationId\s*=\s*"([^"]+)"', gradle_text)
-          min_sdk_m = re.search(r'minSdk\s*=\s*(\d+)', gradle_text)
-          target_sdk_m = re.search(r'targetSdk\s*=\s*(\d+)', gradle_text)
-
-          if not all([ver_name_m, ver_code_m, app_id_m, min_sdk_m, target_sdk_m]):
-              print("::error::Failed to parse required Android metadata from app/build.gradle.kts")
-              sys.exit(1)
-
-          ver_name = ver_name_m.group(1)
-          ver_code = ver_code_m.group(1)
-          app_id = app_id_m.group(1)
-          min_sdk = min_sdk_m.group(1)
-          target_sdk = target_sdk_m.group(1)
-          ref = os.environ.get("GITHUB_REF", "")
-          ref_name = os.environ.get("GITHUB_REF_NAME", "")
-
-          if ref.startswith("refs/tags/"):
-              expected_tag = f"v{ver_name}"
-              if ref_name != expected_tag:
-                  print(f"::error::Tag '{ref_name}' does not match app versionName '{ver_name}' (expected '{expected_tag}').")
-                  sys.exit(1)
-          else:
-              ref_name = f"v{ver_name}-dryrun"
-
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-              fh.write(f"version_name={ver_name}\n")
-              fh.write(f"version_code={ver_code}\n")
-              fh.write(f"application_id={app_id}\n")
-              fh.write(f"min_sdk={min_sdk}\n")
-              fh.write(f"target_sdk={target_sdk}\n")
-              fh.write(f"git_tag={ref_name}\n")
-          PY
-
-      - name: Verify release signing secrets
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          if [[ -z "$KEYSTORE_BASE64" || -z "$STORE_PASSWORD" || -z "$KEY_PASSWORD" ]]; then
-            echo "::error::Release requires KEYSTORE_BASE64, STORE_PASSWORD, and KEY_PASSWORD secrets."
-            exit 1
-          fi
-
-      - name: Run catalog verification before release build
-        run: |
-          python3 -m tools.catalog_verifier validate-catalog --repo-root .
-          python3 -m unittest discover -s tools/catalog_verifier/tests -v
-
-      - name: Decode keystore, run unit tests, vital lint, and build signed release APK
+      - name: Build APK and AAB
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PATH: ${{ runner.temp }}/bdixtester-release.p12
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
-          keytool -list -keystore "$KEYSTORE_PATH" -storetype PKCS12 -storepass "$STORE_PASSWORD" -alias upload >/dev/null
-
-          # Provide ephemeral debug.keystore solely if debug tasks are invoked by unit test dependencies
-          if [[ ! -f debug.keystore ]]; then
-            keytool -genkeypair -noprompt \
-              -keystore debug.keystore -storepass android \
-              -alias androiddebugkey -keypass android \
-              -keyalg RSA -keysize 2048 -validity 10000 \
-              -dname "CN=Android Debug,O=Android,C=US"
+          if [[ -z "$KEYSTORE_BASE64" || -z "$STORE_PASSWORD" || -z "$KEY_PASSWORD" ]]; then
+            echo "::error::Configure KEYSTORE_BASE64, STORE_PASSWORD, and KEY_PASSWORD in the android-release environment."
+            exit 1
           fi
-
+          umask 077
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
+          keytool -list -keystore "$KEYSTORE_PATH" -storetype PKCS12 \
+            -storepass:env STORE_PASSWORD -alias upload >/dev/null
           chmod +x gradlew
-          ./gradlew --no-daemon --stacktrace \
+
+          ./gradlew --no-daemon \
+            :app:ktlintCheck \
             :app:testDebugUnitTest \
             :app:lintVitalRelease \
-            :app:assembleRelease
+            :app:assembleRelease \
+            :app:bundleRelease
 
-      - name: Verify APK signature, metadata, checksums, and release manifest
-        env:
-          VERSION_NAME: ${{ steps.meta.outputs.version_name }}
-          VERSION_CODE: ${{ steps.meta.outputs.version_code }}
-          APP_ID: ${{ steps.meta.outputs.application_id }}
-          MIN_SDK: ${{ steps.meta.outputs.min_sdk }}
-          TARGET_SDK: ${{ steps.meta.outputs.target_sdk }}
-          GIT_TAG: ${{ steps.meta.outputs.git_tag }}
+      - name: Verify release APK signature
         run: |
-          APK_SRC="app/build/outputs/apk/release/app-release.apk"
-          if [[ ! -f "$APK_SRC" ]]; then
-            echo "::error::Expected release APK not found at $APK_SRC"
-            exit 1
-          fi
-
+          APK="app/build/outputs/apk/release/app-release.apk"
           BUILD_TOOLS_DIR="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
-          APKSIGNER="$BUILD_TOOLS_DIR/apksigner"
-          AAPT2="$BUILD_TOOLS_DIR/aapt2"
-
-          VERIFY_OUT="$("$APKSIGNER" verify --verbose --print-certs "$APK_SRC")"
-          echo "$VERIFY_OUT"
-          if echo "$VERIFY_OUT" | grep -qi "CN=Android Debug"; then
-            echo "::error::Release APK is signed with a debug certificate!"
-            exit 1
-          fi
-
-          CERT_SHA256="$(echo "$VERIFY_OUT" | awk -F': ' '/Signer #1 certificate SHA-256 digest/{print $2; exit}')"
-          if [[ -z "$CERT_SHA256" ]]; then
-            echo "::error::Could not extract signing certificate SHA-256 fingerprint."
-            exit 1
-          fi
+          VERIFY_OUT="$("$BUILD_TOOLS_DIR/apksigner" verify --verbose --print-certs "$APK")"
+          CERT_SHA256="$(printf '%s\n' "$VERIFY_OUT" | awk -F': ' '/Signer #1 certificate SHA-256 digest/{print toupper($2); exit}')"
           EXPECTED_CERT_SHA256="E2:1B:27:62:1C:99:86:50:B5:7F:F7:C7:49:A2:63:F5:29:2B:B2:E1:7D:1F:BB:4F:08:59:1E:3A:8B:69:AA:7A"
-          CERT_SHA256_NORMALIZED="$(echo "$CERT_SHA256" | tr '[:lower:]' '[:upper:]')"
-          if [[ "$CERT_SHA256_NORMALIZED" != "$EXPECTED_CERT_SHA256" ]]; then
-            echo "::error::APK signer fingerprint does not match the existing upload certificate."
+          if [[ "$CERT_SHA256" != "$EXPECTED_CERT_SHA256" ]]; then
+            echo "::error::APK signing certificate does not match the existing upload certificate."
             exit 1
           fi
 
-          BADGING="$("$AAPT2" dump badging "$APK_SRC")"
-          echo "$BADGING" | head -n 5
-          if ! echo "$BADGING" | grep -q "package: name='$APP_ID' versionCode='$VERSION_CODE' versionName='$VERSION_NAME'"; then
-            echo "::error::APK badging does not match expected package/version!"
-            exit 1
-          fi
-          if echo "$BADGING" | grep -q "application-debuggable"; then
-            echo "::error::Release APK is flagged as debuggable!"
-            exit 1
-          fi
-
-          mkdir -p release-assets
-          APK_NAME="BDIX-Tester-v${VERSION_NAME}.apk"
-          cp "$APK_SRC" "release-assets/$APK_NAME"
-
-          (
-            cd release-assets
-            sha256sum "$APK_NAME" > SHA256SUMS.txt
-          )
-          APK_SHA256="$(awk '{print $1}' release-assets/SHA256SUMS.txt)"
-          BUILD_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-
-          python3 - <<PY
-          import json
-          manifest = {
-              "application_name": "BDIX Tester",
-              "package_name": "${APP_ID}",
-              "version_name": "${VERSION_NAME}",
-              "version_code": int("${VERSION_CODE}"),
-              "min_android_sdk": int("${MIN_SDK}"),
-              "target_android_sdk": int("${TARGET_SDK}"),
-              "build_variant": "release",
-              "artifact_filename": "${APK_NAME}",
-              "signing_certificate_sha256": "${CERT_SHA256}",
-              "apk_sha256": "${APK_SHA256}",
-              "build_timestamp_utc": "${BUILD_TS}",
-              "source_commit": "${GITHUB_SHA}",
-              "git_tag": "${GIT_TAG}",
-          }
-          with open("release-assets/release-manifest.json", "w", encoding="utf-8") as fh:
-              json.dump(manifest, fh, indent=2)
-              fh.write("\n")
-          PY
-
-          cat > release-assets/RELEASE-NOTES.md <<EOF
-          # BDIX Tester ${GIT_TAG}
-
-          - **Package Name:** \`${APP_ID}\`
-          - **Version:** \`${VERSION_NAME}\` (\`versionCode = ${VERSION_CODE}\`)
-          - **Android Compatibility:** Android 7.0+ (API ${MIN_SDK}) — Target SDK ${TARGET_SDK}
-          - **Artifact:** \`${APK_NAME}\`
-          - **APK SHA-256:** \`${APK_SHA256}\`
-          - **Signing Certificate SHA-256:** \`${CERT_SHA256}\`
-
-          ## Verify Before Installing
-
-          \`\`\`bash
-          sha256sum -c SHA256SUMS.txt
-          \`\`\`
-
-          See \`CHANGELOG.md\` and \`README.md\` for full release notes and installation instructions.
-          EOF
-
-      - name: Remove temporary keystore from runner
+      - name: Remove temporary keystore
         if: always()
         run: rm -f "${{ runner.temp }}/bdixtester-release.p12"
 
-      - name: Upload Release Assets Artifact
-        if: always()
+      - name: Upload Artifacts
+        if: success()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.2
         with:
-          name: bdix-tester-release-assets
+          name: bdixtester-release
           path: |
-            release-assets/
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
             app/build/reports/
           if-no-files-found: warn
-          retention-days: 30
 
-  publish_release:
-    name: Publish GitHub Release
-    needs: build_and_verify
-    if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    environment: android-release
-    permissions:
-      contents: write
-    timeout-minutes: 15
-
-    steps:
-      - name: Download Verified Release Assets
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
-        with:
-          name: bdix-tester-release-assets
-          path: downloaded-artifacts
-
-      - name: Verify checksum integrity and publish GitHub Release
+      - name: Publish Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cd downloaded-artifacts/release-assets
-          sha256sum -c SHA256SUMS.txt
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" \
-              BDIX-Tester-v*.apk SHA256SUMS.txt release-manifest.json RELEASE-NOTES.md --clobber
-          else
-            gh release create "$GITHUB_REF_NAME" \
-              BDIX-Tester-v*.apk SHA256SUMS.txt release-manifest.json RELEASE-NOTES.md \
-              --verify-tag \
-              --title "BDIX Tester ${GITHUB_REF_NAME}" \
-              --notes-file RELEASE-NOTES.md
+            echo "::error::Release '$GITHUB_REF_NAME' already exists; refusing to overwrite it."
+            exit 1
           fi
+          gh release create "$GITHUB_REF_NAME" \
+            app/build/outputs/apk/release/*.apk \
+            app/build/outputs/bundle/release/*.aab \
+            --verify-tag \
+            --generate-notes

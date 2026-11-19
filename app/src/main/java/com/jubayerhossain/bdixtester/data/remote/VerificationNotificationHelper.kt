@@ -87,7 +87,7 @@ object VerificationNotificationHelper {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
       ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
-        PackageManager.PERMISSION_GRANTED
+      PackageManager.PERMISSION_GRANTED
     ) {
       return
     }
@@ -118,7 +118,7 @@ object VerificationNotificationHelper {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
       ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
-        PackageManager.PERMISSION_GRANTED
+      PackageManager.PERMISSION_GRANTED
     ) {
       return
     }

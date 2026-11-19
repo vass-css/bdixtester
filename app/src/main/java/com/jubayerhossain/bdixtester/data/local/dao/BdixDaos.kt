@@ -199,7 +199,9 @@ interface GovernanceDao {
   ): Flow<List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>>
 
   @Query("SELECT * FROM verification_events ORDER BY createdAtEpochMs DESC, eventId DESC LIMIT :limit")
-  suspend fun getRecentEvents(limit: Int = 100): List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>
+  suspend fun getRecentEvents(
+    limit: Int = 100,
+  ): List<com.jubayerhossain.bdixtester.data.local.entity.VerificationEventEntity>
 
   @Upsert
   suspend fun upsertGovernance(entity: com.jubayerhossain.bdixtester.data.local.entity.EndpointGovernanceEntity)

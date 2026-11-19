@@ -39,7 +39,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -153,7 +152,8 @@ fun GovernanceEvidenceSheet(
           color = MaterialTheme.colorScheme.primary,
         )
         record.lastVerifiedAtEpochMs?.let { ts ->
-          val formatted = remember(ts) { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(ts)) }
+          val formatted =
+            remember(ts) { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(ts)) }
           Text(
             text = stringResource(R.string.settings_last_synced_at, formatted),
             style = MaterialTheme.typography.labelSmall,
@@ -327,9 +327,16 @@ fun GovernanceEvidenceSheet(
           record.ispProbes.forEach { probe ->
             val staleSuffix = if (probe.isStale) " [STALE]" else ""
             Text(
-              text = "• ${probe.ispName} (${probe.region}): ${probe.connectionResult} / ${probe.httpOrFtpResult}$staleSuffix",
+              text =
+                "• ${probe.ispName} (${probe.region}): " +
+                  "${probe.connectionResult} / ${probe.httpOrFtpResult}$staleSuffix",
               style = MaterialTheme.typography.bodySmall,
-              color = if (probe.isStale) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
+              color =
+                if (probe.isStale) {
+                  MaterialTheme.colorScheme.onSurfaceVariant
+                } else {
+                  MaterialTheme.colorScheme.onSurface
+                },
             )
           }
         }
@@ -560,7 +567,12 @@ fun LifecycleStatusPill(
       VerificationLifecycleStatus.UNSUPPORTED_PROTOCOL,
       -> semantic.neutralContainer to semantic.onNeutralContainer
     }
-  GovernanceBadgePill(label = status.displayLabel, containerColor = container, contentColor = content, modifier = modifier)
+  GovernanceBadgePill(
+    label = status.displayLabel,
+    containerColor = container,
+    contentColor = content,
+    modifier = modifier,
+  )
 }
 
 @Composable

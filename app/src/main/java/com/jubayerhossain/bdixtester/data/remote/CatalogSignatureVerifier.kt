@@ -50,7 +50,9 @@ class TrustedKeyRegistry(
         TrustedPublicKeyEntry(
           keyId = "bdix-catalog-2026-v1",
           // P-256 X.509 SubjectPublicKeyInfo (public verification key only)
-          x509SpkiBase64 = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEf9qK8pV3aF1a6C+hJ8jS9L0fJ3kO5v2x+V6Q7e1F2W4pN1xJ9z8k6Q5L3R7P4u2m1N8w3E5R7T9Y2U4I6O8P1A==",
+          x509SpkiBase64 =
+            "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEf9qK8pV3aF1a6C+hJ8jS9L0fJ3kO5v2x+" +
+              "V6Q7e1F2W4pN1xJ9z8k6Q5L3R7P4u2m1N8w3E5R7T9Y2U4I6O8P1A==",
           status = TrustedKeyStatus.ACTIVE,
           description = "Primary ECDSA P-256 catalog manifest verification key (2026)",
         ),

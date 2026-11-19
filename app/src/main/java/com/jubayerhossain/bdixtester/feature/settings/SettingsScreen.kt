@@ -535,7 +535,9 @@ fun SettingsScreen(
               ) {
                 LtrContent {
                   Text(
-                    text = "${sync.lastSyncStatus.displayLabel} · Seq #${sync.catalogSequence} · ${sync.remoteEntryCount} remote",
+                    text =
+                      "${sync.lastSyncStatus.displayLabel} · Seq #${sync.catalogSequence} · " +
+                        "${sync.remoteEntryCount} remote",
                     style = MonoUrlStyle,
                     color = MaterialTheme.colorScheme.onSurface,
                   )

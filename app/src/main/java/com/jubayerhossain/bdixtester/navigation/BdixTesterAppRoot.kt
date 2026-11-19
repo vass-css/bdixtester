@@ -240,7 +240,10 @@ fun BdixTesterAppRoot(
 
   fun triggerCatalogSyncFromToolbar() {
     scope.launch {
-      val remoteUrl = appContainer.settingsRepository.settings.first().remoteCatalogUrl
+      val remoteUrl =
+        appContainer.settingsRepository.settings
+          .first()
+          .remoteCatalogUrl
       if (remoteUrl.isNotBlank()) {
         settingsViewModel.syncCatalogNow(remoteUrl)
       } else {
@@ -516,58 +519,58 @@ private fun BdixBottomNavigationBar(
       windowInsets = WindowInsets.navigationBars,
       modifier = Modifier.testTag("main_bottom_navigation_bar"),
     ) {
-    val colors =
-      NavigationBarItemDefaults.colors(
-        selectedIconColor = MaterialTheme.colorScheme.primary,
-        selectedTextColor = MaterialTheme.colorScheme.primary,
-        indicatorColor = semantic.navIndicator,
-        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
+      val colors =
+        NavigationBarItemDefaults.colors(
+          selectedIconColor = MaterialTheme.colorScheme.primary,
+          selectedTextColor = MaterialTheme.colorScheme.primary,
+          indicatorColor = semantic.navIndicator,
+          unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+          unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
 
-    val reducedMotion = LocalReducedMotion.current
-    TopLevelDestination.entries.forEach { destination ->
-      val selected = activeRoute == destination.route
-      val label = stringResource(destination.labelRes)
-      val iconScale by animateFloatAsState(
-        targetValue = if (selected && !reducedMotion) 1.12f else 1f,
-        animationSpec = if (reducedMotion) tween(0) else BdixMotionSpecs.bouncySpring,
-        label = "nav_bar_icon_scale_${destination.route}",
-      )
-      NavigationBarItem(
-        selected = selected,
-        onClick = { onSelectDestination(destination.route) },
-        icon = {
-          Icon(
-            imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
-            contentDescription = label,
-            modifier =
-              Modifier
-                .size(BdixIconSize.lg)
-                .graphicsLayer {
-                  scaleX = iconScale
-                  scaleY = iconScale
-                },
-          )
-        },
-        label = {
-          Text(
-            text = label,
-            style =
-              MaterialTheme.typography.labelMedium.copy(
-                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-              ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            softWrap = false,
-          )
-        },
-        alwaysShowLabel = true,
-        colors = colors,
-        modifier = Modifier.testTag(destination.testTag),
-      )
+      val reducedMotion = LocalReducedMotion.current
+      TopLevelDestination.entries.forEach { destination ->
+        val selected = activeRoute == destination.route
+        val label = stringResource(destination.labelRes)
+        val iconScale by animateFloatAsState(
+          targetValue = if (selected && !reducedMotion) 1.12f else 1f,
+          animationSpec = if (reducedMotion) tween(0) else BdixMotionSpecs.bouncySpring,
+          label = "nav_bar_icon_scale_${destination.route}",
+        )
+        NavigationBarItem(
+          selected = selected,
+          onClick = { onSelectDestination(destination.route) },
+          icon = {
+            Icon(
+              imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
+              contentDescription = label,
+              modifier =
+                Modifier
+                  .size(BdixIconSize.lg)
+                  .graphicsLayer {
+                    scaleX = iconScale
+                    scaleY = iconScale
+                  },
+            )
+          },
+          label = {
+            Text(
+              text = label,
+              style =
+                MaterialTheme.typography.labelMedium.copy(
+                  fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                ),
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis,
+              softWrap = false,
+            )
+          },
+          alwaysShowLabel = true,
+          colors = colors,
+          modifier = Modifier.testTag(destination.testTag),
+        )
+      }
     }
-  }
   }
 }
 
@@ -587,56 +590,56 @@ private fun BdixNavigationRail(
           .statusBarsPadding()
           .testTag("main_navigation_rail"),
     ) {
-    Spacer(modifier = Modifier.weight(0.5f))
-    val colors =
-      NavigationRailItemDefaults.colors(
-        selectedIconColor = MaterialTheme.colorScheme.primary,
-        selectedTextColor = MaterialTheme.colorScheme.primary,
-        indicatorColor = semantic.navIndicator,
-        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
-    val reducedMotion = LocalReducedMotion.current
-    TopLevelDestination.entries.forEach { destination ->
-      val selected = activeRoute == destination.route
-      val label = stringResource(destination.labelRes)
-      val iconScale by animateFloatAsState(
-        targetValue = if (selected && !reducedMotion) 1.12f else 1f,
-        animationSpec = if (reducedMotion) tween(0) else BdixMotionSpecs.bouncySpring,
-        label = "nav_rail_icon_scale_${destination.route}",
-      )
-      NavigationRailItem(
-        selected = selected,
-        onClick = { onSelectDestination(destination.route) },
-        icon = {
-          Icon(
-            imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
-            contentDescription = label,
-            modifier =
-              Modifier
-                .size(BdixIconSize.lg)
-                .graphicsLayer {
-                  scaleX = iconScale
-                  scaleY = iconScale
-                },
-          )
-        },
-        label = {
-          Text(
-            text = label,
-            style =
-              MaterialTheme.typography.labelMedium.copy(
-                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-              ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-          )
-        },
-        colors = colors,
-        modifier = Modifier.testTag(destination.testTag),
-      )
-    }
-    Spacer(modifier = Modifier.weight(1f))
+      Spacer(modifier = Modifier.weight(0.5f))
+      val colors =
+        NavigationRailItemDefaults.colors(
+          selectedIconColor = MaterialTheme.colorScheme.primary,
+          selectedTextColor = MaterialTheme.colorScheme.primary,
+          indicatorColor = semantic.navIndicator,
+          unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+          unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+      val reducedMotion = LocalReducedMotion.current
+      TopLevelDestination.entries.forEach { destination ->
+        val selected = activeRoute == destination.route
+        val label = stringResource(destination.labelRes)
+        val iconScale by animateFloatAsState(
+          targetValue = if (selected && !reducedMotion) 1.12f else 1f,
+          animationSpec = if (reducedMotion) tween(0) else BdixMotionSpecs.bouncySpring,
+          label = "nav_rail_icon_scale_${destination.route}",
+        )
+        NavigationRailItem(
+          selected = selected,
+          onClick = { onSelectDestination(destination.route) },
+          icon = {
+            Icon(
+              imageVector = if (selected) destination.selectedIcon else destination.unselectedIcon,
+              contentDescription = label,
+              modifier =
+                Modifier
+                  .size(BdixIconSize.lg)
+                  .graphicsLayer {
+                    scaleX = iconScale
+                    scaleY = iconScale
+                  },
+            )
+          },
+          label = {
+            Text(
+              text = label,
+              style =
+                MaterialTheme.typography.labelMedium.copy(
+                  fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                ),
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis,
+            )
+          },
+          colors = colors,
+          modifier = Modifier.testTag(destination.testTag),
+        )
+      }
+      Spacer(modifier = Modifier.weight(1f))
     }
     VerticalDivider(
       thickness = BdixBorder.hairline,

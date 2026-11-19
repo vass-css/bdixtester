@@ -99,7 +99,9 @@ fun CatalogGovernanceScreen(
   onMarkCandidate: (String) -> Unit,
   onArchive: (String) -> Unit,
   onRestore: (String) -> Unit,
-  observeEventsFor: (String?) -> kotlinx.coroutines.flow.Flow<List<com.jubayerhossain.bdixtester.core.model.VerificationEventRecord>>,
+  observeEventsFor: (
+    String?,
+  ) -> kotlinx.coroutines.flow.Flow<List<com.jubayerhossain.bdixtester.core.model.VerificationEventRecord>>,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -122,7 +124,10 @@ fun CatalogGovernanceScreen(
     rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
       if (uri == null) return@rememberLauncherForActivityResult
       runCatching {
-        context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+        context.contentResolver
+          .openInputStream(uri)
+          ?.bufferedReader()
+          ?.use { it.readText() }
           ?: error("Empty file")
       }.fold(
         onSuccess = { jsonText ->
@@ -130,7 +135,12 @@ fun CatalogGovernanceScreen(
             onSuccess = { result ->
               scope.launch {
                 snackbarHostState.showSnackbar(
-                  message = resources.getString(R.string.governance_isp_import_success, result.freshCount, result.staleCount),
+                  message =
+                    resources.getString(
+                      R.string.governance_isp_import_success,
+                      result.freshCount,
+                      result.staleCount,
+                    ),
                   duration = SnackbarDuration.Short,
                 )
               }
@@ -489,15 +499,51 @@ private fun GovernanceFilterRow(
   val semantic = LocalBdixSemanticColors.current
   val chips =
     listOf(
-      Triple(GovernanceFilter.ALL, stringResource(R.string.governance_filter_all, counts.totalCatalogCount), "governance_filter_all"),
-      Triple(GovernanceFilter.REMOVAL_CANDIDATES, stringResource(R.string.governance_filter_candidates, counts.removalCandidateCount), "governance_filter_candidates"),
-      Triple(GovernanceFilter.EXPIRED_SUSPECTED, stringResource(R.string.governance_filter_expired_suspected, counts.expiredSuspectedCount), "governance_filter_expired_suspected"),
-      Triple(GovernanceFilter.ARCHIVED, stringResource(R.string.governance_filter_archived, counts.archivedCount), "governance_filter_archived"),
-      Triple(GovernanceFilter.ACTIVE, stringResource(R.string.governance_filter_active, counts.activeCount), "governance_filter_active"),
-      Triple(GovernanceFilter.ISP_RESTRICTED, stringResource(R.string.governance_filter_isp_restricted, counts.ispRestrictedCount), "governance_filter_isp_restricted"),
-      Triple(GovernanceFilter.UNREACHABLE, stringResource(R.string.governance_filter_unreachable, counts.unreachableCount), "governance_filter_unreachable"),
-      Triple(GovernanceFilter.TEMPORARILY_UNAVAILABLE, stringResource(R.string.governance_filter_temp_unavailable, counts.temporarilyUnavailableCount), "governance_filter_temp_unavailable"),
-      Triple(GovernanceFilter.UNVERIFIED, stringResource(R.string.governance_filter_unverified, counts.unverifiedCount), "governance_filter_unverified"),
+      Triple(
+        GovernanceFilter.ALL,
+        stringResource(R.string.governance_filter_all, counts.totalCatalogCount),
+        "governance_filter_all",
+      ),
+      Triple(
+        GovernanceFilter.REMOVAL_CANDIDATES,
+        stringResource(R.string.governance_filter_candidates, counts.removalCandidateCount),
+        "governance_filter_candidates",
+      ),
+      Triple(
+        GovernanceFilter.EXPIRED_SUSPECTED,
+        stringResource(R.string.governance_filter_expired_suspected, counts.expiredSuspectedCount),
+        "governance_filter_expired_suspected",
+      ),
+      Triple(
+        GovernanceFilter.ARCHIVED,
+        stringResource(R.string.governance_filter_archived, counts.archivedCount),
+        "governance_filter_archived",
+      ),
+      Triple(
+        GovernanceFilter.ACTIVE,
+        stringResource(R.string.governance_filter_active, counts.activeCount),
+        "governance_filter_active",
+      ),
+      Triple(
+        GovernanceFilter.ISP_RESTRICTED,
+        stringResource(R.string.governance_filter_isp_restricted, counts.ispRestrictedCount),
+        "governance_filter_isp_restricted",
+      ),
+      Triple(
+        GovernanceFilter.UNREACHABLE,
+        stringResource(R.string.governance_filter_unreachable, counts.unreachableCount),
+        "governance_filter_unreachable",
+      ),
+      Triple(
+        GovernanceFilter.TEMPORARILY_UNAVAILABLE,
+        stringResource(R.string.governance_filter_temp_unavailable, counts.temporarilyUnavailableCount),
+        "governance_filter_temp_unavailable",
+      ),
+      Triple(
+        GovernanceFilter.UNVERIFIED,
+        stringResource(R.string.governance_filter_unverified, counts.unverifiedCount),
+        "governance_filter_unverified",
+      ),
     )
 
   LazyRow(

@@ -160,7 +160,9 @@ class RemoteCatalogSyncManager(
                   sourceUrl = manifestUrlString,
                   lastSyncAttemptAtEpochMs = clock(),
                   lastSyncStatus = SyncStatus.NOT_MODIFIED.name,
-                  lastSyncMessage = "304 Not Modified — reused previously verified catalog sequence ${existingMeta?.catalogSequence ?: 0L}.",
+                  lastSyncMessage =
+                    "304 Not Modified — reused previously verified catalog sequence " +
+                      "${existingMeta?.catalogSequence ?: 0L}.",
                 )
               metadataDao.upsertMetadata(updatedMeta)
               return@withLock RemoteSyncResult(
@@ -313,7 +315,9 @@ class RemoteCatalogSyncManager(
               sourceUrl = manifestUrlString,
               attemptEpochMs = clock(),
               status = SyncStatus.REJECTED_SIZE,
-              message = "Declared payloadSize=${manifest.payloadSize} exceeds ceiling (${CatalogSignatureVerifier.MAX_PAYLOAD_BYTES}B).",
+              message =
+                "Declared payloadSize=${manifest.payloadSize} exceeds ceiling " +
+                  "(${CatalogSignatureVerifier.MAX_PAYLOAD_BYTES}B).",
             )
           }
 
@@ -446,7 +450,9 @@ class RemoteCatalogSyncManager(
               sourceUrl = manifestUrlString,
               attemptEpochMs = clock(),
               status = SyncStatus.REJECTED_SIZE,
-              message = "Downloaded payload size ${payloadBytes.size}B != manifest payloadSize ${manifest.payloadSize}B.",
+              message =
+                "Downloaded payload size ${payloadBytes.size}B != manifest payloadSize " +
+                  "${manifest.payloadSize}B.",
             )
           }
 
@@ -547,7 +553,9 @@ class RemoteCatalogSyncManager(
               lastSyncAttemptAtEpochMs = commitTime,
               lastSuccessfulSyncAtEpochMs = commitTime,
               lastSyncStatus = SyncStatus.UPDATED.name,
-              lastSyncMessage = "Updated to sequence ${manifest.catalogSequence} (${remoteEntities.size} remote entries).",
+              lastSyncMessage =
+                "Updated to sequence ${manifest.catalogSequence} " +
+                  "(${remoteEntities.size} remote entries).",
               entryCount = remoteEntities.size,
             )
 

@@ -50,7 +50,7 @@ class InMemoryCatalogRepository(
   private val _verificationRunProgress = MutableStateFlow(VerificationRunProgress())
   override val verificationRunProgress: StateFlow<VerificationRunProgress> = _verificationRunProgress.asStateFlow()
 
-  private val _verificationEvents = MutableStateFlow<List<VerificationEventRecord>>(emptyList())
+  private val verificationEvents = MutableStateFlow<List<VerificationEventRecord>>(emptyList())
 
   private val _endpoints = MutableStateFlow(parsedEndpoints)
   override val endpoints: StateFlow<List<ServerEndpoint>> = _endpoints.asStateFlow()
@@ -115,7 +115,7 @@ class InMemoryCatalogRepository(
     _history.map { list -> list.filter { it.serverId == serverId } }
 
   override fun observeVerificationEvents(serverId: String): Flow<List<VerificationEventRecord>> =
-    _verificationEvents.map { list -> list.filter { it.serverId == serverId } }
+    verificationEvents.map { list -> list.filter { it.serverId == serverId } }
 
   override suspend fun toggleFavorite(serverId: String) {
     val current = _favorites.value.toMutableMap()
@@ -207,7 +207,7 @@ class InMemoryCatalogRepository(
   ) {
     if (decisions.isEmpty()) return
     val map = _governanceRecords.value.toMutableMap()
-    val events = _verificationEvents.value.toMutableList()
+    val events = verificationEvents.value.toMutableList()
     decisions.forEach { d ->
       val prev = map[d.serverId]?.lifecycleStatus ?: VerificationLifecycleStatus.PENDING_VERIFICATION
       map[d.serverId] =
@@ -219,7 +219,9 @@ class InMemoryCatalogRepository(
           recommendedAction = d.recommendedAction,
           removalEligible = d.removalEligible,
           normalizedDomain = d.normalizedDomain,
-          dnsSummary = d.dns?.summary ?: map[d.serverId]?.dnsSummary ?: com.jubayerhossain.bdixtester.core.model.DnsSummary.NOT_CHECKED,
+          dnsSummary =
+            d.dns?.summary ?: map[d.serverId]?.dnsSummary
+              ?: com.jubayerhossain.bdixtester.core.model.DnsSummary.NOT_CHECKED,
           registrationStatus =
             d.registration?.lookupStatus
               ?: map[d.serverId]?.registrationStatus
@@ -253,7 +255,7 @@ class InMemoryCatalogRepository(
       )
     }
     _governanceRecords.value = map
-    _verificationEvents.value = events
+    verificationEvents.value = events
     recomputeVisibleEndpoints()
   }
 
@@ -272,10 +274,10 @@ class InMemoryCatalogRepository(
         updatedAtEpochMs = now,
       )
     _governanceRecords.value = _governanceRecords.value + (serverId to updated)
-    _verificationEvents.value =
+    verificationEvents.value =
       listOf(
         VerificationEventRecord(
-          eventId = _verificationEvents.value.size + 1L,
+          eventId = verificationEvents.value.size + 1L,
           serverId = serverId,
           previousStatus = current.lifecycleStatus,
           newStatus = VerificationLifecycleStatus.REMOVAL_CANDIDATE,
@@ -284,7 +286,7 @@ class InMemoryCatalogRepository(
           summary = reason,
           createdAtEpochMs = now,
         ),
-      ) + _verificationEvents.value
+      ) + verificationEvents.value
     recomputeVisibleEndpoints()
   }
 
@@ -304,10 +306,10 @@ class InMemoryCatalogRepository(
         updatedAtEpochMs = now,
       )
     _governanceRecords.value = _governanceRecords.value + (serverId to updated)
-    _verificationEvents.value =
+    verificationEvents.value =
       listOf(
         VerificationEventRecord(
-          eventId = _verificationEvents.value.size + 1L,
+          eventId = verificationEvents.value.size + 1L,
           serverId = serverId,
           previousStatus = current.lifecycleStatus,
           newStatus = VerificationLifecycleStatus.ARCHIVED,
@@ -316,7 +318,7 @@ class InMemoryCatalogRepository(
           summary = reason,
           createdAtEpochMs = now,
         ),
-      ) + _verificationEvents.value
+      ) + verificationEvents.value
     recomputeVisibleEndpoints()
   }
 
@@ -337,10 +339,10 @@ class InMemoryCatalogRepository(
         updatedAtEpochMs = now,
       )
     _governanceRecords.value = _governanceRecords.value + (serverId to updated)
-    _verificationEvents.value =
+    verificationEvents.value =
       listOf(
         VerificationEventRecord(
-          eventId = _verificationEvents.value.size + 1L,
+          eventId = verificationEvents.value.size + 1L,
           serverId = serverId,
           previousStatus = current.lifecycleStatus,
           newStatus = VerificationLifecycleStatus.ACTIVE,
@@ -349,7 +351,7 @@ class InMemoryCatalogRepository(
           summary = reason,
           createdAtEpochMs = now,
         ),
-      ) + _verificationEvents.value
+      ) + verificationEvents.value
     recomputeVisibleEndpoints()
   }
 

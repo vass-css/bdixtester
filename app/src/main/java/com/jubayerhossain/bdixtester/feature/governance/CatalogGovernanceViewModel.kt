@@ -79,11 +79,23 @@ class CatalogGovernanceViewModel(
             if (trimmedQuery.isEmpty()) {
               true
             } else {
-              item.endpoint.name.lowercase().contains(trimmedQuery) ||
-                item.endpoint.host.lowercase().contains(trimmedQuery) ||
-                item.endpoint.originalUrl.lowercase().contains(trimmedQuery) ||
-                (item.record.normalizedDomain?.lowercase()?.contains(trimmedQuery) == true) ||
-                item.record.lifecycleStatus.displayLabel.lowercase().contains(trimmedQuery)
+              item.endpoint.name
+                .lowercase()
+                .contains(trimmedQuery) ||
+                item.endpoint.host
+                  .lowercase()
+                  .contains(trimmedQuery) ||
+                item.endpoint.originalUrl
+                  .lowercase()
+                  .contains(trimmedQuery) ||
+                (
+                  item.record.normalizedDomain
+                    ?.lowercase()
+                    ?.contains(trimmedQuery) == true
+                ) ||
+                item.record.lifecycleStatus.displayLabel
+                  .lowercase()
+                  .contains(trimmedQuery)
             }
           }.sortedWith(
             compareBy<GovernanceListItem>(
