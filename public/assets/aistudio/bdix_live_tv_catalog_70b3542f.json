@@ -1,0 +1,2022 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_name": "Bangladesh BDIX Live TV Server Directory",
+  "source": "User-provided BDIX FTP Server List — BDIX Connected Live TV Servers (copied as supplied; not independently checked)",
+  "country": "Bangladesh",
+  "categories": {
+    "live_tv": {
+      "id": "live_tv",
+      "name": "Live TV Servers",
+      "description": "Live TV, IPTV and television-platform endpoints listed by the supplied source. The category does not guarantee stream compatibility or current availability."
+    }
+  },
+  "classification_notes": [
+    "All numbered provider entries 1–50 are preserved as separate source records, including the two separately numbered BDIPTV entries.",
+    "ISP/provider names are transcribed from the source headings. Records labelled Unknown or Others are preserved as separate groups; no ISP attribution has been invented for their endpoints.",
+    "The source provides no separate provider websites or social links for these Live TV entries; endpoint URLs are stored under servers.live_tv.",
+    "All endpoints are unverified. Listing does not mean a server is online, reachable, BDIX-accessible, or capable of playing a stream.",
+    "URLs, schemes, ports, paths, and capitalization are preserved as supplied.",
+    "The final standalone http://iptv.mcnbd.com line repeats the endpoint listed under source entry 34. It is preserved in source_duplicate_occurrences rather than counted as a second canonical endpoint.",
+    "The category describes the source directory grouping, not a verified transport protocol or media format."
+  ],
+  "isps": [
+    {
+      "id": "ddn-ctgtv-1",
+      "source_number": 1,
+      "isp_name": "DDN (CTGTV)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": [
+          "http://www.ctgtv.live",
+          "http://ddn.oncast.me",
+          "http://172.20.1.1",
+          "http://bdixtv.live"
+        ]
+      },
+      "links": [
+        {
+          "url": "http://www.ctgtv.live",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://ddn.oncast.me",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://172.20.1.1",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://bdixtv.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "amrbd-2",
+      "source_number": 2,
+      "isp_name": "AMRBD",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://103.136.200.246", "http://amrbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://103.136.200.246",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://amrbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "exord-online-e-box-live-3",
+      "source_number": 3,
+      "isp_name": "EXORD ONLINE (E-BOX LIVE)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.ebox.live", "http://tv2.ebox.live"]
+      },
+      "links": [
+        {
+          "url": "http://tv.ebox.live",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv2.ebox.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "chittagong-online-limited-4",
+      "source_number": 4,
+      "isp_name": "CHITTAGONG ONLINE LIMITED",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://smartbox.digital"]
+      },
+      "links": [
+        {
+          "url": "http://smartbox.digital",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "c1-5",
+      "source_number": 5,
+      "isp_name": "C1",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://c1live.com"]
+      },
+      "links": [
+        {
+          "url": "http://c1live.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "business-network-ftpbd-6",
+      "source_number": 6,
+      "isp_name": "BUSINESS NETWORK (FTPBD)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://otv.ftpbd.net"]
+      },
+      "links": [
+        {
+          "url": "http://otv.ftpbd.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "unix-7",
+      "source_number": 7,
+      "isp_name": "UNIX",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://30.30.30.30"]
+      },
+      "links": [
+        {
+          "url": "http://30.30.30.30",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "cogent-broadband-khulnaflix-8",
+      "source_number": 8,
+      "isp_name": "COGENT BROADBAND (KHULNAFLIX)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": [
+          "http://bokasoka.net:8080",
+          "http://172.27.27.27:8080",
+          "http://tv.khulnaflix.net"
+        ]
+      },
+      "links": [
+        {
+          "url": "http://bokasoka.net:8080",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://172.27.27.27:8080",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv.khulnaflix.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "bdiptv-9",
+      "source_number": 9,
+      "isp_name": "BDIPTV",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://bdiptv.stream"]
+      },
+      "links": [
+        {
+          "url": "http://bdiptv.stream",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "stargate-communications-limited-starflixbd-10",
+      "source_number": 10,
+      "isp_name": "STARGATE COMMUNICATIONS LIMITED (STARFLIXBD)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://172.27.27.3"]
+      },
+      "links": [
+        {
+          "url": "http://172.27.27.3",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "plusbox-11",
+      "source_number": 11,
+      "isp_name": "PLUSBOX",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://plusbox.tv"]
+      },
+      "links": [
+        {
+          "url": "http://plusbox.tv",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "bdiptv-12",
+      "source_number": 12,
+      "isp_name": "BDIPTV",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://15.1.1.10", "http://bdiptv.net", "http://bciptv.net"]
+      },
+      "links": [
+        {
+          "url": "http://15.1.1.10",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://bdiptv.net",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://bciptv.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "one-net-communications-limited-dugdugi-13",
+      "source_number": 13,
+      "isp_name": "ONE NET COMMUNICATIONS LIMITED (DUGDUGI)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://dugdugilive.com"]
+      },
+      "links": [
+        {
+          "url": "http://dugdugilive.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "rangdhanu-14",
+      "source_number": 14,
+      "isp_name": "RANGDHANU",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": [
+          "http://tv.rangdhanu.live",
+          "http://plus.tv.rangdhanu.live",
+          "https://hdtv.rangdhanu.live"
+        ]
+      },
+      "links": [
+        {
+          "url": "http://tv.rangdhanu.live",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://plus.tv.rangdhanu.live",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://hdtv.rangdhanu.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "roarzone-15",
+      "source_number": 15,
+      "isp_name": "ROARZONE",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.roarzone.info"]
+      },
+      "links": [
+        {
+          "url": "http://tv.roarzone.info",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "icommunication-broadband-ibox-16",
+      "source_number": 16,
+      "isp_name": "ICOMMUNICATION BROADBAND (IBOX)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.iboxbd.online"]
+      },
+      "links": [
+        {
+          "url": "http://tv.iboxbd.online",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "carnival-internet-nagordola-17",
+      "source_number": 17,
+      "isp_name": "CARNIVAL INTERNET (NAGORDOLA)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.nagordola.live"]
+      },
+      "links": [
+        {
+          "url": "http://tv.nagordola.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "dot-internet-18",
+      "source_number": 18,
+      "isp_name": "DOT INTERNET",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://59.153.100.77", "http://tv.dflix.live"]
+      },
+      "links": [
+        {
+          "url": "http://59.153.100.77",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv.dflix.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "link-technologies-19",
+      "source_number": 19,
+      "isp_name": "LINK TECHNOLOGIES",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.linktech.net.bd"]
+      },
+      "links": [
+        {
+          "url": "http://tv.linktech.net.bd",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "tetrasoft-20",
+      "source_number": 20,
+      "isp_name": "TETRASOFT",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.tetrasoftbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://tv.tetrasoftbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "icc-21",
+      "source_number": 21,
+      "isp_name": "ICC",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://10.16.100.244/livetv.php"]
+      },
+      "links": [
+        {
+          "url": "http://10.16.100.244/livetv.php",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "smartonline-22",
+      "source_number": 22,
+      "isp_name": "SMARTONLINE",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://live.ctgoz.com"]
+      },
+      "links": [
+        {
+          "url": "http://live.ctgoz.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "projapoti-23",
+      "source_number": 23,
+      "isp_name": "PROJAPOTI",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://projapoti.live"]
+      },
+      "links": [
+        {
+          "url": "http://projapoti.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "satrong-24",
+      "source_number": 24,
+      "isp_name": "SATRONG",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://103.214.156.2", "http://tv.satrong.live"]
+      },
+      "links": [
+        {
+          "url": "http://103.214.156.2",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv.satrong.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "aliflaila-25",
+      "source_number": 25,
+      "isp_name": "ALIFLAILA",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.aliflailabd.com"]
+      },
+      "links": [
+        {
+          "url": "http://tv.aliflailabd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "samonline-dhakaflix-26",
+      "source_number": 26,
+      "isp_name": "SAMONLINE (DHAKAFLIX)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://172.16.50.22", "http://172.16.50.2"]
+      },
+      "links": [
+        {
+          "url": "http://172.16.50.22",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://172.16.50.2",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "link-71-27",
+      "source_number": 27,
+      "isp_name": "LINK 71",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://103.102.27.172"]
+      },
+      "links": [
+        {
+          "url": "http://103.102.27.172",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "novus-network-28",
+      "source_number": 28,
+      "isp_name": "NOVUS NETWORK",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["https://tv.nbox.live"]
+      },
+      "links": [
+        {
+          "url": "https://tv.nbox.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "movie-bazar-29",
+      "source_number": 29,
+      "isp_name": "MOVIE BAZAR",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://113.212.111.246", "http://live.moviebazar.net"]
+      },
+      "links": [
+        {
+          "url": "http://113.212.111.246",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://live.moviebazar.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "aftabnagar-online-30",
+      "source_number": 30,
+      "isp_name": "AFTABNAGAR ONLINE",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://103.113.224.68", "http://tv.anosbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://103.113.224.68",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv.anosbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "flash-net-31",
+      "source_number": 31,
+      "isp_name": "FLASH NET",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.flashnetbd.net"]
+      },
+      "links": [
+        {
+          "url": "http://tv.flashnetbd.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "it-connection-network-32",
+      "source_number": 32,
+      "isp_name": "IT CONNECTION NETWORK",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://iptv.itcnbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://iptv.itcnbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "medialink24-net-33",
+      "source_number": 33,
+      "isp_name": "MEDIALINK24 NET",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.medialink24.net"]
+      },
+      "links": [
+        {
+          "url": "http://tv.medialink24.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "millennium-mcn-34",
+      "source_number": 34,
+      "isp_name": "MILLENNIUM (MCN)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://iptv.mcnbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://iptv.mcnbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "dhaka-fiber-net-35",
+      "source_number": 35,
+      "isp_name": "DHAKA FIBER NET",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://172.50.50.8"]
+      },
+      "links": [
+        {
+          "url": "http://172.50.50.8",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "ks-network-limited-wow-movie-zone-36",
+      "source_number": 36,
+      "isp_name": "KS NETWORK LIMITED (WOW MOVIE ZONE)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://172.27.27.85", "https://iptv.ksnetworkbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://172.27.27.85",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://iptv.ksnetworkbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "future-net-37",
+      "source_number": 37,
+      "isp_name": "FUTURE NET",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.fn-bd.com"]
+      },
+      "links": [
+        {
+          "url": "http://tv.fn-bd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "aknetworks-38",
+      "source_number": 38,
+      "isp_name": "AKNETWORKS",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://aklivetv.com"]
+      },
+      "links": [
+        {
+          "url": "http://aklivetv.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "bdlan-39",
+      "source_number": 39,
+      "isp_name": "BDLAN",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://live.bdlan.net"]
+      },
+      "links": [
+        {
+          "url": "http://live.bdlan.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "sparklink-40",
+      "source_number": 40,
+      "isp_name": "SPARKLINK",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.sparklinkbd.com"]
+      },
+      "links": [
+        {
+          "url": "http://tv.sparklinkbd.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "mtbsl-41",
+      "source_number": 41,
+      "isp_name": "MTBSL",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.mtbsl.com"]
+      },
+      "links": [
+        {
+          "url": "http://tv.mtbsl.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "mirpur-online-42",
+      "source_number": 42,
+      "isp_name": "MIRPUR ONLINE",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://livetv.mirpur.online"]
+      },
+      "links": [
+        {
+          "url": "http://livetv.mirpur.online",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "bdtv-43",
+      "source_number": 43,
+      "isp_name": "BDTV",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://bdtv.live"]
+      },
+      "links": [
+        {
+          "url": "http://bdtv.live",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "khulna-live-44",
+      "source_number": 44,
+      "isp_name": "KHULNA LIVE",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://103.150.6.2", "http://khulnatv.live", "http://khulna.bid"]
+      },
+      "links": [
+        {
+          "url": "http://103.150.6.2",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://khulnatv.live",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://khulna.bid",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "live-bdix-tv-45",
+      "source_number": 45,
+      "isp_name": "LIVE BDIX TV",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["https://livebdix.com", "https://tv.livebdix.com"]
+      },
+      "links": [
+        {
+          "url": "https://livebdix.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://tv.livebdix.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "race-online-limited-46",
+      "source_number": 46,
+      "isp_name": "RACE ONLINE LIMITED",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["https://iptv.race.net.bd"]
+      },
+      "links": [
+        {
+          "url": "https://iptv.race.net.bd",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "jadoo-broadband-47",
+      "source_number": 47,
+      "isp_name": "JADOO BROADBAND",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["https://iptv.jadoodigital.com"]
+      },
+      "links": [
+        {
+          "url": "https://iptv.jadoodigital.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "daulatpur-online-khulnaplex-48",
+      "source_number": 48,
+      "isp_name": "DAULATPUR ONLINE (KHULNAPLEX)",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://khulnaplex.net/tv"]
+      },
+      "links": [
+        {
+          "url": "http://khulnaplex.net/tv",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "ayanmedia-49",
+      "source_number": 49,
+      "isp_name": "AYANMEDIA",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://tv.ayanmedia.net"]
+      },
+      "links": [
+        {
+          "url": "http://tv.ayanmedia.net",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "link3-50",
+      "source_number": 50,
+      "isp_name": "LINK3",
+      "provider_type": "numbered_provider",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": ["http://www.amaze-tv.com"]
+      },
+      "links": [
+        {
+          "url": "http://www.amaze-tv.com",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "unknown-live-tv-server",
+      "source_number": null,
+      "isp_name": "Unknown Live TV Server",
+      "provider_type": "unknown_provider_group",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": [
+          "http://175.41.46.16",
+          "http://103.84.253.5",
+          "http://103.77.188.2",
+          "http://11.11.11.11",
+          "http://103.138.183.6",
+          "http://103.85.196.10",
+          "http://172.16.29.28",
+          "http://172.17.50.112",
+          "http://10.233.233.12"
+        ]
+      },
+      "links": [
+        {
+          "url": "http://175.41.46.16",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://103.84.253.5",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://103.77.188.2",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://11.11.11.11",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://103.138.183.6",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://103.85.196.10",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://172.16.29.28",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://172.17.50.112",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://10.233.233.12",
+          "role": "live_tv_server"
+        }
+      ]
+    },
+    {
+      "id": "others-live-tv-server",
+      "source_number": null,
+      "isp_name": "Others Live TV Server",
+      "provider_type": "other_platform_group",
+      "websites": [],
+      "social_links": [],
+      "servers": {
+        "live_tv": [
+          "https://www.bioscopelive.com",
+          "http://www.jagobd.com",
+          "https://beta.jagobd.com",
+          "https://bongobd.com",
+          "http://tv.bdixsports.com",
+          "http://livetv.com.bd",
+          "http://durbinlive.com",
+          "https://hotflix.stream",
+          "http://globalbanglatv.com",
+          "https://www.webtvbd.com",
+          "https://crichd.tv"
+        ]
+      },
+      "links": [
+        {
+          "url": "https://www.bioscopelive.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://www.jagobd.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://beta.jagobd.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://bongobd.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://tv.bdixsports.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://livetv.com.bd",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://durbinlive.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://hotflix.stream",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "http://globalbanglatv.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://www.webtvbd.com",
+          "role": "live_tv_server"
+        },
+        {
+          "url": "https://crichd.tv",
+          "role": "live_tv_server"
+        }
+      ]
+    }
+  ],
+  "server_index": {
+    "live_tv": [
+      {
+        "id": "ddn-ctgtv-1-live-tv-1",
+        "isp_id": "ddn-ctgtv-1",
+        "isp_name": "DDN (CTGTV)",
+        "source_number": 1,
+        "provider_type": "numbered_provider",
+        "url": "http://www.ctgtv.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ddn-ctgtv-1-live-tv-2",
+        "isp_id": "ddn-ctgtv-1",
+        "isp_name": "DDN (CTGTV)",
+        "source_number": 1,
+        "provider_type": "numbered_provider",
+        "url": "http://ddn.oncast.me",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ddn-ctgtv-1-live-tv-3",
+        "isp_id": "ddn-ctgtv-1",
+        "isp_name": "DDN (CTGTV)",
+        "source_number": 1,
+        "provider_type": "numbered_provider",
+        "url": "http://172.20.1.1",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ddn-ctgtv-1-live-tv-4",
+        "isp_id": "ddn-ctgtv-1",
+        "isp_name": "DDN (CTGTV)",
+        "source_number": 1,
+        "provider_type": "numbered_provider",
+        "url": "http://bdixtv.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "amrbd-2-live-tv-1",
+        "isp_id": "amrbd-2",
+        "isp_name": "AMRBD",
+        "source_number": 2,
+        "provider_type": "numbered_provider",
+        "url": "http://103.136.200.246",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "amrbd-2-live-tv-2",
+        "isp_id": "amrbd-2",
+        "isp_name": "AMRBD",
+        "source_number": 2,
+        "provider_type": "numbered_provider",
+        "url": "http://amrbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "exord-online-e-box-live-3-live-tv-1",
+        "isp_id": "exord-online-e-box-live-3",
+        "isp_name": "EXORD ONLINE (E-BOX LIVE)",
+        "source_number": 3,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.ebox.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "exord-online-e-box-live-3-live-tv-2",
+        "isp_id": "exord-online-e-box-live-3",
+        "isp_name": "EXORD ONLINE (E-BOX LIVE)",
+        "source_number": 3,
+        "provider_type": "numbered_provider",
+        "url": "http://tv2.ebox.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "chittagong-online-limited-4-live-tv-1",
+        "isp_id": "chittagong-online-limited-4",
+        "isp_name": "CHITTAGONG ONLINE LIMITED",
+        "source_number": 4,
+        "provider_type": "numbered_provider",
+        "url": "http://smartbox.digital",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "c1-5-live-tv-1",
+        "isp_id": "c1-5",
+        "isp_name": "C1",
+        "source_number": 5,
+        "provider_type": "numbered_provider",
+        "url": "http://c1live.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "business-network-ftpbd-6-live-tv-1",
+        "isp_id": "business-network-ftpbd-6",
+        "isp_name": "BUSINESS NETWORK (FTPBD)",
+        "source_number": 6,
+        "provider_type": "numbered_provider",
+        "url": "http://otv.ftpbd.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unix-7-live-tv-1",
+        "isp_id": "unix-7",
+        "isp_name": "UNIX",
+        "source_number": 7,
+        "provider_type": "numbered_provider",
+        "url": "http://30.30.30.30",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "cogent-broadband-khulnaflix-8-live-tv-1",
+        "isp_id": "cogent-broadband-khulnaflix-8",
+        "isp_name": "COGENT BROADBAND (KHULNAFLIX)",
+        "source_number": 8,
+        "provider_type": "numbered_provider",
+        "url": "http://bokasoka.net:8080",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "cogent-broadband-khulnaflix-8-live-tv-2",
+        "isp_id": "cogent-broadband-khulnaflix-8",
+        "isp_name": "COGENT BROADBAND (KHULNAFLIX)",
+        "source_number": 8,
+        "provider_type": "numbered_provider",
+        "url": "http://172.27.27.27:8080",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "cogent-broadband-khulnaflix-8-live-tv-3",
+        "isp_id": "cogent-broadband-khulnaflix-8",
+        "isp_name": "COGENT BROADBAND (KHULNAFLIX)",
+        "source_number": 8,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.khulnaflix.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdiptv-9-live-tv-1",
+        "isp_id": "bdiptv-9",
+        "isp_name": "BDIPTV",
+        "source_number": 9,
+        "provider_type": "numbered_provider",
+        "url": "http://bdiptv.stream",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "stargate-communications-limited-starflixbd-10-live-tv-1",
+        "isp_id": "stargate-communications-limited-starflixbd-10",
+        "isp_name": "STARGATE COMMUNICATIONS LIMITED (STARFLIXBD)",
+        "source_number": 10,
+        "provider_type": "numbered_provider",
+        "url": "http://172.27.27.3",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "plusbox-11-live-tv-1",
+        "isp_id": "plusbox-11",
+        "isp_name": "PLUSBOX",
+        "source_number": 11,
+        "provider_type": "numbered_provider",
+        "url": "http://plusbox.tv",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdiptv-12-live-tv-1",
+        "isp_id": "bdiptv-12",
+        "isp_name": "BDIPTV",
+        "source_number": 12,
+        "provider_type": "numbered_provider",
+        "url": "http://15.1.1.10",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdiptv-12-live-tv-2",
+        "isp_id": "bdiptv-12",
+        "isp_name": "BDIPTV",
+        "source_number": 12,
+        "provider_type": "numbered_provider",
+        "url": "http://bdiptv.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdiptv-12-live-tv-3",
+        "isp_id": "bdiptv-12",
+        "isp_name": "BDIPTV",
+        "source_number": 12,
+        "provider_type": "numbered_provider",
+        "url": "http://bciptv.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "one-net-communications-limited-dugdugi-13-live-tv-1",
+        "isp_id": "one-net-communications-limited-dugdugi-13",
+        "isp_name": "ONE NET COMMUNICATIONS LIMITED (DUGDUGI)",
+        "source_number": 13,
+        "provider_type": "numbered_provider",
+        "url": "http://dugdugilive.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "rangdhanu-14-live-tv-1",
+        "isp_id": "rangdhanu-14",
+        "isp_name": "RANGDHANU",
+        "source_number": 14,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.rangdhanu.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "rangdhanu-14-live-tv-2",
+        "isp_id": "rangdhanu-14",
+        "isp_name": "RANGDHANU",
+        "source_number": 14,
+        "provider_type": "numbered_provider",
+        "url": "http://plus.tv.rangdhanu.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "rangdhanu-14-live-tv-3",
+        "isp_id": "rangdhanu-14",
+        "isp_name": "RANGDHANU",
+        "source_number": 14,
+        "provider_type": "numbered_provider",
+        "url": "https://hdtv.rangdhanu.live",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "roarzone-15-live-tv-1",
+        "isp_id": "roarzone-15",
+        "isp_name": "ROARZONE",
+        "source_number": 15,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.roarzone.info",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "icommunication-broadband-ibox-16-live-tv-1",
+        "isp_id": "icommunication-broadband-ibox-16",
+        "isp_name": "ICOMMUNICATION BROADBAND (IBOX)",
+        "source_number": 16,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.iboxbd.online",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "carnival-internet-nagordola-17-live-tv-1",
+        "isp_id": "carnival-internet-nagordola-17",
+        "isp_name": "CARNIVAL INTERNET (NAGORDOLA)",
+        "source_number": 17,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.nagordola.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "dot-internet-18-live-tv-1",
+        "isp_id": "dot-internet-18",
+        "isp_name": "DOT INTERNET",
+        "source_number": 18,
+        "provider_type": "numbered_provider",
+        "url": "http://59.153.100.77",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "dot-internet-18-live-tv-2",
+        "isp_id": "dot-internet-18",
+        "isp_name": "DOT INTERNET",
+        "source_number": 18,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.dflix.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "link-technologies-19-live-tv-1",
+        "isp_id": "link-technologies-19",
+        "isp_name": "LINK TECHNOLOGIES",
+        "source_number": 19,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.linktech.net.bd",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "tetrasoft-20-live-tv-1",
+        "isp_id": "tetrasoft-20",
+        "isp_name": "TETRASOFT",
+        "source_number": 20,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.tetrasoftbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "icc-21-live-tv-1",
+        "isp_id": "icc-21",
+        "isp_name": "ICC",
+        "source_number": 21,
+        "provider_type": "numbered_provider",
+        "url": "http://10.16.100.244/livetv.php",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "smartonline-22-live-tv-1",
+        "isp_id": "smartonline-22",
+        "isp_name": "SMARTONLINE",
+        "source_number": 22,
+        "provider_type": "numbered_provider",
+        "url": "http://live.ctgoz.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "projapoti-23-live-tv-1",
+        "isp_id": "projapoti-23",
+        "isp_name": "PROJAPOTI",
+        "source_number": 23,
+        "provider_type": "numbered_provider",
+        "url": "http://projapoti.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "satrong-24-live-tv-1",
+        "isp_id": "satrong-24",
+        "isp_name": "SATRONG",
+        "source_number": 24,
+        "provider_type": "numbered_provider",
+        "url": "http://103.214.156.2",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "satrong-24-live-tv-2",
+        "isp_id": "satrong-24",
+        "isp_name": "SATRONG",
+        "source_number": 24,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.satrong.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "aliflaila-25-live-tv-1",
+        "isp_id": "aliflaila-25",
+        "isp_name": "ALIFLAILA",
+        "source_number": 25,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.aliflailabd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "samonline-dhakaflix-26-live-tv-1",
+        "isp_id": "samonline-dhakaflix-26",
+        "isp_name": "SAMONLINE (DHAKAFLIX)",
+        "source_number": 26,
+        "provider_type": "numbered_provider",
+        "url": "http://172.16.50.22",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "samonline-dhakaflix-26-live-tv-2",
+        "isp_id": "samonline-dhakaflix-26",
+        "isp_name": "SAMONLINE (DHAKAFLIX)",
+        "source_number": 26,
+        "provider_type": "numbered_provider",
+        "url": "http://172.16.50.2",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "link-71-27-live-tv-1",
+        "isp_id": "link-71-27",
+        "isp_name": "LINK 71",
+        "source_number": 27,
+        "provider_type": "numbered_provider",
+        "url": "http://103.102.27.172",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "novus-network-28-live-tv-1",
+        "isp_id": "novus-network-28",
+        "isp_name": "NOVUS NETWORK",
+        "source_number": 28,
+        "provider_type": "numbered_provider",
+        "url": "https://tv.nbox.live",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "movie-bazar-29-live-tv-1",
+        "isp_id": "movie-bazar-29",
+        "isp_name": "MOVIE BAZAR",
+        "source_number": 29,
+        "provider_type": "numbered_provider",
+        "url": "http://113.212.111.246",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "movie-bazar-29-live-tv-2",
+        "isp_id": "movie-bazar-29",
+        "isp_name": "MOVIE BAZAR",
+        "source_number": 29,
+        "provider_type": "numbered_provider",
+        "url": "http://live.moviebazar.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "aftabnagar-online-30-live-tv-1",
+        "isp_id": "aftabnagar-online-30",
+        "isp_name": "AFTABNAGAR ONLINE",
+        "source_number": 30,
+        "provider_type": "numbered_provider",
+        "url": "http://103.113.224.68",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "aftabnagar-online-30-live-tv-2",
+        "isp_id": "aftabnagar-online-30",
+        "isp_name": "AFTABNAGAR ONLINE",
+        "source_number": 30,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.anosbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "flash-net-31-live-tv-1",
+        "isp_id": "flash-net-31",
+        "isp_name": "FLASH NET",
+        "source_number": 31,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.flashnetbd.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "it-connection-network-32-live-tv-1",
+        "isp_id": "it-connection-network-32",
+        "isp_name": "IT CONNECTION NETWORK",
+        "source_number": 32,
+        "provider_type": "numbered_provider",
+        "url": "http://iptv.itcnbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "medialink24-net-33-live-tv-1",
+        "isp_id": "medialink24-net-33",
+        "isp_name": "MEDIALINK24 NET",
+        "source_number": 33,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.medialink24.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "millennium-mcn-34-live-tv-1",
+        "isp_id": "millennium-mcn-34",
+        "isp_name": "MILLENNIUM (MCN)",
+        "source_number": 34,
+        "provider_type": "numbered_provider",
+        "url": "http://iptv.mcnbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "dhaka-fiber-net-35-live-tv-1",
+        "isp_id": "dhaka-fiber-net-35",
+        "isp_name": "DHAKA FIBER NET",
+        "source_number": 35,
+        "provider_type": "numbered_provider",
+        "url": "http://172.50.50.8",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ks-network-limited-wow-movie-zone-36-live-tv-1",
+        "isp_id": "ks-network-limited-wow-movie-zone-36",
+        "isp_name": "KS NETWORK LIMITED (WOW MOVIE ZONE)",
+        "source_number": 36,
+        "provider_type": "numbered_provider",
+        "url": "http://172.27.27.85",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ks-network-limited-wow-movie-zone-36-live-tv-2",
+        "isp_id": "ks-network-limited-wow-movie-zone-36",
+        "isp_name": "KS NETWORK LIMITED (WOW MOVIE ZONE)",
+        "source_number": 36,
+        "provider_type": "numbered_provider",
+        "url": "https://iptv.ksnetworkbd.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "future-net-37-live-tv-1",
+        "isp_id": "future-net-37",
+        "isp_name": "FUTURE NET",
+        "source_number": 37,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.fn-bd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "aknetworks-38-live-tv-1",
+        "isp_id": "aknetworks-38",
+        "isp_name": "AKNETWORKS",
+        "source_number": 38,
+        "provider_type": "numbered_provider",
+        "url": "http://aklivetv.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdlan-39-live-tv-1",
+        "isp_id": "bdlan-39",
+        "isp_name": "BDLAN",
+        "source_number": 39,
+        "provider_type": "numbered_provider",
+        "url": "http://live.bdlan.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "sparklink-40-live-tv-1",
+        "isp_id": "sparklink-40",
+        "isp_name": "SPARKLINK",
+        "source_number": 40,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.sparklinkbd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "mtbsl-41-live-tv-1",
+        "isp_id": "mtbsl-41",
+        "isp_name": "MTBSL",
+        "source_number": 41,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.mtbsl.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "mirpur-online-42-live-tv-1",
+        "isp_id": "mirpur-online-42",
+        "isp_name": "MIRPUR ONLINE",
+        "source_number": 42,
+        "provider_type": "numbered_provider",
+        "url": "http://livetv.mirpur.online",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "bdtv-43-live-tv-1",
+        "isp_id": "bdtv-43",
+        "isp_name": "BDTV",
+        "source_number": 43,
+        "provider_type": "numbered_provider",
+        "url": "http://bdtv.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "khulna-live-44-live-tv-1",
+        "isp_id": "khulna-live-44",
+        "isp_name": "KHULNA LIVE",
+        "source_number": 44,
+        "provider_type": "numbered_provider",
+        "url": "http://103.150.6.2",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "khulna-live-44-live-tv-2",
+        "isp_id": "khulna-live-44",
+        "isp_name": "KHULNA LIVE",
+        "source_number": 44,
+        "provider_type": "numbered_provider",
+        "url": "http://khulnatv.live",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "khulna-live-44-live-tv-3",
+        "isp_id": "khulna-live-44",
+        "isp_name": "KHULNA LIVE",
+        "source_number": 44,
+        "provider_type": "numbered_provider",
+        "url": "http://khulna.bid",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "live-bdix-tv-45-live-tv-1",
+        "isp_id": "live-bdix-tv-45",
+        "isp_name": "LIVE BDIX TV",
+        "source_number": 45,
+        "provider_type": "numbered_provider",
+        "url": "https://livebdix.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "live-bdix-tv-45-live-tv-2",
+        "isp_id": "live-bdix-tv-45",
+        "isp_name": "LIVE BDIX TV",
+        "source_number": 45,
+        "provider_type": "numbered_provider",
+        "url": "https://tv.livebdix.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "race-online-limited-46-live-tv-1",
+        "isp_id": "race-online-limited-46",
+        "isp_name": "RACE ONLINE LIMITED",
+        "source_number": 46,
+        "provider_type": "numbered_provider",
+        "url": "https://iptv.race.net.bd",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "jadoo-broadband-47-live-tv-1",
+        "isp_id": "jadoo-broadband-47",
+        "isp_name": "JADOO BROADBAND",
+        "source_number": 47,
+        "provider_type": "numbered_provider",
+        "url": "https://iptv.jadoodigital.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "daulatpur-online-khulnaplex-48-live-tv-1",
+        "isp_id": "daulatpur-online-khulnaplex-48",
+        "isp_name": "DAULATPUR ONLINE (KHULNAPLEX)",
+        "source_number": 48,
+        "provider_type": "numbered_provider",
+        "url": "http://khulnaplex.net/tv",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "ayanmedia-49-live-tv-1",
+        "isp_id": "ayanmedia-49",
+        "isp_name": "AYANMEDIA",
+        "source_number": 49,
+        "provider_type": "numbered_provider",
+        "url": "http://tv.ayanmedia.net",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "link3-50-live-tv-1",
+        "isp_id": "link3-50",
+        "isp_name": "LINK3",
+        "source_number": 50,
+        "provider_type": "numbered_provider",
+        "url": "http://www.amaze-tv.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-1",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://175.41.46.16",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-2",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://103.84.253.5",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-3",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://103.77.188.2",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-4",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://11.11.11.11",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-5",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://103.138.183.6",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-6",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://103.85.196.10",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-7",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://172.16.29.28",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-8",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://172.17.50.112",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "unknown-live-tv-server-live-tv-9",
+        "isp_id": "unknown-live-tv-server",
+        "isp_name": "Unknown Live TV Server",
+        "source_number": null,
+        "provider_type": "unknown_provider_group",
+        "url": "http://10.233.233.12",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-1",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://www.bioscopelive.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-2",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "http://www.jagobd.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-3",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://beta.jagobd.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-4",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://bongobd.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-5",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "http://tv.bdixsports.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-6",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "http://livetv.com.bd",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-7",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "http://durbinlive.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-8",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://hotflix.stream",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-9",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "http://globalbanglatv.com",
+        "scheme": "http",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-10",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://www.webtvbd.com",
+        "scheme": "https",
+        "status": "unverified"
+      },
+      {
+        "id": "others-live-tv-server-live-tv-11",
+        "isp_id": "others-live-tv-server",
+        "isp_name": "Others Live TV Server",
+        "source_number": null,
+        "provider_type": "other_platform_group",
+        "url": "https://crichd.tv",
+        "scheme": "https",
+        "status": "unverified"
+      }
+    ]
+  },
+  "source_duplicate_occurrences": [
+    {
+      "url": "http://iptv.mcnbd.com",
+      "original_isp_id": "millennium-mcn-34",
+      "original_isp_name": "MILLENNIUM (MCN)",
+      "source_location": "Standalone final line after the OTHERS LIVE TV SERVER list",
+      "duplicate_of_server_id": "millennium-mcn-34-live-tv-1",
+      "handling": "Preserved as a duplicate source occurrence; canonical endpoint remains under source entry 34."
+    }
+  ],
+  "statistics": {
+    "numbered_source_entries": 50,
+    "provider_records_including_unknown_and_others": 52,
+    "numbered_live_tv_endpoints": 70,
+    "unknown_live_tv_endpoints": 9,
+    "other_platform_endpoints": 11,
+    "canonical_live_tv_endpoints": 90,
+    "additional_duplicate_source_occurrences": 1,
+    "total_source_url_occurrences_including_duplicate_footer_line": 91,
+    "unknown_provider_group_count": 1,
+    "other_platform_group_count": 1,
+    "all_endpoints_status": "unverified"
+  }
+}

@@ -31,6 +31,11 @@ Third-party actions are pinned to full commit SHAs. The release publication job 
   - Job: `Build, test, lint, and catalog audit`
   - Failed step: `Validate Gradle build, unit tests, lint, and debug APK`
   - Failure: 65 tests ran; `NavigationUiTest.homeStaysMinimalAndServerQuickInspectSheetWorksEndToEnd` failed with `java.lang.AssertionError at NavigationUiTest.kt:266`
+- Android CI run `44495226091`
+  - Branch/HEAD: `main` / `8dbbfbccc22268e5fcb322eacf6a3c9ae4ae2a42`
+  - Conclusion: `failure`
+  - Failed step: `Validate catalogs and governance manifest`
+  - Exact errors: canonical FTP/Movies and Live TV JSON datasets were missing; the `Generate test timing summary` step also failed because `.github/scripts/summarize_gradle_test_results.py` was missing.
 - Dependency & License Audit run `44487701325`: success
 - Release Integrity Audit run `44487701353`: success
 
@@ -39,6 +44,8 @@ No Android Release run or GitHub Release was found for this audit.
 ## Failure Classification
 
 Application test failure. The test assumed the built-in server inspect control was already in the Compose viewport. The UI implementation is unchanged; the test now scrolls to the stable `servers_list` test tag before clicking `server_inspect_builtin:0`.
+
+The subsequent run failed because commit `01dce6e` removed the canonical catalog JSON inputs and the test timing summary helper while the CI workflow and catalog verifier still required them. The three required files were restored byte-for-byte from the previous revision where they were tracked. Local offline catalog validation and all 24 catalog verifier unit tests pass after restoration.
 
 ## Signing Configuration
 
@@ -67,6 +74,9 @@ The Environment API did not expose `android-release` or its secret configuration
 - `docs/release/APP_SIGNING_STRATEGY.md`
 - `docs/release/SIGNING_AND_KEY_MANAGEMENT.md`
 - `docs/release/GITHUB_ACTIONS_DIAGNOSTIC_REPORT.md`
+- `.github/scripts/summarize_gradle_test_results.py` (restored)
+- `public/assets/aistudio/bdix_ftp_movies_catalog_4acd8ccb.json` (restored)
+- `public/assets/aistudio/bdix_live_tv_catalog_70b3542f.json` (restored)
 
 ## Fixes Applied
 
@@ -75,6 +85,7 @@ The Environment API did not expose `android-release` or its secret configuration
 - Added APK signer fingerprint comparison against the existing certificate fingerprint.
 - Added a stable `servers_list` test tag and updated the navigation test to scroll before clicking.
 - Updated release signing documentation to reference the existing `.p12` keystore.
+- Restored CI's required catalog verifier inputs and Gradle test timing helper.
 
 ## Local Validation
 
@@ -83,6 +94,9 @@ The Environment API did not expose `android-release` or its secret configuration
 - `git diff --check` passed.
 - The public certificate SHA-256 fingerprint matched the expected fingerprint.
 - Private signing files remain ignored.
+- `python3 -m tools.catalog_verifier validate-catalog --repo-root .`: passed (752 curated entries, 26 OTT entries, 667 FTP/Movies and 90 Live TV endpoints, zero validation errors).
+- Catalog verifier unit tests: 24 passed.
+- Test timing helper: `py_compile` passed.
 - Android SDK validation is blocked because no SDK location is configured in this environment.
 - Local tests, lint, APK assembly, and `apksigner` verification could not complete without an Android SDK.
 
@@ -99,6 +113,6 @@ The Environment API did not expose `android-release` or its secret configuration
 1. Configure protected GitHub Environment `android-release`.
 2. Add `KEYSTORE_BASE64`, `STORE_PASSWORD`, and `KEY_PASSWORD` as Environment Secrets without exposing values.
 3. Confirm the environment deployment approver policy.
-4. Push the reviewed changes and rerun Android CI.
+4. Push the reviewed changes and rerun Android CI; the new run has not yet been executed.
 5. Trigger Android Release only on a verified `v1.0` tag after CI passes and environment secrets are available.
 6. Monitor with `gh run watch` and independently verify the published APK fingerprint.
